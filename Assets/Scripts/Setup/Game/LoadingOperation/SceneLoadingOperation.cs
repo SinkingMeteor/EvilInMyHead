@@ -1,24 +1,31 @@
 using System;
 using System.Threading.Tasks;
+using Sheldier.Constants;
 using UnityEngine.SceneManagement;
 
 namespace Sheldier.Setup
 {
     public class SceneLoadingOperation : ILoadOperation
     {
-        private readonly string[] _targetSceneNames;
+        private string[] _targetSceneNames;
         public string LoadLabel => "Loading Scene";
+        public SceneLoadingOperation()
+        {
+            //Default
+            _targetSceneNames = new[] { SceneNames.COLONY_OUTSIDE};
+        }
 
-        public SceneLoadingOperation(string[] targetSceneNames)
+        public void SetTargetScene(string[] targetSceneNames)
         {
             _targetSceneNames = targetSceneNames;
         }
 
-        public SceneLoadingOperation(string targetSceneName)
+        public void SetTargetScene(string targetSceneName)
         {
             _targetSceneNames = new[] {targetSceneName};
         }
-        
+
+
         public async Task Load(Action<float> SetProgress)
         {
             float divider = 1.0f / _targetSceneNames.Length;

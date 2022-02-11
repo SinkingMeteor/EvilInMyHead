@@ -1,8 +1,7 @@
-using Sheldier.Common;
 using UnityEngine;
 using Zenject;
 
-namespace Sheldier.Navigation
+namespace Sheldier.Common
 {
     public class CameraBordersConstrains : MonoBehaviour, ITickListener, IInitializable
     {
@@ -13,7 +12,7 @@ namespace Sheldier.Navigation
         private Camera _camera;
 
         [Inject]
-        private void SetDependencies(TickHandler tickHandler)
+        private void InjectDependencies(TickHandler tickHandler)
         {
             _tickHandler = tickHandler;
             _camera = Camera.main;

@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "Movement",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "f7eccf85-1087-403e-a9da-ce4eac4e1573",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Cursor",
@@ -47,19 +47,8 @@
                 },
                 {
                     "name": "",
-                    "id": "43eb2073-c5fc-4930-8000-461f72821f74",
-                    "path": "<DualShockGamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Use",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ee5bee8e-6a75-4364-82b7-12e014b4c762",
-                    "path": "<XInputController>/buttonWest",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "GamePad",
@@ -489,6 +478,11 @@
                     "devicePath": "<Keyboard>",
                     "isOptional": false,
                     "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
                 }
             ]
         },
@@ -497,7 +491,7 @@
             "bindingGroup": "GamePad",
             "devices": [
                 {
-                    "devicePath": "<WebGLGamepad>",
+                    "devicePath": "<Gamepad>",
                     "isOptional": false,
                     "isOR": false
                 }
