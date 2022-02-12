@@ -1,21 +1,20 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sheldier.Common
 {
-    public class TickHandler : MonoBehaviour
+    public class LateTickHandler : MonoBehaviour
     {
-        private List<ITickListener> _tickListeners = new List<ITickListener>();
-
-        public void AddListener(ITickListener tickListener) => _tickListeners.Add(tickListener);
-
-        private void Update()
+        private List<ILateTickListener> _tickListeners = new List<ILateTickListener>();
+        public void AddListener(ILateTickListener tickListener) => _tickListeners.Add(tickListener);
+        
+        private void LateUpdate()
         {
             for (int i = 0; i < _tickListeners.Count; i++)
             {
-                if (!_tickListeners[i].WantsToRemoveFromTick)
+                if(!_tickListeners[i].WantsToRemoveFromLateTick)
                 {
-                    _tickListeners[i].Tick();
+                    _tickListeners[i].LateTick();
                     continue;
                 }
                 int lastIndex = _tickListeners.Count - 1;
@@ -24,6 +23,5 @@ namespace Sheldier.Common
                 i -= 1;
             }
         }
-
     }
 }

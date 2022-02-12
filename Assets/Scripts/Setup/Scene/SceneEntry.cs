@@ -1,4 +1,3 @@
-using System;
 using Sheldier.Actors;
 using Sheldier.Common;
 using Sheldier.Constants;
@@ -11,13 +10,14 @@ namespace Sheldier.Setup
     public class SceneEntry : MonoBehaviour
     {
         [SerializeField] private Actor actor;
+        [SerializeField] private SceneCameraHandler sceneCameraHandler;
         
-        private IInputProvider _inputProvider;
+        private InputProvider _inputProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
         private GameGlobalSettings _globalSettings;
 
         [Inject]
-        public void InjectDependencies(IInputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation, GameGlobalSettings globalSettings)
+        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation, GameGlobalSettings globalSettings)
         {
             _globalSettings = globalSettings;
             _sceneLoadingOperation = sceneLoadingOperation;
@@ -26,17 +26,22 @@ namespace Sheldier.Setup
 
         private void Start()
         {
-            CheckInitialScene();
-            
+            if (!GameIsInitialized())
+                return;
+
+            sceneCameraHandler.Initialize(_inputProvider);
+            _inputProvider.SetSceneCamera(sceneCameraHandler.CurrentSceneCamera);
+            sceneCameraHandler.SetFollowTarget(actor.transform);
             actor.Initialize();
         }
 
-        private void CheckInitialScene()
+        private bool GameIsInitialized()
         {
             if (_globalSettings.IsStarted)
-                return;
+                return true;
             _sceneLoadingOperation.SetTargetScene(SceneManager.GetActiveScene().name);
             SceneManager.LoadScene(SceneNames.GAME_ENTRY);
+            return false;
         }
     }
 

@@ -2,6 +2,8 @@ namespace Sheldier.Common
 {
     public interface ITickListener
     {
-        bool Tick();
+        bool WantsToRemoveFromTick { get; }
+        void Tick();
+        void OnTickDispose();
     }
 }

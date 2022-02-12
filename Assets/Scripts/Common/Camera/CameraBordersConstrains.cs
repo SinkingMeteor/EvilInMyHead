@@ -1,72 +1,53 @@
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Common
 {
-    public class CameraBordersConstrains : MonoBehaviour, ITickListener, IInitializable
+    public class CameraBordersConstrains : MonoBehaviour
     {
-        private Vector2 _minCorner;
-        private Vector2 _maxCorner;
+        [SerializeField] private Vector2 _minCorner;
+        [SerializeField] private Vector2 _maxCorner;
         
-        private TickHandler _tickHandler;
         private Camera _camera;
 
-        [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
-        {
-            _tickHandler = tickHandler;
-            _camera = Camera.main;
-        }
         
-        public void Initialize()
+        public void SetDependencies(Camera camera)
         {
-            _tickHandler.AddListener(this);
+            _camera = camera;
         }
-        
-        public bool Tick()
+
+        public void LateTick()
         {
+            Debug.Log(_minCorner);
             var height = _camera.orthographicSize;
             var width = height * _camera.aspect;
             _camera.transform.position = new Vector3(Mathf.Clamp(_camera.transform.position.x, _minCorner.x + width, _maxCorner.x - width),
                 Mathf.Clamp(_camera.transform.position.y, _minCorner.y + height, _maxCorner.y - height),
                 _camera.transform.position.z);   
             
-            return true;
         }
-        
-        #if UNITY_EDITOR
-        private void SetCornersByChildObjects()
-        {
-            var childs = transform.childCount;
-            if (childs < 1)
-            {
-                new GameObject("MinChild").transform.SetParent(transform);
-                new GameObject("MaxChild").transform.SetParent(transform);
-            }
-                
 
-            var minChild = transform.GetChild(0).position;
-            _minCorner = new Vector2(minChild.x, minChild.y);
+#if UNITY_EDITOR
 
-            var maxChild = transform.GetChild(1).position;
-            _maxCorner = new Vector2(maxChild.x, maxChild.y);
-        } 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            SetCornersByChildObjects();
-
             Vector2 verticalLine = new Vector2(0, _maxCorner.y - _minCorner.y);
             Gizmos.DrawLine(_minCorner, _minCorner + verticalLine);
             Vector2 horizontalLine = new Vector2(_maxCorner.x - _minCorner.x, 0);
             Gizmos.DrawLine(_minCorner + horizontalLine, _minCorner);
             Gizmos.DrawLine(_maxCorner, _maxCorner - verticalLine);
             Gizmos.DrawLine(_maxCorner, _maxCorner - horizontalLine);
+
+
+            if (_camera == null)
+                return;
+            Gizmos.DrawLine(_camera.transform.position,
+                _camera.transform.position + new Vector3(_camera.orthographicSize * _camera.aspect,
+                    _camera.orthographicSize, 0.0f));
         }
         
         #endif
 
 
     }
-
 }

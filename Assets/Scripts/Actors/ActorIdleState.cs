@@ -1,27 +1,25 @@
 ﻿using System;
-using Sheldier.Common;
 using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    [System.Serializable]
-    public class ActorIdleState : IStateComponent
+    public class ActorIdleState : MonoBehaviour, IStateComponent
     {
         public event Action<int> OnNewAnimation;
         public bool IsLocked => _isLocked;
+        public bool TransitionConditionIsDone => true;
+        public int Priority => 0;
 
         private bool _isLocked = false;
-        private ActorStateController _actorStateController;
         
         private int[] _animationHashes;
         private ActorInputController _inputController;
         private ActorTransformHandler _actorTransformHandler;
 
-        public void SetDependencies(ActorStateController actorStateController, ActorInputController inputController, ActorTransformHandler actorTransformHandler)
+        public void SetDependencies(ActorInputController inputController, ActorTransformHandler actorTransformHandler)
         {
             _actorTransformHandler = actorTransformHandler;
             _inputController = inputController;
-            _actorStateController = actorStateController;
 
             _animationHashes = new[]
             {
@@ -42,9 +40,8 @@ namespace Sheldier.Actors
 
         public void Tick()
         {
-            ActorDirectionView directionView = _actorTransformHandler.CurrentDirectionView;
+            ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
             OnNewAnimation?.Invoke(_animationHashes[(int)directionView]);
-            _actorStateController.SetCurrentState(this);
         }
     }
 }

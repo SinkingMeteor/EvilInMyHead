@@ -1,3 +1,4 @@
+using System;
 using Sheldier.Common;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace Sheldier.Actors
         private TickHandler _tickHandler;
         private ActorInputController _actorInputController;
         private IInputProvider _inputProvider;
+        public bool WantsToRemoveFromTick => _wantsToRemoveFromTick;
+        private bool _wantsToRemoveFromTick;
+
 
         public void Initialize()
         {
@@ -31,49 +35,27 @@ namespace Sheldier.Actors
         }
 
         [Inject]
-        private void SetDependencies(TickHandler tickHandler, IInputProvider inputProvider)
+        private void InjectDependencies(TickHandler tickHandler, IInputProvider inputProvider)
         {
             _tickHandler = tickHandler;
             _inputProvider = inputProvider;
         }
 
-        public bool Tick()
+
+        public void Tick()
         {
             stateController.Tick();
-            _transformHandler.Tick();
-            return true;
+        //    _transformHandler.Tick();
+        }
+
+        private void OnDestroy()
+        {
+            OnTickDispose();
+        }
+
+        public void OnTickDispose()
+        {
+            _wantsToRemoveFromTick = true;
         }
     }
-
-    public class ActorInputController
-    {
-        public IInputProvider CurrentInputProvider => _currentInputProvider;
-
-        private IInputProvider _currentInputProvider;
-        private IInputProvider _nullProvider;
-        private IInputProvider _realInputProvider;
-        
-
-        public void Initialize()
-        {
-            _nullProvider = new NullInputProvider();
-            _currentInputProvider = _nullProvider;
-        }
-
-        public void SetInputProvider(IInputProvider inputProvider)
-        {
-            _realInputProvider = inputProvider;
-            _currentInputProvider = _realInputProvider;
-        }
-        public void LockInput()
-        {
-            _currentInputProvider = _nullProvider;
-        }
-
-        public void UnlockInput()
-        {
-            _currentInputProvider = _realInputProvider;
-        }
-    }
-    
 }

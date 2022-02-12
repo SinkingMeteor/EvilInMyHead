@@ -1,21 +1,21 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sheldier.Common
 {
-    public class TickHandler : MonoBehaviour
+    public class FixedTickHandler : MonoBehaviour
     {
-        private List<ITickListener> _tickListeners = new List<ITickListener>();
+        private List<IFixedTickListener> _tickListeners = new List<IFixedTickListener>();
 
-        public void AddListener(ITickListener tickListener) => _tickListeners.Add(tickListener);
+        public void AddListener(IFixedTickListener tickListener) => _tickListeners.Add(tickListener);
 
-        private void Update()
+        private void FixedUpdate()
         {
             for (int i = 0; i < _tickListeners.Count; i++)
             {
-                if (!_tickListeners[i].WantsToRemoveFromTick)
+                if(!_tickListeners[i].WantsToRemoveFromFixedTick)
                 {
-                    _tickListeners[i].Tick();
+                    _tickListeners[i].FixedTick();
                     continue;
                 }
                 int lastIndex = _tickListeners.Count - 1;
@@ -24,6 +24,5 @@ namespace Sheldier.Common
                 i -= 1;
             }
         }
-
     }
 }

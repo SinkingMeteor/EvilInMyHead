@@ -22,13 +22,13 @@ namespace Sheldier.Actors
         {
             foreach (var state in states)
             {
-                state.SetDependencies(this, actorInputController, actorTransformHandler);
+                state.SetDependencies(actorInputController, actorTransformHandler);
                 state.OnNewAnimation += SetNewAnimation;
             }
         }
-        public void SetCurrentState(IStateComponent newState)
+        private void SetCurrentState(IStateComponent newState)
         {
-            if (_currentState != null && !_currentState.IsLocked)
+            if (_currentState != null && _currentState.IsLocked)
                 return;
             
             _currentState?.Exit();
@@ -36,13 +36,24 @@ namespace Sheldier.Actors
             _currentState = newState;
             _currentState.Enter();
         }
-
-        public void SetPreviousState() => SetCurrentState(_previousState);
-
         public void Tick()
         {
+            _currentState?.Tick();
+            
+            IStateComponent nextState = null;
+            int currentPriority = -1;
+
             foreach (var state in states)
-                state.Tick();
+            {
+                if (state.TransitionConditionIsDone && state.Priority > currentPriority)
+                {
+                    nextState = state;
+                    currentPriority = state.Priority;
+                }
+            }
+            
+            if(nextState != null && !IsCurrentState(nextState))
+                SetCurrentState(nextState);
         }
 
         private void OnDestroy()

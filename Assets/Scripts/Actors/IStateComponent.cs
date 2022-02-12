@@ -6,7 +6,9 @@ namespace Sheldier.Actors
     {
         event Action<int> OnNewAnimation;
         bool IsLocked { get; }
-        void SetDependencies(ActorStateController actorStateController, ActorInputController inputController, ActorTransformHandler actorTransformHandler);
+        bool TransitionConditionIsDone { get; }
+        int Priority { get; }
+        void SetDependencies(ActorInputController inputController, ActorTransformHandler actorTransformHandler);
         void Enter();
         void Exit();
         void Tick();
