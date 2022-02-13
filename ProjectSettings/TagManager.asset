@@ -44,3 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: AboveDecor
+    uniqueID: 1388441047
+    locked: 0

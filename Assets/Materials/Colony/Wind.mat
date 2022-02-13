@@ -62,7 +62,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _DistortionBound: 0
-    - _DistortionPower: 0.629
+    - _DistortionPower: 0.316
     - _EnableExternalAlpha: 0
     - _FieldOpacity: 1
     m_Colors:
