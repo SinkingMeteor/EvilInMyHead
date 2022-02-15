@@ -38,13 +38,12 @@ namespace Sheldier.Actors
 
         public void Exit()
         {
-            Debug.Log("Exit");
             rigidbody2D.velocity = Vector2.zero;
         }
 
         public void Tick()
         {
-            ActorDirectionView directionView = _actorTransformHandler.CalculateMovementDirection();
+            ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
             OnNewAnimation?.Invoke(_animationHashes[(int)directionView]);
             
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;

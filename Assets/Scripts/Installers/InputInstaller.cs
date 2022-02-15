@@ -13,5 +13,4 @@ namespace Sheldier.Installers
             Container.Bind<InputProvider>().FromInstance(inputProvider).AsSingle();
         }
     }
-
 }

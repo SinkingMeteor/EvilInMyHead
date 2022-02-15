@@ -1,4 +1,5 @@
 using Sheldier.Common;
+using Sheldier.Common.Localization;
 using UnityEngine;
 using Zenject;
 
@@ -12,11 +13,13 @@ namespace Sheldier.Setup
         private SceneLoadingOperation _sceneLoadingOperation;
         private IInputProvider _inputProvider;
         private GameGlobalSettings _globalSettings;
+        private LocalizationProvider _localizationProvider;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
-            SceneLoadingOperation sceneLoadingOperation, GameGlobalSettings globalSettings)
+            SceneLoadingOperation sceneLoadingOperation, GameGlobalSettings globalSettings, LocalizationProvider localizationProvider)
         {
+            _localizationProvider = localizationProvider;
             _globalSettings = globalSettings;
             _sceneLoadingOperation = sceneLoadingOperation;
             _inputProvider = inputProvider;
@@ -25,6 +28,7 @@ namespace Sheldier.Setup
         private void Start()
         {
             sceneContext.Run();
+            _localizationProvider.Initialize();
             _inputProvider.Initialize();
             ILoadOperation[] loadOperations =
             {
