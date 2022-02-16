@@ -19,6 +19,7 @@ namespace Sheldier.Editor.DialogueSystem
             DialogueSystemGraph graph = node.graph as DialogueSystemGraph;
             GUILayout.Space(10);
             GUILayout.Label(graph.nodes.IndexOf(node).ToString(), NodeEditorResources.styles.nodeHeader);
+            node.SetIndex(graph.nodes.IndexOf(node));
             GUILayout.Space(10);
 
         }
@@ -31,7 +32,8 @@ namespace Sheldier.Editor.DialogueSystem
              if (GUILayout.Button("Create Choice")) node.CreateChoice();
              GUILayout.Space(10);
              if (GUILayout.Button("Remove Last Choice")) node.RemoveLastPort();
-             
+             GUILayout.Space(10);
+             if (GUILayout.Button("Clear")) node.Clear();
 
         }
         

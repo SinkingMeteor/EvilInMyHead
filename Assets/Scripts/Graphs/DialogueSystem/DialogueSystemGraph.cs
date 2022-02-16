@@ -1,3 +1,6 @@
+using System;
+using Sheldier.Editor.DialogueSystem;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
@@ -7,8 +10,16 @@ namespace Sheldier.Graphs.DialogueSystem
     public class DialogueSystemGraph : NodeGraph
     {
         [SerializeField] private ReplicaNode _initialReplica;
+        [SerializeField] private string _dialogueLocalizationKey;
 
+        public string LocalizationKey => _dialogueLocalizationKey;
         public ReplicaNode StartDialogue() => _initialReplica;
+
+
+        public void SetLocalizationKey(string key)
+        {
+            _dialogueLocalizationKey = key;
+        }
     }
     
 }

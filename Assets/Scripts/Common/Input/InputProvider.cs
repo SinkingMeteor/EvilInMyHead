@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Sheldier.Constants;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -29,7 +32,6 @@ namespace Sheldier.Common
         private InputButton _useButton;
         private CursorDirectionConverter _cursorDirectionConverter;
         private Dictionary<string, IInputMouseHandler> _mouseHandlers;
-
         public void Initialize()
         {
             _currentControlScheme = playerInput.currentControlScheme;
@@ -40,12 +42,11 @@ namespace Sheldier.Common
                 {InputControlSchemes.PC, new PCMouseDirectionProvider(_cursorDirectionConverter)},
                 {InputControlSchemes.GAMEPAD, new GamePadMouseDirectionProvider()},
             };
-            
             ActivateInput();
             
         }
 
-        public void OnChangedControls()
+        public void OnChangedControls(PlayerInput newPlayerInput)
         {
             if (_currentControlScheme == playerInput.currentControlScheme) return;
             
@@ -53,6 +54,16 @@ namespace Sheldier.Common
             RemoveAllBindingOverrides();
         }
 
+        public void DeviceRegained()
+        {
+  
+        }
+
+        public void DeviceLost()
+        {
+
+
+        }
         public void SetSceneCamera(Camera camera)
         {
             _cursorDirectionConverter.SetCamera(camera);
@@ -128,6 +139,7 @@ namespace Sheldier.Common
                 return newDirection;
             }
         }
+        
     }
     
     

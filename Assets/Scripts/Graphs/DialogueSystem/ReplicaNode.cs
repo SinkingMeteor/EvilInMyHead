@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.Serialization;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
@@ -14,38 +14,42 @@ namespace Sheldier.Graphs.DialogueSystem
 
         public string Replica => _replica;
         public IReadOnlyList<ReplicaChoice> Choices => _choices;
-        
-        [SerializeField, Multiline] private string _replica;
-        private List<ReplicaChoice> _choices;
 
-        public int OutputCount => DynamicOutputs.Count();
+        public int Index => _index;
         
+        [TableColumnWidth(300)]
+        [SerializeField, Multiline, ReadOnly] private string _replica;
+        [TableColumnWidth(25)]
+        [SerializeField, ReadOnly] private int _index;
+        [TableColumnWidth(500)]
+        [SerializeField, ReadOnly] private List<ReplicaChoice> _choices;
+
         public override object GetValue(NodePort port)
         {
             return this;
         }
-        
-        #if UNITY_EDITOR
-        
-        public void FillText(string replica, params string[] choices)
+
+        public void Clear()
         {
-            _replica = replica;
-            
-            List<string> choiceList = choices.ToList();
-            List<NodePort> outputs = DynamicOutputs.ToList();
-            
-            if(choiceList.Count != outputs.Count)
-                Debug.LogError($"Count of outputs and choices of replica {_replica} is different");
-            
-            _choices = new List<ReplicaChoice>();
-            for (int i = 0; i < choiceList.Count; i++)
+            _choices.Clear();
+            _replica = String.Empty;
+            var outputs = DynamicOutputs.ToArray();
+            for (int i = 0; i < outputs.Length; i++)
             {
-                _choices.Add(new ReplicaChoice(outputs[i], choiceList[i]));
+                RemoveDynamicPort(outputs[i]);
             }
         }
+
+#if UNITY_EDITOR
+        public void SetIndex(int index) => _index = index;
+        public void SetReplica(string localizationKey) => _replica = localizationKey;
         public void CreateChoice()
         {
-            AddDynamicOutput(typeof(ReplicaNode), ConnectionType.Multiple, TypeConstraint.None, "Choice: " + Ports.Count());
+            var port = AddDynamicOutput(typeof(ReplicaNode), ConnectionType.Override, TypeConstraint.None, "Choice: " + Ports.Count());
+
+            if (_choices == null)
+                _choices = new List<ReplicaChoice>();
+            _choices.Add(new ReplicaChoice(port));
         }
 
         public void RemoveLastPort()
@@ -57,23 +61,9 @@ namespace Sheldier.Graphs.DialogueSystem
 
 
     }
-[System.Serializable]
-    public class ReplicaChoice
+    public interface IDialogueReplica
     {
-        public ReplicaNode NextState => _nextState;
-        public string Choice => _choice;
-
-        private string _choice;
-        private ReplicaNode _nextState;
-        
-        public ReplicaChoice(NodePort output, string choice)
-        {
-            _choice = choice;
-            _nextState = output.node as ReplicaNode;
-
-        }
+        public string Replica { get; }
+        public IReadOnlyList<ReplicaChoice> Choices { get; }
     }
-
-
-
 }

@@ -15,11 +15,13 @@ namespace Sheldier.Actors
 
         private IStateComponent _previousState;
         private IStateComponent _currentState;
+        private ActorInputController _actorInputController;
 
 
         public bool IsCurrentState(IStateComponent component) => component == _currentState;
         public void SetDependencies(ActorInputController actorInputController, ActorTransformHandler actorTransformHandler)
         {
+            _actorInputController = actorInputController;
             foreach (var state in states)
             {
                 state.SetDependencies(actorInputController, actorTransformHandler);

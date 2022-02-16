@@ -17,7 +17,6 @@ namespace Sheldier.Common
 
         public void LateTick()
         {
-            Debug.Log(_minCorner);
             var height = _camera.orthographicSize;
             var width = height * _camera.aspect;
             _camera.transform.position = new Vector3(Mathf.Clamp(_camera.transform.position.x, _minCorner.x + width, _maxCorner.x - width),

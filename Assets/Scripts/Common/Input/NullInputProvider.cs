@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem.DualShock;
 
 namespace Sheldier.Common
 {
