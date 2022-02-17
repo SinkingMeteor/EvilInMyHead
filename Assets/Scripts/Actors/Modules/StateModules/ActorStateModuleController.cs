@@ -6,26 +6,25 @@ using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorStateController : SerializedMonoBehaviour
+    public class ActorStateModuleController : SerializedMonoBehaviour
     {
         [OdinSerialize] private List<IStateComponent> states;
-        [SerializeField] private Animator animator;
         
         private TickHandler _tickHandler;
 
         private IStateComponent _previousState;
         private IStateComponent _currentState;
-        private ActorInputController _actorInputController;
+        
 
 
         public bool IsCurrentState(IStateComponent component) => component == _currentState;
+
+
         public void SetDependencies(ActorInputController actorInputController, ActorTransformHandler actorTransformHandler)
         {
-            _actorInputController = actorInputController;
             foreach (var state in states)
             {
                 state.SetDependencies(actorInputController, actorTransformHandler);
-                state.OnNewAnimation += SetNewAnimation;
             }
         }
         private void SetCurrentState(IStateComponent newState)
@@ -57,13 +56,7 @@ namespace Sheldier.Actors
             if(nextState != null && !IsCurrentState(nextState))
                 SetCurrentState(nextState);
         }
+        
 
-        private void OnDestroy()
-        {
-            foreach (var state in states)
-                state.OnNewAnimation -= SetNewAnimation;
-        }
-
-        private void SetNewAnimation(int animationID) => animator.Play(animationID);
     }
 }

@@ -1,21 +1,26 @@
 ﻿using System;
+using Sheldier.Actors.Data;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorControlledMovementState : MonoBehaviour, IStateComponent
+    public class ActorDefaultControlledMovementState : SerializedMonoBehaviour, IStateComponent
     {
-        [SerializeField] private new Rigidbody2D rigidbody2D;
-        
-        private ActorInputController _inputController;
-        private ActorTransformHandler _actorTransformHandler;
-        public event Action<int> OnNewAnimation;
         public bool IsLocked => _isLocked;
-        public bool TransitionConditionIsDone => _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > 0;
-        public int Priority => 1;
+        public virtual bool TransitionConditionIsDone => _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon;
+        public virtual int Priority => 1;
+        
+        [SerializeField] private new Rigidbody2D rigidbody2D;
+        [SerializeField] private Animator animator;
+        [OdinSerialize] private IActorMovementDataProvider data;
+
+        protected ActorInputController _inputController;
+        private ActorTransformHandler _actorTransformHandler;
 
         private bool _isLocked;
-        private int[] _animationHashes;
+        protected int[] _animationHashes;
         
         public void SetDependencies(ActorInputController inputController,
             ActorTransformHandler actorTransformHandler)
@@ -23,6 +28,11 @@ namespace Sheldier.Actors
             _inputController = inputController;
             _actorTransformHandler = actorTransformHandler;
             
+            InitializeHashes();
+        }
+
+        protected virtual void InitializeHashes()
+        {
             _animationHashes = new[]
             {
                 Animator.StringToHash("Run_Front"),
@@ -44,11 +54,13 @@ namespace Sheldier.Actors
         public void Tick()
         {
             ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
-            OnNewAnimation?.Invoke(_animationHashes[(int)directionView]);
+            SetNewAnimation(_animationHashes[(int)directionView]);
             
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
-            var movementDistance = movementDirection * 2.0f;
+            var movementDistance = movementDirection * data.Speed;
             rigidbody2D.velocity = movementDistance;
         }
+        private void SetNewAnimation(int animationID) => animator.Play(animationID);
+
     }
 }

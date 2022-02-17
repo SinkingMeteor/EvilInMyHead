@@ -22,6 +22,12 @@ namespace Sheldier.Actors
             _realInputProvider = inputProvider;
             _currentInputProvider = _realInputProvider;
         }
+
+        public void RemoveInputProvider()
+        {
+            _realInputProvider = null;
+            _currentInputProvider = _nullProvider;
+        }
         public void LockInput()
         {
             _currentInputProvider = _nullProvider;

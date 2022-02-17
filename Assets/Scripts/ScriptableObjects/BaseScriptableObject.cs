@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Sheldier.ScriptableObjects
 {
-    public class BaseScriptableObject : ScriptableObject
+    public class BaseScriptableObject : SerializedScriptableObject
     {
 #if UNITY_EDITOR
         [Title("Editor Only", horizontalLine: true)]

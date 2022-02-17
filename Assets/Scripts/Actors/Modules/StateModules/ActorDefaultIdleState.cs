@@ -3,16 +3,17 @@ using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorIdleState : MonoBehaviour, IStateComponent
+    public class ActorDefaultIdleState : MonoBehaviour, IStateComponent
     {
-        public event Action<int> OnNewAnimation;
         public bool IsLocked => _isLocked;
-        public bool TransitionConditionIsDone => true;
-        public int Priority => 0;
-
-        private bool _isLocked = false;
+        public virtual bool TransitionConditionIsDone => true;
+        public virtual int Priority => 0;
         
-        private int[] _animationHashes;
+        [SerializeField] private Animator animator;
+
+        protected int[] _animationHashes;
+        
+        private bool _isLocked = false;
         private ActorInputController _inputController;
         private ActorTransformHandler _actorTransformHandler;
 
@@ -21,6 +22,11 @@ namespace Sheldier.Actors
             _actorTransformHandler = actorTransformHandler;
             _inputController = inputController;
 
+            InitializeHashes();
+        }
+
+        protected virtual void InitializeHashes()
+        {
             _animationHashes = new[]
             {
                 Animator.StringToHash("Idle_Front"),
@@ -41,7 +47,10 @@ namespace Sheldier.Actors
         public void Tick()
         {
             ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
-            OnNewAnimation?.Invoke(_animationHashes[(int)directionView]);
+            SetNewAnimation(_animationHashes[(int)directionView]);
         }
+        
+        private void SetNewAnimation(int animationID) => animator.Play(animationID);
+
     }
 }
