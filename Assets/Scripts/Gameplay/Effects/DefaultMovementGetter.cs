@@ -1,3 +1,4 @@
+using System;
 using Sheldier.Actors.Data;
 
 namespace Sheldier.Gameplay.Effects

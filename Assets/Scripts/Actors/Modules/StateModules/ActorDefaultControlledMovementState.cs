@@ -12,12 +12,12 @@ namespace Sheldier.Actors
         public virtual bool TransitionConditionIsDone => _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon;
         public virtual int Priority => 1;
         
-        [SerializeField] private new Rigidbody2D rigidbody2D;
-        [SerializeField] private Animator animator;
+        [SerializeField]private Rigidbody2D _rigidbody2D;
+        [SerializeField]private Animator _animator;
         [OdinSerialize] private IActorMovementDataProvider data;
 
         protected ActorInputController _inputController;
-        private ActorTransformHandler _actorTransformHandler;
+        protected ActorTransformHandler _actorTransformHandler;
 
         private bool _isLocked;
         protected int[] _animationHashes;
@@ -27,7 +27,6 @@ namespace Sheldier.Actors
         {
             _inputController = inputController;
             _actorTransformHandler = actorTransformHandler;
-            
             InitializeHashes();
         }
 
@@ -48,19 +47,21 @@ namespace Sheldier.Actors
 
         public void Exit()
         {
-            rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.velocity = Vector2.zero;
         }
 
-        public void Tick()
+        public virtual void Tick()
         {
-            ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
+            ActorDirectionView directionView = GetDirectionView();
             SetNewAnimation(_animationHashes[(int)directionView]);
             
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
             var movementDistance = movementDirection * data.Speed;
-            rigidbody2D.velocity = movementDistance;
+            _rigidbody2D.velocity = movementDistance;
         }
-        private void SetNewAnimation(int animationID) => animator.Play(animationID);
+
+        protected virtual ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateMovementDirection();
+        private void SetNewAnimation(int animationID) => _animator.Play(animationID);
 
     }
 }

@@ -1,26 +1,20 @@
 using System.Collections.Generic;
-using Sheldier.Common;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEngine;
 
 namespace Sheldier.Actors
 {
     public class ActorStateModuleController : SerializedMonoBehaviour
     {
+        
         [OdinSerialize] private List<IStateComponent> states;
         
-        private TickHandler _tickHandler;
-
         private IStateComponent _previousState;
         private IStateComponent _currentState;
         
-
-
         public bool IsCurrentState(IStateComponent component) => component == _currentState;
-
-
-        public void SetDependencies(ActorInputController actorInputController, ActorTransformHandler actorTransformHandler)
+        public void SetDependencies(ActorInputController actorInputController,
+            ActorTransformHandler actorTransformHandler)
         {
             foreach (var state in states)
             {

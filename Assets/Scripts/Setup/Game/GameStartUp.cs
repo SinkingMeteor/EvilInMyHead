@@ -21,13 +21,12 @@ namespace Sheldier.Setup
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
-            SceneLoadingOperation sceneLoadingOperation, GameGlobalSettings globalSettings, LocalizationProvider localizationProvider,
+            SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
             AudioMixerController audioMixerController, ActorsEffectFactory effectFactory)
         {
             _effectFactory = effectFactory;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
-            _globalSettings = globalSettings;
             _sceneLoadingOperation = sceneLoadingOperation;
             _inputProvider = inputProvider;
             _loadingScreenProvider = loadingScreenProvider;
@@ -44,7 +43,7 @@ namespace Sheldier.Setup
                 _sceneLoadingOperation
             };
             
-            _globalSettings.SetStarted();
+            new GameGlobalSettings().SetStarted();
             #pragma warning disable 4014
             _loadingScreenProvider.LoadAndDestroy(loadOperations);
             #pragma warning restore 4014

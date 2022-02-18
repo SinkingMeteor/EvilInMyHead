@@ -1,3 +1,4 @@
+using System;
 using Sheldier.Actors.Data;
 using UnityEngine;
 
@@ -28,7 +29,9 @@ namespace Sheldier.Gameplay.Effects
         {
             _time -= Time.deltaTime;
             if (_time <= 0.0f)
+            {
                 _isExpired = true;
+            }
         }
 
         public abstract IEffect Clone();

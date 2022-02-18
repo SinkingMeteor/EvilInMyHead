@@ -8,13 +8,20 @@ namespace Sheldier.Actors
         public override int Priority => 1;
 
         [SerializeField] private ActorsHand actorsHand;
+
+        public override void Tick()
+        {
+            base.Tick();
+            actorsHand.RotateHand(_inputController.CurrentInputProvider.CursorScreenDirection.normalized);
+        }
+
         protected override void InitializeHashes()
         {
             _animationHashes = new[]
             {
                 Animator.StringToHash("Idle_Equipped_Front"),
-                Animator.StringToHash("Idle_Front_Equipped_Side"),
-                Animator.StringToHash("Idle_Back_Equipped_Side"),
+                Animator.StringToHash("Idle_Equipped_Front_Side"),
+                Animator.StringToHash("Idle_Equipped_Back_Side"),
                 Animator.StringToHash("Idle_Equipped_Back"),
             };
         }

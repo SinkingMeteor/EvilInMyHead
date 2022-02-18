@@ -1,3 +1,4 @@
+using System;
 using Sheldier.Actors;
 using Sheldier.Common;
 using Sheldier.Constants;
@@ -17,15 +18,13 @@ namespace Sheldier.Setup
         
         private InputProvider _inputProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
-        private GameGlobalSettings _globalSettings;
         private ActorsEffectFactory _effectFactory;
 
         [Inject]
-        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation, GameGlobalSettings globalSettings,
+        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
             ActorsEffectFactory effectFactory)
         {
             _effectFactory = effectFactory;
-            _globalSettings = globalSettings;
             _sceneLoadingOperation = sceneLoadingOperation;
             _inputProvider = inputProvider;
         }
@@ -34,7 +33,7 @@ namespace Sheldier.Setup
         {
             if (!GameIsInitialized())
                 return;
-
+            
             sceneCameraHandler.Initialize(_inputProvider);
             _inputProvider.SetSceneCamera(sceneCameraHandler.CurrentSceneCamera);
             sceneCameraHandler.SetFollowTarget(actor.transform);
@@ -45,12 +44,13 @@ namespace Sheldier.Setup
 
         private bool GameIsInitialized()
         {
-            if (_globalSettings.IsStarted)
+            if (GameGlobalSettings.IsStarted)
                 return true;
             _sceneLoadingOperation.SetTargetScene(SceneManager.GetActiveScene().name);
             SceneManager.LoadScene(SceneNames.GAME_ENTRY);
             return false;
         }
+        
     }
 
 }

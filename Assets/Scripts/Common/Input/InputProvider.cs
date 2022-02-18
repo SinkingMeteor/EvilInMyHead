@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Sheldier.Constants;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Sheldier.Common
@@ -25,17 +20,22 @@ namespace Sheldier.Common
         }
 
         public InputButton UseButton => _useButton;
+        public InputButton AttackButton => _attackButton;
 
         [SerializeField] private PlayerInput playerInput;
         
         private string _currentControlScheme;
-        private InputButton _useButton;
         private CursorDirectionConverter _cursorDirectionConverter;
         private Dictionary<string, IInputMouseHandler> _mouseHandlers;
+        
+        private InputButton _useButton;
+        private InputButton _attackButton;
+
         public void Initialize()
         {
             _currentControlScheme = playerInput.currentControlScheme;
             _useButton = new InputButton(playerInput, InputActionNames.USE);
+            _attackButton = new InputButton(playerInput, InputActionNames.ATTACK);
             _cursorDirectionConverter = new CursorDirectionConverter();
             _mouseHandlers = new Dictionary<string, IInputMouseHandler>
             {

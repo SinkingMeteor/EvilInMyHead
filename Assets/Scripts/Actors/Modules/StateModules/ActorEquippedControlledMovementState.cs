@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Sheldier.Actors
 {
@@ -10,16 +11,23 @@ namespace Sheldier.Actors
         public override int Priority => 3;
 
         [SerializeField] private ActorsHand actorsHand;
-
+        protected override ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateViewDirection();
         protected override void InitializeHashes()
         {
             _animationHashes = new[]
             {
                 Animator.StringToHash("Run_Equipped_Front"),
-                Animator.StringToHash("Run_Front_Equipped_Side"),
-                Animator.StringToHash("Run_Back_Equipped_Side"),
+                Animator.StringToHash("Run_Equipped_Front_Side"),
+                Animator.StringToHash("Run_Equipped_Back_Side"),
                 Animator.StringToHash("Run_Equipped_Back"),
             };
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+            
+            actorsHand.RotateHand(_inputController.CurrentInputProvider.CursorScreenDirection);
         }
     }
 }

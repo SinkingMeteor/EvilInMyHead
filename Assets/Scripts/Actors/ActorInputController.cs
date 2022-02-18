@@ -1,9 +1,20 @@
-﻿using Sheldier.Common;
+﻿using System;
+using Sheldier.Common;
+using UnityEngine;
 
 namespace Sheldier.Actors
 {
     public class ActorInputController
     {
+        public Vector2 MovementDirection => _currentInputProvider.MovementDirection;
+        public Vector2 CursorScreenDirection => _currentInputProvider.CursorScreenDirection;
+
+        public event Action OnUseButtonPressed; 
+        public event Action OnUseButtonReleased; 
+        
+        public event Action OnAttackButtonPressed; 
+        public event Action OnAttackButtonReleased; 
+        
         public IInputProvider CurrentInputProvider => _currentInputProvider;
 
         private IInputProvider _currentInputProvider;
@@ -16,15 +27,24 @@ namespace Sheldier.Actors
             _nullProvider = new NullInputProvider();
             _currentInputProvider = _nullProvider;
         }
-
         public void SetInputProvider(IInputProvider inputProvider)
         {
             _realInputProvider = inputProvider;
             _currentInputProvider = _realInputProvider;
-        }
 
+            _realInputProvider.UseButton.OnPressed += UseButtonPressed;
+            _realInputProvider.UseButton.OnReleased += UseButtonReleased;
+            _realInputProvider.AttackButton.OnPressed += AttackButtonPressed;
+            _realInputProvider.AttackButton.OnReleased += AttackButtonReleased;
+
+        }
         public void RemoveInputProvider()
         {
+            _realInputProvider.UseButton.OnPressed -= UseButtonPressed;
+            _realInputProvider.UseButton.OnReleased -= UseButtonReleased;
+            _realInputProvider.AttackButton.OnPressed -= AttackButtonPressed;
+            _realInputProvider.AttackButton.OnReleased -= AttackButtonReleased;
+            
             _realInputProvider = null;
             _currentInputProvider = _nullProvider;
         }
@@ -37,5 +57,10 @@ namespace Sheldier.Actors
         {
             _currentInputProvider = _realInputProvider;
         }
+        
+        private void UseButtonReleased() => OnUseButtonReleased?.Invoke();
+        private void UseButtonPressed() => OnUseButtonPressed?.Invoke();
+        private void AttackButtonReleased() => OnAttackButtonReleased?.Invoke();
+        private void AttackButtonPressed() => OnAttackButtonPressed?.Invoke();
     }
 }

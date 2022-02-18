@@ -1,23 +1,28 @@
 using System;
 using System.Collections.Generic;
 using Sheldier.Gameplay.Effects;
+using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEngine;
 
 namespace Sheldier.Actors.Data
 {
-    public class MovementDataHandler : SerializedMonoBehaviour, IActorMovementDataProvider, ISubDataHandler
+    public class MovementDataHandler : SerializedMonoBehaviour, IActorMovementDataProvider, IExtraActorModule
     {
         public float Speed => _movementEffects.Last.Value.GetMovementData(FormDataPackage()).Speed;
         
-        [OdinSerialize] private IActorMovementDataProvider initialDataProvider;
-
+        [OdinSerialize] private ActorMovementConfig initialDataProvider;
+        
         private MovementDataPackage _movementDataPackage;
         private LinkedList<IMovementEffect> _movementEffects;
-
-        public void Initialize()
+        private IActorModuleCenter _actorModuleCenter;
+        private IActorModuleCenter _moduleCenter;
+        public int Priority => 0;
+        public void Initialize(IActorModuleCenter moduleCenter)
         {
+            _moduleCenter = moduleCenter;
+            _moduleCenter.ActorEffectModule.OnEffectModuleAddedEffect += OnEffectAdded;
+            _moduleCenter.ActorEffectModule.OnEffectModuleRemovedEffect += OnEffectRemoved;
             _movementDataPackage = new MovementDataPackage();
             _movementEffects = new LinkedList<IMovementEffect>();
             _movementEffects.AddLast(new DefaultMovementGetter());
@@ -25,19 +30,9 @@ namespace Sheldier.Actors.Data
 
         public void Tick()
         {
-            var currentNode = _movementEffects.First;
-            for (int i = 0; i < _movementEffects.Count; i++)
-            {
-                if (currentNode.Value.IsExpired)
-                {
-                    Debug.Log($"Effect {currentNode.Value.GetType().Name} expired!");
-                    _movementEffects.Remove(currentNode);
-                    i -= 1;
-                }
-                currentNode = currentNode.Next;
-            }
         }
-        public void AddEffect(IEffect newEffect)
+
+        private void OnEffectAdded(IEffect newEffect)
         {
             if (newEffect is not IMovementEffect effect)
                 return;
@@ -49,10 +44,27 @@ namespace Sheldier.Actors.Data
             _movementEffects.Last.Value.SetWrapper(_movementEffects.Last.Previous.Value);
         }
 
+        private void OnEffectRemoved(IEffect expiredEffect)
+        {
+            if (expiredEffect is not IMovementEffect effect)
+                return;
+
+            if (!_movementEffects.Contains(effect))
+                return;
+            _movementEffects.Remove(effect);
+        }
         private MovementDataPackage FormDataPackage()
         {
             _movementDataPackage.Speed = initialDataProvider.Speed;
             return _movementDataPackage;
+        }
+
+        private void OnDestroy()
+        {
+            if (!GameGlobalSettings.IsStarted) return;
+            
+            _moduleCenter.ActorEffectModule.OnEffectModuleAddedEffect -= OnEffectAdded;
+            _moduleCenter.ActorEffectModule.OnEffectModuleRemovedEffect -= OnEffectRemoved;
         }
     }
 }

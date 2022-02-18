@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sheldier.Actors
 {
@@ -9,19 +8,18 @@ namespace Sheldier.Actors
         public virtual bool TransitionConditionIsDone => true;
         public virtual int Priority => 0;
         
-        [SerializeField] private Animator animator;
+        [SerializeField] private Animator _animator;
 
         protected int[] _animationHashes;
         
         private bool _isLocked = false;
-        private ActorInputController _inputController;
+        protected ActorInputController _inputController;
         private ActorTransformHandler _actorTransformHandler;
 
         public void SetDependencies(ActorInputController inputController, ActorTransformHandler actorTransformHandler)
         {
             _actorTransformHandler = actorTransformHandler;
             _inputController = inputController;
-
             InitializeHashes();
         }
 
@@ -44,13 +42,13 @@ namespace Sheldier.Actors
         {
         }
 
-        public void Tick()
+        public virtual void Tick()
         {
             ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
             SetNewAnimation(_animationHashes[(int)directionView]);
         }
         
-        private void SetNewAnimation(int animationID) => animator.Play(animationID);
+        private void SetNewAnimation(int animationID) => _animator.Play(animationID);
 
     }
 }

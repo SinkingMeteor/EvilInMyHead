@@ -7,7 +7,6 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<GameGlobalSettings>().AsSingle();
             Container.Bind<SceneLoadingOperation>().AsSingle();
         }
     }

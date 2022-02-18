@@ -1,4 +1,6 @@
 
+using System;
+
 namespace Sheldier.Gameplay.Effects
 {
     public interface IEffect

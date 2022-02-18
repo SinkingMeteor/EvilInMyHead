@@ -10,11 +10,11 @@ namespace Sheldier.Common
              
         }
         public Vector2 MovementDirection => Vector2.zero;
-        public Vector2 CursorWorldPosition => Vector2.down;
         public Vector2 CursorScreenDirection => Vector2.zero;
-
-        private InputButton _useButton = new InputButton();
-
         public InputButton UseButton => _useButton;
+        public InputButton AttackButton => _attackButton; 
+        
+        private InputButton _useButton = new InputButton();
+        private InputButton _attackButton = new InputButton();
     }
 }

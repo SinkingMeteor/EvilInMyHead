@@ -1,25 +1,21 @@
 ﻿using System;
+using Sheldier.Setup;
 using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Common
 {
-    public class SceneCameraHandler : MonoBehaviour, ITickListener, ILateTickListener
+    public class SceneCameraHandler : MonoBehaviour, ILateTickListener
     {
         public Camera CurrentSceneCamera => _camera;
-        public bool WantsToRemoveFromTick => _wantsToRemoveFromTick;
-        public bool WantsToRemoveFromLateTick => _wantsToRemoveFromLateTick;
         
         [SerializeField] private CameraBordersConstrains _cameraBordersConstrains;
 
-        private bool _wantsToRemoveFromTick;
-        private bool _wantsToRemoveFromLateTick;
         private Camera _camera;
 
         private CameraSideMover _cameraSideMover;
         private CameraFollower _cameraFollower;
         
-        private TickHandler _tickHandler;
         private LateTickHandler _lateTickHandler;
         public void Initialize(IInputProvider inputProvider)
         {
@@ -33,18 +29,12 @@ namespace Sheldier.Common
             
             _cameraBordersConstrains.SetDependencies(_camera);
             
-            _tickHandler.AddListener(this);
             _lateTickHandler.AddListener(this);
         }
         [Inject]
-        private void InjectDependencies(LateTickHandler lateTickHandler, TickHandler tickHandler)
+        private void InjectDependencies(LateTickHandler lateTickHandler)
         {
-            _tickHandler = tickHandler;
             _lateTickHandler = lateTickHandler;
-        }
-
-        public void Tick()
-        {            
         }
 
         public void LateTick()
@@ -60,13 +50,9 @@ namespace Sheldier.Common
         }
         private void OnDestroy()
         {
-            OnTickDispose();
+            if (!GameGlobalSettings.IsStarted) return;
+            _lateTickHandler.RemoveListener(this);
         }
 
-        public void OnTickDispose()
-        {
-            _wantsToRemoveFromTick = true;
-            _wantsToRemoveFromLateTick = true;
-        }
     }
 }

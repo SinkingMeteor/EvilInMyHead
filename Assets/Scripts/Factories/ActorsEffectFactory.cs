@@ -6,28 +6,30 @@ using Zenject;
 namespace Sheldier.Factories
 {
     public class ActorsEffectFactory
+
     {
-        private Dictionary<ActorEffectType, IEffect> _effectsCollection;
-        private EffectsDataMap _effectsDataMap;
+    private Dictionary<ActorEffectType, IEffect> _effectsCollection;
 
-        public void Initialize()
-        {
-            _effectsCollection = new Dictionary<ActorEffectType, IEffect>
-            {
-                {ActorEffectType.Freeze, new FreezeMovementEffect(_effectsDataMap.EffectMap[ActorEffectType.Freeze])}
-            };
-        }
+    private EffectsDataMap _effectsDataMap;
 
-        [Inject]
-        private void InjectDependencies(EffectsDataMap effectsDataMap)
+    public void Initialize()
+    {
+        _effectsCollection = new Dictionary<ActorEffectType, IEffect>
         {
-            _effectsDataMap = effectsDataMap;
-        }
+            {ActorEffectType.Freeze, new FreezeMovementEffect(_effectsDataMap.EffectMap[ActorEffectType.Freeze])}
+        };
+    }
 
-        public IEffect CreateEffect(ActorEffectType effectType)
-        {
-            return _effectsCollection[effectType].Clone();
-        }
+    [Inject]
+    private void InjectDependencies(EffectsDataMap effectsDataMap)
+    {
+        _effectsDataMap = effectsDataMap;
+    }
+
+    public IEffect CreateEffect(ActorEffectType effectType)
+    {
+        return _effectsCollection[effectType].Clone();
+    }
     }
 
 }

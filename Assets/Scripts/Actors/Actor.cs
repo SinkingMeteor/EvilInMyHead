@@ -1,5 +1,6 @@
 using System.Linq;
 using Sheldier.Common;
+using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -13,29 +14,31 @@ namespace Sheldier.Actors
         public ActorInputController ActorInputController => _actorInputController;
         public ActorTransformHandler ActorTransformHandler => _transformHandler;
         public IActorEffectModule ActorEffectModule => _actorEffectModule;
-        
+        public IGrabNotifier GrabNotifier => grabNotifier; 
+
         [SerializeField] private ActorStateModuleController stateModuleController;
-        [SerializeField] private IActorEffectModule _actorEffectModule;
-        [OdinSerialize] private IActorModule[] modules;
+        [OdinSerialize] private ActorEffectModule _actorEffectModule;
         
+        [InfoBox("If null, actor can't pick up any objects")]
+        [SerializeField] private IGrabNotifier grabNotifier;
+        [OdinSerialize] private IExtraActorModule[] modules;
+
         private ActorTransformHandler _transformHandler;
         private TickHandler _tickHandler;
         private ActorInputController _actorInputController;
-        public bool WantsToRemoveFromTick => _wantsToRemoveFromTick;
-        private bool _wantsToRemoveFromTick;
-
 
         public void Initialize()
         {
-
+            if (grabNotifier == null)
+                grabNotifier = new NullGrabModule();
+            
             _actorInputController = new ActorInputController();
             _actorInputController.Initialize();
             
             _transformHandler = new ActorTransformHandler();
             _transformHandler.SetDependencies(transform, _actorInputController);
-
-            if (_actorEffectModule == null)
-                _actorEffectModule = new NullEffectModule();
+            
+            _actorEffectModule.Initialize();
             
             stateModuleController.SetDependencies(_actorInputController, _transformHandler);
 
@@ -49,6 +52,20 @@ namespace Sheldier.Actors
             _tickHandler.AddListener(this);
         }
 
+        public bool TryGetModule<T>(out T module) where T : class
+        {
+            for (int i = 0; i < modules.Length; i++)
+            {
+                if (modules[i] is T extraModule)
+                {
+                    module = extraModule;
+                    return true;
+                }
+            }
+            module = null;
+            return false;
+        }
+        
         [Inject]
         private void InjectDependencies(TickHandler tickHandler)
         {
@@ -59,7 +76,7 @@ namespace Sheldier.Actors
         public void Tick()
         {
             stateModuleController.Tick();
-
+            _actorEffectModule.Tick();
             for (int i = 0; i < modules.Length; i++)
             {
                 modules[i].Tick();
@@ -68,13 +85,10 @@ namespace Sheldier.Actors
 
         private void OnDestroy()
         {
-            OnTickDispose();
+            if (!GameGlobalSettings.IsStarted) return;
+            _tickHandler.RemoveListener(this);
         }
-
-        public void OnTickDispose()
-        {
-            _wantsToRemoveFromTick = true;
-        }
+        
     }
 }
 

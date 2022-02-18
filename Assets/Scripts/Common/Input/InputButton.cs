@@ -18,7 +18,6 @@ namespace Sheldier.Common
 
         public InputButton()
         {
-            
         }
 
         private void OnButtonPressed(InputAction.CallbackContext callbackContext)
