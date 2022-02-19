@@ -2,6 +2,7 @@ using Sheldier.Common;
 using Sheldier.Common.Audio;
 using Sheldier.Common.Localization;
 using Sheldier.Factories;
+using Sheldier.Item;
 using UnityEngine;
 using Zenject;
 
@@ -18,12 +19,14 @@ namespace Sheldier.Setup
         private LocalizationProvider _localizationProvider;
         private AudioMixerController _audioMixerController;
         private ActorsEffectFactory _effectFactory;
+        private ItemFactory _itemFactory;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
-            AudioMixerController audioMixerController, ActorsEffectFactory effectFactory)
+            AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory)
         {
+            _itemFactory = itemFactory;
             _effectFactory = effectFactory;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
@@ -34,6 +37,7 @@ namespace Sheldier.Setup
         private void Start()
         {
             sceneContext.Run();
+            _itemFactory.Initialize();
             _audioMixerController.Initialize();
             _localizationProvider.Initialize();
             _inputProvider.Initialize();

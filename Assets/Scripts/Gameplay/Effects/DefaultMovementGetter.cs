@@ -26,6 +26,6 @@ namespace Sheldier.Gameplay.Effects
         {
         }
 
-        public IEffect Clone() => new DefaultMovementGetter();
+        public IMovementEffect Clone() => new DefaultMovementGetter();
     }
 }

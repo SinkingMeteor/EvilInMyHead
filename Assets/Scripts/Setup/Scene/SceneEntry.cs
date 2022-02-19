@@ -4,6 +4,7 @@ using Sheldier.Common;
 using Sheldier.Constants;
 using Sheldier.Factories;
 using Sheldier.Gameplay.Effects;
+using Sheldier.Item;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -14,17 +15,16 @@ namespace Sheldier.Setup
     {
         [SerializeField] private Actor actor;
         [SerializeField] private SceneCameraHandler sceneCameraHandler;
-        
+        [SerializeField] private ScenePlaceholdersKeeper scenePlaceholdersKeeper;
         
         private InputProvider _inputProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
-        private ActorsEffectFactory _effectFactory;
+        private ItemSpawner _itemSpawner;
 
         [Inject]
-        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
-            ActorsEffectFactory effectFactory)
+        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation, ItemSpawner itemSpawner)
         {
-            _effectFactory = effectFactory;
+            _itemSpawner = itemSpawner;
             _sceneLoadingOperation = sceneLoadingOperation;
             _inputProvider = inputProvider;
         }
@@ -37,9 +37,10 @@ namespace Sheldier.Setup
             sceneCameraHandler.Initialize(_inputProvider);
             _inputProvider.SetSceneCamera(sceneCameraHandler.CurrentSceneCamera);
             sceneCameraHandler.SetFollowTarget(actor.transform);
+            _itemSpawner.Initialize(scenePlaceholdersKeeper);
             actor.Initialize();
             actor.ActorInputController.SetInputProvider(_inputProvider);
-            actor.ActorEffectModule.AddEffect(_effectFactory.CreateEffect(ActorEffectType.Freeze));
+            actor.ActorEffectModule.AddEffect(ActorEffectType.Freeze);
         }
 
         private bool GameIsInitialized()

@@ -1,35 +1,29 @@
-using System.Collections.Generic;
-using Sheldier.Common;
 using Sheldier.Gameplay.Effects;
 using Zenject;
 
 namespace Sheldier.Factories
 {
     public class ActorsEffectFactory
-
     {
-    private Dictionary<ActorEffectType, IEffect> _effectsCollection;
+        public MovementEffectsFactory MovementEffectsFactory => _movementEffectsFactory;
+        
 
-    private EffectsDataMap _effectsDataMap;
-
-    public void Initialize()
-    {
-        _effectsCollection = new Dictionary<ActorEffectType, IEffect>
+        private EffectsDataMap _effectsDataMap;
+        private MovementEffectsFactory _movementEffectsFactory;
+        public void Initialize()
         {
-            {ActorEffectType.Freeze, new FreezeMovementEffect(_effectsDataMap.EffectMap[ActorEffectType.Freeze])}
-        };
-    }
+            _movementEffectsFactory = new MovementEffectsFactory(_effectsDataMap);
+        }
 
-    [Inject]
-    private void InjectDependencies(EffectsDataMap effectsDataMap)
-    {
-        _effectsDataMap = effectsDataMap;
-    }
+        [Inject]
+        private void InjectDependencies(EffectsDataMap effectsDataMap)
+        {
+            _effectsDataMap = effectsDataMap;
+        }
 
-    public IEffect CreateEffect(ActorEffectType effectType)
-    {
-        return _effectsCollection[effectType].Clone();
+        public ActorEffectGroup GetEffectGroup(ActorEffectType effectConfig)
+        {
+            return _effectsDataMap.EffectMap[effectConfig].EffectGroup;
+        }
     }
-    }
-
 }

@@ -11,6 +11,7 @@ namespace Sheldier.Gameplay.Effects
         public string EffectName => _effectName;
         public string EffectDesription => _effectDescription;
         public ActorEffectType EffectType => _effectType;
+        public ActorEffectGroup EffectGroup => _effectGroup;
         public float Duration => _duration;
 
         [SerializeField][PreviewField] private Sprite _effectIcon;
@@ -18,10 +19,16 @@ namespace Sheldier.Gameplay.Effects
         [SerializeField][Multiline] private string _effectDescription;
         [Range(0.1f, 1000.0f)] private float _duration;
         [SerializeField] private ActorEffectType _effectType;
+        [SerializeField] private ActorEffectGroup _effectGroup;
     }
 
     public enum ActorEffectType
     {
         Freeze
+    }
+
+    public enum ActorEffectGroup
+    {
+        Movement
     }
 }

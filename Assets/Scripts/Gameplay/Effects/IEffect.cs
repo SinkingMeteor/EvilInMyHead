@@ -7,10 +7,8 @@ namespace Sheldier.Gameplay.Effects
     {
         bool IsExpired { get; }
         EffectConfig Config { get; }
-
         void Setup();
         void Tick();
 
-        IEffect Clone();
     }
 }

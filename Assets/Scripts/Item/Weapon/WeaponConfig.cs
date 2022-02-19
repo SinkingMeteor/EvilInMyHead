@@ -7,11 +7,8 @@ namespace Sheldier.Item
 {
     public abstract class WeaponConfig : ItemConfig
     {
-        public Sprite InGameIcon => weaponInGameIcon;
-
         public float Damage => _damage;
-        
-        [OdinSerialize][PreviewField(100, ObjectFieldAlignment.Center)][HideLabel] private Sprite weaponInGameIcon;
+        public override ItemGroup ItemGroup => ItemGroup.Weapon;
 
         [SerializeField] private float _damage;
     }

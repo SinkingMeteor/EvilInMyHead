@@ -8,7 +8,8 @@ namespace Sheldier.Gameplay.Effects
         {
         }
 
-        public override IEffect Clone() => new FreezeMovementEffect(Config);
+        public override IMovementEffect Clone() => new FreezeMovementEffect(Config);
+
         protected override MovementDataPackage GetInternalMovement(MovementDataPackage data)
         {
             var dataPackage = _wrappedEntity.GetMovementData(data);

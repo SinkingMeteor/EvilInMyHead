@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sheldier.Gameplay.Effects;
 
 namespace Sheldier.Actors
 {
     public interface IActorEffectModule
     {
-        event Action<IEffect> OnEffectModuleAddedEffect;
-        event Action<IEffect> OnEffectModuleRemovedEffect;
-        IReadOnlyList<IEffect> EffectCollection { get; }
-        bool IsEffectExists(IEffect effect);
+        IReadOnlyList<ActorEffectType> EffectCollection { get; }
         bool IsEffectExists(ActorEffectType effectType);
-        void AddEffect(IEffect effect);
+        void AddEffect(ActorEffectType effectType);
     }
 }

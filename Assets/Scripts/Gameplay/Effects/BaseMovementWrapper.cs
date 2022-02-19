@@ -34,8 +34,6 @@ namespace Sheldier.Gameplay.Effects
             }
         }
 
-        public abstract IEffect Clone();
-
         public void SetWrapper(IMovementEffect effect)
         {
             _wrappedEntity = effect;
@@ -44,6 +42,9 @@ namespace Sheldier.Gameplay.Effects
         {
             return GetInternalMovement(data);
         }
+
+        public abstract IMovementEffect Clone();
+
         protected abstract MovementDataPackage GetInternalMovement(MovementDataPackage data);
     }
 }

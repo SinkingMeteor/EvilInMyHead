@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Sheldier.Item
@@ -9,7 +10,7 @@ namespace Sheldier.Item
         public int Capacity => _capacity;
         public float FireRate => _fireRate;
         
-        [SerializeField] private int _capacity;
-        [SerializeField] private float _fireRate;
+        [HorizontalGroup("Data")][SerializeField] private int _capacity;
+        [HorizontalGroup("Data")][SerializeField] private float _fireRate;
     }
 }

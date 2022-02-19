@@ -50,7 +50,9 @@ namespace Sheldier.Common
         }
         private void OnDestroy()
         {
+            #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
+            #endif
             _lateTickHandler.RemoveListener(this);
         }
 

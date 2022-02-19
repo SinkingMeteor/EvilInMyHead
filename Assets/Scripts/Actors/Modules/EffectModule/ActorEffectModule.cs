@@ -1,58 +1,65 @@
 using System;
 using System.Collections.Generic;
+using Sheldier.Actors.Data;
+using Sheldier.Factories;
 using Sheldier.Gameplay.Effects;
+using Sheldier.Setup;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace Sheldier.Actors
 {
     public class ActorEffectModule : SerializedMonoBehaviour, IActorEffectModule
     {
-        public event Action<IEffect> OnEffectModuleAddedEffect;
-        public event Action<IEffect> OnEffectModuleRemovedEffect;
+        public IReadOnlyList<ActorEffectType> EffectCollection => _effectsCollection;
 
-        public IReadOnlyList<IEffect> EffectCollection => _effectsCollection;
+        [OdinSerialize] private Dictionary<ActorEffectGroup, IEffectHandler> _effectHandlers;
+        
+        private List<ActorEffectType> _effectsCollection;
+        private ActorsEffectFactory _factory;
 
-        private List<IEffect> _effectsCollection;
-        public bool IsEffectExists(IEffect effect) => _effectsCollection.Contains(effect);
-        public bool IsEffectExists(ActorEffectType effectType)
+        public void Initialize(ActorsEffectFactory factory)
         {
-            foreach (var effect in _effectsCollection)
+            _factory = factory;
+            _effectsCollection = new List<ActorEffectType>();
+            foreach (var effectHandler in _effectHandlers)
             {
-                if (effect.Config.EffectType == effectType)
-                    return true;
+                effectHandler.Value.Initialize(factory);
+                effectHandler.Value.OnEffectExpired += RemoveEffect;
             }
-
-            return false;
         }
 
-        public void Initialize()
+        private void RemoveEffect(ActorEffectType effect)
         {
-            _effectsCollection = new List<IEffect>();
+            _effectsCollection.Remove(effect);
+        }
+
+        public bool IsEffectExists(ActorEffectType effectType) => _effectsCollection.Contains(effectType);
+        public void AddEffect(ActorEffectType effectType)
+        {
+            var group = _factory.GetEffectGroup(effectType);
+            if (IsEffectExists(effectType) || !_effectHandlers.ContainsKey(group))
+                return;
+            _effectsCollection.Add(effectType);
+            _effectHandlers[group].AddEffect(effectType);
         }
 
         public void Tick()
         {
-            for (int i = 0; i < _effectsCollection.Count; i++)
+            foreach (var effectHandler in _effectHandlers)
             {
-                _effectsCollection[i].Tick();
-                if (_effectsCollection[i].IsExpired)
-                {
-                    var lastIndex = _effectsCollection.Count - 1;
-                    (_effectsCollection[i], _effectsCollection[lastIndex]) =
-                        (_effectsCollection[lastIndex], _effectsCollection[i]);
-                    OnEffectModuleRemovedEffect?.Invoke(_effectsCollection[lastIndex]);
-                    _effectsCollection.RemoveAt(lastIndex);
-                    i -= 1;
-                }
+                effectHandler.Value.Tick();
             }
         }
-        public void AddEffect(IEffect effect)
+        private void OnDestroy()
         {
-            if (IsEffectExists(effect))
-                return;
-            _effectsCollection.Add(effect);
-            effect.Setup();
-            OnEffectModuleAddedEffect?.Invoke(effect);
+            #if UNITY_EDITOR
+                if (!GameGlobalSettings.IsStarted) return;
+            #endif
+            foreach (var effectHandler in _effectHandlers)
+            {
+                effectHandler.Value.OnEffectExpired -= RemoveEffect;
+            }
         }
     }
 }

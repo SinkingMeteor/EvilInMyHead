@@ -1,5 +1,7 @@
 using System.Linq;
+using Sheldier.Actors.Inventory;
 using Sheldier.Common;
+using Sheldier.Factories;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -13,24 +15,25 @@ namespace Sheldier.Actors
     {
         public ActorInputController ActorInputController => _actorInputController;
         public ActorTransformHandler ActorTransformHandler => _transformHandler;
-        public IActorEffectModule ActorEffectModule => _actorEffectModule;
-        public IGrabNotifier GrabNotifier => grabNotifier; 
+        public IActorEffectModule ActorEffectModule => actorEffectModule;
+        public ActorNotifyModule Notifier => _notifier; 
+        public ItemFactory ItemFactory => _itemFactory;
 
         [SerializeField] private ActorStateModuleController stateModuleController;
-        [OdinSerialize] private ActorEffectModule _actorEffectModule;
-        
-        [InfoBox("If null, actor can't pick up any objects")]
-        [SerializeField] private IGrabNotifier grabNotifier;
+        [OdinSerialize] private ActorEffectModule actorEffectModule;
+
         [OdinSerialize] private IExtraActorModule[] modules;
 
+        private ActorNotifyModule _notifier;
         private ActorTransformHandler _transformHandler;
         private TickHandler _tickHandler;
         private ActorInputController _actorInputController;
+        private ActorsEffectFactory _effectFactory;
+        private ItemFactory _itemFactory;
 
         public void Initialize()
         {
-            if (grabNotifier == null)
-                grabNotifier = new NullGrabModule();
+            _notifier = new ActorNotifyModule();
             
             _actorInputController = new ActorInputController();
             _actorInputController.Initialize();
@@ -38,7 +41,7 @@ namespace Sheldier.Actors
             _transformHandler = new ActorTransformHandler();
             _transformHandler.SetDependencies(transform, _actorInputController);
             
-            _actorEffectModule.Initialize();
+            actorEffectModule.Initialize(_effectFactory);
             
             stateModuleController.SetDependencies(_actorInputController, _transformHandler);
 
@@ -67,8 +70,10 @@ namespace Sheldier.Actors
         }
         
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
+        private void InjectDependencies(TickHandler tickHandler, ActorsEffectFactory effectFactory, ItemFactory itemFactory)
         {
+            _itemFactory = itemFactory;
+            _effectFactory = effectFactory;
             _tickHandler = tickHandler;
         }
 
@@ -76,16 +81,14 @@ namespace Sheldier.Actors
         public void Tick()
         {
             stateModuleController.Tick();
-            _actorEffectModule.Tick();
-            for (int i = 0; i < modules.Length; i++)
-            {
-                modules[i].Tick();
-            }
+            actorEffectModule.Tick();
         }
 
         private void OnDestroy()
         {
+            #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
+            #endif
             _tickHandler.RemoveListener(this);
         }
         

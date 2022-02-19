@@ -6,37 +6,31 @@ namespace Sheldier.Actors
 {
     public class ActorAttackModule : SerializedMonoBehaviour, IExtraActorModule
     {
-        private bool _isAttacks;
-        
         private ActorInputController _inputController;
 
         [SerializeField] private ActorsHand actorsHand;
+        private ActorNotifyModule _notifier;
         public int Priority => 0;
 
         public void Initialize(IActorModuleCenter moduleCenter)
         {
+            _notifier = moduleCenter.Notifier;
             _inputController = moduleCenter.ActorInputController;
             _inputController.OnAttackButtonPressed += AttackPressed;
-            _inputController.OnAttackButtonReleased += AttackReleased;
         }
-        private void AttackReleased() => _isAttacks = false;
-
         private void AttackPressed()
         {
             if (!actorsHand.IsEquipped)
                 return;
-            actorsHand.AttackByEquip(_inputController.CursorScreenDirection.normalized);
-        }
-
-        public void Tick()
-        {
+            _notifier.NotifyAttack(_inputController.CursorScreenDirection.normalized);
         }
 
         private void OnDestroy()
         {
+            #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
+            #endif
             _inputController.OnAttackButtonPressed -= AttackPressed;
-            _inputController.OnAttackButtonReleased -= AttackReleased;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Sheldier.Actors.Data;
 using Sheldier.ScriptableObjects;
 using Sirenix.Serialization;
 using UnityEngine;

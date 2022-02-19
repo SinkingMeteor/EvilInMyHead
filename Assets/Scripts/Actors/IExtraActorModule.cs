@@ -5,6 +5,5 @@ namespace Sheldier.Actors
     {
         int Priority { get; }
         public void Initialize(IActorModuleCenter moduleCenter);
-        public void Tick();
     }
 }

@@ -4,7 +4,9 @@ namespace Sheldier.Gameplay.Effects
 {
     public interface IMovementEffect : IEffect
     {
-        void SetWrapper(IMovementEffect effect);
+        void SetWrapper(IMovementEffect wrapper);
         MovementDataPackage GetMovementData(MovementDataPackage data);
+
+        IMovementEffect Clone();
     }
 }
