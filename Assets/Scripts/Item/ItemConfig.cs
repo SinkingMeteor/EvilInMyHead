@@ -16,7 +16,7 @@ namespace Sheldier.Item
         public abstract ItemGroup ItemGroup { get; }
 
         [SerializeField] private ItemType itemType;
-        [HorizontalGroup("Icon")][OdinSerialize][PreviewField(100, ObjectFieldAlignment.Center)] private Sprite itemIcon;
+        [SerializeField][PreviewField(100, ObjectFieldAlignment.Center)] private Sprite itemIcon;
         [SerializeField][Multiline] private string itemName;
         [SerializeField][Multiline] private string itemDescription;
         [SerializeField] private int _cost;

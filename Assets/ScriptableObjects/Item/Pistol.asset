@@ -15,8 +15,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 21300000, guid: 423071670e47f3440876a53dcf0b6ddc, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -25,14 +24,17 @@ MonoBehaviour:
     - Name: _id
       Entry: 6
       Data: 
-    - Name: itemIcon
-      Entry: 10
-      Data: 0
   itemType: 0
+  itemIcon: {fileID: 21300000, guid: 423071670e47f3440876a53dcf0b6ddc, type: 3}
   itemName: 
   itemDescription: 
-  _cost: 0
+  _cost: 1
   _itemGroup: 0
-  _damage: 0
+  _damage: 0.2
+  _projectileConfig: {fileID: 11400000, guid: 6938fccc0b2e4cc449c9883ef40084ff, type: 2}
+  aimLocalPosition: {x: 0.18, y: 0.08}
+  CameraXPosition: 0.069
+  CameraYPosition: 0.03
+  CameraSize: 0.226
   _capacity: 0
   _fireRate: 0

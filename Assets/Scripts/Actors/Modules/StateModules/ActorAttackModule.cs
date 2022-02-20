@@ -12,17 +12,17 @@ namespace Sheldier.Actors
         private ActorNotifyModule _notifier;
         public int Priority => 0;
 
-        public void Initialize(IActorModuleCenter moduleCenter)
+        public void Initialize(ActorInternalData data)
         {
-            _notifier = moduleCenter.Notifier;
-            _inputController = moduleCenter.ActorInputController;
+            _notifier = data.Notifier;
+            _inputController = data.ActorInputController;
             _inputController.OnAttackButtonPressed += AttackPressed;
         }
         private void AttackPressed()
         {
             if (!actorsHand.IsEquipped)
                 return;
-            _notifier.NotifyAttack(_inputController.CursorScreenDirection.normalized);
+            _notifier.NotifyAttack();
         }
 
         private void OnDestroy()

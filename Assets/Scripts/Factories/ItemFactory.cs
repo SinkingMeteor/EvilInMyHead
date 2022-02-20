@@ -1,4 +1,5 @@
-﻿using Sheldier.Item;
+﻿using Sheldier.Common.Pool;
+using Sheldier.Item;
 using Zenject;
 
 namespace Sheldier.Factories
@@ -9,15 +10,17 @@ namespace Sheldier.Factories
         
         private ItemMap _itemMap;
         private WeaponItemFactory _weaponItemFactory;
+        private ProjectilePool _projectilePool;
 
         public void Initialize()
         {
-            _weaponItemFactory = new WeaponItemFactory(_itemMap);
+            _weaponItemFactory = new WeaponItemFactory(_itemMap, _projectilePool);
         }
         
         [Inject]
-        private void InjectDependencies(ItemMap itemMap)
+        private void InjectDependencies(ItemMap itemMap, ProjectilePool projectilePool)
         {
+            _projectilePool = projectilePool;
             _itemMap = itemMap;
         }
         

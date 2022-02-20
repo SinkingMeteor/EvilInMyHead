@@ -15,11 +15,11 @@ namespace Sheldier.Actors.Inventory
         private ActorNotifyModule _notifier;
 
 
-        public void Initialize(IActorModuleCenter moduleCenter)
+        public void Initialize(ActorInternalData data)
         {
-            _notifier = moduleCenter.Notifier;
+            _notifier = data.Notifier;
             _notifier.OnItemPickedUp += AddItem;
-            _weaponInventorySubModule = new WeaponInventorySubModule(moduleCenter.ItemFactory, _notifier);
+            _weaponInventorySubModule = new WeaponInventorySubModule(data.ItemFactory, _notifier);
         }
 
         public void AddItem(ItemConfig item)

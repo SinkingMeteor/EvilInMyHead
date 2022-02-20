@@ -1,5 +1,4 @@
 using System.Linq;
-using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Factories;
 using Sheldier.Setup;
@@ -11,17 +10,14 @@ using IInitializable = Sheldier.Setup.IInitializable;
 
 namespace Sheldier.Actors
 {
-    public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener, IActorModuleCenter
+    public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener
     {
-        public ActorInputController ActorInputController => _actorInputController;
-        public ActorTransformHandler ActorTransformHandler => _transformHandler;
-        public IActorEffectModule ActorEffectModule => actorEffectModule;
-        public ActorNotifyModule Notifier => _notifier; 
-        public ItemFactory ItemFactory => _itemFactory;
+        public ActorInputController InputController => _actorInputController;
+        public ActorEffectModule EffectModule => actorEffectModule;
+        public ActorNotifyModule Notifier => _notifier;
 
         [SerializeField] private ActorStateModuleController stateModuleController;
         [OdinSerialize] private ActorEffectModule actorEffectModule;
-
         [OdinSerialize] private IExtraActorModule[] modules;
 
         private ActorNotifyModule _notifier;
@@ -30,7 +26,7 @@ namespace Sheldier.Actors
         private ActorInputController _actorInputController;
         private ActorsEffectFactory _effectFactory;
         private ItemFactory _itemFactory;
-
+        private ActorInternalData _internalData;
         public void Initialize()
         {
             _notifier = new ActorNotifyModule();
@@ -46,27 +42,16 @@ namespace Sheldier.Actors
             stateModuleController.SetDependencies(_actorInputController, _transformHandler);
 
             modules = modules.OrderBy(module => module.Priority).ToArray();
+
+            _internalData = new ActorInternalData(_actorInputController, _transformHandler, actorEffectModule,
+                _notifier, _itemFactory);
             
             foreach (var module in modules)
             {
-                module.Initialize(this);
+                module.Initialize(_internalData);
             }
             
             _tickHandler.AddListener(this);
-        }
-
-        public bool TryGetModule<T>(out T module) where T : class
-        {
-            for (int i = 0; i < modules.Length; i++)
-            {
-                if (modules[i] is T extraModule)
-                {
-                    module = extraModule;
-                    return true;
-                }
-            }
-            module = null;
-            return false;
         }
         
         [Inject]
@@ -76,7 +61,6 @@ namespace Sheldier.Actors
             _effectFactory = effectFactory;
             _tickHandler = tickHandler;
         }
-
 
         public void Tick()
         {

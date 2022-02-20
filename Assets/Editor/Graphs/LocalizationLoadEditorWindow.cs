@@ -5,6 +5,7 @@ using Sheldier.Common.Localization;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
+using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
 
@@ -83,6 +84,7 @@ namespace SheldierEditor.DialogueSystem
         [TitleGroup("Dialogues")]
         
         [Sirenix.OdinInspector.FilePath]  public string GraphsPath;
+        [HorizontalGroup("Dialogues/Load")] [ShowInInspector] public bool IsLoaded => DialoguesGraph.Count > 0;
         [TableList] public List<GraphCellData> DialoguesGraph;
         
         [HorizontalGroup("Dialogues/Load")]
@@ -100,19 +102,6 @@ namespace SheldierEditor.DialogueSystem
             }
         }
 
-   
-
-        /*private void OnDisable()
-        {
-            if (DialoguesGraph == null)
-                return;
-
-            foreach (var graph in DialoguesGraph)
-            {
-                graph.InsertCallBack = null;
-            }
-        }*/
-       
         public class GraphCellData
         {
             public DialogueSystemGraph Graph;

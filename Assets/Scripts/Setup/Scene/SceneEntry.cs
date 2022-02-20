@@ -39,8 +39,8 @@ namespace Sheldier.Setup
             sceneCameraHandler.SetFollowTarget(actor.transform);
             _itemSpawner.Initialize(scenePlaceholdersKeeper);
             actor.Initialize();
-            actor.ActorInputController.SetInputProvider(_inputProvider);
-            actor.ActorEffectModule.AddEffect(ActorEffectType.Freeze);
+            actor.InputController.SetInputProvider(_inputProvider);
+            actor.EffectModule.AddEffect(ActorEffectType.Freeze);
         }
 
         private bool GameIsInitialized()

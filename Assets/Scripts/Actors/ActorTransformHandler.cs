@@ -5,7 +5,7 @@ namespace Sheldier.Actors
 {
     public class ActorTransformHandler
     {
-        public bool LooksToRight => _lookDot >= 0 ? true : false;
+        public bool LooksToRight => _lookDot >= 0;
         
         private ActorDirectionView _previousDirectionView;
 
@@ -27,7 +27,7 @@ namespace Sheldier.Actors
             
             
             _lookDot = Vector2.Dot(Vector2.right, cursorScreenDirection);
-            _actorTransform.localScale = new Vector3(_lookDot >= 0 ? 1 : -1, _actorTransform.localScale.y,
+           _actorTransform.localScale = new Vector3(_lookDot >= 0 ? 1 : -1, _actorTransform.localScale.y,
                 _actorTransform.localScale.z);
             _previousDirectionView = cursorScreenDirection.GetViewDirection();
             return _previousDirectionView;

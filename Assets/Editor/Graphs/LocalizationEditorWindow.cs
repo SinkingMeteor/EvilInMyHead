@@ -17,7 +17,7 @@ namespace SheldierEditor.DialogueSystem
             var tree = new OdinMenuTree();
             tree.Selection.SupportsMultiSelect = false;
 
-            tree.AddAssetAtPath("Localization", "Assets/Editor/Graphs/ScriptableObjects/LocalizationWindow.asset");
+            tree.AddAssetAtPath("Dialogues Localization", "Assets/Editor/Graphs/ScriptableObjects/LocalizationWindow.asset");
             return tree;
         }
 
