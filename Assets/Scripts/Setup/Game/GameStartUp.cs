@@ -22,12 +22,15 @@ namespace Sheldier.Setup
         private ActorsEffectFactory _effectFactory;
         private ItemFactory _itemFactory;
         private ProjectilePool _projectilePool;
+        private WeaponBlowPool _weaponBlowPool;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
-            AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory, ProjectilePool projectilePool)
+            AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory, ProjectilePool projectilePool,
+            WeaponBlowPool weaponBlowPool)
         {
+            _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;
             _itemFactory = itemFactory;
             _effectFactory = effectFactory;
@@ -42,6 +45,7 @@ namespace Sheldier.Setup
             sceneContext.Run();
             
             _projectilePool.Initialize();
+            _weaponBlowPool.Initialize();
             
             _itemFactory.Initialize();
             _audioMixerController.Initialize();

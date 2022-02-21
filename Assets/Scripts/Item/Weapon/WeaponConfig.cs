@@ -1,4 +1,5 @@
 using System;
+using Sheldier.Common.Animation;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -11,10 +12,14 @@ namespace Sheldier.Item
         public ProjectileConfig ProjectileConfig => _projectileConfig;
         public float Damage => _damage;
         public Vector2 AimLocalPosition => aimLocalPosition;
+        public AnimationData WeaponBlowAnimation => _weaponBlowAnimation;
+        public AnimationData RealodAnimation => _reloadAnimation;
         public override ItemGroup ItemGroup => ItemGroup.Weapon;
 
         [SerializeField] private float _damage;
         [SerializeField] private ProjectileConfig _projectileConfig;
+        [SerializeField] private AnimationData _weaponBlowAnimation;
+        [SerializeField] private AnimationData _reloadAnimation;
         [SerializeField] private Vector2 aimLocalPosition;
         
         

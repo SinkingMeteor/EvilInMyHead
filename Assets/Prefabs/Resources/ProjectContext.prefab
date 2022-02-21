@@ -1184,6 +1184,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5729403185493041149}
+  - {fileID: 5064162582869611412}
   m_Father: {fileID: 2407684473881099581}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1200,6 +1201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePool: {fileID: 4017183499855115712}
+  weaponBlowPool: {fileID: 7633645560097590607}
 --- !u!1 &6970051544659879451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,6 +1463,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d6d9b266d547a5843350a8335a9e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8615652743497010443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5064162582869611412}
+  - component: {fileID: 7633645560097590607}
+  m_Layer: 0
+  m_Name: WeaponBlowPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5064162582869611412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8615652743497010443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7101945339097448848}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7633645560097590607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8615652743497010443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878a0426ae70470d9a4da24d11c3560a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolTransform: {fileID: 5064162582869611412}
+  startEntitiesAmount: 2
+  _entity: {fileID: 8989680997292603595, guid: 9615438d80f62a24fa1086bf1586c5ab, type: 3}
 --- !u!1 &9113187509644788912
 GameObject:
   m_ObjectHideFlags: 0

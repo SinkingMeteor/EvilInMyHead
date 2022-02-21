@@ -1,5 +1,7 @@
 ﻿using System;
 using Sheldier.Actors.Data;
+using Sheldier.Common.Animation;
+using Sheldier.Constants;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -34,10 +36,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                Animator.StringToHash("Run_Front"),
-                Animator.StringToHash("Run_Front_Side"),
-                Animator.StringToHash("Run_Back_Side"),
-                Animator.StringToHash("Run_Back"),
+                AnimationConstants.Animations[AnimationType.Run_Front],
+                AnimationConstants.Animations[AnimationType.Run_Front_Side],
+                AnimationConstants.Animations[AnimationType.Run_Back_Side],
+                AnimationConstants.Animations[AnimationType.Run_Back],
             };
         }
 

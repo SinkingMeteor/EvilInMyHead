@@ -44,7 +44,7 @@ namespace Sheldier.Actors
             modules = modules.OrderBy(module => module.Priority).ToArray();
 
             _internalData = new ActorInternalData(_actorInputController, _transformHandler, actorEffectModule,
-                _notifier, _itemFactory);
+                _notifier, _itemFactory, _tickHandler);
             
             foreach (var module in modules)
             {

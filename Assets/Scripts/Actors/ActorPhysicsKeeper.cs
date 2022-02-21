@@ -2,7 +2,7 @@
 
 namespace Sheldier.Actors
 {
-    public class ActorPhysicsProvider : MonoBehaviour
+    public class ActorPhysicsKeeper : MonoBehaviour
     {
         public Animator Animator => _animator;
         public Rigidbody2D Rigidbody2D => _rigidbody;

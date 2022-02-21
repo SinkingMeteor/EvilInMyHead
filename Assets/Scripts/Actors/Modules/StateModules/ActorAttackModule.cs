@@ -1,4 +1,5 @@
-﻿using Sheldier.Setup;
+﻿using Sheldier.Actors.Hand;
+using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,9 +23,10 @@ namespace Sheldier.Actors
         {
             if (!actorsHand.IsEquipped)
                 return;
-            _notifier.NotifyAttack();
+            _notifier.NotifyAttack(_inputController.CursorScreenDirection.normalized);
         }
 
+        
         private void OnDestroy()
         {
             #if UNITY_EDITOR

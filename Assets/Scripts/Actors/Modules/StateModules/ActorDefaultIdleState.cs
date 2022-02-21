@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Sheldier.Common.Animation;
+using Sheldier.Constants;
+using UnityEngine;
 
 namespace Sheldier.Actors
 {
@@ -27,10 +29,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                Animator.StringToHash("Idle_Front"),
-                Animator.StringToHash("Idle_Front_Side"),
-                Animator.StringToHash("Idle_Back_Side"),
-                Animator.StringToHash("Idle_Back"),
+                AnimationConstants.Animations[AnimationType.Idle_Front],
+                AnimationConstants.Animations[AnimationType.Idle_Front_Side],
+                AnimationConstants.Animations[AnimationType.Idle_Back_Side],
+                AnimationConstants.Animations[AnimationType.Idle_Back]
             };
         }
 

@@ -19,7 +19,7 @@ namespace Sheldier.Common
 
             for (int i = 0; i < _scheduledToRemove.Count; i++)
                 _tickListeners.Remove(_scheduledToRemove[i]);
-            _tickListeners.Clear();
+            _scheduledToRemove.Clear();
         }
     }
 }

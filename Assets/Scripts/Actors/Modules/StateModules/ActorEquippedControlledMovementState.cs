@@ -1,4 +1,7 @@
 ﻿using System;
+using Sheldier.Actors.Hand;
+using Sheldier.Common.Animation;
+using Sheldier.Constants;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -16,10 +19,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                Animator.StringToHash("Run_Equipped_Front"),
-                Animator.StringToHash("Run_Equipped_Front_Side"),
-                Animator.StringToHash("Run_Equipped_Back_Side"),
-                Animator.StringToHash("Run_Equipped_Back"),
+                AnimationConstants.Animations[AnimationType.Run_Equipped_Front],
+                AnimationConstants.Animations[AnimationType.Run_Equipped_Front_Side],
+                AnimationConstants.Animations[AnimationType.Run_Equipped_Back_Side],
+                AnimationConstants.Animations[AnimationType.Run_Equipped_Back],
             };
         }
 

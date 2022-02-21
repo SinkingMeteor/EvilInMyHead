@@ -1,4 +1,5 @@
 using System.Collections;
+using Sheldier.Common;
 using Sheldier.Common.Pool;
 using Sheldier.Setup;
 using UnityEngine;
@@ -15,17 +16,22 @@ namespace Sheldier.Item
         private ProjectileConfig _config;
         private Coroutine _projectileLifetime;
         private IPoolSetter<Projectile> _poolSetter;
+        private TickHandler _tickHandler;
 
-        public void Initialize(IPoolSetter<Projectile> poolSetter)
+        public void Initialize(IPoolSetter<Projectile> poolSetter, TickHandler tickHandler)
         {
-            Debug.Log("Setted");
             _poolSetter = poolSetter;
+            _tickHandler = tickHandler;
+        }
+
+        public void OnInstantiated()
+        {
+            _tickHandler.AddListener(this);
         }
         public void SetDirection(Vector2 dir)
         {
             _movementDirection = dir;
         }
-
         public void SetRotation(Quaternion rotation)
         {
             transform.rotation = rotation;
@@ -37,25 +43,16 @@ namespace Sheldier.Item
             spriteRenderer.sprite = _config.Icon;
         }
 
-
-
         public void Tick()
         {
-            Debug.Log("Ticked");
-
             Vector3 position = transform.position;
             transform.position = Vector3.Lerp(position, position + new Vector3(_movementDirection.x, _movementDirection.y, 0.0f) * _config.Speed, Time.deltaTime * 3f);
         }
 
-        
         public void Reset()
         {
-
-            _config = null;
             if(_projectileLifetime != null)
                 StopCoroutine(_projectileLifetime);
-            Debug.Log("Reseted");
-        
         }
         private IEnumerator StartLifetimeCoroutine()
         {
@@ -66,8 +63,10 @@ namespace Sheldier.Item
                 totalTime -= Time.deltaTime;
                 yield return null;
             }
+            _tickHandler.RemoveListener(this);
             _poolSetter.SetToPull(this);
         }
+
 
     }
 }

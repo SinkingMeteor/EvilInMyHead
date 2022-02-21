@@ -13,6 +13,14 @@ namespace Sheldier.Actors
         private ActorInputController _actorInputController;
         private float _lookDot;
 
+        public float GetAngle(Vector2 dir)
+        {
+            var angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+            if (!LooksToRight)
+                angle -= 180;
+            return angle;
+        }
+        
         public void SetDependencies(Transform actorTransform, ActorInputController actorInputController)
         {
             _actorInputController = actorInputController;

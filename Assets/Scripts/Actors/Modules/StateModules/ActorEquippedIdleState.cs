@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using Sheldier.Actors.Hand;
+using Sheldier.Common.Animation;
+using Sheldier.Constants;
+using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorEquippedIdleStateModule : ActorDefaultIdleState
+    public class ActorEquippedIdleState : ActorDefaultIdleState
     {
         public override bool TransitionConditionIsDone => actorsHand.IsEquipped;
         public override int Priority => 1;
@@ -19,10 +22,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                Animator.StringToHash("Idle_Equipped_Front"),
-                Animator.StringToHash("Idle_Equipped_Front_Side"),
-                Animator.StringToHash("Idle_Equipped_Back_Side"),
-                Animator.StringToHash("Idle_Equipped_Back"),
+                AnimationConstants.Animations[AnimationType.Idle_Equipped_Front],
+                AnimationConstants.Animations[AnimationType.Idle_Equipped_Front_Side],
+                AnimationConstants.Animations[AnimationType.Idle_Equipped_Back_Side],
+                AnimationConstants.Animations[AnimationType.Idle_Equipped_Back],
             };
         }
     }

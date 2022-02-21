@@ -1,10 +1,9 @@
 ﻿using System;
-using Sheldier.Actors.Inventory;
 using Sheldier.Item;
 using Sheldier.Setup;
 using UnityEngine;
 
-namespace Sheldier.Actors
+namespace Sheldier.Actors.Hand
 {
     public class ActorsHand : MonoBehaviour, IExtraActorModule
     {
@@ -19,9 +18,9 @@ namespace Sheldier.Actors
         private IHandInputReceiver _currentInputReceiver;
         public void Initialize(ActorInternalData data)
         {
-            _transformHandler = data.ActorTransformHandler;
             _notifier = data.Notifier;
             _notifier.OnWeaponPickedUp += EquipWeapon;
+            _transformHandler = data.ActorTransformHandler;
             _currentInputReceiver = new BaseHandInputReceiver();
         }
 
@@ -35,9 +34,8 @@ namespace Sheldier.Actors
         }
         private void SetItemSprite(IItem activeItem)
         {
-            var icon = activeItem.ItemConfig.Icon;
             _currentEquippable = activeItem;
-            actorHandObject.AddItem(icon);
+            actorHandObject.AddItem(activeItem.ItemConfig.Icon);
         }
 
         private void EquipWeapon(GunWeapon weapon)
@@ -65,51 +63,10 @@ namespace Sheldier.Actors
             if (!GameGlobalSettings.IsStarted) return;
             _notifier.OnWeaponPickedUp -= EquipWeapon;
         }
-    }
 
-    public interface IHandInputReceiver
-    {
-        float GetHandRotation(float angle);
-        void Dispose();
-        
-    }
-    public class WeaponedHandInputReceiver : IHandInputReceiver
-    {
-        private GunWeapon _currentWeapon;
-        private readonly ActorNotifyModule _notifier;
-        private readonly HandView _itemView;
-
-        public WeaponedHandInputReceiver(GunWeapon weapon, ActorNotifyModule notifier, HandView itemView)
+        private void OnDrawGizmos()
         {
-            _currentWeapon = weapon;
-            _notifier = notifier;
-            _itemView = itemView;
-            weapon.SetWeaponView(itemView);
-            notifier.OnActorAttacks += AttackByWeapon;
-            notifier.OnActorReloads += ReloadWeapon;
-        }
-        private void ReloadWeapon() => _currentWeapon.Reload();
-        private void AttackByWeapon() => _currentWeapon.Shoot();
-        public float GetHandRotation(float angle)
-        {
-            return _currentWeapon.GetHandRotation(angle);
-        }
-
-        public void Dispose()
-        {
-            _notifier.OnActorAttacks += AttackByWeapon;
-            _notifier.OnActorReloads += ReloadWeapon;
-        }
-    }
-    public class BaseHandInputReceiver : IHandInputReceiver
-    {
-        public float GetHandRotation(float angle)
-        {
-            return angle;
-        }
-
-        public void Dispose()
-        {
+            
         }
     }
 }

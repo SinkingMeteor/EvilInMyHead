@@ -4,22 +4,19 @@ using Zenject;
 
 namespace Sheldier.Common.Pool
 {
-    public class DefaultPool<T> : MonoBehaviour, ITickListener, IPoolSetter<T> where T : MonoBehaviour, IPoolObject<T>
+    public class DefaultPool<T> : MonoBehaviour, IPoolSetter<T> where T : MonoBehaviour, IPoolObject<T>
     {
         [SerializeField] private Transform poolTransform;
         [SerializeField] private int startEntitiesAmount;
         [SerializeField] private T _entity;
 
         private Queue<T> _pooledEntities;
-        private List<T> _activeEntities;
         private TickHandler _tickHandler;
 
         public void Initialize()
         {
             _pooledEntities = new Queue<T>();
-            _activeEntities = new List<T>();
             FillPool();
-            _tickHandler.AddListener(this);
         }
 
         [Inject]
@@ -32,13 +29,13 @@ namespace Sheldier.Common.Pool
             if (_pooledEntities.Count > 0)
             {
                 var poolObj = _pooledEntities.Dequeue();
-                _activeEntities.Add(poolObj);
                 poolObj.gameObject.SetActive(true);
+                poolObj.OnInstantiated();
                 return poolObj;
             }
             var instantiatedObj = InstantiateEntity();
-            _activeEntities.Add(instantiatedObj);
             instantiatedObj.gameObject.SetActive(true);
+            instantiatedObj.OnInstantiated();
             return instantiatedObj;
         }
         public void SetToPull(T itemSlot)
@@ -52,7 +49,7 @@ namespace Sheldier.Common.Pool
         private T InstantiateEntity()
         {
             var entity = Instantiate(_entity, poolTransform, false);
-            entity.Initialize(this);
+            entity.Initialize(this, _tickHandler);
             entity.gameObject.SetActive(false);
             return entity;
         }
@@ -67,7 +64,6 @@ namespace Sheldier.Common.Pool
 
         private void OnDestroy()
         {
-            _tickHandler.RemoveListener(this);
             ResetPool();
         }
 
@@ -78,22 +74,6 @@ namespace Sheldier.Common.Pool
                 Destroy(t.Transform.gameObject);
             }
             _pooledEntities.Clear();
-        }
-
-        public void Tick()
-        {
-            for (int i = 0; i < _activeEntities.Count; i++)
-            {
-                if (_pooledEntities.Contains(_activeEntities[i]))
-                {
-                    int lastIndex = _activeEntities.Count - 1;
-                    (_activeEntities[lastIndex], _activeEntities[i]) = (_activeEntities[i], _activeEntities[lastIndex]);
-                    _activeEntities.RemoveAt(lastIndex);
-                    i -= 1;
-                    continue;
-                }
-                _activeEntities[i].Tick();
-            }
         }
 
     }
