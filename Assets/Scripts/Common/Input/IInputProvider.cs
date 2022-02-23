@@ -10,5 +10,6 @@ namespace Sheldier.Common
          Vector2 CursorScreenDirection { get; }
          InputButton UseButton { get; }
          InputButton AttackButton { get; }
+         InputButton ReloadButton { get; }
     }
 }

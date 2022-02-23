@@ -18,6 +18,14 @@ namespace Sheldier.Actors
             _notifier = data.Notifier;
             _inputController = data.ActorInputController;
             _inputController.OnAttackButtonPressed += AttackPressed;
+            _inputController.OnReloadButtonPressed += ReloadPressed;
+        }
+
+        private void ReloadPressed()
+        {
+            if (!actorsHand.IsEquipped)
+                return;
+            _notifier.NotifyReloading();
         }
 
         private void AttackPressed()
@@ -29,6 +37,7 @@ namespace Sheldier.Actors
 
         public void Dispose()
         {
+            _inputController.OnReloadButtonPressed -= ReloadPressed;
             _inputController.OnAttackButtonPressed -= AttackPressed;
 
         }

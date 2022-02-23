@@ -2,6 +2,7 @@
 {
     public enum ItemGroup
     {
-        Weapon
+        Weapon,
+        Ammo
     }
 }

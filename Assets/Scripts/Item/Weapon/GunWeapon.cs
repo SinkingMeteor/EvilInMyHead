@@ -9,8 +9,6 @@ namespace Sheldier.Item
 {
     public class GunWeapon : SimpleItem
     {
-        public WeaponConfig WeaponConfig => _weaponConfig;
-
         private readonly WeaponBlowPool _weaponBlowPool;
         private readonly WeaponConfig _weaponConfig;
         private readonly ProjectilePool _projectilePool;
@@ -23,16 +21,24 @@ namespace Sheldier.Item
         private GameObject _aim;
         private Actor _owner;
 
+        private int _ammoLeft;
+        
         public GunWeapon(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool) : base(weaponConfig)
         {
             _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;
             _weaponConfig = weaponConfig;
+            _ammoLeft = 3;
         }
 
 
         public void Shoot(Vector2 direction)
         {
+            if (_ammoLeft == 0)
+                return;
+
+            _ammoLeft -= 1;
+            Debug.Log("Ammo left " + _ammoLeft);
             direction = Quaternion.AngleAxis(Random.Range(-5.0f, 5.0f), Vector3.forward) * direction;
             
             Projectile projectile = _projectilePool.GetFromPool();
@@ -56,6 +62,13 @@ namespace Sheldier.Item
 
         public void Reload()
         {
+            if (!_owner.InventoryModule.IsItemExists(_weaponConfig.RequiredAmmoType))
+                return;
+            if (_ammoLeft == _weaponConfig.Capacity)
+                return;
+            int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft);
+            Debug.Log("Ammo added " + newAmmo);
+            _ammoLeft += newAmmo;
         }
         public override void Equip(HandView handView)
         {
@@ -72,15 +85,24 @@ namespace Sheldier.Item
         }
         public override void Unequip()
         {
+            _owner.Notifier.OnActorAttacks -= Shoot;
+            _owner.Notifier.OnActorReloads -= Reload;
+            
             GameObject.Destroy(_aim);
         }
-        public override void PutToInventory(Actor owner, List<SimpleItem> itemsCollection)
+        public override void PutToInventory(Actor owner, Dictionary<ItemConfig, List<SimpleItem>> itemsCollection)
         {
             _owner = owner;
-            itemsCollection.Add(this);
+            itemsCollection[_itemConfig].Add(this);
         }
 
-        public override void Drop()
+        public override int RemoveItem(Dictionary<ItemConfig, List<SimpleItem>> itemsCollection, int amount)
+        {
+            Drop();
+            return 1;
+        }
+
+        protected override void Drop()
         {
         }
 

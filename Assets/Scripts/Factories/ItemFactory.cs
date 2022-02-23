@@ -10,12 +10,14 @@ namespace Sheldier.Factories
         
         private ItemMap _itemMap;
         private WeaponItemFactory _weaponItemFactory;
+        private AmmoItemFactory _ammoItemFactory;
         private ProjectilePool _projectilePool;
         private WeaponBlowPool _weaponBlowPool;
 
         public void Initialize()
         {
             _weaponItemFactory = new WeaponItemFactory(_itemMap, _projectilePool, _weaponBlowPool);
+            _ammoItemFactory = new AmmoItemFactory(_itemMap);
         }
         
         [Inject]
@@ -32,6 +34,7 @@ namespace Sheldier.Factories
             return group switch
             {
                 ItemGroup.Weapon => _weaponItemFactory.GetItem(itemConfig),
+                ItemGroup.Ammo => _ammoItemFactory.GetItem(itemConfig),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

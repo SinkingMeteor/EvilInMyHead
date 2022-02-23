@@ -21,6 +21,7 @@ namespace Sheldier.Common
 
         public InputButton UseButton => _useButton;
         public InputButton AttackButton => _attackButton;
+        public InputButton ReloadButton => _reloadButton;
 
         [SerializeField] private PlayerInput playerInput;
         
@@ -30,12 +31,14 @@ namespace Sheldier.Common
         
         private InputButton _useButton;
         private InputButton _attackButton;
+        private InputButton _reloadButton;
 
         public void Initialize()
         {
             _currentControlScheme = playerInput.currentControlScheme;
             _useButton = new InputButton(playerInput, InputActionNames.USE);
             _attackButton = new InputButton(playerInput, InputActionNames.ATTACK);
+            _reloadButton = new InputButton(playerInput, InputActionNames.RELOAD);
             _cursorDirectionConverter = new CursorDirectionConverter();
             _mouseHandlers = new Dictionary<string, IInputMouseHandler>
             {

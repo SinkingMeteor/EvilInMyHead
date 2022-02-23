@@ -1,12 +1,10 @@
-using System;
 using Sheldier.Common.Animation;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Sheldier.Item
 {
-    [System.Serializable]
+    [CreateAssetMenu(menuName = "Sheldier/Items/WeaponConfig", fileName = "WeaponConfig")]
     public class WeaponConfig : ItemConfig
     {
         public ProjectileConfig ProjectileConfig => _projectileConfig;
@@ -15,6 +13,7 @@ namespace Sheldier.Item
         public Vector2 AimLocalPosition => aimLocalPosition;
         public AnimationData WeaponBlowAnimation => _weaponBlowAnimation;
         public AnimationData RealodAnimation => _reloadAnimation;
+        public AmmoConfig RequiredAmmoType => _requiredAmmoType;
         public override ItemGroup ItemGroup => ItemGroup.Weapon;
 
         [SerializeField] private float _damage;
@@ -22,6 +21,7 @@ namespace Sheldier.Item
         [SerializeField] private ProjectileConfig _projectileConfig;
         [SerializeField] private AnimationData _weaponBlowAnimation;
         [SerializeField] private AnimationData _reloadAnimation;
+        [SerializeField] private AmmoConfig _requiredAmmoType;
         [SerializeField] private Vector2 aimLocalPosition;
         
         

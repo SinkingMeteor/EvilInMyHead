@@ -2,6 +2,7 @@
 {
     public enum ItemType
     {
-        Pistol
+        Pistol,
+        PistolAmmo
     }
 }

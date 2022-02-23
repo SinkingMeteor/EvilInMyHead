@@ -19,6 +19,5 @@ namespace Sheldier.Item
         [SerializeField][Multiline] private string itemName;
         [SerializeField][Multiline] private string itemDescription;
         [SerializeField] private int _cost;
-        [SerializeField][EnumToggleButtons] private ItemGroup _itemGroup;
     }
 }
