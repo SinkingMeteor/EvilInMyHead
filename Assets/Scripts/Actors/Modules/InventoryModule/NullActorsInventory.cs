@@ -15,6 +15,7 @@ namespace Sheldier.Actors.Inventory
 
         public void AddItem(SimpleItem item)
         {
+            _actorNotifyModule.NotifyAddedItemToInventory(item);
         }
 
         public void RemoveItem(SimpleItem item)

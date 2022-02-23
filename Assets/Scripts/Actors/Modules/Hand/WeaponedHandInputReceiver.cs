@@ -14,14 +14,13 @@ namespace Sheldier.Actors.Hand
         {
             _currentWeapon = weapon;
             _notifier = notifier;
-            weapon.SetWeaponView(itemView);
+           // weapon.SetWeaponView(itemView);
             notifier.OnActorAttacks += AttackByWeapon;
             notifier.OnActorReloads += ReloadWeapon;
         }
         private void ReloadWeapon() => _currentWeapon.Reload();
         private void AttackByWeapon(Vector2 dir)
         {
-            dir = Quaternion.AngleAxis(Random.Range(-5.0f, 5.0f), Vector3.forward) * dir;
             _currentWeapon.Shoot(dir);
         }
 

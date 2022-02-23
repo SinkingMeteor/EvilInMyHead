@@ -17,6 +17,7 @@ namespace Sheldier.Actors
         public ActorInputController InputController => _actorInputController;
         public ActorEffectModule EffectModule => actorEffectModule;
         public ActorNotifyModule Notifier => _notifier;
+        public ActorsInventoryModule InventoryModule => _inventoryModule;
 
         [SerializeField] private ActorStateModuleController stateModuleController;
         [OdinSerialize] private ActorEffectModule actorEffectModule;

@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using Sheldier.Actors;
 using Sheldier.Actors.Hand;
 using Sheldier.Common.Pool;
 using UnityEngine;
@@ -19,6 +21,7 @@ namespace Sheldier.Item
 
         private Coroutine _reduceCoroutine;
         private GameObject _aim;
+        private Actor _owner;
 
         public GunWeapon(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool) : base(weaponConfig)
         {
@@ -27,17 +30,11 @@ namespace Sheldier.Item
             _weaponConfig = weaponConfig;
         }
 
-        public void SetWeaponView(HandView weaponView)
-        {
-            _weaponView = weaponView;
-            _aim = new GameObject("Aim");
-            _aim.transform.SetParent(weaponView.transform);
-            _aim.transform.localPosition = _weaponConfig.AimLocalPosition;
-            _aim.transform.localRotation = Quaternion.identity;
-            _aim.transform.localScale = Vector3.one;
-        }
+
         public void Shoot(Vector2 direction)
         {
+            direction = Quaternion.AngleAxis(Random.Range(-5.0f, 5.0f), Vector3.forward) * direction;
+            
             Projectile projectile = _projectilePool.GetFromPool();
             CreateKickback();
             var position = _aim.transform.position;
@@ -59,28 +56,35 @@ namespace Sheldier.Item
 
         public void Reload()
         {
-            Debug.Log("Pistol reloads");
         }
-
-        public override void PutToInventory()
+        public override void Equip(HandView handView)
         {
-            throw new System.NotImplementedException();
-        }
+            _weaponView = handView;
+            _aim = new GameObject("Aim");
+            _aim.transform.SetParent(handView.transform);
+            _aim.transform.localPosition = _weaponConfig.AimLocalPosition;
+            _aim.transform.localRotation = Quaternion.identity;
+            _aim.transform.localScale = Vector3.one;
+            
+            _owner.Notifier.OnActorAttacks += Shoot;
+            _owner.Notifier.OnActorReloads += Reload;
 
-        public override void Drop()
-        {
-            throw new System.NotImplementedException();
         }
-
-        public override void Equip()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void Unequip()
         {
             GameObject.Destroy(_aim);
         }
+        public override void PutToInventory(Actor owner, List<SimpleItem> itemsCollection)
+        {
+            _owner = owner;
+            itemsCollection.Add(this);
+        }
+
+        public override void Drop()
+        {
+        }
+
+
         public float GetHandRotation(float angle)
         {
             angle = Mathf.Lerp(0.0f,_kickbackAngle,  _kickbackPower) + angle;

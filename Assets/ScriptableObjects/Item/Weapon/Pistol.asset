@@ -32,8 +32,8 @@ MonoBehaviour:
   _itemGroup: 0
   _damage: 0
   capacity: 0
-  _projectileConfig: {fileID: 0}
-  _weaponBlowAnimation: {fileID: 0}
+  _projectileConfig: {fileID: 11400000, guid: 6938fccc0b2e4cc449c9883ef40084ff, type: 2}
+  _weaponBlowAnimation: {fileID: 11400000, guid: fc3979b6c854d21479d30fbfa3e8081e, type: 2}
   _reloadAnimation: {fileID: 0}
   aimLocalPosition: {x: 0.24, y: 0.09}
   CameraXPosition: 0.11

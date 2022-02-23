@@ -1,8 +1,5 @@
-﻿using System;
-using Sheldier.Factories;
-using Sheldier.Item;
+﻿using Sheldier.Item;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Actors.Hand
 {
@@ -21,14 +18,18 @@ namespace Sheldier.Actors.Hand
         {
             _transformHandler = data.ActorTransformHandler;
             _notifier = data.Notifier;
+            _notifier.OnItemAddedToInventory += Equip;
         }
         
         public void Equip(SimpleItem item)
         {
+            if (!item.IsEquippable)
+                return;
             if (IsEquipped)
                 _currentItem.Unequip();
             actorHandObject.AddItem(item.ItemConfig.Icon);
             _currentItem = item;
+            _currentItem.Equip(actorHandObject);
         }
         public void UnEquip()
         {

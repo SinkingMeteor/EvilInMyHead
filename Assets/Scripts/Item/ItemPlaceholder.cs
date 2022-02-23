@@ -38,7 +38,7 @@ namespace Sheldier.Item
 
         public void OnInteracted(Actor actor)
         {
-            //notifier.NotifyPickUpItem(_item);
+            actor.InventoryModule.AddItem(_simpleItem);
             Deactivate();
         }
 
