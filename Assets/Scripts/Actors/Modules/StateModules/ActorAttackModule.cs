@@ -19,6 +19,7 @@ namespace Sheldier.Actors
             _inputController = data.ActorInputController;
             _inputController.OnAttackButtonPressed += AttackPressed;
         }
+
         private void AttackPressed()
         {
             if (!actorsHand.IsEquipped)
@@ -26,13 +27,10 @@ namespace Sheldier.Actors
             _notifier.NotifyAttack(_inputController.CursorScreenDirection.normalized);
         }
 
-        
-        private void OnDestroy()
+        public void Dispose()
         {
-            #if UNITY_EDITOR
-            if (!GameGlobalSettings.IsStarted) return;
-            #endif
             _inputController.OnAttackButtonPressed -= AttackPressed;
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Sheldier.Common;
 using Sheldier.Factories;
+using UnityEngine;
 
 namespace Sheldier.Actors
 {
@@ -9,26 +10,29 @@ namespace Sheldier.Actors
         public ActorTransformHandler ActorTransformHandler => _transformHandler;
         public IActorEffectModule ActorEffectModule => _actorEffectModule;
         public ActorNotifyModule Notifier => _notifier; 
-        public ItemFactory ItemFactory => _itemFactory;
         public TickHandler TickHandler => _tickHandler;
+        public Actor Actor => _actor;
+        public SpriteRenderer Sprite => _spriteRenderer;
 
-        private ActorNotifyModule _notifier;
-        private ActorTransformHandler _transformHandler;
-        private ActorInputController _actorInputController;
-        private ItemFactory _itemFactory;
-        private ActorEffectModule _actorEffectModule;
-        private TickHandler _tickHandler;
+        private readonly ActorNotifyModule _notifier;
+        private readonly ActorTransformHandler _transformHandler;
+        private readonly ActorInputController _actorInputController;
+        private readonly ActorEffectModule _actorEffectModule;
+        private readonly TickHandler _tickHandler;
+        private readonly Actor _actor;
+        private readonly SpriteRenderer _spriteRenderer;
 
         public ActorInternalData(ActorInputController inputController, ActorTransformHandler transformHandler,
             ActorEffectModule effectModule,
-            ActorNotifyModule notifier, ItemFactory itemFactory, TickHandler tickHandler)
+            ActorNotifyModule notifier, TickHandler tickHandler, Actor actor, SpriteRenderer spriteRenderer)
         {
+            _spriteRenderer = spriteRenderer;
+            _actor = actor;
             _tickHandler = tickHandler;
             _actorInputController = inputController;
             _transformHandler = transformHandler;
             _notifier = notifier;
             _actorEffectModule = effectModule;
-            _itemFactory = itemFactory;
         }
 
     }

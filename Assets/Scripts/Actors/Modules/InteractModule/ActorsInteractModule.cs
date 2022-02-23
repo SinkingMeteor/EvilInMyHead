@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Sheldier.Actors.Interact
@@ -9,9 +10,10 @@ namespace Sheldier.Actors.Interact
     [RequireComponent(typeof(CircleCollider2D))]
     public class ActorsInteractModule : SerializedMonoBehaviour, IExtraActorModule
     {
-        public int Priority => 0;
+  public int Priority => 0;
         
         [SerializeField] private CircleCollider2D circleCollider2D;
+        [ReadOnly][OdinSerialize]private Stack<IInteractReceiver> _receivers;
 
         private ActorNotifyModule _notifier;
         private ActorInputController _inputController;
@@ -19,19 +21,27 @@ namespace Sheldier.Actors.Interact
         private Coroutine _inInteractField;
 
         private IInteractReceiver _currentReceiver;
-        private Stack<IInteractReceiver> _receivers;
+        private Actor _actor;
 
         public void Initialize(ActorInternalData data)
         {
             _notifier = data.Notifier;
+            _actor = data.Actor;
             _inputController = data.ActorInputController;
             _receivers = new Stack<IInteractReceiver>();
             _inputController.OnUseButtonPressed += Interact;
+            _notifier.OnSettedInput += OnSettedInput;
         }
-        
+
+        private void OnSettedInput()
+        {
+            if(_currentReceiver != null)
+                CheckInput(_currentReceiver);
+        }
+
         private bool IsInsideField(Transform receiver)
         {
-            var length = (receiver.position - transform.position).magnitude - 0.2f;
+            var length = (receiver.position - transform.position).magnitude - 0.4f;
             return length < circleCollider2D.radius;
         }
 
@@ -39,8 +49,10 @@ namespace Sheldier.Actors.Interact
         {
             if(_currentReceiver == null)
                 return;
-            _currentReceiver.OnInteracted(_notifier);
-            DisposeReceiver();
+            _currentReceiver.OnInteracted(_actor);
+            if(_inInteractField != null)
+                StopCoroutine(_inInteractField);
+            _currentReceiver.OnExit();
             PopOldReceiver();
         }
 
@@ -48,11 +60,15 @@ namespace Sheldier.Actors.Interact
         {
             if (col.gameObject.TryGetComponent(out IInteractReceiver receiver))
             {
-                Debug.Log("Found");
-                if(_currentReceiver != null)
-                    PushOldReceiver();
-                EnterReceiver(_receivers.Contains(receiver) ? GetPushedReceiver(receiver) : receiver);
+                CheckInput(receiver);
             }
+        }
+
+        private void CheckInput(IInteractReceiver receiver)
+        {
+            if (_currentReceiver != null)
+                PushOldReceiver();
+            EnterReceiver(_receivers.Contains(receiver) ? GetPushedReceiver(receiver) : receiver);
         }
 
         private void PushOldReceiver()
@@ -122,11 +138,9 @@ namespace Sheldier.Actors.Interact
             Gizmos.DrawLine(transform.position, _currentReceiver.Transform.position);
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
-            #if UNITY_EDITOR
-            if (!GameGlobalSettings.IsStarted) return;
-            #endif
+            _notifier.OnSettedInput -= OnSettedInput;
             _inputController.OnUseButtonPressed -= Interact;
 
         }

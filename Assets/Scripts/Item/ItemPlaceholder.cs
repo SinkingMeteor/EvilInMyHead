@@ -1,4 +1,5 @@
-﻿using Sheldier.Actors;
+﻿using System;
+using Sheldier.Actors;
 using Sheldier.Actors.Interact;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,20 +12,20 @@ namespace Sheldier.Item
     {
         public Transform Transform => transform;
         public string ID => uniqueID.ID;
-        public ItemType Reference => itemReference;
+        public ItemConfig Reference => itemReference;
 
         [SerializeField] private UniqueID uniqueID;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private ItemType itemReference;
+        [SerializeField] private ItemConfig itemReference;
         [SerializeField] private Material OnInteractMaterial;
 
-        private ItemConfig _item;
+        private SimpleItem _simpleItem;
         private Material _defaulMaterial;
         
-        public void Initialize(ItemConfig itemConfig)
+        public void Initialize(SimpleItem simpleItem)
         {
-            _item = itemConfig;
-            spriteRenderer.sprite = itemConfig.Icon;
+            _simpleItem = simpleItem;
+            spriteRenderer.sprite = simpleItem.ItemConfig.Icon;
             _defaulMaterial = spriteRenderer.sharedMaterial;
         }
 
@@ -35,9 +36,9 @@ namespace Sheldier.Item
             spriteRenderer.sharedMaterial = OnInteractMaterial;
         }
 
-        public void OnInteracted(ActorNotifyModule notifier)
+        public void OnInteracted(Actor actor)
         {
-            notifier.NotifyPickUpItem(_item);
+            //notifier.NotifyPickUpItem(_item);
             Deactivate();
         }
 
@@ -45,7 +46,13 @@ namespace Sheldier.Item
         {
             spriteRenderer.sharedMaterial = _defaulMaterial;
         }
-        
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, 0.1f);
+        }
+
         [Button("Setup")]
         private void SetupPlaceholder()
         {
@@ -53,4 +60,6 @@ namespace Sheldier.Item
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
     }
+    
+    
 }

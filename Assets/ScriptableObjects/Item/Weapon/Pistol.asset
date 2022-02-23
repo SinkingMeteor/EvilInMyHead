@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6b1397496764d92bccae3a1319a25a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 70f1c7c35446458baad4d91d8b3e100c, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
   serializationData:
@@ -28,14 +28,14 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 423071670e47f3440876a53dcf0b6ddc, type: 3}
   itemName: 
   itemDescription: 
-  _cost: 1
+  _cost: 0
   _itemGroup: 0
-  _damage: 0.2
-  _projectileConfig: {fileID: 11400000, guid: 6938fccc0b2e4cc449c9883ef40084ff, type: 2}
-  _weaponBlowAnimation: {fileID: 11400000, guid: fc3979b6c854d21479d30fbfa3e8081e, type: 2}
-  aimLocalPosition: {x: 0.22, y: 0.07}
-  CameraXPosition: 0.069
-  CameraYPosition: 0.03
-  CameraSize: 0.226
-  _capacity: 0
-  _fireRate: 0
+  _damage: 0
+  capacity: 0
+  _projectileConfig: {fileID: 0}
+  _weaponBlowAnimation: {fileID: 0}
+  _reloadAnimation: {fileID: 0}
+  aimLocalPosition: {x: 0.24, y: 0.09}
+  CameraXPosition: 0.11
+  CameraYPosition: 0.038
+  CameraSize: 0.223

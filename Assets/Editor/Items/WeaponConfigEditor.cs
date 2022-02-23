@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace SheldierEditor.Item
 {
-    [CustomEditor(typeof(GunWeaponConfig))]
+    [CustomEditor(typeof(WeaponConfig))]
     public class WeaponConfigEditor : Editor
     {
         private WeaponPreview _weaponPreview = new WeaponPreview();
         
         void OnEnable()
         {
-            _weaponPreview.Init((GunWeaponConfig)target);
+            _weaponPreview.Init((WeaponConfig)target);
         }
 
         void OnDisable()

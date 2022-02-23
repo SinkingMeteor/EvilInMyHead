@@ -1,50 +1,44 @@
-﻿using System;
-using Sheldier.Factories;
-using Sheldier.Item;
-using Sheldier.Setup;
-using UnityEngine;
+﻿using Sheldier.Item;
 
 namespace Sheldier.Actors.Inventory
 {
-    public class ActorsInventoryModule : MonoBehaviour, IExtraActorModule
+    public class ActorsInventoryModule
     {
-        public WeaponInventorySubModule WeaponInventorySubModule => _weaponInventorySubModule;
-        public int Priority => 0;
+        public IActorsInventory CurrentInventory => _currentInventory;
+        
+        private IActorsInventory _currentInventory;
+        private ActorNotifyModule _actorNotifyModule;
 
-        private WeaponInventorySubModule _weaponInventorySubModule;
-        private ActorNotifyModule _notifier;
-
-
-        public void Initialize(ActorInternalData data)
+        public void Initialize(ActorNotifyModule actorNotifyModule)
         {
-            _notifier = data.Notifier;
-            _notifier.OnItemPickedUp += AddItem;
-            _weaponInventorySubModule = new WeaponInventorySubModule(data.ItemFactory, _notifier);
+            _actorNotifyModule = actorNotifyModule;
+            _currentInventory = new NullActorsInventory(_actorNotifyModule);
+        }
+        
+        public bool IsItemExists(SimpleItem item)
+        {
+            return _currentInventory.IsItemExists(item);
         }
 
-        public void AddItem(ItemConfig item)
+        public void AddItem(SimpleItem item)
         {
-            GetSubModule(item)();
+            _currentInventory.AddItem(item);
         }
 
-        private Action GetSubModule(ItemConfig item)
+        public void RemoveItem(SimpleItem item)
         {
-            var group = item.ItemGroup;
-            return group switch
-            {
-                ItemGroup.Weapon => () => _weaponInventorySubModule.AddItem(item)
-            };
+            _currentInventory.RemoveItem(item);
+        }
+        
+
+        public void SetInventory(IActorsInventory actorsInventory)
+        {
+            _currentInventory = actorsInventory;
         }
 
-
-        public void OnDestroy()
+        public void RemoveInventory()
         {
-            #if UNITY_EDITOR
-            if (!GameGlobalSettings.IsStarted) return;
-            #endif
-            _notifier.OnItemPickedUp -= AddItem;
+            _currentInventory = new NullActorsInventory(_actorNotifyModule);
         }
-
-
     }
 }

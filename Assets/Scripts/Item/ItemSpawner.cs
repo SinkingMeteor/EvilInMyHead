@@ -1,11 +1,12 @@
-﻿using Zenject;
+﻿using Sheldier.Factories;
+using Zenject;
 
 namespace Sheldier.Item
 {
     public class ItemSpawner
     {
         private ScenePlaceholdersKeeper _placeholdersKeeper;
-        private ItemMap _itemMap;
+        private ItemFactory _itemFactory;
 
         public void Initialize(ScenePlaceholdersKeeper placeholdersKeeper)
         {
@@ -15,19 +16,16 @@ namespace Sheldier.Item
         }
 
         [Inject]
-        private void InjectDependencies(ItemMap itemMap)
+        private void InjectDependencies(ItemFactory itemFactory)
         {
-            _itemMap = itemMap;
+            _itemFactory = itemFactory;
         }
         
         private void LoadItems()
         {
             foreach (var placeholder in _placeholdersKeeper.ItemPlaceholders)
             {
-                if (_itemMap.ItemsMap.TryGetValue(placeholder.Reference, out ItemConfig config))
-                    placeholder.Initialize(config);
-                else
-                    placeholder.Deactivate();                    
+                placeholder.Initialize(_itemFactory.GetItem(placeholder.Reference));                
             }
         }
     }

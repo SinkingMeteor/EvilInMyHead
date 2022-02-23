@@ -6,6 +6,7 @@ using Sheldier.Gameplay.Effects;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using Zenject;
 
 namespace Sheldier.Actors
 {
@@ -18,17 +19,21 @@ namespace Sheldier.Actors
         private List<ActorEffectType> _effectsCollection;
         private ActorsEffectFactory _factory;
 
-        public void Initialize(ActorsEffectFactory factory)
+        public void Initialize()
         {
-            _factory = factory;
             _effectsCollection = new List<ActorEffectType>();
             foreach (var effectHandler in _effectHandlers)
             {
-                effectHandler.Value.Initialize(factory);
+                effectHandler.Value.Initialize(_factory);
                 effectHandler.Value.OnEffectExpired += RemoveEffect;
             }
         }
 
+        [Inject]
+        private void InjectDependencies(ActorsEffectFactory effectFactory)
+        {
+            _factory = effectFactory;
+        }
         private void RemoveEffect(ActorEffectType effect)
         {
             _effectsCollection.Remove(effect);
@@ -51,11 +56,8 @@ namespace Sheldier.Actors
                 effectHandler.Value.Tick();
             }
         }
-        private void OnDestroy()
+        public void Dispose()
         {
-            #if UNITY_EDITOR
-                if (!GameGlobalSettings.IsStarted) return;
-            #endif
             foreach (var effectHandler in _effectHandlers)
             {
                 effectHandler.Value.OnEffectExpired -= RemoveEffect;

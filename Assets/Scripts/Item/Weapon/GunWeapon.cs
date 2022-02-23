@@ -5,10 +5,9 @@ using UnityEngine;
 
 namespace Sheldier.Item
 {
-    public class GunWeapon : IItem
+    public class GunWeapon : SimpleItem
     {
         public WeaponConfig WeaponConfig => _weaponConfig;
-        public ItemConfig ItemConfig => _weaponConfig;
 
         private readonly WeaponBlowPool _weaponBlowPool;
         private readonly WeaponConfig _weaponConfig;
@@ -21,7 +20,7 @@ namespace Sheldier.Item
         private Coroutine _reduceCoroutine;
         private GameObject _aim;
 
-        public GunWeapon(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
+        public GunWeapon(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool) : base(weaponConfig)
         {
             _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;
@@ -63,7 +62,22 @@ namespace Sheldier.Item
             Debug.Log("Pistol reloads");
         }
 
-        public void Unequip()
+        public override void PutToInventory()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Drop()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Equip()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Unequip()
         {
             GameObject.Destroy(_aim);
         }

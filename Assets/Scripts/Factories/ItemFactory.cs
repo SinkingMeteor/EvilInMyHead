@@ -1,4 +1,5 @@
-﻿using Sheldier.Common.Pool;
+﻿using System;
+using Sheldier.Common.Pool;
 using Sheldier.Item;
 using Zenject;
 
@@ -6,7 +7,6 @@ namespace Sheldier.Factories
 {
     public class ItemFactory
     {
-        public WeaponItemFactory WeaponItemFactory => _weaponItemFactory;
         
         private ItemMap _itemMap;
         private WeaponItemFactory _weaponItemFactory;
@@ -25,7 +25,16 @@ namespace Sheldier.Factories
             _projectilePool = projectilePool;
             _itemMap = itemMap;
         }
-        
+
+        public SimpleItem GetItem(ItemConfig itemConfig)
+        {
+            var group = itemConfig.ItemGroup;
+            return group switch
+            {
+                ItemGroup.Weapon => _weaponItemFactory.GetItem(itemConfig),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
         
     }
 }

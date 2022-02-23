@@ -17,7 +17,9 @@ namespace Sheldier.Common
         private CameraFollower _cameraFollower;
         
         private LateTickHandler _lateTickHandler;
-        public void Initialize(IInputProvider inputProvider)
+        private IInputProvider _inputProvider;
+
+        public void Initialize()
         {
             _camera = Camera.main;
 
@@ -25,15 +27,16 @@ namespace Sheldier.Common
             _cameraFollower.SetDependencies(_camera);
             
             _cameraSideMover = new CameraSideMover();
-            _cameraSideMover.SetDependencies(_camera, inputProvider, _cameraFollower);
+            _cameraSideMover.SetDependencies(_camera, _inputProvider, _cameraFollower);
             
             _cameraBordersConstrains.SetDependencies(_camera);
             
             _lateTickHandler.AddListener(this);
         }
         [Inject]
-        private void InjectDependencies(LateTickHandler lateTickHandler)
+        private void InjectDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider)
         {
+            _inputProvider = inputProvider;
             _lateTickHandler = lateTickHandler;
         }
 

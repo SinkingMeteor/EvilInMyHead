@@ -1,5 +1,4 @@
-﻿using Sheldier.Actors.Inventory;
-using Sheldier.Factories;
+﻿using Sheldier.Factories;
 
 namespace Sheldier.Actors
 {

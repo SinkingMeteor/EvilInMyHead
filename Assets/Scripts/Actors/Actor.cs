@@ -1,4 +1,6 @@
 using System.Linq;
+using Sheldier.Actors.Interact;
+using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Factories;
 using Sheldier.Setup;
@@ -19,14 +21,16 @@ namespace Sheldier.Actors
         [SerializeField] private ActorStateModuleController stateModuleController;
         [OdinSerialize] private ActorEffectModule actorEffectModule;
         [OdinSerialize] private IExtraActorModule[] modules;
+        [SerializeField] private Rigidbody2D actorsRigidbody;
+        [SerializeField] private SpriteRenderer actorsSprite;
 
         private ActorNotifyModule _notifier;
         private ActorTransformHandler _transformHandler;
         private TickHandler _tickHandler;
         private ActorInputController _actorInputController;
-        private ActorsEffectFactory _effectFactory;
         private ItemFactory _itemFactory;
         private ActorInternalData _internalData;
+        private ActorsInventoryModule _inventoryModule;
         public void Initialize()
         {
             _notifier = new ActorNotifyModule();
@@ -37,14 +41,17 @@ namespace Sheldier.Actors
             _transformHandler = new ActorTransformHandler();
             _transformHandler.SetDependencies(transform, _actorInputController);
             
-            actorEffectModule.Initialize(_effectFactory);
+            actorEffectModule.Initialize();
             
             stateModuleController.SetDependencies(_actorInputController, _transformHandler);
+
+            _inventoryModule = new ActorsInventoryModule();
+            _inventoryModule.Initialize(_notifier);
 
             modules = modules.OrderBy(module => module.Priority).ToArray();
 
             _internalData = new ActorInternalData(_actorInputController, _transformHandler, actorEffectModule,
-                _notifier, _itemFactory, _tickHandler);
+                _notifier,_tickHandler, this, actorsSprite);
             
             foreach (var module in modules)
             {
@@ -55,10 +62,8 @@ namespace Sheldier.Actors
         }
         
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler, ActorsEffectFactory effectFactory, ItemFactory itemFactory)
+        private void InjectDependencies(TickHandler tickHandler)
         {
-            _itemFactory = itemFactory;
-            _effectFactory = effectFactory;
             _tickHandler = tickHandler;
         }
 
@@ -68,12 +73,42 @@ namespace Sheldier.Actors
             actorEffectModule.Tick();
         }
 
+        public void SetControl(IInputProvider inputProvider)
+        {
+            _actorInputController.SetInputProvider(inputProvider);
+            actorsRigidbody.bodyType = RigidbodyType2D.Dynamic;
+            _notifier.NotifySettedInput();
+        }
+
+        public void RemoveControl()
+        {
+            _actorInputController.RemoveInputProvider();
+            actorsRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        public void SetInventory(IActorsInventory inventory)
+        {
+            _inventoryModule.SetInventory(inventory);
+            inventory.SetOwner(this);
+        }
+
+        public void RemoveInventory()
+        {
+            _inventoryModule.RemoveInventory();
+        }
+        
         private void OnDestroy()
         {
             #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
             #endif
             _tickHandler.RemoveListener(this);
+
+            actorEffectModule.Dispose();
+            foreach (var module in modules)
+            {
+                module.Dispose();
+            }
         }
         
     }
