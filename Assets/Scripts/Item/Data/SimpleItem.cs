@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Sheldier.Actors;
 using Sheldier.Actors.Hand;
+using Sheldier.Actors.Inventory;
 using Sheldier.Common.Utilities;
+using UnityEngine;
 
 namespace Sheldier.Item
 {
@@ -9,6 +11,7 @@ namespace Sheldier.Item
     {
         public ItemConfig ItemConfig => _itemConfig;
         public virtual bool IsEquippable => true;
+        public virtual bool IsStackable => false;
         public Counter ItemAmount => _itemAmount;
 
         protected Counter _itemAmount;
@@ -21,13 +24,34 @@ namespace Sheldier.Item
             _itemAmount = new Counter(1);
         }
 
-        public abstract void PutToInventory(Actor owner, Dictionary<ItemConfig, List<SimpleItem>> itemsCollection);
+        public virtual Vector2 GetRotateDirection()
+        {
+            return Vector2.zero;
+        }
+        public abstract void Drop();
 
-        public abstract int RemoveItem(Dictionary<ItemConfig, List<SimpleItem>> itemsCollection, int amount);
-        protected abstract void Drop();
-
-        public abstract void Equip(HandView handView);
+        public abstract void Equip(HandView handView, Actor owner);
 
         public abstract void Unequip();
+    }
+
+    public class NullItem : SimpleItem
+    {
+        public NullItem(ItemConfig itemConfig = null) : base(itemConfig)
+        {
+        }
+
+        public override void Drop()
+        {
+            
+        }
+
+        public override void Equip(HandView handView, Actor owner)
+        {
+        }
+
+        public override void Unequip()
+        {
+        }
     }
 }

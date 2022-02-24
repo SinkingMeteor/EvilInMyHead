@@ -1,13 +1,27 @@
-﻿using UnityEngine;
+﻿using Sheldier.Common;
+using Sheldier.Common.Animation;
+using UnityEngine;
 
 namespace Sheldier.Actors.Hand
 {
     public class HandView : MonoBehaviour
     {
+        public SimpleAnimator Animator => simpleAnimator;
         
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private SimpleAnimator simpleAnimator;
         public void AddItem(Sprite itemSprite) => spriteRenderer.sprite = itemSprite;
         public void ClearItem() => spriteRenderer.sprite = null;
 
+
+        public void Initialize(TickHandler tickHandler)
+        {
+            simpleAnimator.SetDependencies(tickHandler);
+        }
+
+        public void Dispose()
+        {
+            simpleAnimator.Dispose();
+        }
     }
 }

@@ -36,6 +36,8 @@ namespace Sheldier.Common.Animation
         }
         public void Play()
         {
+            if(_isPlaying)
+                StopPlaying();
             _isPlaying = true;
             _tickHandler.AddListener(this);
         }
@@ -62,6 +64,12 @@ namespace Sheldier.Common.Animation
         {
             StopPlaying();
             currentAnimation = null;
+        }
+
+        public void Dispose()
+        {
+            Reset();
+            _tickHandler.RemoveListener(this);
         }
     }
 }

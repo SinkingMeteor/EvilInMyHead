@@ -29,12 +29,14 @@ MonoBehaviour:
   itemName: 
   itemDescription: 
   _cost: 0
-  _damage: 0
+  fireRate: 0.5
+  damage: 0
   capacity: 7
-  _projectileConfig: {fileID: 11400000, guid: 6938fccc0b2e4cc449c9883ef40084ff, type: 2}
-  _weaponBlowAnimation: {fileID: 11400000, guid: fc3979b6c854d21479d30fbfa3e8081e, type: 2}
-  _reloadAnimation: {fileID: 0}
-  _requiredAmmoType: {fileID: 11400000, guid: 405ed6c204a6cd94a9469da5fb16145d, type: 2}
+  reloadDuration: 2
+  projectileConfig: {fileID: 11400000, guid: 6938fccc0b2e4cc449c9883ef40084ff, type: 2}
+  weaponBlowAnimation: {fileID: 11400000, guid: fc3979b6c854d21479d30fbfa3e8081e, type: 2}
+  reloadAnimation: {fileID: 11400000, guid: a4de883f4e8cc554c9c97400b37026cc, type: 2}
+  requiredAmmoType: {fileID: 11400000, guid: 405ed6c204a6cd94a9469da5fb16145d, type: 2}
   aimLocalPosition: {x: 0.24, y: 0.09}
   CameraXPosition: 0.11
   CameraYPosition: 0.038

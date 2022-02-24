@@ -7,21 +7,24 @@ namespace Sheldier.Item
     [CreateAssetMenu(menuName = "Sheldier/Items/WeaponConfig", fileName = "WeaponConfig")]
     public class WeaponConfig : ItemConfig
     {
-        public ProjectileConfig ProjectileConfig => _projectileConfig;
-        public float Damage => _damage;
+        public ProjectileConfig ProjectileConfig => projectileConfig;
+        public float Damage => damage;
+        public float FireRate => fireRate;
         public int Capacity => capacity;
         public Vector2 AimLocalPosition => aimLocalPosition;
-        public AnimationData WeaponBlowAnimation => _weaponBlowAnimation;
-        public AnimationData RealodAnimation => _reloadAnimation;
-        public AmmoConfig RequiredAmmoType => _requiredAmmoType;
+        public AnimationData WeaponBlowAnimation => weaponBlowAnimation;
+        public AnimationData ReloadAnimation => reloadAnimation;
+        public AmmoConfig RequiredAmmoType => requiredAmmoType;
         public override ItemGroup ItemGroup => ItemGroup.Weapon;
 
-        [SerializeField] private float _damage;
+        [SerializeField] private float fireRate;
+        [SerializeField] private float damage;
         [SerializeField] private int capacity;
-        [SerializeField] private ProjectileConfig _projectileConfig;
-        [SerializeField] private AnimationData _weaponBlowAnimation;
-        [SerializeField] private AnimationData _reloadAnimation;
-        [SerializeField] private AmmoConfig _requiredAmmoType;
+        [SerializeField] private float reloadDuration;
+        [SerializeField] private ProjectileConfig projectileConfig;
+        [SerializeField] private AnimationData weaponBlowAnimation;
+        [SerializeField] private AnimationData reloadAnimation;
+        [SerializeField] private AmmoConfig requiredAmmoType;
         [SerializeField] private Vector2 aimLocalPosition;
         
         
@@ -32,6 +35,7 @@ namespace Sheldier.Item
         [Range(-0.2f, 0.2f)] public float CameraYPosition;
         [BoxGroup("PreviewEditor")]
         [Range(0.05f, 0.4f)] public float CameraSize;
-        #endif
+
+#endif
     }
 }

@@ -20,7 +20,7 @@ namespace Sheldier.Common
 
         public void LateTick()
         {
-            var cursorMousePosition = _inputProvider.CursorScreenDirection;
+            var cursorMousePosition = _inputProvider.CursorScreenCenterDirection;
            _camera.transform.position = _cameraFollower.TargetPosition + new Vector3(cursorMousePosition.x, cursorMousePosition.y, 0.0f);
         }
     }

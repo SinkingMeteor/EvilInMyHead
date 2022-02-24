@@ -7,8 +7,8 @@ namespace Sheldier.Actors
     public class ActorInputController
     {
         public Vector2 MovementDirection => _currentInputProvider.MovementDirection;
-        public Vector2 CursorScreenDirection => _currentInputProvider.CursorScreenDirection;
-
+        public Vector2 CursorScreenDirection => _currentInputProvider.CursorScreenCenterDirection;
+        public Vector2 GetNormalizedCursorDirectionByTransform(Vector3 position) => _currentInputProvider.GetNormalizedDirectionToCursorFromPosition(position);
         public event Action OnUseButtonPressed; 
         public event Action OnUseButtonReleased; 
         public event Action OnAttackButtonPressed; 
@@ -30,37 +30,38 @@ namespace Sheldier.Actors
         }
         public void SetInputProvider(IInputProvider inputProvider)
         {
-            _realInputProvider = inputProvider;
-            _currentInputProvider = _realInputProvider;
 
-            _realInputProvider.UseButton.OnPressed += UseButtonPressed;
-            _realInputProvider.UseButton.OnReleased += UseButtonReleased;
-            _realInputProvider.AttackButton.OnPressed += AttackButtonPressed;
-            _realInputProvider.AttackButton.OnReleased += AttackButtonReleased;
-            _realInputProvider.ReloadButton.OnPressed += ReloadButtonPressed;
-            _realInputProvider.ReloadButton.OnReleased += ReloadButtonReleased;
+            _currentInputProvider = inputProvider;
+
+            _currentInputProvider.UseButton.OnPressed += UseButtonPressed;
+            _currentInputProvider.UseButton.OnReleased += UseButtonReleased;
+            _currentInputProvider.AttackButton.OnPressed += AttackButtonPressed;
+            _currentInputProvider.AttackButton.OnReleased += AttackButtonReleased;
+            _currentInputProvider.ReloadButton.OnPressed += ReloadButtonPressed;
+            _currentInputProvider.ReloadButton.OnReleased += ReloadButtonReleased;
 
         }
         public void RemoveInputProvider()
         {
-            _realInputProvider.UseButton.OnPressed -= UseButtonPressed;
-            _realInputProvider.UseButton.OnReleased -= UseButtonReleased;
-            _realInputProvider.AttackButton.OnPressed -= AttackButtonPressed;
-            _realInputProvider.AttackButton.OnReleased -= AttackButtonReleased;
-            _realInputProvider.ReloadButton.OnPressed -= ReloadButtonPressed;
-            _realInputProvider.ReloadButton.OnReleased -= ReloadButtonReleased;
+            _currentInputProvider.UseButton.OnPressed -= UseButtonPressed;
+            _currentInputProvider.UseButton.OnReleased -= UseButtonReleased;
+            _currentInputProvider.AttackButton.OnPressed -= AttackButtonPressed;
+            _currentInputProvider.AttackButton.OnReleased -= AttackButtonReleased;
+            _currentInputProvider.ReloadButton.OnPressed -= ReloadButtonPressed;
+            _currentInputProvider.ReloadButton.OnReleased -= ReloadButtonReleased;
             
-            _realInputProvider = null;
             _currentInputProvider = _nullProvider;
         }
         public void LockInput()
         {
+            _realInputProvider = _currentInputProvider;
             _currentInputProvider = _nullProvider;
         }
 
         public void UnlockInput()
         {
             _currentInputProvider = _realInputProvider;
+            _realInputProvider = null;
         }
         
         private void UseButtonReleased() => OnUseButtonReleased?.Invoke();

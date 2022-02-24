@@ -30,9 +30,10 @@ namespace Sheldier.Actors
 
         private void AttackPressed()
         {
+            
             if (!actorsHand.IsEquipped)
                 return;
-            _notifier.NotifyAttack(_inputController.CursorScreenDirection.normalized);
+            _notifier.NotifyAttack();
         }
 
         public void Dispose()

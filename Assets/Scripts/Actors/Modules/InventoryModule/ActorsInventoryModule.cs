@@ -9,29 +9,28 @@ namespace Sheldier.Actors.Inventory
         private IActorsInventory _currentInventory;
         private ActorNotifyModule _actorNotifyModule;
 
-        public void Initialize(ActorNotifyModule actorNotifyModule)
+        public void Initialize()
         {
-            _actorNotifyModule = actorNotifyModule;
-            _currentInventory = new NullActorsInventory(_actorNotifyModule);
+            _currentInventory = new NullActorsInventory();
         }
         public bool IsItemExists(ItemConfig itemConfig)
         {
             return _currentInventory.IsItemExists(itemConfig);
         }
 
-        public void AddItem(SimpleItem item)
+        public bool AddItem(SimpleItem item)
         {
-            _currentInventory.AddItem(item);
+            return _currentInventory.AddItem(item);
         }
 
-        public int RemoveItem(SimpleItem item, int amount = 1)
+        public void RemoveItem(SimpleItem item)
         {
-            return _currentInventory.RemoveItem(item, amount);
+            _currentInventory.RemoveItem(item);
         }
         
-        public int RemoveItem(ItemConfig item, int amount = 1)
+        public int RemoveItem(ItemConfig item, int amount = 1, int index = 0)
         {
-            return _currentInventory.RemoveItem(item, amount);
+            return _currentInventory.RemoveItem(item, amount, index);
         }
         public void SetInventory(IActorsInventory actorsInventory)
         {
@@ -40,7 +39,7 @@ namespace Sheldier.Actors.Inventory
 
         public void RemoveInventory()
         {
-            _currentInventory = new NullActorsInventory(_actorNotifyModule);
+            _currentInventory = new NullActorsInventory();
         }
     }
 }

@@ -1,50 +1,143 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using Sheldier.Actors;
 using Sheldier.Actors.Hand;
 using Sheldier.Common.Pool;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Sheldier.Item
 {
     public class GunWeapon : SimpleItem
     {
-        private readonly WeaponBlowPool _weaponBlowPool;
         private readonly WeaponConfig _weaponConfig;
-        private readonly ProjectilePool _projectilePool;
-        
-        private HandView _weaponView;
-        private float _kickbackAngle;
-        private float _kickbackPower;
+        private readonly WeaponShootModule _shootModule;
+        private readonly WeaponReloadModule _reloadModule;
 
-        private Coroutine _reduceCoroutine;
-        private GameObject _aim;
+        private HandView _weaponView;
+
         private Actor _owner;
 
         private int _ammoLeft;
-        
+
         public GunWeapon(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool) : base(weaponConfig)
         {
-            _weaponBlowPool = weaponBlowPool;
-            _projectilePool = projectilePool;
             _weaponConfig = weaponConfig;
-            _ammoLeft = 3;
+            _ammoLeft = 4;
+            _reloadModule = new WeaponReloadModule(_weaponConfig);
+            _shootModule = new WeaponShootModule(weaponConfig, projectilePool, weaponBlowPool);
         }
 
-
-        public void Shoot(Vector2 direction)
+        public override void Equip(HandView handView, Actor owner)
         {
-            if (_ammoLeft == 0)
+            _owner = owner;
+            _weaponView = handView;
+            _weaponView.AddItem(_itemConfig.Icon);
+            _reloadModule.SetView(handView);
+            _shootModule.SetView(handView);
+            _shootModule.CreateAim();
+            
+            _owner.Notifier.OnActorAttacks += Shoot;
+            _owner.Notifier.OnActorReloads += Reload;
+
+        }
+        public override void Unequip()
+        {
+            _owner.Notifier.OnActorAttacks -= Shoot;
+            _owner.Notifier.OnActorReloads -= Reload;
+            _weaponView.ClearItem();
+            _reloadModule.Dispose();
+            _shootModule.Dispose();
+            _owner = null;
+            _weaponView = null;
+        }
+        public override void Drop()
+        {
+        }
+
+        public override Vector2 GetRotateDirection()
+        {
+            var dir = _owner.InputController.GetNormalizedCursorDirectionByTransform(_weaponView.transform.position);
+            dir = Quaternion.Euler(new Vector3(0.0f, 0.0f, _shootModule.KickbackAngle)) * dir;
+            return dir;
+        }
+        private void Shoot()
+        {
+            if (_ammoLeft == 0 || !_shootModule.CanShoot || !_reloadModule.CanShoot)
+                return;
+            _ammoLeft -= 1;
+            
+            _shootModule.Shoot( _owner.InputController.GetNormalizedCursorDirectionByTransform(_shootModule.Aim.position));
+        }
+
+        private void Reload()
+        {
+            if (!_owner.InventoryModule.IsItemExists(_weaponConfig.RequiredAmmoType))
+                return;
+            if (_ammoLeft >= _weaponConfig.Capacity)
                 return;
 
-            _ammoLeft -= 1;
-            Debug.Log("Ammo left " + _ammoLeft);
+            _reloadModule.StartReloading(AddAmmoAfterReloading);
+        }
+        private void AddAmmoAfterReloading()
+        {
+            int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft);
+            _ammoLeft += newAmmo;
+        }
+    }
+
+    public class WeaponShootModule
+    {
+        public Transform Aim => _aim.transform;
+        public bool CanShoot => _canShoot;
+        public float KickbackAngle => _kickbackAngle * _kickbackPower;
+
+        private bool _canShoot;
+        
+        private Coroutine _reduceKickbackCoroutine;
+        private Coroutine _shootCooldownCoroutine;
+        private HandView _weaponView;
+
+        private float _kickbackAngle;
+        private float _kickbackPower;
+
+        private readonly WeaponConfig _weaponConfig;
+        private readonly ProjectilePool _projectilePool;
+        private readonly WeaponBlowPool _weaponBlowPool;
+        private readonly WaitForSeconds _shootCooldown;
+        private GameObject _aim;
+
+
+        public WeaponShootModule(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
+        {
+            _weaponConfig = weaponConfig;
+            _projectilePool = projectilePool;
+            _weaponBlowPool = weaponBlowPool;
+            _canShoot = true;
+            _shootCooldown = new WaitForSeconds(_weaponConfig.FireRate);
+        }
+
+        public void SetView(HandView weaponView)
+        {
+            _weaponView = weaponView;
+        }
+        
+        public void CreateAim()
+        {
+            _aim = new GameObject("Aim");
+            _aim.transform.SetParent(_weaponView.transform);
+            _aim.transform.localPosition = _weaponConfig.AimLocalPosition;
+            _aim.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            _aim.transform.localScale = Vector3.one;
+        }
+        public void Shoot(Vector2 direction)
+        {
             direction = Quaternion.AngleAxis(Random.Range(-5.0f, 5.0f), Vector3.forward) * direction;
             
             Projectile projectile = _projectilePool.GetFromPool();
             CreateKickback();
             var position = _aim.transform.position;
-            var rotation = _aim.transform.rotation;
+            var rotation = _weaponView.transform.rotation;
             var scale = _aim.transform.lossyScale;
 
             projectile.transform.position = position;
@@ -58,75 +151,90 @@ namespace Sheldier.Item
             blow.transform.rotation = rotation;
             blow.transform.localScale = scale;
             blow.SetAnimation(_weaponConfig.WeaponBlowAnimation);
-        }
 
-        public void Reload()
-        {
-            if (!_owner.InventoryModule.IsItemExists(_weaponConfig.RequiredAmmoType))
-                return;
-            if (_ammoLeft == _weaponConfig.Capacity)
-                return;
-            int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft);
-            Debug.Log("Ammo added " + newAmmo);
-            _ammoLeft += newAmmo;
-        }
-        public override void Equip(HandView handView)
-        {
-            _weaponView = handView;
-            _aim = new GameObject("Aim");
-            _aim.transform.SetParent(handView.transform);
-            _aim.transform.localPosition = _weaponConfig.AimLocalPosition;
-            _aim.transform.localRotation = Quaternion.identity;
-            _aim.transform.localScale = Vector3.one;
-            
-            _owner.Notifier.OnActorAttacks += Shoot;
-            _owner.Notifier.OnActorReloads += Reload;
-
-        }
-        public override void Unequip()
-        {
-            _owner.Notifier.OnActorAttacks -= Shoot;
-            _owner.Notifier.OnActorReloads -= Reload;
-            
-            GameObject.Destroy(_aim);
-        }
-        public override void PutToInventory(Actor owner, Dictionary<ItemConfig, List<SimpleItem>> itemsCollection)
-        {
-            _owner = owner;
-            itemsCollection[_itemConfig].Add(this);
-        }
-
-        public override int RemoveItem(Dictionary<ItemConfig, List<SimpleItem>> itemsCollection, int amount)
-        {
-            Drop();
-            return 1;
-        }
-
-        protected override void Drop()
-        {
-        }
-
-
-        public float GetHandRotation(float angle)
-        {
-            angle = Mathf.Lerp(0.0f,_kickbackAngle,  _kickbackPower) + angle;
-            return angle;
+            _shootCooldownCoroutine = _weaponView.StartCoroutine(ShootCooldownCoroutine());
         }
         private void CreateKickback()
         {
-            _kickbackAngle = Random.value > 0.5 ?  Random.Range(-15.0f, -10.0f) : Random.Range(10.0f, 15.0f);
-            if (_reduceCoroutine != null)
-                _weaponView.StopCoroutine(_reduceCoroutine);
-            _reduceCoroutine = _weaponView.StartCoroutine(ReduceKickbackPower());
+            _kickbackAngle = Random.value > 0.5 ?  Random.Range(-20.0f, -10.0f) : Random.Range(10.0f, 20.0f);
+            if (_reduceKickbackCoroutine != null)
+                _weaponView.StopCoroutine(_reduceKickbackCoroutine);
+            _reduceKickbackCoroutine = _weaponView.StartCoroutine(ReduceKickbackPower());
         }
         private IEnumerator ReduceKickbackPower()
         {
             _kickbackPower = 1.0f;
             while (_kickbackPower > 0.0f)
             {
-                _kickbackPower -= Time.deltaTime * 2;
+                _kickbackPower = Mathf.Clamp01(_kickbackPower - Time.deltaTime * 2);
                 yield return null;
             }
+        }
+
+        private IEnumerator ShootCooldownCoroutine()
+        {
+            _canShoot = false;
+            yield return _shootCooldown;
+            _canShoot = true;
+        }
+
+        public void Dispose()
+        {
+            if(_reduceKickbackCoroutine != null)
+                _weaponView.StopCoroutine(_reduceKickbackCoroutine);
+            if(_shootCooldownCoroutine != null)
+                _weaponView.StopCoroutine(_shootCooldownCoroutine);
+            GameObject.Destroy(_aim);
+            _weaponView = null;
+        }
+    }
+    public class WeaponReloadModule
+    {
+        public bool CanShoot => !_isReloading;
+        
+        private readonly WeaponConfig _weaponConfig;
+        private Coroutine _reloadingCoroutine;
+        private HandView _weaponView;
+        private bool _isReloading;
+        private bool _canShoot;
+
+        public WeaponReloadModule(WeaponConfig weaponConfig)
+        {
+            _weaponConfig = weaponConfig;
+        }
+
+        public void SetView(HandView handView)
+        {
+            _weaponView = handView;
+        }
+
+        public void StartReloading(Action onComplete) => _reloadingCoroutine = _weaponView.StartCoroutine(ReloadingCoroutine(onComplete));
+
+        public void InterruptReloading()
+        {
+            if (_reloadingCoroutine == null) return;
+            
+            _weaponView.StopCoroutine(_reloadingCoroutine);
+            _weaponView.Animator.StopPlaying();
+        }
+        private IEnumerator ReloadingCoroutine(Action onComplete)
+        {
+            _isReloading = true;
+            
+            _weaponView.Animator.Play(_weaponConfig.ReloadAnimation);
+
+            yield return new WaitForSeconds(_weaponConfig.ReloadAnimation.Frames.Length / _weaponConfig.ReloadAnimation.FrameRate);
+
+            _isReloading = false;
+            Debug.Log("Reloaded");
+
+            onComplete.Invoke();
+        }
+
+        public void Dispose()
+        {
+            InterruptReloading();
+            _weaponView = null;
         }
     }
 }

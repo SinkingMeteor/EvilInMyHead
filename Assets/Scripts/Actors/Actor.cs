@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Sheldier.Actors.Interact;
 using Sheldier.Actors.Inventory;
@@ -6,6 +7,7 @@ using Sheldier.Factories;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 using IInitializable = Sheldier.Setup.IInitializable;
@@ -47,7 +49,7 @@ namespace Sheldier.Actors
             stateModuleController.SetDependencies(_actorInputController, _transformHandler);
 
             _inventoryModule = new ActorsInventoryModule();
-            _inventoryModule.Initialize(_notifier);
+            _inventoryModule.Initialize();
 
             modules = modules.OrderBy(module => module.Priority).ToArray();
 
@@ -90,14 +92,15 @@ namespace Sheldier.Actors
         public void SetInventory(IActorsInventory inventory)
         {
             _inventoryModule.SetInventory(inventory);
-            inventory.SetOwner(this);
         }
 
         public void RemoveInventory()
         {
             _inventoryModule.RemoveInventory();
         }
-        
+
+
+
         private void OnDestroy()
         {
             #if UNITY_EDITOR

@@ -29,7 +29,7 @@ namespace Sheldier.Actors
 
         public ActorDirectionView CalculateViewDirection()
         {
-            Vector2 cursorScreenDirection = _actorInputController.CurrentInputProvider.CursorScreenDirection.normalized;
+            Vector2 cursorScreenDirection = _actorInputController.CursorScreenDirection.normalized;
             if (cursorScreenDirection.sqrMagnitude < Mathf.Epsilon)
                 return _previousDirectionView;
             
@@ -43,7 +43,7 @@ namespace Sheldier.Actors
 
         public ActorDirectionView CalculateMovementDirection()
         {
-            Vector2 movementDirection = _actorInputController.CurrentInputProvider.MovementDirection.normalized;
+            Vector2 movementDirection = _actorInputController.MovementDirection.normalized;
             var movesToRight = Vector2.Dot(Vector2.right, movementDirection);
             _actorTransform.localScale = new Vector3(movesToRight >= 0 ? 1 : -1, _actorTransform.localScale.y,
                 _actorTransform.localScale.z);

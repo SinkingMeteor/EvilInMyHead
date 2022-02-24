@@ -22,5 +22,5 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _duration: 1.3
-  _speed: 2
+  _speed: 3
   _icon: {fileID: 21300000, guid: 7a86ee7c313c63344a924ad70aa8ae28, type: 3}

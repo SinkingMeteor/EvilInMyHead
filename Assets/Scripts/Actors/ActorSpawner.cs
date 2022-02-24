@@ -31,14 +31,17 @@ namespace Sheldier.Actors
         
         private void LoadItems()
         {
+            int counter = 0;
             foreach (var placeholder in _placeholdersKeeper.ActorPlaceholders)
             {
                 Actor actor = GameObject.Instantiate(_actorsMap.Actors[placeholder.ActorReference]);
+                actor.name += counter++;
                 actor.transform.position = placeholder.transform.position;
                 _actorsInstaller.InjectActor(actor);
                 actor.Initialize();
                 _actorsOnScene.Add(actor);
                 placeholder.Deactivate();
+                
             }
         }
         

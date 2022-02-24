@@ -38,7 +38,8 @@ namespace Sheldier.Item
 
         public void OnInteracted(Actor actor)
         {
-            actor.InventoryModule.AddItem(_simpleItem);
+            if (!actor.InventoryModule.AddItem(_simpleItem)) return;
+            actor.Notifier.NotifyAddedItemToInventory(_simpleItem);
             Deactivate();
         }
 

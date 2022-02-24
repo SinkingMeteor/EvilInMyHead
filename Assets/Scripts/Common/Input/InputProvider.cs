@@ -9,8 +9,8 @@ namespace Sheldier.Common
     public class InputProvider : MonoBehaviour, IInitializable, IInputProvider
     {
         public Vector2 MovementDirection => playerInput.actions[InputActionNames.MOVEMENT].ReadValue<Vector2>();
-
-        public Vector2 CursorScreenDirection
+        
+        public Vector2 CursorScreenCenterDirection
         {
             get
             {
@@ -49,6 +49,11 @@ namespace Sheldier.Common
             
         }
 
+        public Vector2 GetNormalizedDirectionToCursorFromPosition(Vector3 position)
+        {
+            return _cursorDirectionConverter.GetDirectionByTransform(position,
+                playerInput.actions[InputActionNames.CURSOR].ReadValue<Vector2>()).normalized;
+        }
         public void OnChangedControls(PlayerInput newPlayerInput)
         {
             if (_currentControlScheme == playerInput.currentControlScheme) return;
@@ -103,13 +108,15 @@ namespace Sheldier.Common
             {
                 var screen = new Vector2(Screen.width, Screen.height);
                 var halfScreen = screen * 0.5f;
-                var directionMinusOneToOne = (mouseScreenPosition - halfScreen) / screen * 2.0f;
+                var directionMinusOneToOne = (mouseScreenPosition - halfScreen) / screen.y * 2.0f;
                 
                 return directionMinusOneToOne;
             }
-            public Vector2 GetMouseWorldPosition(Vector2 mouseScreenPosition)
+
+            public Vector2 GetDirectionByTransform(Vector3 position, Vector2 cursorPosition)
             {
-                return _camera.ScreenToWorldPoint(mouseScreenPosition);
+                var worldCursorPosition = _camera.ScreenToWorldPoint(cursorPosition);
+                return (worldCursorPosition - position);
             }
         }
         private interface IInputMouseHandler
