@@ -56,7 +56,10 @@ namespace Sheldier.Actors
         {
             ActorDirectionView directionView = GetDirectionView();
             SetNewAnimation(_animationHashes[(int)directionView]);
-            
+        }
+
+        public void FixedTick()
+        {
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
             var movementDistance = movementDirection * data.Speed;
             _rigidbody2D.velocity = movementDistance;

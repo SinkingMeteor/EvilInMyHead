@@ -49,10 +49,10 @@ namespace Sheldier.Common
             
         }
 
-        public Vector2 GetNormalizedDirectionToCursorFromPosition(Vector3 position)
+        public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position)
         {
             return _cursorDirectionConverter.GetDirectionByTransform(position,
-                playerInput.actions[InputActionNames.CURSOR].ReadValue<Vector2>()).normalized;
+                playerInput.actions[InputActionNames.CURSOR].ReadValue<Vector2>());
         }
         public void OnChangedControls(PlayerInput newPlayerInput)
         {

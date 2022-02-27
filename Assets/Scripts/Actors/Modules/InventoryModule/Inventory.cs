@@ -39,7 +39,10 @@ namespace Sheldier.Actors.Inventory
         {
             if (!IsItemExists(item))
                 return 0;
-            return _itemsCollection[item].RemoveAmount(amount, index);
+            int returnedAmount = _itemsCollection[item].RemoveAmount(amount, index);
+            if (_itemsCollection[item].Count == 0)
+                _itemsCollection.Remove(item);
+            return returnedAmount;
         }
         
     }

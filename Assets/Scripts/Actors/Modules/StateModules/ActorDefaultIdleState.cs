@@ -15,13 +15,11 @@ namespace Sheldier.Actors
         protected int[] _animationHashes;
         
         private bool _isLocked = false;
-        protected ActorInputController _inputController;
         private ActorTransformHandler _actorTransformHandler;
 
         public void SetDependencies(ActorInputController inputController, ActorTransformHandler actorTransformHandler)
         {
             _actorTransformHandler = actorTransformHandler;
-            _inputController = inputController;
             InitializeHashes();
         }
 
@@ -49,7 +47,12 @@ namespace Sheldier.Actors
             ActorDirectionView directionView = _actorTransformHandler.CalculateViewDirection();
             SetNewAnimation(_animationHashes[(int)directionView]);
         }
-        
+
+        public void FixedTick()
+        {
+            
+        }
+
         private void SetNewAnimation(int animationID) => _animator.Play(animationID);
 
     }

@@ -57,7 +57,9 @@ namespace Sheldier.Item
 
         public override Vector2 GetRotateDirection()
         {
-            var dir = _owner.InputController.GetNormalizedCursorDirectionByTransform(_weaponView.transform.position);
+            var dir = _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_weaponView.transform.position);
+            if (dir.magnitude < 0.2f)
+                return Vector2.zero;
             dir = Quaternion.Euler(new Vector3(0.0f, 0.0f, _shootModule.KickbackAngle)) * dir;
             return dir;
         }
@@ -67,7 +69,7 @@ namespace Sheldier.Item
                 return;
             _ammoLeft -= 1;
             
-            _shootModule.Shoot( _owner.InputController.GetNormalizedCursorDirectionByTransform(_shootModule.Aim.position));
+            _shootModule.Shoot( _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_shootModule.Aim.position).normalized);
         }
 
         private void Reload()

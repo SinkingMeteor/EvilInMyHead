@@ -1,20 +1,17 @@
-using System;
 using System.Linq;
-using Sheldier.Actors.Interact;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Factories;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 using IInitializable = Sheldier.Setup.IInitializable;
 
 namespace Sheldier.Actors
 {
-    public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener
+    public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener, IFixedTickListener
     {
         public ActorInputController InputController => _actorInputController;
         public ActorEffectModule EffectModule => actorEffectModule;
@@ -29,11 +26,13 @@ namespace Sheldier.Actors
 
         private ActorNotifyModule _notifier;
         private ActorTransformHandler _transformHandler;
-        private TickHandler _tickHandler;
         private ActorInputController _actorInputController;
         private ItemFactory _itemFactory;
         private ActorInternalData _internalData;
         private ActorsInventoryModule _inventoryModule;
+        private TickHandler _tickHandler;
+        private FixedTickHandler _fixedTickHandler;
+
         public void Initialize()
         {
             _notifier = new ActorNotifyModule();
@@ -62,11 +61,13 @@ namespace Sheldier.Actors
             }
             
             _tickHandler.AddListener(this);
+            _fixedTickHandler.AddListener(this);
         }
         
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
+        private void InjectDependencies(TickHandler tickHandler, FixedTickHandler fixedTickHandler)
         {
+            _fixedTickHandler = fixedTickHandler;
             _tickHandler = tickHandler;
         }
 
@@ -75,7 +76,10 @@ namespace Sheldier.Actors
             stateModuleController.Tick();
             actorEffectModule.Tick();
         }
-
+        public void FixedTick()
+        {
+            stateModuleController.FixedTick();
+        }
         public void SetControl(IInputProvider inputProvider)
         {
             _actorInputController.SetInputProvider(inputProvider);
@@ -107,14 +111,15 @@ namespace Sheldier.Actors
             if (!GameGlobalSettings.IsStarted) return;
             #endif
             _tickHandler.RemoveListener(this);
-
+            _fixedTickHandler.RemoveListener(this);
             actorEffectModule.Dispose();
             foreach (var module in modules)
             {
                 module.Dispose();
             }
         }
-        
+
+    
     }
 }
 

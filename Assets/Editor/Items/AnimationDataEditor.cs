@@ -25,6 +25,7 @@ namespace SheldierEditor.Item
             Rect previewRect = EditorGUILayout.GetControlRect(false, WeaponPreview.IconSize);
             var texture = _weaponPreview.Render();
             GUI.DrawTexture(previewRect, texture, ScaleMode.ScaleToFit, false);
+            EditorUtility.SetDirty(target);
         }
     }
 }

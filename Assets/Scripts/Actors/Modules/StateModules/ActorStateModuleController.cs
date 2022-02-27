@@ -50,7 +50,11 @@ namespace Sheldier.Actors
             if(nextState != null && !IsCurrentState(nextState))
                 SetCurrentState(nextState);
         }
-        
 
+
+        public void FixedTick()
+        {
+            _currentState?.FixedTick();
+        }
     }
 }

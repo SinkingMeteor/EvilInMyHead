@@ -11,5 +11,6 @@ namespace Sheldier.Actors
         void Enter();
         void Exit();
         void Tick();
+        void FixedTick();
     }
 }

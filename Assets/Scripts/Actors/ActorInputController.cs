@@ -8,7 +8,6 @@ namespace Sheldier.Actors
     {
         public Vector2 MovementDirection => _currentInputProvider.MovementDirection;
         public Vector2 CursorScreenDirection => _currentInputProvider.CursorScreenCenterDirection;
-        public Vector2 GetNormalizedCursorDirectionByTransform(Vector3 position) => _currentInputProvider.GetNormalizedDirectionToCursorFromPosition(position);
         public event Action OnUseButtonPressed; 
         public event Action OnUseButtonReleased; 
         public event Action OnAttackButtonPressed; 
@@ -28,6 +27,8 @@ namespace Sheldier.Actors
             _nullProvider = new NullInputProvider();
             _currentInputProvider = _nullProvider;
         }
+        public Vector2 GetNonNormalizedCursorDirectionByTransform(Vector3 position) => _currentInputProvider.GetNonNormalizedDirectionToCursorFromPosition(position);
+        
         public void SetInputProvider(IInputProvider inputProvider)
         {
 

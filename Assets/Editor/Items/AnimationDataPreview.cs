@@ -70,7 +70,7 @@ namespace SheldierEditor.Item
             objectTransform.rotation = Quaternion.identity;
             
             int frameCount = _animationData.Frames.Length;
-            _currentFrame = (_currentFrame + Time.deltaTime * _animationData.FrameRate) % frameCount;
+            _currentFrame = (_currentFrame + Time.deltaTime * 6) % frameCount;
             int frameIndex = (int) _currentFrame;
             _spriteRenderer.sprite = _animationData.Frames[frameIndex];
 

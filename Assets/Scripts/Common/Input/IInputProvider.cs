@@ -11,6 +11,6 @@ namespace Sheldier.Common
          InputButton UseButton { get; }
          InputButton AttackButton { get; }
          InputButton ReloadButton { get; }
-         Vector2 GetNormalizedDirectionToCursorFromPosition(Vector3 position);
+         Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position);
     }
 }

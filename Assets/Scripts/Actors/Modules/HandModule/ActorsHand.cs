@@ -16,13 +16,11 @@ namespace Sheldier.Actors.Hand
         private SimpleItem _currentItem;
         private NullItem _nullItem;
         private Actor _actor;
-        private ActorInputController _inputController;
         private TickHandler _tickHandler;
 
         public void Initialize(ActorInternalData data)
         {
             _actor = data.Actor;
-            _inputController = _actor.InputController;
             _transformHandler = data.ActorTransformHandler;
             _tickHandler = data.TickHandler;
             _notifier = data.Notifier;
@@ -56,17 +54,12 @@ namespace Sheldier.Actors.Hand
         private void RotateHand()
         {
             var dir = _currentItem.GetRotateDirection();
+            if(dir == Vector2.zero)
+                return;
             var angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
             if (!_transformHandler.LooksToRight)
                 angle -= 180;
             transform.rotation = Quaternion.Euler(0f, 0f, angle); 
-        }
-        
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            var dir = _inputController.GetNormalizedCursorDirectionByTransform(actorHandObject.transform.position);
-            Gizmos.DrawLine(actorHandObject.transform.position, actorHandObject.transform.position + new Vector3(dir.x, dir.y, 0.0f));
         }
         public void Dispose()
         {

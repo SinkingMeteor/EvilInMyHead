@@ -37,7 +37,7 @@ MonoBehaviour:
   weaponBlowAnimation: {fileID: 11400000, guid: fc3979b6c854d21479d30fbfa3e8081e, type: 2}
   reloadAnimation: {fileID: 11400000, guid: a4de883f4e8cc554c9c97400b37026cc, type: 2}
   requiredAmmoType: {fileID: 11400000, guid: 405ed6c204a6cd94a9469da5fb16145d, type: 2}
-  aimLocalPosition: {x: 0.24, y: 0.09}
+  aimLocalPosition: {x: 0.21, y: 0.09}
   CameraXPosition: 0.11
   CameraYPosition: 0.038
   CameraSize: 0.223

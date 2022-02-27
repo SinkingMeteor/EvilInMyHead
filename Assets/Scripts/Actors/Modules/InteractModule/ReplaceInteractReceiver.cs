@@ -31,7 +31,6 @@ namespace Sheldier.Actors.Interact
         {
             if (_playerSceneController.IsCurrentActor(_currentActor))
                 return;
-            Debug.Log("Entered");
             _spriteRenderer.sharedMaterial = material;
         }
 
