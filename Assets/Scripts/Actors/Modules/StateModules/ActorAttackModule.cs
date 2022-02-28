@@ -1,7 +1,5 @@
-﻿using Sheldier.Actors.Hand;
-using Sheldier.Setup;
+﻿using Sheldier.Actors.Inventory;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace Sheldier.Actors
 {
@@ -9,21 +7,22 @@ namespace Sheldier.Actors
     {
         private ActorInputController _inputController;
 
-        [SerializeField] private ActorsHand actorsHand;
         private ActorNotifyModule _notifier;
+        private ActorsInventoryModule _inventoryModule;
         public int Priority => 0;
 
         public void Initialize(ActorInternalData data)
         {
-            _notifier = data.Notifier;
-            _inputController = data.ActorInputController;
+            _notifier = data.Actor.Notifier;
+            _inventoryModule = data.Actor.InventoryModule;
+            _inputController = data.Actor.InputController;
             _inputController.OnAttackButtonPressed += AttackPressed;
             _inputController.OnReloadButtonPressed += ReloadPressed;
         }
 
         private void ReloadPressed()
         {
-            if (!actorsHand.IsEquipped)
+            if (!_inventoryModule.IsEquipped)
                 return;
             _notifier.NotifyReloading();
         }
@@ -31,7 +30,7 @@ namespace Sheldier.Actors
         private void AttackPressed()
         {
             
-            if (!actorsHand.IsEquipped)
+            if (!_inventoryModule.IsEquipped)
                 return;
             _notifier.NotifyAttack();
         }

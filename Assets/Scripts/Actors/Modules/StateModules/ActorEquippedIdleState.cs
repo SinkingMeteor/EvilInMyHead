@@ -1,16 +1,21 @@
-﻿using Sheldier.Actors.Hand;
+﻿using Sheldier.Actors.Inventory;
 using Sheldier.Common.Animation;
 using Sheldier.Constants;
-using UnityEngine;
 
 namespace Sheldier.Actors
 {
     public class ActorEquippedIdleState : ActorDefaultIdleState
     {
-        public override bool TransitionConditionIsDone => actorsHand.IsEquipped;
+        public override bool TransitionConditionIsDone => _inventoryModule.IsEquipped;
         public override int Priority => 1;
 
-        [SerializeField] private ActorsHand actorsHand;
+        private ActorsInventoryModule _inventoryModule;
+
+        public override void SetDependencies(ActorInternalData data)
+        {
+            base.SetDependencies(data);
+            _inventoryModule = data.Actor.InventoryModule;
+        }
 
         protected override void InitializeHashes()
         {

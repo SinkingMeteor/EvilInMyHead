@@ -1,7 +1,6 @@
 using System.Linq;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
-using Sheldier.Factories;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -17,17 +16,17 @@ namespace Sheldier.Actors
         public ActorEffectModule EffectModule => actorEffectModule;
         public ActorNotifyModule Notifier => _notifier;
         public ActorsInventoryModule InventoryModule => _inventoryModule;
+        public ActorsView ActorsView => actorsView;
 
         [SerializeField] private ActorStateModuleController stateModuleController;
         [OdinSerialize] private ActorEffectModule actorEffectModule;
         [OdinSerialize] private IExtraActorModule[] modules;
         [SerializeField] private Rigidbody2D actorsRigidbody;
-        [SerializeField] private SpriteRenderer actorsSprite;
+        [SerializeField] private ActorsView actorsView;
 
         private ActorNotifyModule _notifier;
         private ActorTransformHandler _transformHandler;
         private ActorInputController _actorInputController;
-        private ItemFactory _itemFactory;
         private ActorInternalData _internalData;
         private ActorsInventoryModule _inventoryModule;
         private TickHandler _tickHandler;
@@ -44,16 +43,16 @@ namespace Sheldier.Actors
             _transformHandler.SetDependencies(transform, _actorInputController);
             
             actorEffectModule.Initialize();
-            
-            stateModuleController.SetDependencies(_actorInputController, _transformHandler);
+
 
             _inventoryModule = new ActorsInventoryModule();
             _inventoryModule.Initialize();
 
             modules = modules.OrderBy(module => module.Priority).ToArray();
 
-            _internalData = new ActorInternalData(_actorInputController, _transformHandler, actorEffectModule,
-                _notifier,_tickHandler, this, actorsSprite);
+            _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody);
+
+            stateModuleController.SetDependencies(_internalData);
             
             foreach (var module in modules)
             {
@@ -103,8 +102,6 @@ namespace Sheldier.Actors
             _inventoryModule.RemoveInventory();
         }
 
-
-
         private void OnDestroy()
         {
             #if UNITY_EDITOR
@@ -118,8 +115,6 @@ namespace Sheldier.Actors
                 module.Dispose();
             }
         }
-
-    
     }
 }
 

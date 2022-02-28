@@ -32,6 +32,9 @@ namespace Sheldier.Common
             OnReleased?.Invoke();
         }
 
+        public void InvokeButtonPressedEvent() => OnPressed?.Invoke();
+        public void InvokeButtonReleasedEvent() => OnReleased?.Invoke();
+
         public void Dispose()
         {
             _playerInput.actions[_actionKey].started -= OnButtonPressed;

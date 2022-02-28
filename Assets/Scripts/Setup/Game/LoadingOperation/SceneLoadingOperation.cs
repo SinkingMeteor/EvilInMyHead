@@ -11,7 +11,6 @@ namespace Sheldier.Setup
         public string LoadLabel => "Loading Scene";
         public SceneLoadingOperation()
         {
-            //Default
             _targetSceneNames = new[] { SceneNames.COLONY_OUTSIDE};
         }
 

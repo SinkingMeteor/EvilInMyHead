@@ -25,9 +25,9 @@ namespace Sheldier.Actors.Interact
 
         public void Initialize(ActorInternalData data)
         {
-            _notifier = data.Notifier;
+            _notifier = data.Actor.Notifier;
             _actor = data.Actor;
-            _inputController = data.ActorInputController;
+            _inputController = data.Actor.InputController;
             _receivers = new Stack<IInteractReceiver>();
             _inputController.OnUseButtonPressed += Interact;
             _notifier.OnSettedInput += OnSettedInput;

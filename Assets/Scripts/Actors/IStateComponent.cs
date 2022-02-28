@@ -7,7 +7,7 @@ namespace Sheldier.Actors
         bool IsLocked { get; }
         bool TransitionConditionIsDone { get; }
         int Priority { get; }
-        void SetDependencies(ActorInputController inputController, ActorTransformHandler actorTransformHandler);
+        void SetDependencies(ActorInternalData data);
         void Enter();
         void Exit();
         void Tick();

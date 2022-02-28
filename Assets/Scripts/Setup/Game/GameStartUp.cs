@@ -1,4 +1,5 @@
 using Sheldier.Actors.Inventory;
+using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
 using Sheldier.Common.Audio;
 using Sheldier.Common.Localization;
@@ -24,13 +25,15 @@ namespace Sheldier.Setup
         private ProjectilePool _projectilePool;
         private WeaponBlowPool _weaponBlowPool;
         private Inventory _inventory;
+        private PathProvider _pathProvider;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
             AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory, ProjectilePool projectilePool,
-            WeaponBlowPool weaponBlowPool, Inventory inventory)
+            WeaponBlowPool weaponBlowPool, Inventory inventory, PathProvider pathProvider)
         {
+            _pathProvider = pathProvider;
             _inventory = inventory;
             _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;
@@ -54,6 +57,7 @@ namespace Sheldier.Setup
             _localizationProvider.Initialize();
             _inputProvider.Initialize();
             _effectFactory.Initialize();
+            _pathProvider.Initialize();
             ILoadOperation[] loadOperations =
             {
                 _sceneLoadingOperation

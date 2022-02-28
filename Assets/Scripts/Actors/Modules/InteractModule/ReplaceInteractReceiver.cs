@@ -13,14 +13,15 @@ namespace Sheldier.Actors.Interact
         [SerializeField] private Material material;
 
         private Actor _currentActor;
-        private SpriteRenderer _spriteRenderer;
         private ScenePlayerController _playerSceneController;
         private Material _defaultMaterial;
+        private ActorsView _actorsView;
+
         public void Initialize(ActorInternalData data)
         {
             _currentActor = data.Actor;
-            _spriteRenderer = data.Sprite;
-            _defaultMaterial = data.Sprite.sharedMaterial;
+            _actorsView = data.Actor.ActorsView;
+            _defaultMaterial = _actorsView.CurrentBodyMaterial;
         }
         [Inject]
         private void InjectDependencies(ScenePlayerController playerSceneController)
@@ -31,7 +32,7 @@ namespace Sheldier.Actors.Interact
         {
             if (_playerSceneController.IsCurrentActor(_currentActor))
                 return;
-            _spriteRenderer.sharedMaterial = material;
+            _actorsView.SetMaterial(material);
         }
 
         public void OnInteracted(Actor actor)
@@ -43,8 +44,7 @@ namespace Sheldier.Actors.Interact
 
         public void OnExit()
         {
-            _spriteRenderer.sharedMaterial = _defaultMaterial;
-
+            _actorsView.SetMaterial(_defaultMaterial);
         }
         public void Dispose()
         {

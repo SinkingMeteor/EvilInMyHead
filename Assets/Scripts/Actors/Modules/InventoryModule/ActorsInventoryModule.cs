@@ -4,10 +4,11 @@ namespace Sheldier.Actors.Inventory
 {
     public class ActorsInventoryModule
     {
+        public bool IsEquipped => _isEquipped;
         public IActorsInventory CurrentInventory => _currentInventory;
         
         private IActorsInventory _currentInventory;
-        private ActorNotifyModule _actorNotifyModule;
+        private bool _isEquipped;
 
         public void Initialize()
         {
@@ -41,5 +42,7 @@ namespace Sheldier.Actors.Inventory
         {
             _currentInventory = new NullActorsInventory();
         }
+
+        public void SetEquipped(bool isEquipped) => _isEquipped = isEquipped;
     }
 }

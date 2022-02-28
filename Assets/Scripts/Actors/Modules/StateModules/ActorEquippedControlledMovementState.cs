@@ -1,4 +1,4 @@
-﻿using Sheldier.Actors.Hand;
+﻿using Sheldier.Actors.Inventory;
 using Sheldier.Common.Animation;
 using Sheldier.Constants;
 using UnityEngine;
@@ -7,12 +7,19 @@ namespace Sheldier.Actors
 {
     public class ActorEquippedControlledMovementState : ActorDefaultControlledMovementState
     {
+
         public override bool TransitionConditionIsDone =>
             _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon &&
-            actorsHand.IsEquipped;
+            _inventoryModule.IsEquipped;
         public override int Priority => 3;
+        
+        private ActorsInventoryModule _inventoryModule;
+        public override void SetDependencies(ActorInternalData data)
+        {
+            base.SetDependencies(data);
+            _inventoryModule = data.Actor.InventoryModule;
+        }
 
-        [SerializeField] private ActorsHand actorsHand;
         protected override ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateViewDirection();
         protected override void InitializeHashes()
         {

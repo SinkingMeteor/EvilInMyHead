@@ -1,5 +1,4 @@
-﻿using System;
-using Sheldier.Actors.Data;
+﻿using Sheldier.Actors.Data;
 using Sheldier.Common.Animation;
 using Sheldier.Constants;
 using Sirenix.OdinInspector;
@@ -14,21 +13,23 @@ namespace Sheldier.Actors
         public virtual bool TransitionConditionIsDone => _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon;
         public virtual int Priority => 1;
         
-        [SerializeField]private Rigidbody2D _rigidbody2D;
-        [SerializeField]private Animator _animator;
         [OdinSerialize] private IActorMovementDataProvider data;
 
         protected ActorInputController _inputController;
         protected ActorTransformHandler _actorTransformHandler;
+        protected int[] _animationHashes;
+
+        private Rigidbody2D _rigidbody2D;
+        private ActorsView _actorsView;
 
         private bool _isLocked;
-        protected int[] _animationHashes;
-        
-        public void SetDependencies(ActorInputController inputController,
-            ActorTransformHandler actorTransformHandler)
+
+        public virtual void SetDependencies(ActorInternalData data)
         {
-            _inputController = inputController;
-            _actorTransformHandler = actorTransformHandler;
+            _inputController = data.Actor.InputController;
+            _actorTransformHandler = data.ActorTransformHandler;
+            _rigidbody2D = data.Rigidbody2D;
+            _actorsView = data.Actor.ActorsView;
             InitializeHashes();
         }
 
@@ -66,7 +67,7 @@ namespace Sheldier.Actors
         }
 
         protected virtual ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateMovementDirection();
-        private void SetNewAnimation(int animationID) => _animator.Play(animationID);
+        private void SetNewAnimation(int animationID) => _actorsView.PlayAnimation(animationID);
 
     }
 }

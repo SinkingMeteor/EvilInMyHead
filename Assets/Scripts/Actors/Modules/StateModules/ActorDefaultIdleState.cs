@@ -9,17 +9,17 @@ namespace Sheldier.Actors
         public bool IsLocked => _isLocked;
         public virtual bool TransitionConditionIsDone => true;
         public virtual int Priority => 0;
-        
-        [SerializeField] private Animator _animator;
 
         protected int[] _animationHashes;
         
         private bool _isLocked = false;
         private ActorTransformHandler _actorTransformHandler;
+        private ActorsView _actorsView;
 
-        public void SetDependencies(ActorInputController inputController, ActorTransformHandler actorTransformHandler)
+        public virtual void SetDependencies(ActorInternalData data)
         {
-            _actorTransformHandler = actorTransformHandler;
+            _actorTransformHandler = data.ActorTransformHandler;
+            _actorsView = data.Actor.ActorsView;
             InitializeHashes();
         }
 
@@ -53,7 +53,7 @@ namespace Sheldier.Actors
             
         }
 
-        private void SetNewAnimation(int animationID) => _animator.Play(animationID);
+        private void SetNewAnimation(int animationID) => _actorsView.PlayAnimation(animationID);
 
     }
 }
