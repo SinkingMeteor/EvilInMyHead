@@ -11,7 +11,7 @@ namespace Sheldier.Actors.Pathfinding
         private Queue<PathRequest> _requestsQueue;
         private PathRequest _currentRequest;
         private bool _isProcessingPath;
-        private PathSeeker _pathSeeker;
+        private Pathfinder _pathfinder;
 
         public void Initialize()
         {
@@ -19,9 +19,9 @@ namespace Sheldier.Actors.Pathfinding
         }
 
         [Inject]
-        public void InjectDependencies(PathSeeker pathSeeker)
+        public void InjectDependencies(Pathfinder pathfinder)
         {
-            _pathSeeker = pathSeeker;
+            _pathfinder = pathfinder;
         }
         
         public void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector2[], bool> callBack)
@@ -43,7 +43,7 @@ namespace Sheldier.Actors.Pathfinding
             {
                 _currentRequest = _requestsQueue.Dequeue();
                 _isProcessingPath = true;
-                _pathSeeker.StartFindPath(_currentRequest.PathStart, _currentRequest.PathEnd, FinishedProcessingPath);
+                _pathfinder.FindPath(_currentRequest.PathStart, _currentRequest.PathEnd, FinishedProcessingPath);
             }
         }
 

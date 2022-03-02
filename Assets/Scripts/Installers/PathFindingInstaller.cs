@@ -7,7 +7,7 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<PathSeeker>().AsSingle();
+            Container.Bind<Pathfinder>().AsSingle();
             Container.Bind<PathProvider>().AsSingle();
         }
     }

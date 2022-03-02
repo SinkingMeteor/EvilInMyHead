@@ -2576,6 +2576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360912327}
   - component: {fileID: 360912328}
+  - component: {fileID: 360912329}
   m_Layer: 7
   m_Name: GreenCrate
   m_TagString: Untagged
@@ -2650,6 +2651,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &360912329
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360912326}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.005019188, y: 0.027193546}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.875, y: 0.703125}
+    newSize: {x: 0.875, y: 0.703125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.67087746, y: 0.30072498}
+  m_EdgeRadius: 0
 --- !u!1 &365714498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3142,20 +3169,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 433590817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7baccd6b0e6f52848aa5a7aa0927f730, type: 3}
+  m_Script: {fileID: 11500000, guid: 336ba8c6c21c4d40a67710c66937d158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  gridWorldPosition: {x: -17.53, y: -4.1}
-  gridWorldSize: {x: 28.25, y: 19.1}
+  gridWorldPosition: {x: -18.48, y: -4.8}
+  gridWorldSize: {x: 31.78, y: 21.16}
   nodeRadius: 0.15
   obstacleLayer:
     serializedVersion: 2
@@ -4671,7 +4689,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616696702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.22, y: 11.69, z: 0}
+  m_LocalPosition: {x: 4.517, y: -0.774, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

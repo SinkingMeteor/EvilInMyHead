@@ -13,20 +13,20 @@ namespace Sheldier.Setup
     {
         [SerializeField] private SceneCameraHandler sceneCameraHandler;
         [SerializeField] private ScenePlaceholdersKeeper scenePlaceholdersKeeper;
-        [SerializeField] private PathfindingGrid pathfindingGrid;
+        [SerializeField] private PathGrid pathfindingGrid;
         
         private InputProvider _inputProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
         private ItemSpawner _itemSpawner;
         private ScenePlayerController _scenePlayerController;
         private ActorSpawner _actorSpawner;
-        private PathSeeker _pathSeeker;
+        private Pathfinder _pathfinder;
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
-            ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, PathSeeker pathSeeker)
+            ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, Pathfinder pathfinder)
         {
-            _pathSeeker = pathSeeker;
+            _pathfinder = pathfinder;
             _scenePlayerController = scenePlayerController;
             _itemSpawner = itemSpawner;
             _sceneLoadingOperation = sceneLoadingOperation;
@@ -45,7 +45,7 @@ namespace Sheldier.Setup
             _actorSpawner.Initialize(scenePlaceholdersKeeper);
             _scenePlayerController.InitializeOnScene(sceneCameraHandler);
             pathfindingGrid.Initialize();
-            _pathSeeker.InitializeOnScene(pathfindingGrid);
+            _pathfinder.InitializeOnScene(pathfindingGrid);
             
             Actor firstActor = _actorSpawner.ActorsOnScene[0];
             _scenePlayerController.SetControl(firstActor);

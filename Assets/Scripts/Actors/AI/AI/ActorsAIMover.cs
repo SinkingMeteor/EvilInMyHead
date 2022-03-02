@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
 using Sheldier.Common.Utilities;
@@ -13,7 +12,6 @@ namespace Sheldier.Actors.AI
         [SerializeField] private Transform targetTransform;
         
         private PathProvider _pathProvider;
-        private float _speed;
         private Vector2[] _paths;
         private int _targetIndex;
         
@@ -62,13 +60,14 @@ namespace Sheldier.Actors.AI
 
             while (true)
             {
-                if (Vector2.Distance(_actorTransform.position.DiscardZ(), currentWaypoint) < 0.1f)
+                if (Vector2.Distance(_actorTransform.position.DiscardZ(), currentWaypoint) < 0.2f)
                 {
                     _targetIndex++;
                     if (_targetIndex >= _paths.Length)
                     {
                         _paths = null;
                         _aiInputProvider.SetMovementDirection(Vector2.zero);
+                        _targetIndex = 0;
                         yield break;
                     }
                     currentWaypoint = _paths[_targetIndex];
