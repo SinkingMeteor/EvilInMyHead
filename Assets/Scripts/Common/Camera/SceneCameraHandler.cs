@@ -1,5 +1,4 @@
-﻿using System;
-using Sheldier.Setup;
+﻿using Sheldier.Setup;
 using UnityEngine;
 using Zenject;
 
@@ -9,8 +8,6 @@ namespace Sheldier.Common
     {
         public Camera CurrentSceneCamera => _camera;
         
-        [SerializeField] private CameraBordersConstrains _cameraBordersConstrains;
-
         private Camera _camera;
 
         private CameraSideMover _cameraSideMover;
@@ -29,8 +26,6 @@ namespace Sheldier.Common
             _cameraSideMover = new CameraSideMover();
             _cameraSideMover.SetDependencies(_camera, _inputProvider, _cameraFollower);
             
-            _cameraBordersConstrains.SetDependencies(_camera);
-            
             _lateTickHandler.AddListener(this);
         }
         [Inject]
@@ -44,7 +39,6 @@ namespace Sheldier.Common
         {
             _cameraFollower.LateTick();
             _cameraSideMover.LateTick();
-            _cameraBordersConstrains.LateTick();
         }
 
         public void SetFollowTarget(Transform transform)
