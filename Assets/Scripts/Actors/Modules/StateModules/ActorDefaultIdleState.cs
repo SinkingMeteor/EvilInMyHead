@@ -27,10 +27,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                AnimationConstants.Animations[AnimationType.Idle_Front],
-                AnimationConstants.Animations[AnimationType.Idle_Front_Side],
-                AnimationConstants.Animations[AnimationType.Idle_Back_Side],
-                AnimationConstants.Animations[AnimationType.Idle_Back]
+                AnimationConstants.ANIMATIONS[AnimationType.Idle_Front],
+                AnimationConstants.ANIMATIONS[AnimationType.Idle_Front_Side],
+                AnimationConstants.ANIMATIONS[AnimationType.Idle_Back_Side],
+                AnimationConstants.ANIMATIONS[AnimationType.Idle_Back]
             };
         }
 

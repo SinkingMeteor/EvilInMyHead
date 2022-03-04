@@ -356,7 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 66672585}
   - component: {fileID: 66672586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Planks2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 72500502}
   - component: {fileID: 72500504}
   - component: {fileID: 72500503}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AboveBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 85280464}
   - component: {fileID: 85280466}
   - component: {fileID: 85280465}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SideBorder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 130071891}
   - component: {fileID: 130071892}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DesertTile (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1579,7 +1579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 193403798}
   - component: {fileID: 193403799}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1947,7 +1947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 230590285}
   - component: {fileID: 230590286}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3728,7 +3728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 399118749}
   - component: {fileID: 399118750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Planks2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3935,8 +3935,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336ba8c6c21c4d40a67710c66937d158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWorldPosition: {x: -18.48, y: -4.8}
-  gridWorldSize: {x: 31.78, y: 21.16}
+  gridWorldPosition: {x: -18.48, y: -11.23}
+  gridWorldSize: {x: 31.78, y: 27.92}
   nodeRadius: 0.15
   obstacleLayer:
     serializedVersion: 2
@@ -4838,7 +4838,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &538628367
 GameObject:
@@ -5442,7 +5442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 616696703}
   m_Layer: 0
-  m_Name: Dummy
+  m_Name: PathfindingDummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5461,7 +5461,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &622867488
 GameObject:
@@ -5473,7 +5473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622867489}
   - component: {fileID: 622867490}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6013,7 +6013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 760686898}
   - component: {fileID: 760686899}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6332,7 +6332,7 @@ Transform:
   m_Children:
   - {fileID: 433590818}
   m_Father: {fileID: 1936077392}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &819255100
 GameObject:
@@ -6344,7 +6344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 819255101}
   - component: {fileID: 819255102}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Planks1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6526,10 +6526,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00061349693
+    x: 0
     y: 0
-    width: 0.998773
-    height: 0.9989095
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -8224,7 +8224,7 @@ Transform:
   - {fileID: 951282182}
   - {fileID: 1186401627}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1007294027
 GameObject:
@@ -8520,7 +8520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054272006}
   - component: {fileID: 1054272007}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock9 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9089,7 +9089,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1103684515}
   - component: {fileID: 1103684516}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9173,7 +9173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1104999625}
   - component: {fileID: 1104999626}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DesertTile (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9341,7 +9341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1108287301}
   - component: {fileID: 1108287302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9661,7 +9661,7 @@ GameObject:
   - component: {fileID: 1155281237}
   - component: {fileID: 1155281238}
   - component: {fileID: 1155281239}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10588,7 +10588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1288867867}
   - component: {fileID: 1288867868}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10673,7 +10673,7 @@ GameObject:
   - component: {fileID: 1294598161}
   - component: {fileID: 1294598163}
   - component: {fileID: 1294598162}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SideBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11318,7 +11318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1420177926}
   - component: {fileID: 1420177927}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DesertTile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11622,7 +11622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1438798860}
   - component: {fileID: 1438798861}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11706,7 +11706,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1443770351}
   - component: {fileID: 1443770352}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DesertTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12463,58 +12463,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546267473}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1546624017
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1546624018}
-  - component: {fileID: 1546624019}
-  m_Layer: 0
-  m_Name: CameraHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1546624018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546624017}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1936077392}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1546624019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546624017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fffeddd646543af829632207f2ad350, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1551163152
 GameObject:
   m_ObjectHideFlags: 0
@@ -13089,7 +13045,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608311977}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -13115,7 +13071,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608311977}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -13141,7 +13097,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608311977}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -14612,7 +14568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1714075286}
   - component: {fileID: 1714075287}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rock3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14701,7 +14657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1740122592}
   - component: {fileID: 1740122593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Planks1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15235,7 +15191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1801695204}
   - component: {fileID: 1801695205}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DesertTile (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15725,7 +15681,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1857511631}
   - component: {fileID: 1857511632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Planks2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15893,7 +15849,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1881795169}
   - component: {fileID: 1881795170}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DesertTile (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16368,9 +16324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb6fa5b2cd9593488ae4acb5d99c3b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneCameraHandler: {fileID: 1546624019}
   scenePlaceholdersKeeper: {fileID: 1001387703}
   pathfindingGrid: {fileID: 433590819}
+  sceneData: {fileID: 11400000, guid: ff9b4a7c8cdca5342b32e66ebe878df9, type: 2}
 --- !u!4 &1936077392
 Transform:
   m_ObjectHideFlags: 0
@@ -16383,8 +16339,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1546624018}
   - {fileID: 796768632}
+  - {fileID: 1546267475}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17725,7 +17681,7 @@ GameObject:
   - component: {fileID: 2085574476}
   - component: {fileID: 2085574477}
   - component: {fileID: 2085574478}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Desert
   m_TagString: Untagged
   m_Icon: {fileID: 0}

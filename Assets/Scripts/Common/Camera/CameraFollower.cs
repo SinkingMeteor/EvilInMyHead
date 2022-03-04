@@ -9,7 +9,7 @@ namespace Sheldier.Common
 
         public Vector3 TargetPosition => _targetPosition;
         private Vector3 _targetPosition;
-        public void SetDependencies(Camera camera)
+        public void SetCamera(Camera camera)
         {
             _camera = camera;
         }

@@ -1,10 +1,9 @@
-﻿using Sheldier.Setup;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Common
 {
-    public class SceneCameraHandler : MonoBehaviour, ILateTickListener
+    public class CameraHandler : ILateTickListener
     {
         public Camera CurrentSceneCamera => _camera;
         
@@ -16,17 +15,24 @@ namespace Sheldier.Common
         private LateTickHandler _lateTickHandler;
         private IInputProvider _inputProvider;
 
-        public void Initialize()
+
+        public void InitializeOnScene()
         {
             _camera = Camera.main;
-
-            _cameraFollower = new CameraFollower();
-            _cameraFollower.SetDependencies(_camera);
-            
-            _cameraSideMover = new CameraSideMover();
-            _cameraSideMover.SetDependencies(_camera, _inputProvider, _cameraFollower);
+            _cameraFollower.SetCamera(_camera);
+            _cameraSideMover.SetCamera(_camera);
             
             _lateTickHandler.AddListener(this);
+        }
+        
+        public void Initialize()
+        {
+            _cameraFollower = new CameraFollower();
+            _cameraFollower.SetCamera(_camera);
+            
+            _cameraSideMover = new CameraSideMover();
+            _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower);
+            
         }
         [Inject]
         private void InjectDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider)
@@ -45,11 +51,8 @@ namespace Sheldier.Common
         {
             _cameraFollower.SetNewTarget(transform);
         }
-        private void OnDestroy()
+        public void OnSceneDispose()
         {
-            #if UNITY_EDITOR
-            if (!GameGlobalSettings.IsStarted) return;
-            #endif
             _lateTickHandler.RemoveListener(this);
         }
 

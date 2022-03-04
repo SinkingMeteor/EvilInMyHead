@@ -6,7 +6,7 @@ namespace Sheldier.Constants
 {
     public static class AnimationConstants
     {
-        public static readonly Dictionary<AnimationType, int> Animations = new Dictionary<AnimationType, int>
+        public static readonly Dictionary<AnimationType, int> ANIMATIONS = new Dictionary<AnimationType, int>
         {
             {AnimationType.Idle_Front, Animator.StringToHash("Idle_Front")},
             {AnimationType.Idle_Front_Side, Animator.StringToHash("Idle_Front_Side")},

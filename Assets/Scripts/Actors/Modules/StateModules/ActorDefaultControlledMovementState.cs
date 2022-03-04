@@ -37,10 +37,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                AnimationConstants.Animations[AnimationType.Run_Front],
-                AnimationConstants.Animations[AnimationType.Run_Front_Side],
-                AnimationConstants.Animations[AnimationType.Run_Back_Side],
-                AnimationConstants.Animations[AnimationType.Run_Back],
+                AnimationConstants.ANIMATIONS[AnimationType.Run_Front],
+                AnimationConstants.ANIMATIONS[AnimationType.Run_Front_Side],
+                AnimationConstants.ANIMATIONS[AnimationType.Run_Back_Side],
+                AnimationConstants.ANIMATIONS[AnimationType.Run_Back],
             };
         }
 

@@ -1,44 +1,33 @@
 using System;
 using System.Threading.Tasks;
 using Sheldier.Constants;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Sheldier.Setup
 {
     public class SceneLoadingOperation : ILoadOperation
     {
-        private string[] _targetSceneNames;
+        private SceneData _sceneData;
         public string LoadLabel => "Loading Scene";
+        
         public SceneLoadingOperation()
         {
-            _targetSceneNames = new[] { SceneNames.COLONY_OUTSIDE};
+            _sceneData = Resources.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
         }
-
-        public void SetTargetScene(string[] targetSceneNames)
+        public void SetTargetScene(SceneData targetSceneData)
         {
-            _targetSceneNames = targetSceneNames;
+            _sceneData = targetSceneData;
         }
-
-        public void SetTargetScene(string targetSceneName)
-        {
-            _targetSceneNames = new[] {targetSceneName};
-        }
-
-
         public async Task Load(Action<float> SetProgress)
         {
-            float divider = 1.0f / _targetSceneNames.Length;
-
-            for (int i = 0; i < _targetSceneNames.Length; i++)
+            var loadedScene = SceneManager.LoadSceneAsync(_sceneData.SceneName, LoadSceneMode.Single);
+            while (!loadedScene.isDone)
             {
-                var loadedScene = SceneManager.LoadSceneAsync(_targetSceneNames[i], i == 0 ? LoadSceneMode.Single : LoadSceneMode.Additive);
-                SetProgress(divider * i);
-                while (!loadedScene.isDone)
-                {
-                    await Task.Delay(1);
-                }
+                await Task.Delay(1);
             }
             SetProgress(1.0f);
+            
         }
     }
 }

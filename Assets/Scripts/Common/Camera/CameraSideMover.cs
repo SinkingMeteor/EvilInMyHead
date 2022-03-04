@@ -11,10 +11,14 @@ namespace Sheldier.Common
         private Camera _camera;
         private CameraFollower _cameraFollower;
 
-        public void SetDependencies(Camera camera, IInputProvider inputProvider, CameraFollower cameraFollower)
+        public void SetCamera(Camera camera)
+        {
+            _camera = camera;
+        }
+        
+        public void SetDependencies(IInputProvider inputProvider, CameraFollower cameraFollower)
         {
             _inputProvider = inputProvider;
-            _camera = camera;
             _cameraFollower = cameraFollower;
         }
 

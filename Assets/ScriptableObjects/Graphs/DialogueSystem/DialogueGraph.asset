@@ -33,7 +33,8 @@ MonoBehaviour:
   input: {fileID: 0}
   _replica: dialogues.bob.colony.to_earth.bob.replica_2
   _index: 1
-  _choices: []
+  _choices:
+  - _choice: 
 --- !u!114 &-7067234155362305682
 MonoBehaviour:
   m_ObjectHideFlags: 0

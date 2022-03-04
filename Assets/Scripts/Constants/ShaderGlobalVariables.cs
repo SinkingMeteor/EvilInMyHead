@@ -1,6 +1,6 @@
 namespace Sheldier.Constants
 {
-        public class ShaderGlobalVariables
+        public static class ShaderGlobalVariables
         {
             public const string LOADING_BAR_FILL_AMOUNT = "_Fill";
         }

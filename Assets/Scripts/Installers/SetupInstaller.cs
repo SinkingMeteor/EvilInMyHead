@@ -8,6 +8,7 @@ namespace Sheldier.Installers
         public override void InstallBindings()
         {
             Container.Bind<SceneLoadingOperation>().AsSingle();
+            Container.Bind<UILoadingOperation>().AsSingle();
         }
     }
 }

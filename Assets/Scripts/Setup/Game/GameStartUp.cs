@@ -17,7 +17,6 @@ namespace Sheldier.Setup
         private LoadingScreenProvider _loadingScreenProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
         private IInputProvider _inputProvider;
-        private GameGlobalSettings _globalSettings;
         private LocalizationProvider _localizationProvider;
         private AudioMixerController _audioMixerController;
         private ActorsEffectFactory _effectFactory;
@@ -26,13 +25,16 @@ namespace Sheldier.Setup
         private WeaponBlowPool _weaponBlowPool;
         private Inventory _inventory;
         private PathProvider _pathProvider;
+        private UILoadingOperation _uiLoadingOperation;
+        private CameraHandler _cameraHandler;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
             AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory, ProjectilePool projectilePool,
-            WeaponBlowPool weaponBlowPool, Inventory inventory, PathProvider pathProvider)
+            WeaponBlowPool weaponBlowPool, Inventory inventory, PathProvider pathProvider, UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler)
         {
+            _cameraHandler = cameraHandler;
             _pathProvider = pathProvider;
             _inventory = inventory;
             _weaponBlowPool = weaponBlowPool;
@@ -44,6 +46,7 @@ namespace Sheldier.Setup
             _sceneLoadingOperation = sceneLoadingOperation;
             _inputProvider = inputProvider;
             _loadingScreenProvider = loadingScreenProvider;
+            _uiLoadingOperation = uiLoadingOperation;
         }
         private void Start()
         {
@@ -58,9 +61,12 @@ namespace Sheldier.Setup
             _inputProvider.Initialize();
             _effectFactory.Initialize();
             _pathProvider.Initialize();
+            _cameraHandler.Initialize();
+
             ILoadOperation[] loadOperations =
             {
-                _sceneLoadingOperation
+                _uiLoadingOperation,
+                _sceneLoadingOperation,
             };
             
             new GameGlobalSettings().SetStarted();

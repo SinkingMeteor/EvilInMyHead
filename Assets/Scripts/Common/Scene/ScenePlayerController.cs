@@ -14,19 +14,15 @@ namespace Sheldier.Common
         private Actor _controlledActor;
         
         private IInputProvider _inputProvider;
-        private SceneCameraHandler _cameraHandler;
+        private CameraHandler _cameraHandler;
         private Inventory _inventory;
 
         [Inject]
-        private void InjectDependencies(IInputProvider inputProvider, Inventory inventory)
+        private void InjectDependencies(IInputProvider inputProvider, Inventory inventory, CameraHandler cameraHandler)
         {
+            _cameraHandler = cameraHandler;
             _inventory = inventory;
             _inputProvider = inputProvider;
-        }
-
-        public void InitializeOnScene(SceneCameraHandler sceneCameraHandler)
-        {
-            _cameraHandler = sceneCameraHandler;
         }
 
         public void SetFollowTarget(Actor actor)
