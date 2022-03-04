@@ -1,7 +1,9 @@
 ﻿using Sheldier.Common;
 using Sheldier.Common.Animation;
+using Sheldier.Common.Pause;
 using Sheldier.Common.Pool;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.Item
 {
@@ -12,21 +14,25 @@ namespace Sheldier.Item
         [SerializeField] private SimpleAnimator animator;
         private IPoolSetter<WeaponBlow> _poolSetter;
 
-        public void Initialize(IPoolSetter<WeaponBlow> poolSetter, TickHandler tickHandler)
+        public void Initialize(IPoolSetter<WeaponBlow> poolSetter)
         {
             _poolSetter = poolSetter;
-            animator.SetDependencies(tickHandler);
+        }
 
+        [Inject]
+        private void InjectDependencies(TickHandler tickHandler)
+        {
+            animator.SetDependencies(tickHandler);
         }
         public void OnInstantiated()
         {
             animator.Initialize();
         }
+        
         public void SetAnimation(AnimationData data)
         {
             animator.Play(data);
             animator.OnAnimationEnd += SetToPool;
-
         }
 
         private void SetToPool()

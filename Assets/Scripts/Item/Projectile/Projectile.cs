@@ -1,8 +1,8 @@
 using System.Collections;
 using Sheldier.Common;
 using Sheldier.Common.Pool;
-using Sheldier.Setup;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.Item
 {
@@ -17,17 +17,23 @@ namespace Sheldier.Item
         private Coroutine _projectileLifetime;
         private IPoolSetter<Projectile> _poolSetter;
         private TickHandler _tickHandler;
+        private bool _isPaused;
 
-        public void Initialize(IPoolSetter<Projectile> poolSetter, TickHandler tickHandler)
+        public void Initialize(IPoolSetter<Projectile> poolSetter)
         {
             _poolSetter = poolSetter;
-            _tickHandler = tickHandler;
         }
 
+        [Inject]
+        private void InjectDependencies(TickHandler tickHandler)
+        {
+            _tickHandler = tickHandler;
+        }
         public void OnInstantiated()
         {
             _tickHandler.AddListener(this);
         }
+
         public void SetDirection(Vector2 dir)
         {
             _movementDirection = dir;
@@ -53,6 +59,7 @@ namespace Sheldier.Item
         {
             if(_projectileLifetime != null)
                 StopCoroutine(_projectileLifetime);
+            _tickHandler.RemoveListener(this);
         }
         private IEnumerator StartLifetimeCoroutine()
         {
@@ -63,7 +70,6 @@ namespace Sheldier.Item
                 totalTime -= Time.deltaTime;
                 yield return null;
             }
-            _tickHandler.RemoveListener(this);
             _poolSetter.SetToPull(this);
         }
 

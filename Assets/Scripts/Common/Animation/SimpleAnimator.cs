@@ -51,7 +51,6 @@ namespace Sheldier.Common.Animation
             if (!currentAnimation.IsLoop && frameIndex == frameCount - 1)
                 StopPlaying();
         }
-
         public void StopPlaying()
         {
             _isPlaying = false;

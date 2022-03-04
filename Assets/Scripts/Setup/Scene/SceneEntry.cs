@@ -1,6 +1,7 @@
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
+using Sheldier.Common.Pause;
 using Sheldier.Item;
 using Sheldier.UI;
 using UnityEngine;
@@ -24,12 +25,15 @@ namespace Sheldier.Setup
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
         private CameraHandler _cameraHandler;
+        private PauseNotifier _pauseNotifier;
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
             ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, Pathfinder pathfinder,
-            UILoadingOperation uiLoadingOperation, UIStatesController uiStatesController, CameraHandler cameraHandler)
+            UILoadingOperation uiLoadingOperation, UIStatesController uiStatesController, CameraHandler cameraHandler,
+            PauseNotifier pauseNotifier)
         {
+            _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
             _uiStatesController = uiStatesController;
             _uiLoadingOperation = uiLoadingOperation;
@@ -55,6 +59,8 @@ namespace Sheldier.Setup
 
             InstantiateUI();
             _uiStatesController.InitializeOnScene();
+            
+            
             //Test
             Actor firstActor = _actorSpawner.ActorsOnScene[0];
             _scenePlayerController.SetControl(firstActor);
@@ -90,6 +96,7 @@ namespace Sheldier.Setup
             #endif
             _cameraHandler.OnSceneDispose();
             _uiStatesController.OnSceneDispose();
+            _pauseNotifier.Clear();
         }
     }
 

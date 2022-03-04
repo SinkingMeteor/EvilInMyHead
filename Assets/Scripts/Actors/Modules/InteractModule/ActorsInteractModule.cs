@@ -10,7 +10,7 @@ namespace Sheldier.Actors.Interact
     [RequireComponent(typeof(CircleCollider2D))]
     public class ActorsInteractModule : SerializedMonoBehaviour, IExtraActorModule
     {
-  public int Priority => 0;
+        public int Priority => 0;
         
         [SerializeField] private CircleCollider2D circleCollider2D;
         [ReadOnly][OdinSerialize]private Stack<IInteractReceiver> _receivers;
@@ -30,10 +30,10 @@ namespace Sheldier.Actors.Interact
             _inputController = data.Actor.InputController;
             _receivers = new Stack<IInteractReceiver>();
             _inputController.OnUseButtonPressed += Interact;
-            _notifier.OnSettedInput += OnSettedInput;
+            _notifier.OnSettedInput += OnSetInput;
         }
 
-        private void OnSettedInput()
+        private void OnSetInput()
         {
             if(_currentReceiver != null)
                 CheckInput(_currentReceiver);
@@ -140,7 +140,7 @@ namespace Sheldier.Actors.Interact
 
         public void Dispose()
         {
-            _notifier.OnSettedInput -= OnSettedInput;
+            _notifier.OnSettedInput -= OnSetInput;
             _inputController.OnUseButtonPressed -= Interact;
 
         }

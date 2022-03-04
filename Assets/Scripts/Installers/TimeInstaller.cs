@@ -1,4 +1,5 @@
 ﻿using Sheldier.Common;
+using Sheldier.Common.Pause;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace Sheldier.Installers
             Container.Bind<TickHandler>().FromInstance(tickHandler).AsSingle();
             Container.Bind<LateTickHandler>().FromInstance(lateTickHandler).AsSingle();
             Container.Bind<FixedTickHandler>().FromInstance(fixedTickHandler).AsSingle();
+            Container.Bind<PauseNotifier>().AsSingle();
         }
     }
 }

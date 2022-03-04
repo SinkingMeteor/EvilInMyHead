@@ -250,7 +250,7 @@
                 },
                 {
                     "name": "Click",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "f91f1055-0892-4d24-b0d8-67fa099238aa",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -268,7 +268,7 @@
                 },
                 {
                     "name": "MiddleClick",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "b2f75b54-ef84-47d8-ace7-24c7b59031ef",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -277,7 +277,7 @@
                 },
                 {
                     "name": "RightClick",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "2db44697-0f28-444f-bfbe-0e4269f07a60",
                     "expectedControlType": "Button",
                     "processors": "",

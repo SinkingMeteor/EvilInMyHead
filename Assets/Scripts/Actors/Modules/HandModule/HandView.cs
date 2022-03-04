@@ -10,15 +10,13 @@ namespace Sheldier.Actors.Hand
         
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private SimpleAnimator simpleAnimator;
-        public void AddItem(Sprite itemSprite) => spriteRenderer.sprite = itemSprite;
-        public void ClearItem() => spriteRenderer.sprite = null;
-
 
         public void Initialize(TickHandler tickHandler)
         {
             simpleAnimator.SetDependencies(tickHandler);
         }
-
+        public void AddItem(Sprite itemSprite) => spriteRenderer.sprite = itemSprite;
+        public void ClearItem() => spriteRenderer.sprite = null;
         public void Dispose()
         {
             simpleAnimator.Dispose();

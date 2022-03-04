@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Sheldier.Common.Pause;
+using Sheldier.Installers;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +13,7 @@ namespace Sheldier.Common.Pool
         [SerializeField] private T _entity;
 
         private Queue<T> _pooledEntities;
-        private TickHandler _tickHandler;
+        private PoolInstaller _poolInstaller;
 
         public void Initialize()
         {
@@ -20,9 +22,9 @@ namespace Sheldier.Common.Pool
         }
 
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
+        private void InjectDependencies(PoolInstaller poolInstaller)
         {
-            _tickHandler = tickHandler;
+            _poolInstaller = poolInstaller;
         }
         public T GetFromPool()
         {
@@ -49,7 +51,8 @@ namespace Sheldier.Common.Pool
         private T InstantiateEntity()
         {
             var entity = Instantiate(_entity, poolTransform, false);
-            entity.Initialize(this, _tickHandler);
+            _poolInstaller.InjectPoolObject(entity);
+            entity.Initialize(this);
             entity.gameObject.SetActive(false);
             return entity;
         }

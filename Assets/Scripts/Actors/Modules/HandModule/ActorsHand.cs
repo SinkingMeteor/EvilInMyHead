@@ -1,5 +1,4 @@
-﻿using Sheldier.Actors.Inventory;
-using Sheldier.Common;
+﻿using Sheldier.Common;
 using Sheldier.Item;
 using UnityEngine;
 

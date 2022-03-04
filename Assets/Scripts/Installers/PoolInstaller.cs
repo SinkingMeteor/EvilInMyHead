@@ -13,6 +13,12 @@ namespace Sheldier.Installers
         {
             Container.Bind<ProjectilePool>().FromInstance(projectilePool).AsSingle();
             Container.Bind<WeaponBlowPool>().FromInstance(weaponBlowPool).AsSingle();
+            Container.Bind<PoolInstaller>().FromInstance(this).AsSingle();
+        }
+
+        public void InjectPoolObject<T>(T obj) where T : MonoBehaviour
+        {
+            Container.InjectGameObject(obj.transform.gameObject);
         }
     }
 }

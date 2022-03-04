@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Sheldier.Common.Pause;
+using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Common
 {
-    public class CameraHandler : ILateTickListener
+    public class CameraHandler : ILateTickListener, IPausable
     {
         public Camera CurrentSceneCamera => _camera;
         
@@ -14,6 +15,7 @@ namespace Sheldier.Common
         
         private LateTickHandler _lateTickHandler;
         private IInputProvider _inputProvider;
+        private PauseNotifier _pauseNotifier;
 
 
         public void InitializeOnScene()
@@ -23,6 +25,7 @@ namespace Sheldier.Common
             _cameraSideMover.SetCamera(_camera);
             
             _lateTickHandler.AddListener(this);
+            _pauseNotifier.Add(this);
         }
         
         public void Initialize()
@@ -35,8 +38,9 @@ namespace Sheldier.Common
             
         }
         [Inject]
-        private void InjectDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider)
+        private void InjectDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider, PauseNotifier pauseNotifier)
         {
+            _pauseNotifier = pauseNotifier;
             _inputProvider = inputProvider;
             _lateTickHandler = lateTickHandler;
         }
@@ -54,7 +58,17 @@ namespace Sheldier.Common
         public void OnSceneDispose()
         {
             _lateTickHandler.RemoveListener(this);
+            _pauseNotifier.Remove(this);
         }
 
+        public void Pause()
+        {
+            _lateTickHandler.RemoveListener(this);
+        }
+
+        public void Unpause()
+        {
+            _lateTickHandler.AddListener(this);
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Linq;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
+using Sheldier.Common.Pause;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -10,7 +11,7 @@ using IInitializable = Sheldier.Setup.IInitializable;
 
 namespace Sheldier.Actors
 {
-    public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener, IFixedTickListener
+    public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener, IFixedTickListener, IPausable
     {
         public ActorInputController InputController => _actorInputController;
         public ActorEffectModule EffectModule => actorEffectModule;
@@ -31,9 +32,12 @@ namespace Sheldier.Actors
         private ActorsInventoryModule _inventoryModule;
         private TickHandler _tickHandler;
         private FixedTickHandler _fixedTickHandler;
+        private PauseNotifier _pauseNotifier;
 
         public void Initialize()
         {
+            _pauseNotifier.Add(this);
+            
             _notifier = new ActorNotifyModule();
             
             _actorInputController = new ActorInputController();
@@ -64,8 +68,9 @@ namespace Sheldier.Actors
         }
         
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler, FixedTickHandler fixedTickHandler)
+        private void InjectDependencies(TickHandler tickHandler, FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
         {
+            _pauseNotifier = pauseNotifier;
             _fixedTickHandler = fixedTickHandler;
             _tickHandler = tickHandler;
         }
@@ -101,12 +106,25 @@ namespace Sheldier.Actors
         {
             _inventoryModule.RemoveInventory();
         }
+        public void Pause()
+        {
+            _tickHandler.RemoveListener(this);
+            _fixedTickHandler.RemoveListener(this);
+            _actorInputController.LockInput();
+        }
 
+        public void Unpause()
+        {
+            _tickHandler.AddListener(this);
+            _fixedTickHandler.AddListener(this);
+            _actorInputController.UnlockInput();
+        }
         private void OnDestroy()
         {
             #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
             #endif
+            _pauseNotifier.Remove(this);
             _tickHandler.RemoveListener(this);
             _fixedTickHandler.RemoveListener(this);
             actorEffectModule.Dispose();
@@ -115,6 +133,8 @@ namespace Sheldier.Actors
                 module.Dispose();
             }
         }
+
+
     }
 }
 

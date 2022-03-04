@@ -23,6 +23,7 @@ namespace Sheldier.Actors.Interact
             _actorsView = data.Actor.ActorsView;
             _defaultMaterial = _actorsView.CurrentBodyMaterial;
         }
+
         [Inject]
         private void InjectDependencies(ScenePlayerController playerSceneController)
         {
