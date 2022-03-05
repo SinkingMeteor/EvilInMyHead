@@ -23,19 +23,19 @@ namespace Sheldier.Setup
         private ActorSpawner _actorSpawner;
         private Pathfinder _pathfinder;
         private UILoadingOperation _uiLoadingOperation;
-        private UIStatesController _uiStatesController;
         private CameraHandler _cameraHandler;
         private PauseNotifier _pauseNotifier;
+        private UIStatesController _uiStatesController;
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
             ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, Pathfinder pathfinder,
-            UILoadingOperation uiLoadingOperation, UIStatesController uiStatesController, CameraHandler cameraHandler,
-            PauseNotifier pauseNotifier)
+            UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
+            PauseNotifier pauseNotifier, UIStatesController uiStatesController)
         {
+            _uiStatesController = uiStatesController;
             _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
-            _uiStatesController = uiStatesController;
             _uiLoadingOperation = uiLoadingOperation;
             _pathfinder = pathfinder;
             _scenePlayerController = scenePlayerController;
@@ -56,11 +56,8 @@ namespace Sheldier.Setup
             _actorSpawner.Initialize(scenePlaceholdersKeeper);
             pathfindingGrid.Initialize();
             _pathfinder.InitializeOnScene(pathfindingGrid);
-
-            InstantiateUI();
             _uiStatesController.InitializeOnScene();
-            
-            
+            _uiStatesController.Add(UIType.Inventory);
             //Test
             Actor firstActor = _actorSpawner.ActorsOnScene[0];
             _scenePlayerController.SetControl(firstActor);
@@ -68,16 +65,16 @@ namespace Sheldier.Setup
 
         }
 
-        private void InstantiateUI()
+       /* private void InstantiateUI()
         {
             GameObject uiMain = new GameObject("[UI]");
             uiMain.transform.position = Vector3.zero;
             
-            foreach (var uiState in _uiStatesController.States)
+            foreach (var uiState in _uiStatesController.States.Values)
             {
                 Instantiate(uiState, uiMain.transform, true);
             }
-        }
+        }*/
 
         private bool GameIsInitialized()
         {

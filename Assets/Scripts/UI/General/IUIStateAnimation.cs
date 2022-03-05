@@ -7,4 +7,6 @@ namespace Sheldier.UI
         Task PlayAnimation();
         void Reset();
     }
+    public interface IUIStateAnimationAppearing : IUIStateAnimation{}
+    public interface IUIStateAnimationDisappearing : IUIStateAnimation{}
 }

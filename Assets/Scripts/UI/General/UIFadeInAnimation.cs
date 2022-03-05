@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Sheldier.UI
 {
-    public class UIFadeInAnimation : DOTweenUIAnimation
+    public class UIFadeInAnimation : DOTweenUIAnimation, IUIStateAnimationAppearing
     {
         [SerializeField] private CanvasGroup canvasGroup;
-        protected override Tween[] GetAnimations()
+        protected override Tween GetAnimation()
         {
-            return new Tween[] {canvasGroup.DOFade(1.0f, duration * (1.0f - canvasGroup.alpha))};
+            return canvasGroup.DOFade(1.0f, duration * (1.0f - canvasGroup.alpha));
         }
     }
 }

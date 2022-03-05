@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sheldier.Constants;
 using Sheldier.UI;
@@ -32,7 +33,7 @@ namespace Sheldier.Setup
         public async Task Load(Action<float> SetProgress)
         {
             int count = _sceneData.UIStatesRequest.UITypes.Count;
-            UIState[] states = new UIState[count];
+            Dictionary<UIType, UIState> states = new Dictionary<UIType, UIState>();
 
             float divider = 1.0f / count;
 
@@ -48,7 +49,7 @@ namespace Sheldier.Setup
 
                 SetProgress(divider * i);
                 var state = (UIState) request.asset;
-                states[i] = state;
+                states.Add(_sceneData.UIStatesRequest.UITypes[i], state);
             }
 
             SetProgress(1.0f);

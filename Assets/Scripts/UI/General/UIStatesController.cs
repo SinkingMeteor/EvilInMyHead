@@ -1,69 +1,87 @@
+using System;
 using System.Collections.Generic;
-using Sheldier.Common;
+using System.Linq;
+using Sheldier.Common.Pause;
+using Sheldier.Installers;
+using UnityEngine;
 using Zenject;
 
 
 namespace Sheldier.UI
 {
-    public class UIStatesController : ITickListener, IUIStatesController
+    public class UIStatesController : IUIStatesController
     {
-        public UIState CurrentTopState => _currentTopState;
-        public IEnumerable<UIState> States => _states;
+        public IReadOnlyDictionary<UIType, UIState> States => _states;
         
-        private UIState[] _states;
-        
-        private UIState _currentTopState;
-        private TickHandler _tickHandler;
+        private Dictionary<UIType, UIState> _states;
+        private Dictionary<UIType, UIState> _loadedStates;
+
+        private UIInstaller _uiInstaller;
+        private int _topSortingOrder;
+        private PauseNotifier _pauseNotifier;
 
         public void InitializeOnScene()
         {
+            
+            _states = new Dictionary<UIType, UIState>();
+            GameObject uiMain = new GameObject("[UI]");
+            uiMain.transform.position = Vector3.zero;
+            foreach (var uiState in _loadedStates)
+            {
+                var state = GameObject.Instantiate(uiState.Value, uiMain.transform, true);
+                _uiInstaller.InjectUIState(state.gameObject);
+                _states.Add(uiState.Key, state);
+            }
+            
+            _topSortingOrder = 0;
             foreach (var state in _states)
             {
-                state.Initialize();
+                state.Value.Initialize();
             }
 
-            _currentTopState = _states[0];
-            _tickHandler.AddListener(this);
+            _loadedStates = null;
         }
 
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
+        private void InjectDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier)
         {
-            _tickHandler = tickHandler;
-        }
-        public void Tick()
-        {
-            _currentTopState.Tick();
-        }
-        public void SetStates(UIState[] states) => _states = states;
+            _pauseNotifier = pauseNotifier;
+            _uiInstaller = uiInstaller;
+        } 
         
-        public void Add(UIState state)
+        public void SetStates(Dictionary<UIType, UIState> loadedStates)
         {
-            if (state != null)
-            {
-                
-            }
+            _loadedStates = loadedStates;
         }
 
-        public void Remove(UIState state)
+        public void Add(UIType uiType)
         {
+            if (!_states.ContainsKey(uiType))
+                throw new ArgumentNullException($"UI State {uiType.ToString()} doesn't exist in current scene");
+            var state = _states[uiType];
+            state.Activate();
+            state.SetSortingOrder(++_topSortingOrder);
+            if(state.IsRequirePause && !_pauseNotifier.IsPaused)
+                _pauseNotifier.Pause();
+        }
+
+        public void Remove(UIType uiType)
+        {
+            if (!_states.ContainsKey(uiType))
+                throw new ArgumentNullException($"UI State {uiType.ToString()} doesn't exist in current scene");
+            _topSortingOrder--;
+            var state = _states[uiType];
+            state.Deactivate();
+            if (!_states.Values.Any(x => x.IsActivated && x.IsRequirePause))
+                _pauseNotifier.Unpause();
         }
         public void OnSceneDispose()
         {
-            _tickHandler.RemoveListener(this);
             foreach (var state in _states)
             {
-                state.Dispose();
+                state.Value.Dispose();
             }
-            
         }
-
  
-    }
-
-    public interface IUIStatesController
-    {
-        void Add(UIState state);
-        void Remove(UIState state);
     }
 }

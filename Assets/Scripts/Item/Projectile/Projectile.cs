@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Sheldier.Item
 {
-    public class Projectile : MonoBehaviour, IPoolObject<Projectile>
+    public class Projectile : MonoBehaviour, IPoolObject<Projectile>, ITickListener
     {
         private Vector2 _movementDirection;
         public Transform Transform => transform;

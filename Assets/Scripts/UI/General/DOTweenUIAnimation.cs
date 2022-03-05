@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sheldier.UI
 {
-    public abstract class DOTweenUIAnimation : SerializedMonoBehaviour, IUIStateAnimation
+    public abstract class DOTweenUIAnimation : SerializedMonoBehaviour
     {
         [SerializeField] [Range(0.1f, 4.0f)] protected float duration;
         [SerializeField] private Ease easeType;
@@ -13,7 +13,7 @@ namespace Sheldier.UI
         private Tween _mainSequence;
 
  
-        protected abstract Tween[] GetAnimations();
+        protected abstract Tween GetAnimation();
 
         private async Task RunSequence()
         {
@@ -22,12 +22,8 @@ namespace Sheldier.UI
             Sequence sequence = DOTween.Sequence();
             sequence.SetUpdate(true);
             sequence.SetEase(easeType);
-            Tween[] animations = GetAnimations();
-            for (int i = 0; i < animations.Length; i++)
-            {
-                sequence.Append(animations[i]);
-            }
-
+            Tween animation = GetAnimation();
+            sequence.Append(animation);
             _mainSequence = sequence;
             await _mainSequence.AsyncWaitForCompletion();
         }

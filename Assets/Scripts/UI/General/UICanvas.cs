@@ -19,9 +19,9 @@ namespace Sheldier.UI
             canvasGroup.blocksRaycasts = false;
         }
 
-        public void SetSortingOrder()
+        public void SetSortingOrder(int order)
         {
-            
+            canvas.sortingOrder = order;
         }
     }
 }

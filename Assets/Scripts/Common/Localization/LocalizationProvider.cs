@@ -10,7 +10,7 @@ namespace Sheldier.Common.Localization
         public IReadOnlyDictionary<string, string> LocalizedText => _localizedText;
         private Dictionary<string, string> _localizedText;
 
-        private Language _currentLanguage;
+        //private Language _currentLanguage;
         private ILocalizationLoader _localizationLoader;
 
 
@@ -28,14 +28,9 @@ namespace Sheldier.Common.Localization
         }
         public void ChangeLanguage(Language language)
         {
-            _currentLanguage = Language.RU;
+            //_currentLanguage = Language.RU;
             _localizedText = _localizationLoader.LoadFile(language);
             OnLanguageChanged?.Invoke();
         }
-    }
-
-    public interface ILocalizationProvider
-    {
-        IReadOnlyDictionary<string, string> LocalizedText { get; }
     }
 }

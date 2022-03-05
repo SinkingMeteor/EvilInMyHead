@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Sheldier.Common.Localization
 {
@@ -21,7 +19,6 @@ namespace Sheldier.Common.Localization
             if (!File.Exists(path))
                 throw new ArgumentException($"Language file {language.ToString()} by path {path} not found");
             Dictionary<string, string> _localization = new Dictionary<string, string>();
-            var keys = File.ReadLines(path).Skip(1).First();
             string line;
             using (StreamReader streamReader = new StreamReader(path))
             {

@@ -8,7 +8,7 @@ namespace Sheldier.Constants
 
         public static readonly Dictionary<UIType, string> UI_STATE_PATHS = new Dictionary<UIType, string>()
         {
-            {UIType.GameplayHUD, "UIState/TestUIState"},
+            {UIType.Inventory, "UIState/InventoryUIState"},
             {UIType.GameplayPauseMenu, ""}
         };
 
