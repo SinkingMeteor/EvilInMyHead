@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
@@ -13,6 +14,9 @@ namespace Sheldier.Actors
 {
     public class Actor : SerializedMonoBehaviour, IInitializable, ITickListener, IFixedTickListener, IPausable
     {
+        public event Action OnWillRemoveControl;
+        public event Action OnAddedControl;
+        
         public ActorInputController InputController => _actorInputController;
         public ActorEffectModule EffectModule => actorEffectModule;
         public ActorNotifyModule Notifier => _notifier;
@@ -88,11 +92,12 @@ namespace Sheldier.Actors
         {
             _actorInputController.SetInputProvider(inputProvider);
             actorsRigidbody.bodyType = RigidbodyType2D.Dynamic;
-            _notifier.NotifySettedInput();
+            OnAddedControl?.Invoke();
         }
 
         public void RemoveControl()
         {
+            OnWillRemoveControl?.Invoke();
             _actorInputController.RemoveInputProvider();
             actorsRigidbody.bodyType = RigidbodyType2D.Kinematic;
         }

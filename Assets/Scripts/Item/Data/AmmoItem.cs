@@ -28,5 +28,10 @@ namespace Sheldier.Item
         {
             throw new ArgumentException("This item is unequippable");
         }
+
+        public override string GetExtraInfo()
+        {
+            return _itemAmount.Amount.ToString();
+        }
     }
 }

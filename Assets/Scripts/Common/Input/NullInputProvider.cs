@@ -13,10 +13,12 @@ namespace Sheldier.Common
         public InputButton UseButton => _useButton;
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
+        public InputButton OpenInventoryButton => _openInventoryButton;
         public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position) => Vector2.zero;
 
         private InputButton _reloadButton = new InputButton();
         private InputButton _useButton = new InputButton();
         private InputButton _attackButton = new InputButton();
+        private InputButton _openInventoryButton = new InputButton();
     }
 }

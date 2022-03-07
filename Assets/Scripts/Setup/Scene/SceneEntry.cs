@@ -57,7 +57,6 @@ namespace Sheldier.Setup
             pathfindingGrid.Initialize();
             _pathfinder.InitializeOnScene(pathfindingGrid);
             _uiStatesController.InitializeOnScene();
-            _uiStatesController.Add(UIType.Inventory);
             //Test
             Actor firstActor = _actorSpawner.ActorsOnScene[0];
             _scenePlayerController.SetControl(firstActor);

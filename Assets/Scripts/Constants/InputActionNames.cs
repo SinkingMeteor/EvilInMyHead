@@ -7,5 +7,6 @@ namespace Sheldier.Constants
         public const string MOVEMENT = "Movement";
         public const string CURSOR = "Cursor";
         public const string RELOAD = "Reload";
+        public const string OPENINVENTORY = "OpenInventory";
     }
 }

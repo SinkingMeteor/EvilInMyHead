@@ -9,21 +9,24 @@ namespace Sheldier.UI
 {
     public class UIState : SerializedMonoBehaviour, ITickListener
     {
-        public bool IsActivated => isActivated;
         public bool IsRequirePause => isRequirePause;
 
-        [OdinSerialize] private IUIStateAnimationAppearing[] appearingAnimations;
-        [OdinSerialize] private IUIStateAnimationDisappearing[] disappearingAnimations;
-        [OdinSerialize] [ReadOnly] private IVisualUIElement[] visualUIElements;
+        [OdinSerialize] [ReadOnly] private IUIStateAnimationAppearing[] appearingAnimations;
+        [OdinSerialize] [ReadOnly] private IUIStateAnimationDisappearing[] disappearingAnimations;
+        [OdinSerialize] [ReadOnly] private IUIElement[] visualUIElements;
         
         [OdinSerialize] private UICanvas canvas;
         [SerializeField] private bool isRequirePause;
         
-        private bool isActivated;
+        private bool _isActivated;
         private TickHandler _tickHandler;
 
         public void Initialize()
         {
+            for (int i = 0; i < appearingAnimations.Length; i++)
+                appearingAnimations[i].Initialize();
+            for (int i = 0; i < disappearingAnimations.Length; i++)
+                disappearingAnimations[i].Initialize();
             for (int i = 0; i < visualUIElements.Length; i++)
                 visualUIElements[i].Initialize();                
         }
@@ -38,12 +41,10 @@ namespace Sheldier.UI
             for (int i = 0; i < visualUIElements.Length; i++)
                 visualUIElements[i].Tick();    
         }
-        public async void Activate()
+
+        public async void Show()
         {
-            _tickHandler.AddListener(this);
-            
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].Activate();
+            Activate();
             
             Task[] tasks = new Task[appearingAnimations.Length];
             for (int i = 0; i < appearingAnimations.Length; i++)
@@ -52,17 +53,12 @@ namespace Sheldier.UI
             }
             await Task.WhenAll(tasks);
             
-
-            
-            isActivated = true;
-            canvas.OnActivated();
+            _isActivated = true;
         }
 
-        public async void Deactivate()
+        public async void Hide()
         {
-            _tickHandler.RemoveListener(this);
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].Deactivate();  
+            Deactivate();
             
             Task[] tasks = new Task[disappearingAnimations.Length];
             for (int i = 0; i < disappearingAnimations.Length; i++)
@@ -71,7 +67,41 @@ namespace Sheldier.UI
             }
             await Task.WhenAll(tasks);
             
-            isActivated = false;
+            _isActivated = false;
+        }
+
+        public void KillAllAppearingAnimations()
+        {
+            if(_isActivated) return; 
+            for (int i = 0; i < appearingAnimations.Length; i++)
+            {
+                appearingAnimations[i].Reset();
+            }
+        }
+        public void KillAllDisapearingAnimations()
+        {
+            if(!_isActivated) return; 
+            for (int i = 0; i < disappearingAnimations.Length; i++)
+            {
+                disappearingAnimations[i].Reset();
+            }
+        }
+        public void Activate()
+        {
+            _tickHandler.AddListener(this);
+            for (int i = 0; i < visualUIElements.Length; i++)
+                visualUIElements[i].OnActivated();
+            
+            canvas.OnActivated();
+
+        }
+
+        public void Deactivate()
+        {
+            _tickHandler.RemoveListener(this);
+            for (int i = 0; i < visualUIElements.Length; i++)
+                visualUIElements[i].OnDeactivated();  
+            
             canvas.OnDeactivated();
         }
 
@@ -85,14 +115,15 @@ namespace Sheldier.UI
                 visualUIElements[i].Dispose();          
         }
 
+        #if UNITY_EDITOR
         [Button]
         private void FindAllElements()
         {
             appearingAnimations = GetComponentsInChildren<IUIStateAnimationAppearing>();
             disappearingAnimations = GetComponentsInChildren<IUIStateAnimationDisappearing>();
-            visualUIElements = GetComponentsInChildren<IVisualUIElement>();
+            visualUIElements = GetComponentsInChildren<IUIElement>();
         }
-
+        #endif
 
     }
 }

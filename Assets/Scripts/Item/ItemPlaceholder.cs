@@ -17,7 +17,8 @@ namespace Sheldier.Item
         [SerializeField] private UniqueID uniqueID;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private ItemConfig itemReference;
-        [SerializeField] private Material OnInteractMaterial;
+        [SerializeField] private Material onInteractMaterial;
+        [SerializeField] private int amount;
 
         private SimpleItem _simpleItem;
         private Material _defaulMaterial;
@@ -25,6 +26,7 @@ namespace Sheldier.Item
         public void Initialize(SimpleItem simpleItem)
         {
             _simpleItem = simpleItem;
+            _simpleItem.ItemAmount.Set(amount);
             spriteRenderer.sprite = simpleItem.ItemConfig.Icon;
             _defaulMaterial = spriteRenderer.sharedMaterial;
         }
@@ -33,13 +35,12 @@ namespace Sheldier.Item
 
         public void OnEntered()
         {
-            spriteRenderer.sharedMaterial = OnInteractMaterial;
+            spriteRenderer.sharedMaterial = onInteractMaterial;
         }
 
         public void OnInteracted(Actor actor)
         {
             if (!actor.InventoryModule.AddItem(_simpleItem)) return;
-            actor.Notifier.NotifyAddedItemToInventory(_simpleItem);
             Deactivate();
         }
 

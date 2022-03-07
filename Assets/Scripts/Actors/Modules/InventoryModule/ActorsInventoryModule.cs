@@ -1,11 +1,12 @@
-﻿using Sheldier.Item;
+﻿using System;
+using Sheldier.Item;
 
 namespace Sheldier.Actors.Inventory
 {
     public class ActorsInventoryModule
     {
+        public event Action<SimpleItem> OnUseItem;
         public bool IsEquipped => _isEquipped;
-        public IActorsInventory CurrentInventory => _currentInventory;
         
         private IActorsInventory _currentInventory;
         private bool _isEquipped;
@@ -14,6 +15,12 @@ namespace Sheldier.Actors.Inventory
         {
             _currentInventory = new NullActorsInventory();
         }
+
+        private void UseItem(SimpleItem item)
+        {
+            OnUseItem?.Invoke(item);
+        }
+
         public bool IsItemExists(ItemConfig itemConfig)
         {
             return _currentInventory.IsItemExists(itemConfig);
@@ -29,17 +36,19 @@ namespace Sheldier.Actors.Inventory
             _currentInventory.RemoveItem(item);
         }
         
-        public int RemoveItem(ItemConfig item, int amount = 1, int index = 0)
+        public int RemoveItem(ItemConfig item, int amount = 1)
         {
-            return _currentInventory.RemoveItem(item, amount, index);
+            return _currentInventory.RemoveItem(item, amount);
         }
         public void SetInventory(IActorsInventory actorsInventory)
         {
             _currentInventory = actorsInventory;
+            _currentInventory.OnItemUse += UseItem;
         }
 
         public void RemoveInventory()
         {
+            _currentInventory.OnItemUse -= UseItem;
             _currentInventory = new NullActorsInventory();
         }
 

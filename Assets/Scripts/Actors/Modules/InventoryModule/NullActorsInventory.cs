@@ -1,9 +1,11 @@
-﻿using Sheldier.Item;
+﻿using System;
+using Sheldier.Item;
 
 namespace Sheldier.Actors.Inventory
 {
     public class NullActorsInventory : IActorsInventory
     {
+        public event Action<SimpleItem> OnItemUse;
 
         private const int LARGE_NUMBER = 9999;
 
@@ -15,7 +17,7 @@ namespace Sheldier.Actors.Inventory
         {
         }
 
-        public int RemoveItem(ItemConfig item, int amount = 1, int index = 0)
+        public int RemoveItem(ItemConfig item, int amount = 1)
         {
             return LARGE_NUMBER;
         }

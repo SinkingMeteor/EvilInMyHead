@@ -83,5 +83,10 @@ namespace Sheldier.Item
             int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft);
             _ammoLeft += newAmmo;
         }
+
+        public override string GetExtraInfo()
+        {
+            return $"{_ammoLeft}/{_weaponConfig.Capacity}";
+        }
     }
 }

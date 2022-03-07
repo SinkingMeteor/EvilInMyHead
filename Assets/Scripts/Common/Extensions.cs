@@ -17,6 +17,14 @@ namespace Sheldier.Common
             else
                 return ActorDirectionView.Back;
         }
+
+        public static Vector2 UnitVectorFromSegment(this int segmentIndex, int totalSegments)
+        {
+            float anglePerSegment = 6.2832f / totalSegments;
+            var segmentCenterAngle = anglePerSegment / 2;
+            var currentSegmentCenter = segmentCenterAngle + anglePerSegment * segmentIndex;
+            return new Vector2(-1.0f * Mathf.Cos(currentSegmentCenter), -1.0f * Mathf.Sin(currentSegmentCenter));
+        }
     }
 
 }

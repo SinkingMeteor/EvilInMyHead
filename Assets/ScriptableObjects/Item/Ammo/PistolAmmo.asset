@@ -28,4 +28,5 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: a718b6d554c8728459569efc60ba6be2, type: 3}
   itemName: 
   itemDescription: 
-  _cost: 0
+  cost: 0
+  maxStack: 10

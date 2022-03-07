@@ -25,20 +25,30 @@ namespace Sheldier.Actors.Hand
             _currentItem = _nullItem;
             actorHandObject.Initialize(_tickHandler);
             _tickHandler.AddListener(this);
-            _actor.Notifier.OnItemAddedToInventory += Equip;
+            _actor.InventoryModule.OnUseItem += Equip;
+            _actor.OnWillRemoveControl += UnEquip;
         }
-        
-        public void Equip(SimpleItem item)
+        public void Tick()
+        {
+            RotateHand();
+        }
+        private void Equip(SimpleItem item)
         {
             if (!item.IsEquippable)
                 return;
+            if (_currentItem == item)
+            {
+                UnEquip();
+                return;
+            }
             if (_currentItem != _nullItem)
                 _currentItem.Unequip();
             _currentItem = item;
             _currentItem.Equip(actorHandObject, _actor);
             _actor.InventoryModule.SetEquipped(true);
         }
-        public void UnEquip()
+
+        private void UnEquip()
         {
             if (_currentItem == _nullItem)
                 return;
@@ -46,10 +56,7 @@ namespace Sheldier.Actors.Hand
             _actor.InventoryModule.SetEquipped(false);
             _currentItem = _nullItem;
         }
-        public void Tick()
-        {
-            RotateHand();
-        }
+
         private void RotateHand()
         {
             var dir = _currentItem.GetRotateDirection();
@@ -61,7 +68,8 @@ namespace Sheldier.Actors.Hand
         }
         public void Dispose()
         {
-            _actor.Notifier.OnItemAddedToInventory -= Equip;
+            _actor.OnWillRemoveControl -= UnEquip;
+            _actor.InventoryModule.OnUseItem -= Equip;
             _tickHandler.RemoveListener(this);
             actorHandObject.Dispose();
         }

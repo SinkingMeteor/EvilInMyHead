@@ -11,10 +11,12 @@ namespace Sheldier.Actors.AI
         public InputButton UseButton => _useButton;
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
-        
+        public InputButton OpenInventoryButton => _openInventoryButton;
+
         private InputButton _useButton;
         private InputButton _attackButton;
         private InputButton _reloadButton;
+        private InputButton _openInventoryButton;
         private Vector2 _movementDirection;
         private Vector2 _cursorScreenCenterDirection;
 
@@ -23,6 +25,7 @@ namespace Sheldier.Actors.AI
             _useButton = new InputButton();
             _reloadButton = new InputButton();
             _attackButton = new InputButton();
+            _openInventoryButton = new InputButton();
             _movementDirection = Vector2.zero;
             _cursorScreenCenterDirection = Vector2.zero;
         }

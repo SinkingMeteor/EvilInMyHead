@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sheldier.Actors;
 using Sheldier.Actors.Hand;
 using Sheldier.Actors.Inventory;
@@ -13,6 +14,7 @@ namespace Sheldier.Item
         public virtual bool IsEquippable => true;
         public virtual bool IsStackable => false;
         public Counter ItemAmount => _itemAmount;
+        public int FreeAmount => _itemConfig.MaxStack - _itemAmount.Amount; 
 
         protected Counter _itemAmount;
 
@@ -33,25 +35,10 @@ namespace Sheldier.Item
         public abstract void Equip(HandView handView, Actor owner);
 
         public abstract void Unequip();
-    }
 
-    public class NullItem : SimpleItem
-    {
-        public NullItem(ItemConfig itemConfig = null) : base(itemConfig)
+        public virtual string GetExtraInfo()
         {
-        }
-
-        public override void Drop()
-        {
-            
-        }
-
-        public override void Equip(HandView handView, Actor owner)
-        {
-        }
-
-        public override void Unequip()
-        {
+            return String.Empty;
         }
     }
 }

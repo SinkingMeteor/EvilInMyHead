@@ -38,7 +38,6 @@ namespace Sheldier.Actors.Interact
 
         public void OnInteracted(Actor actor)
         {            
-            Debug.Log("Replaced");
             _playerSceneController.SetControl(_currentActor);
             _playerSceneController.SetFollowTarget(_currentActor);
         }

@@ -268,6 +268,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2a13ecd89af3841a8a54ef7b2d01c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &696823290028039995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9156628273491268466}
+  - component: {fileID: 7331378869713163184}
+  m_Layer: 0
+  m_Name: InventorySlotPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9156628273491268466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696823290028039995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7101945339097448848}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7331378869713163184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696823290028039995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2122b0321b8647d186e62db259f2d85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolTransform: {fileID: 9156628273491268466}
+  startEntitiesAmount: 2
+  _entity: {fileID: 5669292178770198486, guid: 711d1d0f2005349499e474401c4b3ada, type: 3}
 --- !u!1 &1193635830489629764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,6 +1418,7 @@ Transform:
   m_Children:
   - {fileID: 5729403185493041149}
   - {fileID: 5064162582869611412}
+  - {fileID: 9156628273491268466}
   m_Father: {fileID: 2407684473881099581}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1388,6 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePool: {fileID: 4017183499855115712}
   weaponBlowPool: {fileID: 7633645560097590607}
+  inventorySlotPool: {fileID: 7331378869713163184}
 --- !u!1 &6970051544659879451
 GameObject:
   m_ObjectHideFlags: 0

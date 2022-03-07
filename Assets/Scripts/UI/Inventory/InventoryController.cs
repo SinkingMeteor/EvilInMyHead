@@ -1,53 +1,68 @@
+using System.Collections.Generic;
 using Sheldier.Actors.Inventory;
-using Sheldier.Common.Pool;
+using Sheldier.Common;
 using Sheldier.Item;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Sheldier.UI
 {
-    public class InventoryController : MonoBehaviour
+    public class InventoryController : MonoBehaviour, IUIElement
     {
         [SerializeField] private InventoryView view;
+        
         private Inventory _inventory;
+        private IInputProvider _inputProvider;
+        private UIStatesController _statesController;
+
+        public void Initialize()
+        {
+            _inputProvider.OpenInventoryButton.OnPressed += OpenInventoryWindow;
+            _inputProvider.OpenInventoryButton.OnReleased += CloseInventoryWindow;
+        }
 
         [Inject]
-        private void InjectDependencies(Inventory inventory)
+        private void InjectDependencies(Inventory inventory, IInputProvider inputProvider, UIStatesController statesController)
         {
+            _statesController = statesController;
+            _inputProvider = inputProvider;
             _inventory = inventory;
         }
-    }
 
-    public class InventorySlot : MonoBehaviour, IPoolObject<InventorySlot>
-    {
-        public Transform Transform => transform;
-
-        [SerializeField] private Image itemIcon; 
-        
-        private ItemConfig _itemConfig;
-
-        public void Initialize(IPoolSetter<InventorySlot> poolSetter)
+        public void OnActivated()
         {
+            List<SimpleItem> inventoryItems = new List<SimpleItem>();
+            foreach (var inventoryGroup in _inventory.ItemsCollection)
+                inventoryItems.AddRange(inventoryGroup.Value.Items);
+            view.Activate(inventoryItems);
         }
 
-        public void SetItem(ItemConfig itemConfig)
+        public void OnDeactivated()
         {
-            _itemConfig = itemConfig;
-        }
-        public void OnInstantiated()
-        {
+            ApplySelectedItem();
+            view.Deactivate();
         }
 
-        public void Reset()
+        private void ApplySelectedItem()
         {
-            
+            SimpleItem selectedItem = view.GetCurrentSelectedItem();
+            if (selectedItem == null)
+                return;
+            _inventory.UseItem(selectedItem);
         }
-    }
 
-    public class InventoryView : MonoBehaviour
-    {
-        
+        public void Tick()
+        {
+            view.Tick();
+        }
+
+        public void Dispose()
+        {
+            _inputProvider.OpenInventoryButton.OnPressed -= OpenInventoryWindow;
+            _inputProvider.OpenInventoryButton.OnReleased -= CloseInventoryWindow;
+        }
+        private void CloseInventoryWindow() => _statesController.Remove(UIType.Inventory);
+        private void OpenInventoryWindow() => _statesController.Add(UIType.Inventory);
     }
 }
 

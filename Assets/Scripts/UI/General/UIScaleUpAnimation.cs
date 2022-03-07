@@ -6,10 +6,15 @@ namespace Sheldier.UI
     public class UIScaleUpAnimation : DOTweenUIAnimation, IUIStateAnimationAppearing
     {
         [SerializeField] private RectTransform rectTransform;
+        [SerializeField] private Vector3 initialScale;
+        [SerializeField] private Vector3 targetScale = Vector3.one;
+        public void Initialize()
+        {
+            rectTransform.localScale = initialScale;
+        }
         protected override Tween GetAnimation()
         {
-            rectTransform.localScale = Vector3.zero;
-            return rectTransform.DOScale(Vector3.one, duration);
+            return rectTransform.DOScale(targetScale, duration);
         }
     }
 }

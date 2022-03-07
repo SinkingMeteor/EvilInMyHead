@@ -12,7 +12,7 @@ namespace Sheldier.UI
     public class UIStatesController : IUIStatesController
     {
         public IReadOnlyDictionary<UIType, UIState> States => _states;
-        
+        private Stack<UIState> _shownStates;
         private Dictionary<UIType, UIState> _states;
         private Dictionary<UIType, UIState> _loadedStates;
 
@@ -22,7 +22,7 @@ namespace Sheldier.UI
 
         public void InitializeOnScene()
         {
-            
+            _shownStates = new Stack<UIState>();
             _states = new Dictionary<UIType, UIState>();
             GameObject uiMain = new GameObject("[UI]");
             uiMain.transform.position = Vector3.zero;
@@ -58,9 +58,15 @@ namespace Sheldier.UI
         {
             if (!_states.ContainsKey(uiType))
                 throw new ArgumentNullException($"UI State {uiType.ToString()} doesn't exist in current scene");
+            
+            if(_shownStates.Count > 0)
+                _shownStates.Peek().Deactivate();
+            
             var state = _states[uiType];
-            state.Activate();
+            state.KillAllDisapearingAnimations();
+            state.Show();
             state.SetSortingOrder(++_topSortingOrder);
+            _shownStates.Push(state);
             if(state.IsRequirePause && !_pauseNotifier.IsPaused)
                 _pauseNotifier.Pause();
         }
@@ -69,10 +75,23 @@ namespace Sheldier.UI
         {
             if (!_states.ContainsKey(uiType))
                 throw new ArgumentNullException($"UI State {uiType.ToString()} doesn't exist in current scene");
+            if (_shownStates.Peek() != _states[uiType])
+                throw new ArgumentException($"UI State {uiType.ToString()} is not topmost");
             _topSortingOrder--;
-            var state = _states[uiType];
-            state.Deactivate();
-            if (!_states.Values.Any(x => x.IsActivated && x.IsRequirePause))
+            var state = _shownStates.Pop();
+            state.KillAllAppearingAnimations();
+            state.Hide();
+            
+            if(_shownStates.Count == 0)
+            {
+                if(_pauseNotifier.IsPaused)
+                    _pauseNotifier.Unpause();
+                return;
+            };
+
+            var previousState = _shownStates.Peek();
+            previousState.Activate();
+            if (!previousState.IsRequirePause && _pauseNotifier.IsPaused)
                 _pauseNotifier.Unpause();
         }
         public void OnSceneDispose()

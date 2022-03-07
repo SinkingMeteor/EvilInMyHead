@@ -2,7 +2,7 @@
 
 namespace Sheldier.UI
 {
-    public class UIRotator : MonoBehaviour, IVisualUIElement
+    public class UIRotator : MonoBehaviour, IUIElement
     {
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private float speed;
@@ -16,12 +16,12 @@ namespace Sheldier.UI
             _currentDirection = clockwise ? 1.0f : -1.0f;
         }
 
-        public void Activate()
+        public void OnActivated()
         {
             _currentSpeed = speed;
         }
 
-        public void Deactivate()
+        public void OnDeactivated()
         {
             _currentSpeed = 0;
         }

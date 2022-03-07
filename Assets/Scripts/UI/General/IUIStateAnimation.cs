@@ -4,6 +4,7 @@ namespace Sheldier.UI
 {
     public interface IUIStateAnimation
     {
+        void Initialize();
         Task PlayAnimation();
         void Reset();
     }

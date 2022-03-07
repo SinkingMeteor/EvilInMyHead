@@ -30,7 +30,7 @@ namespace Sheldier.Actors.Interact
             _inputController = data.Actor.InputController;
             _receivers = new Stack<IInteractReceiver>();
             _inputController.OnUseButtonPressed += Interact;
-            _notifier.OnSettedInput += OnSetInput;
+            _actor.OnAddedControl += OnSetInput;
         }
 
         private void OnSetInput()
@@ -140,7 +140,7 @@ namespace Sheldier.Actors.Interact
 
         public void Dispose()
         {
-            _notifier.OnSettedInput -= OnSetInput;
+            _actor.OnAddedControl -= OnSetInput;
             _inputController.OnUseButtonPressed -= Interact;
 
         }
