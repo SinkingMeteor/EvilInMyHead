@@ -68,11 +68,14 @@ namespace SheldierEditor.Item
             objectTransform.position = new Vector3(0.0f, 0.0f, 0.5f);
             objectTransform.localScale = Vector3.one;
             objectTransform.rotation = Quaternion.identity;
-            
-            int frameCount = _animationData.Frames.Length;
-            _currentFrame = (_currentFrame + Time.deltaTime * 6) % frameCount;
-            int frameIndex = (int) _currentFrame;
-            _spriteRenderer.sprite = _animationData.Frames[frameIndex];
+
+            if (_animationData.Frames.Length > 0)
+            {
+                int frameCount = _animationData.Frames.Length;
+                _currentFrame = (_currentFrame + Time.deltaTime * 6) % frameCount;
+                int frameIndex = (int) _currentFrame;
+                _spriteRenderer.sprite = _animationData.Frames[frameIndex];
+            }
 
             _previewRenderUtility.BeginPreview(new Rect(0, 0, IconSize, IconSize), _guiStyle);
             _previewRenderUtility.Render(true);

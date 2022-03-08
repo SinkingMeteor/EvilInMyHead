@@ -13,13 +13,14 @@ namespace Sheldier.UI
 
         [OdinSerialize] [ReadOnly] private IUIStateAnimationAppearing[] appearingAnimations;
         [OdinSerialize] [ReadOnly] private IUIStateAnimationDisappearing[] disappearingAnimations;
-        [OdinSerialize] [ReadOnly] private IUIElement[] visualUIElements;
+        [OdinSerialize] [ReadOnly] private IUIElement[] UIElements;
         
         [OdinSerialize] private UICanvas canvas;
         [SerializeField] private bool isRequirePause;
         
         private bool _isActivated;
         private TickHandler _tickHandler;
+        private IInputProvider _inputProvider;
 
         public void Initialize()
         {
@@ -27,19 +28,20 @@ namespace Sheldier.UI
                 appearingAnimations[i].Initialize();
             for (int i = 0; i < disappearingAnimations.Length; i++)
                 disappearingAnimations[i].Initialize();
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].Initialize();                
+            for (int i = 0; i < UIElements.Length; i++)
+                UIElements[i].Initialize(_inputProvider);                
         }
 
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
+        private void InjectDependencies(TickHandler tickHandler, IInputProvider inputProvider)
         {
+            _inputProvider = inputProvider;
             _tickHandler = tickHandler;
         }
         public void Tick()
         {
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].Tick();    
+            for (int i = 0; i < UIElements.Length; i++)
+                UIElements[i].Tick();    
         }
 
         public async void Show()
@@ -89,8 +91,8 @@ namespace Sheldier.UI
         public void Activate()
         {
             _tickHandler.AddListener(this);
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].OnActivated();
+            for (int i = 0; i < UIElements.Length; i++)
+                UIElements[i].OnActivated();
             
             canvas.OnActivated();
 
@@ -99,8 +101,8 @@ namespace Sheldier.UI
         public void Deactivate()
         {
             _tickHandler.RemoveListener(this);
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].OnDeactivated();  
+            for (int i = 0; i < UIElements.Length; i++)
+                UIElements[i].OnDeactivated();  
             
             canvas.OnDeactivated();
         }
@@ -111,8 +113,8 @@ namespace Sheldier.UI
         }
         public void Dispose()
         {
-            for (int i = 0; i < visualUIElements.Length; i++)
-                visualUIElements[i].Dispose();          
+            for (int i = 0; i < UIElements.Length; i++)
+                UIElements[i].Dispose();          
         }
 
         #if UNITY_EDITOR
@@ -121,7 +123,7 @@ namespace Sheldier.UI
         {
             appearingAnimations = GetComponentsInChildren<IUIStateAnimationAppearing>();
             disappearingAnimations = GetComponentsInChildren<IUIStateAnimationDisappearing>();
-            visualUIElements = GetComponentsInChildren<IUIElement>();
+            UIElements = GetComponentsInChildren<IUIElement>();
         }
         #endif
 

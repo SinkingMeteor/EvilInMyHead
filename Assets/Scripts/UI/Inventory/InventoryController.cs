@@ -15,17 +15,17 @@ namespace Sheldier.UI
         private IInputProvider _inputProvider;
         private UIStatesController _statesController;
 
-        public void Initialize()
+        public void Initialize(IInputProvider inputProvider)
         {
+            _inputProvider = inputProvider;
             _inputProvider.OpenInventoryButton.OnPressed += OpenInventoryWindow;
             _inputProvider.OpenInventoryButton.OnReleased += CloseInventoryWindow;
         }
 
         [Inject]
-        private void InjectDependencies(Inventory inventory, IInputProvider inputProvider, UIStatesController statesController)
+        private void InjectDependencies(Inventory inventory, UIStatesController statesController)
         {
             _statesController = statesController;
-            _inputProvider = inputProvider;
             _inventory = inventory;
         }
 

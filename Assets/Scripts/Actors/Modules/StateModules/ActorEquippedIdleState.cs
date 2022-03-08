@@ -21,10 +21,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Equipped_Front],
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Equipped_Front_Side],
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Equipped_Back_Side],
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Equipped_Back],
+                AnimationType.Idle_Equipped_Front,
+                AnimationType.Idle_Equipped_Front_Side,
+                AnimationType.Idle_Equipped_Back_Side,
+                AnimationType.Idle_Equipped_Back,
             };
         }
     }

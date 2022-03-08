@@ -1,6 +1,6 @@
 namespace Sheldier.Constants
 {
-    public class InputActionNames
+    public static class InputActionNames
     {
         public const string USE = "Use";
         public const string ATTACK = "Attack";

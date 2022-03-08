@@ -8,8 +8,8 @@ namespace Sheldier.Actors.Inventory
 
         public event Action<SimpleItem> OnItemUse;
         bool IsItemExists(ItemConfig itemConfig);
-        bool AddItem(SimpleItem item);
-        void RemoveItem(SimpleItem item);
-        int RemoveItem(ItemConfig item, int amount = 1);
+        InventoryOperationReport AddItem(SimpleItem item);
+        InventoryOperationReport RemoveItem(SimpleItem item);
+        InventoryOperationReport RemoveItemAmount(ItemConfig item, int amount = 1);
     }
 }

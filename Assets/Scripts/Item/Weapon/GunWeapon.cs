@@ -80,7 +80,7 @@ namespace Sheldier.Item
         }
         private void AddAmmoAfterReloading()
         {
-            int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft);
+            int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft).Amount;
             _ammoLeft += newAmmo;
         }
 

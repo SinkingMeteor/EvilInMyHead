@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sheldier.Common;
+using UnityEngine;
 
 namespace Sheldier.UI
 {
@@ -10,9 +11,11 @@ namespace Sheldier.UI
 
         private float _currentDirection;
         private float _currentSpeed;
-        
-        public void Initialize()
+        private IInputProvider _inputProvider;
+
+        public void Initialize(IInputProvider inputProvider)
         {
+            _inputProvider = inputProvider;
             _currentDirection = clockwise ? 1.0f : -1.0f;
         }
 

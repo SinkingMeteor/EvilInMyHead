@@ -5,21 +5,25 @@ namespace Sheldier.Actors.Inventory
 {
     public class NullActorsInventory : IActorsInventory
     {
+        #pragma warning disable
         public event Action<SimpleItem> OnItemUse;
-
-        private const int LARGE_NUMBER = 9999;
+        #pragma warning restore
 
         public bool IsItemExists(ItemConfig itemConfig) => true;
 
-        public bool AddItem(SimpleItem item) => true;
-
-        public void RemoveItem(SimpleItem item)
+        public InventoryOperationReport AddItem(SimpleItem item)
         {
+            return new InventoryOperationReport() {IsCompleted = true, Amount = item.ItemAmount.Amount};
         }
 
-        public int RemoveItem(ItemConfig item, int amount = 1)
+        public InventoryOperationReport RemoveItem(SimpleItem item)
         {
-            return LARGE_NUMBER;
+            return new InventoryOperationReport() {IsCompleted = true, Amount = item.ItemAmount.Amount};
+        }
+
+        public InventoryOperationReport RemoveItemAmount(ItemConfig item, int amount = 1)
+        {
+            return new InventoryOperationReport() {IsCompleted = true, Amount = amount};
         }
 
     }

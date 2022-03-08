@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Sheldier.Actors.Builder;
+using Sheldier.Actors.Data;
 using Sheldier.Installers;
 using Sheldier.Item;
-using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Actors
@@ -12,8 +13,8 @@ namespace Sheldier.Actors
         private List<Actor> _actorsOnScene;
         
         private ScenePlaceholdersKeeper _placeholdersKeeper;
-        private ActorsMap _actorsMap;
         private ActorsInstaller _actorsInstaller;
+        private ActorBuilder _actorBuilder;
 
         public void Initialize(ScenePlaceholdersKeeper placeholdersKeeper)
         {
@@ -23,10 +24,9 @@ namespace Sheldier.Actors
         }
 
         [Inject]
-        private void InjectDependencies(ActorsMap actorsMap, ActorsInstaller actorsInstaller)
+        private void InjectDependencies(ActorBuilder actorBuilder)
         {
-            _actorsInstaller = actorsInstaller;
-            _actorsMap = actorsMap;
+            _actorBuilder = actorBuilder;
         }
         
         private void LoadItems()
@@ -34,11 +34,9 @@ namespace Sheldier.Actors
             int counter = 0;
             foreach (var placeholder in _placeholdersKeeper.ActorPlaceholders)
             {
-                Actor actor = GameObject.Instantiate(_actorsMap.Actors[placeholder.ActorReference]);
+                Actor actor = _actorBuilder.Build(placeholder.ActorReference);
                 actor.name += counter++;
                 actor.transform.position = placeholder.transform.position;
-                _actorsInstaller.InjectActor(actor);
-                actor.Initialize();
                 _actorsOnScene.Add(actor);
                 placeholder.Deactivate();
                 

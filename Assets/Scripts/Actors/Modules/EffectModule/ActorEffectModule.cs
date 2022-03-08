@@ -1,67 +1,60 @@
-using System;
 using System.Collections.Generic;
-using Sheldier.Actors.Data;
+using Sheldier.Common;
 using Sheldier.Factories;
 using Sheldier.Gameplay.Effects;
-using Sheldier.Setup;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using Zenject;
 
 namespace Sheldier.Actors
 {
-    public class ActorEffectModule : SerializedMonoBehaviour, IActorEffectModule
+    public class ActorEffectModule : IExtraActorModule, ITickListener
     {
-        public IReadOnlyList<ActorEffectType> EffectCollection => _effectsCollection;
 
-        [OdinSerialize] private Dictionary<ActorEffectGroup, IEffectHandler> _effectHandlers;
-        
-        private List<ActorEffectType> _effectsCollection;
+        private List<IEffect> _influencingEffects;
         private ActorsEffectFactory _factory;
+        private ActorEffectDataModule _effectData;
+        private TickHandler _tickHandler;
+        private Actor _actor;
 
-        public void Initialize()
-        {
-            _effectsCollection = new List<ActorEffectType>();
-            foreach (var effectHandler in _effectHandlers)
-            {
-                effectHandler.Value.Initialize(_factory);
-                effectHandler.Value.OnEffectExpired += RemoveEffect;
-            }
-        }
-
-        [Inject]
-        private void InjectDependencies(ActorsEffectFactory effectFactory)
+        public ActorEffectModule(ActorsEffectFactory effectFactory)
         {
             _factory = effectFactory;
         }
-        private void RemoveEffect(ActorEffectType effect)
+        public void Initialize(ActorInternalData data)
         {
-            _effectsCollection.Remove(effect);
+            _actor = data.Actor;
+            _tickHandler = data.TickHandler;
+            _effectData = data.Actor.DataModule.EffectDataModule;
+            _influencingEffects = new List<IEffect>();
+
+            _effectData.OnEffectAdded += AddEffect;
+            _tickHandler.AddListener(this);
         }
 
-        public bool IsEffectExists(ActorEffectType effectType) => _effectsCollection.Contains(effectType);
-        public void AddEffect(ActorEffectType effectType)
+        private void AddEffect(ActorEffectType effectType, float duration)
         {
-            var group = _factory.GetEffectGroup(effectType);
-            if (IsEffectExists(effectType) || !_effectHandlers.ContainsKey(group))
-                return;
-            _effectsCollection.Add(effectType);
-            _effectHandlers[group].AddEffect(effectType);
+            var effect = _factory.GetEffect(effectType);
+            effect.Setup(_actor, duration);
+            _influencingEffects.Add(effect);
         }
 
         public void Tick()
         {
-            foreach (var effectHandler in _effectHandlers)
+            for (int i = 0; i < _influencingEffects.Count; i++)
             {
-                effectHandler.Value.Tick();
+                _influencingEffects[i].Tick();
+                if (_influencingEffects[i].IsExpired)
+                {
+                    _effectData.RemoveEffect(_influencingEffects[i].EffectType);
+                    (_influencingEffects[i], _influencingEffects[^1]) =
+                        (_influencingEffects[^1], _influencingEffects[i]);
+                    _influencingEffects.RemoveAt(_influencingEffects.Count -1);
+                    i -= 1;
+                }
             }
         }
         public void Dispose()
         {
-            foreach (var effectHandler in _effectHandlers)
-            {
-                effectHandler.Value.OnEffectExpired -= RemoveEffect;
-            }
+            _tickHandler.RemoveListener(this);
+            _effectData.OnEffectAdded -= AddEffect;
         }
     }
 }

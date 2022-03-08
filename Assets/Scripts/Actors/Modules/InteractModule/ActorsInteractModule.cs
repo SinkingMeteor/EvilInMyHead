@@ -10,7 +10,6 @@ namespace Sheldier.Actors.Interact
     [RequireComponent(typeof(CircleCollider2D))]
     public class ActorsInteractModule : SerializedMonoBehaviour, IExtraActorModule
     {
-        public int Priority => 0;
         
         [SerializeField] private CircleCollider2D circleCollider2D;
         [ReadOnly][OdinSerialize]private Stack<IInteractReceiver> _receivers;
@@ -60,7 +59,7 @@ namespace Sheldier.Actors.Interact
         {
             if (col.gameObject.TryGetComponent(out IInteractReceiver receiver))
             {
-                CheckInput(receiver);
+             //   CheckInput(receiver);
             }
         }
 

@@ -6,7 +6,6 @@ namespace Sheldier.Actors.Hand
 {
     public class ActorsHand : MonoBehaviour, IExtraActorModule, ITickListener
     {
-        public int Priority => 0;
         
         [SerializeField] private HandView actorHandObject;
         
@@ -23,7 +22,7 @@ namespace Sheldier.Actors.Hand
             _tickHandler = data.TickHandler;
             _nullItem = new NullItem();
             _currentItem = _nullItem;
-            actorHandObject.Initialize(_tickHandler);
+            actorHandObject.Initialize();
             _tickHandler.AddListener(this);
             _actor.InventoryModule.OnUseItem += Equip;
             _actor.OnWillRemoveControl += UnEquip;

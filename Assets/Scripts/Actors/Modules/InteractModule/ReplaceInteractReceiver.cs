@@ -5,18 +5,21 @@ using Zenject;
 
 namespace Sheldier.Actors.Interact
 {
-    public class ReplaceInteractReceiver : SerializedMonoBehaviour, IInteractReceiver, IExtraActorModule
+    public class ReplaceInteractReceiver : IInteractReceiver, IExtraActorModule
     {
-        public Transform Transform => transform;
-        public int Priority => 0;
+        public Transform Transform => _currentActor.transform;
 
-        [SerializeField] private Material material;
-
+        private Material _material;
         private Actor _currentActor;
         private ScenePlayerController _playerSceneController;
         private Material _defaultMaterial;
         private ActorsView _actorsView;
 
+
+        public ReplaceInteractReceiver(Material onInteractMaterial)
+        {
+            _material = onInteractMaterial;
+        }
         public void Initialize(ActorInternalData data)
         {
             _currentActor = data.Actor;
@@ -33,7 +36,7 @@ namespace Sheldier.Actors.Interact
         {
             if (_playerSceneController.IsCurrentActor(_currentActor))
                 return;
-            _actorsView.SetMaterial(material);
+            _actorsView.SetMaterial(_material);
         }
 
         public void OnInteracted(Actor actor)

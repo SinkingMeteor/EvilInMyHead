@@ -1,6 +1,7 @@
 ﻿using Sheldier.Common.Animation;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace SheldierEditor.Item
 {

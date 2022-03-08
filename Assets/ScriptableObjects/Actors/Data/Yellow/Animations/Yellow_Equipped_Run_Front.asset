@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d744b92f54eb4e6992f41540c19d07ce, type: 3}
+  m_Name: Yellow_Equipped_Run_Front
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  frames:
+  - {fileID: -1022609459, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
+  - {fileID: -1516199289, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
+  - {fileID: 1145857136, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
+  - {fileID: 1435687710, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
+  - {fileID: 232270934, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
+  - {fileID: 2016384844, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
+  isLoop: 1
+  frameRate: 9.5

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.Common.Animation
 {
@@ -25,7 +26,8 @@ namespace Sheldier.Common.Animation
             if (_playOnInitialize && currentAnimation != null)
                 Play();
         }
-        public void SetDependencies(TickHandler tickHandler)
+        [Inject]
+        public void InjectDependencies(TickHandler tickHandler)
         {
             _tickHandler = tickHandler;
         }

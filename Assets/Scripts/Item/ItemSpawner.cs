@@ -25,7 +25,7 @@ namespace Sheldier.Item
         {
             foreach (var placeholder in _placeholdersKeeper.ItemPlaceholders)
             {
-                placeholder.Initialize(_itemFactory.GetItem(placeholder.Reference));                
+                placeholder.Initialize(_itemFactory);                
             }
         }
     }

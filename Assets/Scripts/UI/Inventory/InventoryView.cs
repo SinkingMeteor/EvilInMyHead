@@ -17,13 +17,12 @@ namespace Sheldier.UI
         [SerializeField] private TextMeshProUGUI titleTMP;
         [SerializeField] private TextMeshProUGUI descriptionTMP;
         [SerializeField] private UIRadialPointer radialPointer;
-        [SerializeField] private float slotsSpawnDistance = 4.0f;
         [SerializeField] private RectTransform slotsParent;
         [SerializeField] private ItemSlotMap itemSlotMap;
-        
+        [SerializeField] private float slotsSpawnDistance = 4.0f;
+
         private InventorySlot[] _slotsCollection;
         private InventorySlotPool _inventorySlotPool;
-        
         private InventorySlot _selectedSlot;
 
         [Inject]

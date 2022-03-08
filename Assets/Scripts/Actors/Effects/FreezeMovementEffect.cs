@@ -1,20 +1,31 @@
+using Sheldier.Actors;
 using Sheldier.Actors.Data;
+using UnityEngine;
 
 namespace Sheldier.Gameplay.Effects
 {
-    public class FreezeMovementEffect : BaseMovementWrapper
+    public class FreezeMovementEffect : IEffect
     {
-        public FreezeMovementEffect(EffectConfig config) : base(config)
+        public ActorEffectType EffectType => ActorEffectType.Freeze;
+        public bool IsExpired => _timeLeft <= 0;
+
+        private float _timeLeft;
+        private Actor _owner;
+
+        public void Setup(Actor owner, float duration)
         {
+            _owner = owner;
+            _timeLeft = duration;
         }
 
-        public override IMovementEffect Clone() => new FreezeMovementEffect(Config);
-
-        protected override MovementDataPackage GetInternalMovement(MovementDataPackage data)
+        public void Tick()
         {
-            var dataPackage = _wrappedEntity.GetMovementData(data);
-            dataPackage.Speed /= 2;
-            return dataPackage;
+            var movementDataModule = _owner.DataModule.MovementDataModule;
+            movementDataModule.SetSpeed(movementDataModule.CurrentSpeed / 2);
+            _timeLeft -= Time.deltaTime;
         }
+        
+        public IEffect Clone() => new FreezeMovementEffect();
+        
     }
 }

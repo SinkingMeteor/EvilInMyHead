@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
@@ -18,17 +19,17 @@ namespace Sheldier.Actors
         public event Action OnAddedControl;
         
         public ActorInputController InputController => _actorInputController;
-        public ActorEffectModule EffectModule => actorEffectModule;
         public ActorNotifyModule Notifier => _notifier;
         public ActorsInventoryModule InventoryModule => _inventoryModule;
         public ActorsView ActorsView => actorsView;
+        public ActorStateModuleController StateModuleController => _stateModuleController;
+        public ActorDataModule DataModule => _dataModule;
 
-        [SerializeField] private ActorStateModuleController stateModuleController;
-        [OdinSerialize] private ActorEffectModule actorEffectModule;
-        [OdinSerialize] private IExtraActorModule[] modules;
         [SerializeField] private Rigidbody2D actorsRigidbody;
         [SerializeField] private ActorsView actorsView;
 
+        private List<IExtraActorModule> _extraModules;
+        private ActorStateModuleController _stateModuleController;
         private ActorNotifyModule _notifier;
         private ActorTransformHandler _transformHandler;
         private ActorInputController _actorInputController;
@@ -37,38 +38,34 @@ namespace Sheldier.Actors
         private TickHandler _tickHandler;
         private FixedTickHandler _fixedTickHandler;
         private PauseNotifier _pauseNotifier;
+        private ActorDataModule _dataModule;
 
         public void Initialize()
         {
             _pauseNotifier.Add(this);
             
             _notifier = new ActorNotifyModule();
+
+            _dataModule = new ActorDataModule();
             
             _actorInputController = new ActorInputController();
             _actorInputController.Initialize();
             
             _transformHandler = new ActorTransformHandler();
             _transformHandler.SetDependencies(transform, _actorInputController);
-            
-            actorEffectModule.Initialize();
-
 
             _inventoryModule = new ActorsInventoryModule();
             _inventoryModule.Initialize();
 
-            modules = modules.OrderBy(module => module.Priority).ToArray();
-
             _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody);
-
-            stateModuleController.SetDependencies(_internalData);
             
-            foreach (var module in modules)
-            {
-                module.Initialize(_internalData);
-            }
+            _stateModuleController = new ActorStateModuleController();
+            _stateModuleController.Initialize(_internalData);
             
             _tickHandler.AddListener(this);
             _fixedTickHandler.AddListener(this);
+
+            _extraModules = new List<IExtraActorModule>();
         }
         
         [Inject]
@@ -79,14 +76,18 @@ namespace Sheldier.Actors
             _tickHandler = tickHandler;
         }
 
+        public void AddExtraModule(IExtraActorModule extraActorModule)
+        {
+            _extraModules.Add(extraActorModule);
+            extraActorModule.Initialize(_internalData);
+        }
         public void Tick()
         {
-            stateModuleController.Tick();
-            actorEffectModule.Tick();
+            _stateModuleController.Tick();
         }
         public void FixedTick()
         {
-            stateModuleController.FixedTick();
+            _stateModuleController.FixedTick();
         }
         public void SetControl(IInputProvider inputProvider)
         {
@@ -100,16 +101,6 @@ namespace Sheldier.Actors
             OnWillRemoveControl?.Invoke();
             _actorInputController.RemoveInputProvider();
             actorsRigidbody.bodyType = RigidbodyType2D.Kinematic;
-        }
-
-        public void SetInventory(IActorsInventory inventory)
-        {
-            _inventoryModule.SetInventory(inventory);
-        }
-
-        public void RemoveInventory()
-        {
-            _inventoryModule.RemoveInventory();
         }
         public void Pause()
         {
@@ -132,8 +123,8 @@ namespace Sheldier.Actors
             _pauseNotifier.Remove(this);
             _tickHandler.RemoveListener(this);
             _fixedTickHandler.RemoveListener(this);
-            actorEffectModule.Dispose();
-            foreach (var module in modules)
+            actorsView.Dispose();
+            foreach (var module in _extraModules)
             {
                 module.Dispose();
             }

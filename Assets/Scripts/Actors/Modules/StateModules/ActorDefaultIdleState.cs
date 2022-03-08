@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorDefaultIdleState : MonoBehaviour, IStateComponent
+    public class ActorDefaultIdleState : IStateComponent
     {
         public bool IsLocked => _isLocked;
         public virtual bool TransitionConditionIsDone => true;
         public virtual int Priority => 0;
 
-        protected int[] _animationHashes;
+        protected AnimationType[] _animationHashes;
         
         private bool _isLocked = false;
         private ActorTransformHandler _actorTransformHandler;
@@ -27,10 +27,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Front],
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Front_Side],
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Back_Side],
-                AnimationConstants.ANIMATIONS[AnimationType.Idle_Back]
+                AnimationType.Idle_Front,
+                AnimationType.Idle_Front_Side,
+                AnimationType.Idle_Back_Side,
+                AnimationType.Idle_Back
             };
         }
 
@@ -53,7 +53,7 @@ namespace Sheldier.Actors
             
         }
 
-        private void SetNewAnimation(int animationID) => _actorsView.PlayAnimation(animationID);
+        private void SetNewAnimation(AnimationType animationID) => _actorsView.PlayAnimation(animationID);
 
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace Sheldier.UI
+﻿using Sheldier.Common;
+
+namespace Sheldier.UI
 {
     public interface IUIElement
     {
-        void Initialize();
+        void Initialize(IInputProvider inputProvider);
         void OnActivated();
         void OnDeactivated();
         void Tick();

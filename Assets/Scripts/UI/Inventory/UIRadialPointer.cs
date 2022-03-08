@@ -1,7 +1,7 @@
 ﻿using Sheldier.Common;
+using Sheldier.Constants;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Sheldier.UI
 {
@@ -20,14 +20,7 @@ namespace Sheldier.UI
         
         private IInputProvider _inputProvider;
 
-        private const float TAU = 6.2832f;
-
-        public void Initialize()
-        {
-        }
-
-        [Inject]
-        private void InjectDependencies(IInputProvider inputProvider)
+        public void Initialize(IInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
         }
@@ -35,7 +28,7 @@ namespace Sheldier.UI
         public void SetSegments(int segments)
         {
             _totalSegments = segments;
-            _anglePerSegment = TAU / _totalSegments;
+            _anglePerSegment = MathConstants.TAU / _totalSegments;
         }
         public void OnActivated()
         {

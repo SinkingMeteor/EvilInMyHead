@@ -1,4 +1,5 @@
 ﻿using Sheldier.Actors;
+using Sheldier.Actors.Builder;
 using Sheldier.Common;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,7 @@ namespace Sheldier.Installers
         {
             Container.Bind<ScenePlayerController>().AsSingle();
             Container.Bind<ActorSpawner>().AsSingle();
+            Container.Bind<ActorBuilder>().AsSingle();
             Container.Bind<ActorsMap>().FromInstance(actorsMap).AsSingle();
             Container.Bind<ActorsInstaller>().FromInstance(this);
             

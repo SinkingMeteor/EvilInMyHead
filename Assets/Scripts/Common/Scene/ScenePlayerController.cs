@@ -36,13 +36,13 @@ namespace Sheldier.Common
             if (_controlledActor != null)
             {
                 _controlledActor.RemoveControl();
-                _controlledActor.RemoveInventory();
+                _controlledActor.InventoryModule.RemoveInventory();
             }
             
             _controlledActor = actor;
             
             _controlledActor.SetControl(_inputProvider);
-            _controlledActor.SetInventory(_inventory);
+            _controlledActor.InventoryModule.SetInventory(_inventory);
         }
 
         public bool IsCurrentActor(Actor actor) => _controlledActor == actor;

@@ -2,6 +2,8 @@
 {
     public enum AnimationType
     {
+        None,
+        
         Idle_Front,
         Idle_Front_Side,
         Idle_Back_Side,

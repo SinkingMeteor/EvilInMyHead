@@ -1,15 +1,13 @@
 ﻿using Sheldier.Actors.Inventory;
-using Sirenix.OdinInspector;
 
 namespace Sheldier.Actors
 {
-    public class ActorAttackModule : SerializedMonoBehaviour, IExtraActorModule
+    public class ActorAttackModule : IExtraActorModule
     {
         private ActorInputController _inputController;
 
         private ActorNotifyModule _notifier;
         private ActorsInventoryModule _inventoryModule;
-        public int Priority => 0;
 
         public void Initialize(ActorInternalData data)
         {

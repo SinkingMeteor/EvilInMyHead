@@ -1,23 +1,19 @@
-﻿using Sheldier.Actors.Data;
-using Sheldier.Common.Animation;
-using Sheldier.Constants;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
+﻿using Sheldier.Common.Animation;
 using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorDefaultControlledMovementState : SerializedMonoBehaviour, IStateComponent
+    public class ActorDefaultControlledMovementState : IStateComponent
     {
         public bool IsLocked => _isLocked;
         public virtual bool TransitionConditionIsDone => _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon;
         public virtual int Priority => 1;
-        
-        [OdinSerialize] private IActorMovementDataProvider data;
 
+
+        private ActorMovementDataModule _movementData;
         protected ActorInputController _inputController;
         protected ActorTransformHandler _actorTransformHandler;
-        protected int[] _animationHashes;
+        protected AnimationType[] _animationHashes;
 
         private Rigidbody2D _rigidbody2D;
         private ActorsView _actorsView;
@@ -26,6 +22,7 @@ namespace Sheldier.Actors
 
         public virtual void SetDependencies(ActorInternalData data)
         {
+            _movementData = data.Actor.DataModule.MovementDataModule;
             _inputController = data.Actor.InputController;
             _actorTransformHandler = data.ActorTransformHandler;
             _rigidbody2D = data.Rigidbody2D;
@@ -37,10 +34,10 @@ namespace Sheldier.Actors
         {
             _animationHashes = new[]
             {
-                AnimationConstants.ANIMATIONS[AnimationType.Run_Front],
-                AnimationConstants.ANIMATIONS[AnimationType.Run_Front_Side],
-                AnimationConstants.ANIMATIONS[AnimationType.Run_Back_Side],
-                AnimationConstants.ANIMATIONS[AnimationType.Run_Back],
+                AnimationType.Run_Front,
+                AnimationType.Run_Front_Side,
+                AnimationType.Run_Back_Side,
+                AnimationType.Run_Back,
             };
         }
 
@@ -62,12 +59,12 @@ namespace Sheldier.Actors
         public void FixedTick()
         {
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
-            var movementDistance = movementDirection * data.Speed;
+            var movementDistance = movementDirection * _movementData.CurrentSpeed;
             _rigidbody2D.velocity = movementDistance;
         }
 
         protected virtual ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateMovementDirection();
-        private void SetNewAnimation(int animationID) => _actorsView.PlayAnimation(animationID);
+        private void SetNewAnimation(AnimationType animationID) => _actorsView.PlayAnimation(animationID);
 
     }
 }

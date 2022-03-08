@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sheldier.Item;
+using UnityEngine;
 
 namespace Sheldier.Actors.Inventory
 {
@@ -7,42 +8,59 @@ namespace Sheldier.Actors.Inventory
     {
         public IReadOnlyList<SimpleItem> Items => _collection;
 
+        protected readonly IItemStorage _itemStorage;
         protected List<SimpleItem> _collection;
 
         public int Count => _collection.Count;
 
-        public InventoryGroup()
+        public InventoryGroup(IItemStorage itemStorage)
         {
+            _itemStorage = itemStorage;
             _collection = new List<SimpleItem>();
         }
 
         public bool IsExists(SimpleItem item) => _collection.Contains(item);
 
-        public virtual void AddItem(SimpleItem item)
+        public virtual InventoryOperationReport AddItem(SimpleItem item)
         {
+            if (_itemStorage.GetFreeSlotsAmount() == 0)
+                return InventoryOperationReport.FailReport;
             _collection.Add(item);
+            return new InventoryOperationReport() {IsCompleted = true, Amount = 1};
         }
 
-        public void RemoveItem(SimpleItem item)
+        public InventoryOperationReport RemoveSlot(SimpleItem item)
         {
             if (!IsExists(item))
-                return;
+                return InventoryOperationReport.FailReport;
             _collection.Remove(item);
             item.Drop();
+            return new InventoryOperationReport() {IsCompleted = true, Amount = item.ItemAmount.Amount};
         }
 
-        public virtual int RemoveAmount(int amountToRemove)
+        public virtual InventoryOperationReport RemoveAmount(int amountToRemove)
         {
-
-            var currentItemAmount = _collection[0].ItemAmount.Amount;
-            if (amountToRemove < currentItemAmount)
+            int remainsToRemove = amountToRemove;
+            for (int i = 0; i < _collection.Count; i++)
             {
-                _collection[0].ItemAmount.Remove(amountToRemove);
-                return amountToRemove;
+                var currentItemAmount = _collection[i].ItemAmount.Amount;
+                int clampedAmount = Mathf.Min(currentItemAmount, remainsToRemove);
+                _collection[i].ItemAmount.Remove(clampedAmount);
+                remainsToRemove -= clampedAmount;
+                
+                if (_collection[i].ItemAmount.Amount == 0)
+                {
+                    _collection[i].Drop();
+                    int lastIndex = _collection.Count - 1;
+                    (_collection[i], _collection[lastIndex]) = (_collection[lastIndex], _collection[i]);
+                    _collection.RemoveAt(lastIndex);
+                    i -= 1;
+                }
+                
+                if (remainsToRemove <= 0)
+                    return new InventoryOperationReport(){IsCompleted = true, Amount = amountToRemove};
             }
-            _collection[0].Drop();
-            _collection.RemoveAt(0);
-            return currentItemAmount;
+            return new InventoryOperationReport(){IsCompleted = false, Amount = amountToRemove-remainsToRemove};
         }
     }
 }

@@ -4,21 +4,28 @@ using Sirenix.Serialization;
 
 namespace Sheldier.Actors
 {
-    public class ActorStateModuleController : SerializedMonoBehaviour
+    public class ActorStateModuleController
     {
         
-        [OdinSerialize] private List<IStateComponent> states;
+        private List<IStateComponent> _states;
         
         private IStateComponent _previousState;
         private IStateComponent _currentState;
-        
+        private ActorInternalData _data;
+
         public bool IsCurrentState(IStateComponent component) => component == _currentState;
-        public void SetDependencies(ActorInternalData data)
+        
+        
+        public void Initialize(ActorInternalData data)
         {
-            foreach (var state in states)
-            {
-                state.SetDependencies(data);
-            }
+            _states = new List<IStateComponent>();
+            _data = data;
+        }
+
+        public void AddState(IStateComponent stateComponent)
+        {
+            _states.Add(stateComponent);
+            stateComponent.SetDependencies(_data);
         }
         private void SetCurrentState(IStateComponent newState)
         {
@@ -37,7 +44,7 @@ namespace Sheldier.Actors
             IStateComponent nextState = null;
             int currentPriority = -1;
 
-            foreach (var state in states)
+            foreach (var state in _states)
             {
                 if (state.TransitionConditionIsDone && state.Priority > currentPriority)
                 {

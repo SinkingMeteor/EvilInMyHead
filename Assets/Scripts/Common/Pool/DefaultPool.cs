@@ -43,6 +43,8 @@ namespace Sheldier.Common.Pool
         public void SetToPull(T itemSlot)
         {
             itemSlot.Transform.SetParent(poolTransform, false);
+            itemSlot.transform.localScale = Vector3.one;
+            itemSlot.transform.rotation = Quaternion.Euler(0,0,0);
             itemSlot.Reset();
             itemSlot.gameObject.SetActive(false);
             _pooledEntities.Enqueue(itemSlot);

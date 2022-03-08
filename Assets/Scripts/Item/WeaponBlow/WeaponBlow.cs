@@ -17,16 +17,10 @@ namespace Sheldier.Item
         public void Initialize(IPoolSetter<WeaponBlow> poolSetter)
         {
             _poolSetter = poolSetter;
-        }
-
-        [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
-        {
-            animator.SetDependencies(tickHandler);
+            animator.Initialize();
         }
         public void OnInstantiated()
         {
-            animator.Initialize();
         }
         
         public void SetAnimation(AnimationData data)

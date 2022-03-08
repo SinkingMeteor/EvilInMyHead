@@ -26,7 +26,7 @@ namespace Sheldier.Actors.Inventory
             return _currentInventory.IsItemExists(itemConfig);
         }
 
-        public bool AddItem(SimpleItem item)
+        public InventoryOperationReport AddItem(SimpleItem item)
         {
             return _currentInventory.AddItem(item);
         }
@@ -36,9 +36,9 @@ namespace Sheldier.Actors.Inventory
             _currentInventory.RemoveItem(item);
         }
         
-        public int RemoveItem(ItemConfig item, int amount = 1)
+        public InventoryOperationReport RemoveItem(ItemConfig item, int amount = 1)
         {
-            return _currentInventory.RemoveItem(item, amount);
+            return _currentInventory.RemoveItemAmount(item, amount);
         }
         public void SetInventory(IActorsInventory actorsInventory)
         {

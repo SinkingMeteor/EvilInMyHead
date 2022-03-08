@@ -8,9 +8,9 @@ using Zenject;
 
 namespace Sheldier.Actors.AI
 {
-    public class ActorsAIMover : MonoBehaviour, IExtraAIModule, ITickListener, IPausable
+    public class ActorsAIMover : IExtraAIModule, ITickListener, IPausable
     {
-        [SerializeField] private Transform targetTransform;
+        private Transform _targetTransform;
         
         private PathProvider _pathProvider;
         private Vector2[] _paths;
@@ -23,9 +23,11 @@ namespace Sheldier.Actors.AI
 
         private bool _isPaused;
         private PauseNotifier _pauseNotifier;
+        private Actor _currentActor;
 
         public void Initialize(ActorInternalData data, ActorsAIModule aiModule)
         {
+            _currentActor = data.Actor;
             _actorTransform = data.Actor.transform;
             _tickHandler = data.TickHandler;
             _aiInputProvider = aiModule.AIInputProvider;
@@ -41,8 +43,8 @@ namespace Sheldier.Actors.AI
         }
         public void Tick()
         {
-            if (targetTransform == null || _paths != null) return;
-            _pathProvider.RequestPath(_actorTransform.position, targetTransform.position, OnPathFound);
+            if (_targetTransform == null || _paths != null) return;
+            _pathProvider.RequestPath(_actorTransform.position, _targetTransform.position, OnPathFound);
         }
         public void Pause()
         {
@@ -58,9 +60,9 @@ namespace Sheldier.Actors.AI
         {
             if(!isSuccess) return;
             if(_followCoroutine != null)
-                StopCoroutine(_followCoroutine);
+                _currentActor.StopCoroutine(_followCoroutine);
             _paths = waypoints;
-            _followCoroutine = StartCoroutine(FollowPath());
+            _followCoroutine = _currentActor.StartCoroutine(FollowPath());
         }
 
         private IEnumerator FollowPath()
