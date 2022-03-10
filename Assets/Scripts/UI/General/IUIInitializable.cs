@@ -2,13 +2,9 @@
 
 namespace Sheldier.UI
 {
-    public interface IUIElement
+    public interface IUIInitializable
     {
         void Initialize(IInputProvider inputProvider);
-        void OnActivated();
-        void OnDeactivated();
-        void Tick();
-
         void Dispose();
     }
 }

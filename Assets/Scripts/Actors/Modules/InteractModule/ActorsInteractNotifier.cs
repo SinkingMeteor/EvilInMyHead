@@ -14,7 +14,6 @@ namespace Sheldier.Actors.Interact
         [SerializeField] private CircleCollider2D circleCollider2D;
         [ReadOnly][OdinSerialize]private Stack<IInteractReceiver> _receivers;
 
-        private ActorNotifyModule _notifier;
         private ActorInputController _inputController;
 
         private Coroutine _inInteractField;
@@ -24,7 +23,6 @@ namespace Sheldier.Actors.Interact
 
         public void Initialize(ActorInternalData data)
         {
-            _notifier = data.Actor.Notifier;
             _actor = data.Actor;
             _inputController = data.Actor.InputController;
             _receivers = new Stack<IInteractReceiver>();
@@ -59,7 +57,7 @@ namespace Sheldier.Actors.Interact
         {
             if (col.gameObject.TryGetComponent(out IInteractReceiver receiver))
             {
-             //   CheckInput(receiver);
+                CheckInput(receiver);
             }
         }
 
