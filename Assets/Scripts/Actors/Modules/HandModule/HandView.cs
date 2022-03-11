@@ -11,8 +11,9 @@ namespace Sheldier.Actors.Hand
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private SimpleAnimator simpleAnimator;
 
-        public void Initialize()
+        public void Initialize(TickHandler tickHandler)
         {
+            simpleAnimator.InjectDependencies(tickHandler);
             simpleAnimator.Initialize();
         }
         public void AddItem(Sprite itemSprite) => spriteRenderer.sprite = itemSprite;

@@ -4,7 +4,7 @@ namespace Sheldier.UI
 {
     public interface IUIInitializable
     {
-        void Initialize(IInputProvider inputProvider);
+        void Initialize(IUIInputProvider inputProvider);
         void Dispose();
     }
 }

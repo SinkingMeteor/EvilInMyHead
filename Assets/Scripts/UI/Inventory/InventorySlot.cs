@@ -30,10 +30,16 @@ namespace Sheldier.UI
         {
             itemIcon.sprite = item.ItemConfig.Icon;
             _item = item;
-            string extraInfo = item.GetExtraInfo();
-            if (extraInfo == String.Empty) return;
+            UpdateInfo();
             itemInfoTransform.gameObject.SetActive(true);
+        }
+
+        public void UpdateInfo()
+        {
+            string extraInfo = _item.GetExtraInfo();
+            if (extraInfo == String.Empty) return;
             itemInfoTMP.text = extraInfo;
+
         }
         public void OnInstantiated()
         {

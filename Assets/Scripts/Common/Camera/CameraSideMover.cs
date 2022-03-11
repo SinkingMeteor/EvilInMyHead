@@ -4,9 +4,6 @@ namespace Sheldier.Common
 {
     public class CameraSideMover
     {
-        private LateTickHandler _lateTickHandler;
-
-
         private IInputProvider _inputProvider;
         private Camera _camera;
         private CameraFollower _cameraFollower;

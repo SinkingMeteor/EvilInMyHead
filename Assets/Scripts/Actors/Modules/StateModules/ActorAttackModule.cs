@@ -5,7 +5,6 @@ namespace Sheldier.Actors
     public class ActorAttackModule : IExtraActorModule
     {
         private ActorInputController _inputController;
-
         private ActorNotifyModule _notifier;
         private ActorsInventoryModule _inventoryModule;
 

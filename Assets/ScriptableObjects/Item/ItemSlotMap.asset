@@ -51,10 +51,10 @@ MonoBehaviour:
       Data: 2|Sheldier.UI.ItemSlotData, Sheldier
     - Name: title
       Entry: 1
-      Data: '[PISTOL]'
+      Data: ui.items.item_slot.pistol.title
     - Name: description
       Entry: 1
-      Data: ...
+      Data: ui.items.item_slot.pistol.description
     - Name: previewSprite
       Entry: 10
       Data: 1
@@ -75,10 +75,10 @@ MonoBehaviour:
       Data: 3|Sheldier.UI.ItemSlotData, Sheldier
     - Name: title
       Entry: 1
-      Data: '[PISTOL AMMO]'
+      Data: ui.items.item_slot.pistol_ammo.title
     - Name: description
       Entry: 1
-      Data: ...
+      Data: ui.items.item_slot.pistol_ammo.description
     - Name: previewSprite
       Entry: 10
       Data: 3
@@ -99,13 +99,63 @@ MonoBehaviour:
       Data: 4|Sheldier.UI.ItemSlotData, Sheldier
     - Name: title
       Entry: 1
-      Data: '[RETURN]'
+      Data: ui.items.item_slot.cancel.title
     - Name: description
       Entry: 1
-      Data: ...
+      Data: ui.items.item_slot.cancel.description
     - Name: previewSprite
       Entry: 10
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: hintTitleMap
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[Sheldier.UI.InventoryHintPerformType,
+        Sheldier],[System.String, mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.EnumEqualityComparer`1[[Sheldier.UI.InventoryHintPerformType,
+        Sheldier]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 1
+      Data: ui.inventory.hint.use
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 1
+      Data: ui.inventory.hint.remove
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 

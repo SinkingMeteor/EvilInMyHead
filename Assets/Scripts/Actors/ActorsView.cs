@@ -1,4 +1,5 @@
-﻿using Sheldier.Common.Animation;
+﻿using Sheldier.Common;
+using Sheldier.Common.Animation;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -15,7 +16,7 @@ namespace Sheldier.Actors
         
         private int _currentSortingOrder;
         private AnimationType _currentPlayingType = AnimationType.None;
-
+        
         public void SetMaterial(Material material)
         {
             body.sharedMaterial = material;

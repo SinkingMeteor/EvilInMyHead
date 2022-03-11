@@ -9,17 +9,16 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class UIInventoryHitController : UIHintController<SimpleItem, InventoryHintPerformType>
+    public class UIInventoryHintController : UIHintController<SimpleItem, InventoryHintPerformType>
     {
         protected override IUIItemSwitcher<SimpleItem> ItemSwitcher => itemSwitcher;
 
         [OdinSerialize] private InventoryView itemSwitcher;
-        
+        [OdinSerialize] private ItemSlotMap itemSlotMap;
         private Inventory _inventory;
-        private ItemSlotMap _itemSlotMap;
 
 
-        public override void Initialize(IInputProvider inputProvider)
+        public override void Initialize(IUIInputProvider inputProvider)
         {
             base.Initialize(inputProvider);
             _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<SimpleItem, bool>>()
@@ -35,9 +34,8 @@ namespace Sheldier.UI
             _hintsCollection = new Dictionary<InventoryHintPerformType, UIHint>();
         }
         [Inject]
-        private void InjectDependencies(Inventory inventory, ItemSlotMap itemSlotMap)
+        private void InjectDependencies(Inventory inventory)
         {
-            _itemSlotMap = itemSlotMap;
             _inventory = inventory;
         }
         public override void OnActivated()
@@ -49,6 +47,14 @@ namespace Sheldier.UI
             base.OnActivated();
         }
 
+        public override void OnLanguageChanged()
+        {
+            foreach (var uiHint in _hintsCollection)
+            {
+                string text = _localizationProvider.LocalizedText[itemSlotMap.HintTitleMap[uiHint.Key]];
+                uiHint.Value.SetTitle(text);
+            }
+        }
         public override void OnDeactivated()
         {
             _uiInputProvider.UIUseItemButton.OnPressed -= OnUseButtonPressed;
@@ -88,11 +94,19 @@ namespace Sheldier.UI
             UIHint hint = _uiHintPool.GetFromPool();
             hint.Transform.SetParent(parentContainer);
             hint.Transform.localScale = Vector3.one;
-            
-            hint.SetTitle(_itemSlotMap.HintTitleMap[conditionKey]);
+            hint.SetIconImage(_bindIconProvider.GetActionInputSprite(GetActionType(conditionKey)));
+            hint.SetTitle(_localizationProvider.LocalizedText[itemSlotMap.HintTitleMap[conditionKey]]);
             
             _hintsCollection.Add(conditionKey, hint);
         }
 
+        private InputActionType GetActionType(InventoryHintPerformType performType)
+        {
+            return performType switch
+            {
+                InventoryHintPerformType.Use => InputActionType.UseItem,
+                InventoryHintPerformType.Remove => InputActionType.RemoveItem
+            };
+        }
     }
 }

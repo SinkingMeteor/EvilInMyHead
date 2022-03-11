@@ -36,6 +36,11 @@ namespace Sheldier.Actors.AI
             
         }
 
+        public void SwitchActionMap(ActionMapType actionMapType)
+        {
+            
+        }
+
         public void SetMovementDirection(Vector2 movementDirection) => _movementDirection = movementDirection;
     }
 }

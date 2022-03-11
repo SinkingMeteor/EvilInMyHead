@@ -16,7 +16,7 @@ namespace Sheldier.UI
         protected override Tween GetAnimation()
         {
             rectTransform.anchoredPosition = initialLocalPosition;
-            return rectTransform.DOLocalMove(targetLocalPosition.AddZ(), duration);
+            return rectTransform.DOAnchorPos(targetLocalPosition, duration);
         }
     }
 }

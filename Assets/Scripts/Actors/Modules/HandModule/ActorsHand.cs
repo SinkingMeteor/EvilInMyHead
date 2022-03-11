@@ -22,7 +22,7 @@ namespace Sheldier.Actors.Hand
             _tickHandler = data.TickHandler;
             _nullItem = new NullItem();
             _currentItem = _nullItem;
-            actorHandObject.Initialize();
+            actorHandObject.Initialize(_tickHandler);
             _tickHandler.AddListener(this);
             _actor.InventoryModule.OnUseItem += Equip;
             _actor.OnWillRemoveControl += UnEquip;

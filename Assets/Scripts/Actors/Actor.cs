@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Common.Pause;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using Zenject;
 using IInitializable = Sheldier.Setup.IInitializable;
@@ -17,7 +15,6 @@ namespace Sheldier.Actors
     {
         public event Action OnWillRemoveControl;
         public event Action OnAddedControl;
-        
         public ActorInputController InputController => _actorInputController;
         public ActorNotifyModule Notifier => _notifier;
         public ActorsInventoryModule InventoryModule => _inventoryModule;

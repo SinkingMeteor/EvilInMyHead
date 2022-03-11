@@ -7,9 +7,11 @@ namespace Sheldier.UI
 {
     public abstract class DOTweenUIAnimation : SerializedMonoBehaviour
     {
+        public bool IsLocal => isLocal;
+        
         [SerializeField] [Range(0.1f, 4.0f)] protected float duration;
         [SerializeField] private Ease easeType;
-        
+        [SerializeField] private bool isLocal;
         private Tween _mainSequence;
 
  

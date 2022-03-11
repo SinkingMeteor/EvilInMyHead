@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
+using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Sheldier.UI
 {
@@ -13,8 +15,7 @@ namespace Sheldier.UI
     {
         public Transform Transform => transform;
 
-        [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
-        [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
+        [OdinSerialize] private IUIStateAnimationAppearing[] appearingAnimations;
             
         [SerializeField] private float delay;
         [SerializeField] private Image hintImageBackground;
@@ -26,14 +27,14 @@ namespace Sheldier.UI
 
         public void Initialize(IPoolSetter<UIHint> poolSetter)
         {
-            appearingAnimation.Initialize();
-            disappearingAnimation.Initialize();
+            for (int i = 0; i < appearingAnimations.Length; i++)
+                appearingAnimations[i].Initialize();
             _poolSetter = poolSetter;
         }
-
         public void OnInstantiated()
         {
-            appearingAnimation.PlayAnimation();
+            for (int i = 0; i < appearingAnimations.Length; i++)
+                appearingAnimations[i].PlayAnimation();
         }
 
         public void SetIconImage(Sprite icon)
@@ -45,9 +46,8 @@ namespace Sheldier.UI
         {
             hintTitle.text = title;
         }
-        public async void Deactivate()
+        public void Deactivate()
         {
-            await disappearingAnimation.PlayAnimation();
             _poolSetter.SetToPull(this);
         }
 
@@ -65,8 +65,11 @@ namespace Sheldier.UI
 
         public void StopWaiting()
         {
-            if(_waitCoroutine != null)
+            if (_waitCoroutine != null)
+            {
+                hintImageBackground.fillAmount = 0.0f;
                 StopCoroutine(_waitCoroutine);
+            }
         }
 
         private IEnumerator WaitBeforePerformActionCoroutine(Action callback)

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Sheldier.Common;
 using Sirenix.OdinInspector;
@@ -10,17 +11,21 @@ namespace Sheldier.UI
     public class UIState : SerializedMonoBehaviour, ITickListener
     {
         public bool IsRequirePause => isRequirePause;
+        public ActionMapType ActionMap => actionMapType;
 
         [OdinSerialize] [ReadOnly] private IUIStateAnimationAppearing[] appearingAnimations;
         [OdinSerialize] [ReadOnly] private IUIStateAnimationDisappearing[] disappearingAnimations;
-        [OdinSerialize] [ReadOnly] private IUIElement[] UIElements;
+        [OdinSerialize] [ReadOnly] private IUIInitializable[] initializableUIElements;
+        [OdinSerialize] [ReadOnly] private ITickListener[] tickListeners;
+        [OdinSerialize] [ReadOnly] private IUIActivatable[] activatableUIElements;
         
         [OdinSerialize] private UICanvas canvas;
         [SerializeField] private bool isRequirePause;
+        [SerializeField] private ActionMapType actionMapType;
         
         private bool _isActivated;
         private TickHandler _tickHandler;
-        private IInputProvider _inputProvider;
+        private IUIInputProvider _inputProvider;
 
         public void Initialize()
         {
@@ -28,20 +33,20 @@ namespace Sheldier.UI
                 appearingAnimations[i].Initialize();
             for (int i = 0; i < disappearingAnimations.Length; i++)
                 disappearingAnimations[i].Initialize();
-            for (int i = 0; i < UIElements.Length; i++)
-                UIElements[i].Initialize(_inputProvider);                
+            for (int i = 0; i < initializableUIElements.Length; i++)
+                initializableUIElements[i].Initialize(_inputProvider);                
         }
 
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler, IInputProvider inputProvider)
+        private void InjectDependencies(TickHandler tickHandler, IUIInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _tickHandler = tickHandler;
         }
         public void Tick()
         {
-            for (int i = 0; i < UIElements.Length; i++)
-                UIElements[i].Tick();    
+            for (int i = 0; i < tickListeners.Length; i++)
+                tickListeners[i].Tick();    
         }
 
         public async void Show()
@@ -91,8 +96,8 @@ namespace Sheldier.UI
         public void Activate()
         {
             _tickHandler.AddListener(this);
-            for (int i = 0; i < UIElements.Length; i++)
-                UIElements[i].OnActivated();
+            for (int i = 0; i < activatableUIElements.Length; i++)
+                activatableUIElements[i].OnActivated();
             
             canvas.OnActivated();
 
@@ -101,8 +106,8 @@ namespace Sheldier.UI
         public void Deactivate()
         {
             _tickHandler.RemoveListener(this);
-            for (int i = 0; i < UIElements.Length; i++)
-                UIElements[i].OnDeactivated();  
+            for (int i = 0; i < activatableUIElements.Length; i++)
+                activatableUIElements[i].OnDeactivated();  
             
             canvas.OnDeactivated();
         }
@@ -113,17 +118,19 @@ namespace Sheldier.UI
         }
         public void Dispose()
         {
-            for (int i = 0; i < UIElements.Length; i++)
-                UIElements[i].Dispose();          
+            for (int i = 0; i < initializableUIElements.Length; i++)
+                initializableUIElements[i].Dispose();          
         }
 
         #if UNITY_EDITOR
         [Button]
         private void FindAllElements()
         {
-            appearingAnimations = GetComponentsInChildren<IUIStateAnimationAppearing>();
-            disappearingAnimations = GetComponentsInChildren<IUIStateAnimationDisappearing>();
-            UIElements = GetComponentsInChildren<IUIElement>();
+            appearingAnimations = GetComponentsInChildren<IUIStateAnimationAppearing>().Where(x => !x.IsLocal).ToArray();
+            disappearingAnimations = GetComponentsInChildren<IUIStateAnimationDisappearing>().Where(x => !x.IsLocal).ToArray();
+            initializableUIElements = GetComponentsInChildren<IUIInitializable>();
+            tickListeners = GetComponentsInChildren<ITickListener>().Where(x => !ReferenceEquals(x, this)).ToArray();
+            activatableUIElements = GetComponentsInChildren<IUIActivatable>();
         }
         #endif
 

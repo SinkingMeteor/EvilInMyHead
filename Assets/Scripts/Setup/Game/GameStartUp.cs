@@ -32,14 +32,16 @@ namespace Sheldier.Setup
         private PauseNotifier _pauseNotifier;
         private InventorySlotPool _inventorySlotPool;
         private ActorBuilder _actorBuilder;
+        private UIHintPool _uiHintPool;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
             AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory, ProjectilePool projectilePool,
             WeaponBlowPool weaponBlowPool, Inventory inventory, PathProvider pathProvider, UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
-            PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder)
+            PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool)
         {
+            _uiHintPool = uiHintPool;
             _inventorySlotPool = inventorySlotPool;
             _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
@@ -64,6 +66,8 @@ namespace Sheldier.Setup
             _projectilePool.Initialize();
             _weaponBlowPool.Initialize();
             _inventorySlotPool.Initialize();
+            _uiHintPool.Initialize();
+            
             _actorBuilder.Initialize();
             
             _pauseNotifier.Initialize();

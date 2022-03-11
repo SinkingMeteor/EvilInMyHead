@@ -1,11 +1,9 @@
 ﻿using Sheldier.Common;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Actors.Interact
 {
-    public class ReplaceInteractReceiver : IInteractReceiver, IExtraActorModule
+    public class ReplaceInteractReceiver : MonoBehaviour, IInteractReceiver, IExtraActorModule
     {
         public Transform Transform => _currentActor.transform;
 
@@ -15,21 +13,15 @@ namespace Sheldier.Actors.Interact
         private Material _defaultMaterial;
         private ActorsView _actorsView;
 
-
-        public ReplaceInteractReceiver(Material onInteractMaterial)
-        {
-            _material = onInteractMaterial;
-        }
         public void Initialize(ActorInternalData data)
         {
             _currentActor = data.Actor;
             _actorsView = data.Actor.ActorsView;
             _defaultMaterial = _actorsView.CurrentBodyMaterial;
         }
-
-        [Inject]
-        private void InjectDependencies(ScenePlayerController playerSceneController)
+        public void SetDependencies(ScenePlayerController playerSceneController, Material material)
         {
+            _material = material;
             _playerSceneController = playerSceneController;
         }
         public void OnEntered()
@@ -38,11 +30,11 @@ namespace Sheldier.Actors.Interact
                 return;
             _actorsView.SetMaterial(_material);
         }
-
-        public void OnInteracted(Actor actor)
+        public bool OnInteracted(Actor actor)
         {            
             _playerSceneController.SetControl(_currentActor);
             _playerSceneController.SetFollowTarget(_currentActor);
+            return false;
         }
 
         public void OnExit()

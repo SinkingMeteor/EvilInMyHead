@@ -2,5 +2,5 @@
 
 namespace Sheldier.Common.Pool
 {
-    public class UIHintPool : DefaultPool<UIHintController.UIHint>{}
+    public class UIHintPool : DefaultPool<UIHint>{}
 }

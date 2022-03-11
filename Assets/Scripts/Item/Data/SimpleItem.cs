@@ -13,6 +13,7 @@ namespace Sheldier.Item
         public ItemConfig ItemConfig => _itemConfig;
         public virtual bool IsEquippable => true;
         public virtual bool IsStackable => false;
+        public virtual bool IsQuest => false;
         public Counter ItemAmount => _itemAmount;
         public int FreeAmount => _itemConfig.MaxStack - _itemAmount.Amount; 
 

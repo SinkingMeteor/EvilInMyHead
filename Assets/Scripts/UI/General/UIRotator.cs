@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Sheldier.UI
 {
-    public class UIRotator : MonoBehaviour, IUIElement
+    public class UIRotator : MonoBehaviour, IUIActivatable, ITickListener
     {
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private float speed;
@@ -11,16 +11,10 @@ namespace Sheldier.UI
 
         private float _currentDirection;
         private float _currentSpeed;
-        private IInputProvider _inputProvider;
-
-        public void Initialize(IInputProvider inputProvider)
-        {
-            _inputProvider = inputProvider;
-            _currentDirection = clockwise ? 1.0f : -1.0f;
-        }
 
         public void OnActivated()
         {
+            _currentDirection = clockwise ? 1.0f : -1.0f;
             _currentSpeed = speed;
         }
 
@@ -34,9 +28,5 @@ namespace Sheldier.UI
             rectTransform.Rotate(new Vector3(0.0f, 0.0f, 1.0f * _currentDirection) * _currentSpeed * Time.unscaledDeltaTime, Space.Self);
         }
 
-        public void Dispose()
-        {
-            
-        }
     }
 }

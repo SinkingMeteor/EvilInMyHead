@@ -8,13 +8,12 @@ using UnityEngine;
 namespace Sheldier.Actors.Interact
 {
     [RequireComponent(typeof(CircleCollider2D))]
-    public class ActorsInteractModule : SerializedMonoBehaviour, IExtraActorModule
+    public class ActorsInteractNotifier : SerializedMonoBehaviour, IExtraActorModule
     {
-        
-        [SerializeField] private CircleCollider2D circleCollider2D;
         [ReadOnly][OdinSerialize]private Stack<IInteractReceiver> _receivers;
 
         private ActorInputController _inputController;
+        private CircleCollider2D _circleCollider2D;
 
         private Coroutine _inInteractField;
 
@@ -24,6 +23,7 @@ namespace Sheldier.Actors.Interact
         public void Initialize(ActorInternalData data)
         {
             _actor = data.Actor;
+            _circleCollider2D = GetComponent<CircleCollider2D>();
             _inputController = data.Actor.InputController;
             _receivers = new Stack<IInteractReceiver>();
             _inputController.OnUseButtonPressed += Interact;
@@ -39,17 +39,19 @@ namespace Sheldier.Actors.Interact
         private bool IsInsideField(Transform receiver)
         {
             var length = (receiver.position - transform.position).magnitude - 0.4f;
-            return length < circleCollider2D.radius;
+            return length < _circleCollider2D.radius;
         }
 
         private void Interact()
         {
             if(_currentReceiver == null)
                 return;
-            _currentReceiver.OnInteracted(_actor);
-            if(_inInteractField != null)
+            bool interactResult = _currentReceiver.OnInteracted(_actor);
+            if(_inInteractField != null || interactResult)
                 StopCoroutine(_inInteractField);
             _currentReceiver.OnExit();
+            if (interactResult)
+                _currentReceiver = null;
             PopOldReceiver();
         }
 

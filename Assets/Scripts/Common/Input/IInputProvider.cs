@@ -1,4 +1,3 @@
-using System;
 using Sheldier.Setup;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace Sheldier.Common
          InputButton UseButton { get; }
          InputButton AttackButton { get; }
          InputButton ReloadButton { get; }
-         InputButton OpenInventoryButton { get; }
          Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position);
     }
 }

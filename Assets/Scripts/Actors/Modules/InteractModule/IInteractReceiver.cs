@@ -6,7 +6,7 @@ namespace Sheldier.Actors.Interact
     {
         Transform Transform { get; }
         void OnEntered();
-        void OnInteracted(Actor actor);
+        bool OnInteracted(Actor actor);
         void OnExit();
         
     }

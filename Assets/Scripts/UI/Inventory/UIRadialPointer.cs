@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 namespace Sheldier.UI
 {
-    public class UIRadialPointer : MonoBehaviour, IUIElement
+    public class UIRadialPointer : MonoBehaviour, ITickListener, IUIInitializable
     {
         public int CurrentSegment => _currentSegment;
-        
+
         [SerializeField] private RectTransform pointerBaseRectTransform;
         [SerializeField] private Image pointerImage;
         [SerializeField] private float inactiveRadius;
         [SerializeField] private float deltaMaxDistance;
-        
+
         private int _currentSegment;
         private int _totalSegments;
         private float _anglePerSegment;
-        
-        private IInputProvider _inputProvider;
 
-        public void Initialize(IInputProvider inputProvider)
+        private IUIInputProvider _inputProvider;
+
+        public void Initialize(IUIInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
         }
@@ -30,23 +30,17 @@ namespace Sheldier.UI
             _totalSegments = segments;
             _anglePerSegment = MathConstants.TAU / _totalSegments;
         }
-        public void OnActivated()
-        {
-        }
-
-        public void OnDeactivated()
-        {
-        }
 
         public void Tick()
         {
             Vector2 dir = _inputProvider.CursorScreenCenterDirection;
 
             var angle = (Mathf.Atan2(dir.y, dir.x));
-            pointerBaseRectTransform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg), 0.5f);
+            pointerBaseRectTransform.rotation = Quaternion.Slerp(transform.rotation,
+                Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg), 0.5f);
             angle += Mathf.PI;
             _currentSegment = Mathf.FloorToInt(angle / (_anglePerSegment + 0.1f));
-            if (!CheckCursorLength(dir))
+            if (!CheckCursorLength(dir) || _totalSegments == 0)
                 _currentSegment = -1;
         }
 
@@ -75,13 +69,13 @@ namespace Sheldier.UI
                 Gizmos.color = Color.red;
 
                 Gizmos.DrawLine(parent.anchoredPosition,
-                    parent.anchoredPosition + i.UnitVectorFromSegment(_totalSegments)*60.0f);
-                
+                    parent.anchoredPosition + i.UnitVectorFromSegment(_totalSegments) * 60.0f);
+
                 Gizmos.color = Color.green;
                 var angle = (i * _anglePerSegment);
                 var y = Mathf.Sin(angle);
                 var x = Mathf.Cos(angle);
-                Gizmos.DrawLine(parent.anchoredPosition, parent.anchoredPosition + new Vector2(x,y)*80.0f);
+                Gizmos.DrawLine(parent.anchoredPosition, parent.anchoredPosition + new Vector2(x, y) * 80.0f);
             }
         }
 

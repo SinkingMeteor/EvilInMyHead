@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sheldier.Actors.Inventory;
 using Sheldier.Common;
+using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
 using Sheldier.Item;
 using TMPro;
@@ -10,8 +12,9 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class InventoryView : MonoBehaviour
+    public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener
     {
+        public event Action<SimpleItem> OnCurrentItemChanged;
         
         [SerializeField] private Image selectedItemImage;
         [SerializeField] private TextMeshProUGUI titleTMP;
@@ -21,33 +24,39 @@ namespace Sheldier.UI
         [SerializeField] private ItemSlotMap itemSlotMap;
         [SerializeField] private float slotsSpawnDistance = 4.0f;
 
-        private InventorySlot[] _slotsCollection;
+        private ILocalizationProvider _localizationProvider;
+        private List<InventorySlot> _slotsCollection;
         private InventorySlotPool _inventorySlotPool;
         private InventorySlot _selectedSlot;
+        private Inventory _inventory;
 
         [Inject]
-        private void InjectDependencies(InventorySlotPool inventorySlotPool)
+        private void InjectDependencies(InventorySlotPool inventorySlotPool, Inventory inventory, ILocalizationProvider localizationProvider)
         {
+            _localizationProvider = localizationProvider;
+            _inventory = inventory;
             _inventorySlotPool = inventorySlotPool;
         }
-        public void Activate(List<SimpleItem> inventoryItems)
+        public void Activate()
         {
+            var inventoryItems = GetItemsList();
+            _localizationProvider.AddListener(this);
             radialPointer.SetSegments(inventoryItems.Count);
-            _slotsCollection = new InventorySlot[inventoryItems.Count];
+            _slotsCollection = new List<InventorySlot>();
             for (int i = 0; i < inventoryItems.Count; i++)
             {
                 InventorySlot slot = InstantiateSlot(inventoryItems[i]);
-                _slotsCollection[i] = slot;
+                _slotsCollection.Add(slot);
                 var offsetVector =  i.UnitVectorFromSegment(inventoryItems.Count) * slotsSpawnDistance;
                 slot.RectTransform.anchoredPosition = slotsParent.anchoredPosition + offsetVector;
             }
         }
-
-        public SimpleItem GetCurrentSelectedItem()
+        public void OnLanguageChanged()
         {
             if (_selectedSlot == null)
-                return null;
-            return _selectedSlot.Item;
+                CleanInfo();
+            else
+                SetNewInfo();                
         }
         public void Tick()
         {
@@ -56,10 +65,11 @@ namespace Sheldier.UI
             if (slotIndex == -1)
             {
                 CleanInfo();
+                OnCurrentItemChanged?.Invoke(null);
                 return;
             }
 
-            if (slotIndex >= _slotsCollection.Length) 
+            if (slotIndex >= _slotsCollection.Count) 
                 return;
 
             if (_slotsCollection[slotIndex] == _selectedSlot)
@@ -67,13 +77,41 @@ namespace Sheldier.UI
 
             SelectNewSlot(_slotsCollection[slotIndex]);
         }
+        public void Refresh()
+        {
+            List<SimpleItem> itemsList = GetItemsList();
+            radialPointer.SetSegments(itemsList.Count);
+            for (int i = 0; i < _slotsCollection.Count; i++)
+            {
+                if (!itemsList.Contains(_slotsCollection[i].Item))
+                {
+                    (_slotsCollection[i], _slotsCollection[^1]) = (_slotsCollection[^1], _slotsCollection[i]);
+                    _inventorySlotPool.SetToPull(_slotsCollection[^1]);
+                    _slotsCollection.RemoveAt(_slotsCollection.Count-1);
+                    i -= 1;
+                    continue;
+                }
+                _slotsCollection[i].UpdateInfo();
+                var offsetVector =  i.UnitVectorFromSegment(itemsList.Count) * slotsSpawnDistance;
+                _slotsCollection[i].RectTransform.anchoredPosition = slotsParent.anchoredPosition + offsetVector;
+            }
 
+            Tick();
+        }
         public void Deactivate()
         {
-            for (int i = 0; i < _slotsCollection.Length; i++)
+            _localizationProvider.RemoveListener(this);
+            for (int i = 0; i < _slotsCollection.Count; i++)
             {
                 _inventorySlotPool.SetToPull(_slotsCollection[i]);
             }
+        }
+        private List<SimpleItem> GetItemsList()
+        {
+            List<SimpleItem> inventoryItems = new List<SimpleItem>();
+            foreach (var inventoryGroup in _inventory.ItemsCollection)
+                inventoryItems.AddRange(inventoryGroup.Value.Items);
+            return inventoryItems;
         }
         private InventorySlot InstantiateSlot(SimpleItem inventoryItem)
         {
@@ -83,19 +121,22 @@ namespace Sheldier.UI
             slot.transform.localScale = Vector3.one;
             return slot;
         }
+
+
         private void SelectNewSlot(InventorySlot slot)
         {
             DeselectOldSlot();
             _selectedSlot = slot;
             _selectedSlot.Select();
+            OnCurrentItemChanged?.Invoke(slot.Item);
             SetNewInfo();
         }
 
         private void CleanInfo()
         {
             DeselectOldSlot();
-            titleTMP.text = itemSlotMap.CancelSlot.Title;
-            descriptionTMP.text = itemSlotMap.CancelSlot.Description;
+            titleTMP.text = _localizationProvider.LocalizedText[itemSlotMap.CancelSlot.Title];
+            descriptionTMP.text = _localizationProvider.LocalizedText[itemSlotMap.CancelSlot.Description];
             selectedItemImage.sprite = itemSlotMap.CancelSlot.PreviewSprite;
         }
 
@@ -111,8 +152,8 @@ namespace Sheldier.UI
         private void SetNewInfo()
         {
             ItemSlotData data = itemSlotMap.SlotMap[_selectedSlot.Item.ItemConfig];
-            titleTMP.text = data.Title;
-            descriptionTMP.text = data.Description;
+            titleTMP.text = _localizationProvider.LocalizedText[data.Title];
+            descriptionTMP.text = _localizationProvider.LocalizedText[data.Description];
             selectedItemImage.sprite = data.PreviewSprite;
         }
         private void OnDrawGizmos()
@@ -120,5 +161,7 @@ namespace Sheldier.UI
             Gizmos.matrix = slotsParent.localToWorldMatrix;
             Gizmos.DrawWireSphere(slotsParent.anchoredPosition, slotsSpawnDistance);
         }
+
+
     }
 }

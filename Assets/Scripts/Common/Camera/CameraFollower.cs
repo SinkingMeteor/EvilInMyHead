@@ -6,7 +6,6 @@ namespace Sheldier.Common
     {
         private Transform _targetTransform;
         private Camera _camera;
-
         public Vector3 TargetPosition => _targetPosition;
         private Vector3 _targetPosition;
         public void SetCamera(Camera camera)

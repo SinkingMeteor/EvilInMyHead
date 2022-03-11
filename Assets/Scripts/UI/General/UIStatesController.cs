@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sheldier.Common;
 using Sheldier.Common.Pause;
 using Sheldier.Installers;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Sheldier.UI
         private UIInstaller _uiInstaller;
         private int _topSortingOrder;
         private PauseNotifier _pauseNotifier;
+        private IInputProvider _inputProvider;
 
         public void InitializeOnScene()
         {
@@ -43,8 +45,9 @@ namespace Sheldier.UI
         }
 
         [Inject]
-        private void InjectDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier)
+        private void InjectDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IInputProvider inputProvider)
         {
+            _inputProvider = inputProvider;
             _pauseNotifier = pauseNotifier;
             _uiInstaller = uiInstaller;
         } 
@@ -69,6 +72,7 @@ namespace Sheldier.UI
             _shownStates.Push(state);
             if(state.IsRequirePause && !_pauseNotifier.IsPaused)
                 _pauseNotifier.Pause();
+          //  _inputProvider.SwitchActionMap(state.ActionMap);
         }
 
         public void Remove(UIType uiType)
@@ -90,9 +94,11 @@ namespace Sheldier.UI
             };
 
             var previousState = _shownStates.Peek();
-            previousState.Activate();
             if (!previousState.IsRequirePause && _pauseNotifier.IsPaused)
                 _pauseNotifier.Unpause();
+           // _inputProvider.SwitchActionMap(previousState.ActionMap);
+            previousState.Activate();
+
         }
         public void OnSceneDispose()
         {

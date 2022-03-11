@@ -11,8 +11,10 @@ namespace Sheldier.UI
     {
         public ItemSlotData CancelSlot => cancelSlot;
         public IReadOnlyDictionary<ItemConfig, ItemSlotData> SlotMap => slotMap;
+        public IReadOnlyDictionary<InventoryHintPerformType, string> HintTitleMap => hintTitleMap;
         
         [OdinSerialize] private Dictionary<ItemConfig, ItemSlotData> slotMap;
         [OdinSerialize] private ItemSlotData cancelSlot;
+        [OdinSerialize] private Dictionary<InventoryHintPerformType, string> hintTitleMap;
     }
 }

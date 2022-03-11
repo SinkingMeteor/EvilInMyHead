@@ -15,6 +15,10 @@ namespace Sheldier.Common
         public InputButton ReloadButton => _reloadButton;
         public InputButton OpenInventoryButton => _openInventoryButton;
         public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position) => Vector2.zero;
+        public void SwitchActionMap(ActionMapType actionMapType)
+        {
+            
+        }
 
         private InputButton _reloadButton = new InputButton();
         private InputButton _useButton = new InputButton();

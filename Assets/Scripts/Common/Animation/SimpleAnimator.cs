@@ -63,6 +63,8 @@ namespace Sheldier.Common.Animation
 
         public void Reset()
         {
+            if(!_isPlaying)
+                return;
             StopPlaying();
             currentAnimation = null;
         }
@@ -70,7 +72,6 @@ namespace Sheldier.Common.Animation
         public void Dispose()
         {
             Reset();
-            _tickHandler.RemoveListener(this);
         }
     }
 }

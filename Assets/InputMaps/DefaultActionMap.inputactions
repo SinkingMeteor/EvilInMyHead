@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Cursor",
+                    "name": "Point",
                     "type": "PassThrough",
                     "id": "79838ade-6848-4ea8-87c1-eb3cee8d4382",
                     "expectedControlType": "Vector2",
@@ -54,6 +54,24 @@
                     "name": "OpenInventory",
                     "type": "Button",
                     "id": "e5b95391-e70f-42ad-8138-88ab19a805f2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "50283c97-51ed-44e3-8508-931e12cea048",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RemoveItem",
+                    "type": "Button",
+                    "id": "d599ca6c-e7f6-4d37-96c2-47bddf2c5442",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -156,7 +174,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Cursor",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -167,7 +185,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "GamePad",
-                    "action": "Cursor",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -218,11 +236,66 @@
                 {
                     "name": "",
                     "id": "0938c32d-0248-4bf0-9d40-47e277a4bfbe",
-                    "path": "<Keyboard>/tab",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
                     "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aac86850-8af3-498f-b70d-b39d9a0f83b7",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d40f9de-1f58-4570-9388-94ff3069aa26",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d39a34c-3905-4fea-91e5-b14fadeeee3b",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3b0a462-9dda-4edc-9cfc-477790bd0360",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "RemoveItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d18fdb61-e7eb-4598-bcf8-676161219805",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "RemoveItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -456,6 +529,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4359a1e2-82d5-4614-aee0-e210dbdea90a",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false

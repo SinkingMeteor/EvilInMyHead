@@ -37,7 +37,7 @@ namespace Sheldier.Item
             spriteRenderer.sharedMaterial = onInteractMaterial;
         }
 
-        public void OnInteracted(Actor actor)
+        public bool OnInteracted(Actor actor)
         {
             SimpleItem item = _itemFactory.GetItem(itemReference);
             item.ItemAmount.Set(amount);
@@ -45,7 +45,12 @@ namespace Sheldier.Item
             if (!report.IsCompleted)
                 amount -= report.Amount;
             else
+            {
                 Deactivate();
+                return true;
+            }
+
+            return false;
         }
 
         public void OnExit()

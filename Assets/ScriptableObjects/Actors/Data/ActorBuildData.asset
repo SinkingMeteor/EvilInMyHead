@@ -24,3 +24,7 @@ MonoBehaviour:
   actorData: {fileID: 11400000, guid: 5bcb8642b2698334fb3bbe769e9886bc, type: 2}
   _canMove: 1
   _canEquip: 1
+  _isEffectPerceptive: 1
+  _canInteract: 1
+  _canAttack: 1
+  _interactType: 1
