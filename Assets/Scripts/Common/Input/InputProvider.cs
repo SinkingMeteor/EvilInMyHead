@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Sheldier.Common
 {
-    public class InputProvider : MonoBehaviour, IInputProvider, IUIInputProvider
+    public class InputProvider : MonoBehaviour, IInputProvider, IInventoryInputProvider
     {
         public Vector2 MovementDirection => playerInput.actions[InputConstants.InputActions[InputActionType.Movement]].ReadValue<Vector2>();
         
@@ -14,18 +14,22 @@ namespace Sheldier.Common
             get
             {
                 var handler = _mouseHandlers[_currentControlScheme];
-                return handler.GetMouseScreenDirection(playerInput.actions[InputConstants.InputActions[InputActionType.Point]].ReadValue<Vector2>());
+                var inputAction = playerInput.currentActionMap.FindAction(InputConstants.InputActions[InputActionType.Cursor]);
+                var vec = inputAction.ReadValue<Vector2>();
+                var direction = handler.GetMouseScreenDirection(vec);
+                return direction;
             }
         }
-
         public InputButton UseButton => _useButton;
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
         public InputButton UIOpenInventoryButton => _uiOpenInventoryButton;
+        public InputButton UICloseInventoryButton => _uiCloseInventoryButton;
         public InputButton UIUseItemButton => _uiUseItemButton;
         public InputButton UIRemoveItemButton => _uiRemoveItemButton;
         
         [SerializeField] private PlayerInput playerInput;
+        [SerializeField] private InputBindHandler bindHandler;
         
         private string _currentControlScheme;
         private CursorDirectionConverter _cursorDirectionConverter;
@@ -36,8 +40,10 @@ namespace Sheldier.Common
         private InputButton _reloadButton;
         
         private InputButton _uiOpenInventoryButton;
+        private InputButton _uiCloseInventoryButton;
         private InputButton _uiRemoveItemButton;
         private InputButton _uiUseItemButton;
+        private TickHandler _tickHandler;
 
 
         public void Initialize()
@@ -50,6 +56,7 @@ namespace Sheldier.Common
             _uiOpenInventoryButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.OpenInventory]);
             _uiUseItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.UseItem]);
             _uiRemoveItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.RemoveItem]);
+            _uiCloseInventoryButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.CloseInventory]);
             
             _cursorDirectionConverter = new CursorDirectionConverter();
             _mouseHandlers = new Dictionary<string, IInputMouseHandler>
@@ -58,19 +65,26 @@ namespace Sheldier.Common
                 {InputConstants.GAMEPAD, new GamePadMouseDirectionProvider()},
             };
             ActivateInput();
-            
         }
 
+        public void SwitchActionMap(ActionMapType actionMapType)
+        {
+            string mapName = InputConstants.ActionMaps[actionMapType];
+            var newActionMap = playerInput.actions.FindActionMap(mapName);
+            newActionMap.Enable();
+            playerInput.currentActionMap.Disable();
+            playerInput.currentActionMap = newActionMap;
+        }
         public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position)
         {
             return _cursorDirectionConverter.GetDirectionByTransform(position,
-                playerInput.actions[InputConstants.InputActions[InputActionType.Point]].ReadValue<Vector2>());
+                playerInput.actions[InputConstants.InputActions[InputActionType.Cursor]].ReadValue<Vector2>());
         }
         public void OnChangedControls(PlayerInput newPlayerInput)
         {
             if (_currentControlScheme == playerInput.currentControlScheme) return;
-            
             _currentControlScheme = playerInput.currentControlScheme;
+            bindHandler.OnChangedControls();
             RemoveAllBindingOverrides();
         }
 
@@ -84,9 +98,9 @@ namespace Sheldier.Common
 
 
         }
-        public void SetSceneCamera(Camera camera)
+        public void SetSceneCamera(Camera cam)
         {
-            _cursorDirectionConverter.SetCamera(camera);
+            _cursorDirectionConverter.SetCamera(cam);
         }
         private void RemoveAllBindingOverrides()
         {
@@ -154,7 +168,7 @@ namespace Sheldier.Common
             private Vector2 previousDirection;
             public Vector2 GetMouseScreenDirection(Vector2 mouseDirection)
             {
-                var newDirection = Vector2.Lerp(previousDirection, mouseDirection, Time.deltaTime);
+                var newDirection = Vector2.Lerp(previousDirection, mouseDirection, Time.deltaTime * 5.0f);
                 previousDirection = newDirection;
                 return newDirection;
             }

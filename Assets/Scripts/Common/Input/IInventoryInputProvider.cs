@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-
+﻿
 namespace Sheldier.Common
 {
-    public interface IUIInputProvider
+    public interface IInventoryInputProvider : ICursorProvider
     {
-        Vector2 CursorScreenCenterDirection { get; }
         InputButton UIUseItemButton { get; }
         InputButton UIRemoveItemButton { get; }
-        
         InputButton UIOpenInventoryButton { get; }
+        InputButton UICloseInventoryButton { get; }
+        
     }
 }

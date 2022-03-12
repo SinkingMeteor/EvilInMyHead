@@ -11,9 +11,10 @@ namespace Sheldier.Installers
         public override void InstallBindings()
         {
             Container.Bind<IInputProvider>().FromInstance(inputProvider).AsSingle();
-            Container.Bind<IUIInputProvider>().FromInstance(inputProvider).AsSingle();
+            Container.Bind<IInventoryInputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<InputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<IInputRebinder>().FromInstance(bindHandler).AsSingle();
+            Container.Bind<InputBindHandler>().FromInstance(bindHandler).AsSingle();
             Container.Bind<IInputBindIconProvider>().FromInstance(bindHandler).AsSingle();
         }
     }

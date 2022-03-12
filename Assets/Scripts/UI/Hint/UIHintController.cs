@@ -10,7 +10,7 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public abstract class UIHintController<T, V> : SerializedMonoBehaviour, IUIInitializable, IUIActivatable, ILocalizationListener
+    public abstract class UIHintController<T, V> : SerializedMonoBehaviour, IUIInitializable, IUIActivatable, ILocalizationListener, IDeviceListener
     {
         protected abstract IUIItemSwitcher<T> ItemSwitcher { get; }
 
@@ -24,14 +24,14 @@ namespace Sheldier.UI
         protected Dictionary<V, UIHint> _hintsCollection;
         protected T _currentItem;
         
-        protected IUIInputProvider _uiInputProvider;
+        protected IInventoryInputProvider InventoryInputProvider;
         protected UIHintPool _uiHintPool;
         protected ILocalizationProvider _localizationProvider;
         protected IInputBindIconProvider _bindIconProvider;
 
-        public virtual void Initialize(IUIInputProvider inputProvider)
+        public virtual void Initialize(IInventoryInputProvider inputProvider)
         {
-            _uiInputProvider = inputProvider;
+            InventoryInputProvider = inputProvider;
             appearingAnimation.Initialize();
             disappearingAnimation.Initialize();
         }
@@ -44,11 +44,13 @@ namespace Sheldier.UI
             _uiHintPool = uiHintPool;
         }
         public abstract void OnLanguageChanged();
+        public abstract void OnDeviceChanged();
         protected abstract void CreateHint(V conditionKey);
         public virtual void OnActivated()
         {
             appearingAnimation.PlayAnimation();
             _localizationProvider.AddListener(this);
+            _bindIconProvider.AddListener(this);
             ItemSwitcher.OnCurrentItemChanged += OnItemChanged;
         }
 
@@ -56,6 +58,7 @@ namespace Sheldier.UI
         {
             RemoveAllHints();
             _localizationProvider.RemoveListener(this);
+            _bindIconProvider.RemoveListener(this);
             disappearingAnimation.PlayAnimation();
             ItemSwitcher.OnCurrentItemChanged -= OnItemChanged;
         }

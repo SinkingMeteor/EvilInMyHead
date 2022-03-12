@@ -781,7 +781,7 @@ MonoBehaviour:
       Entry: 10
       Data: 19
   isRequirePause: 1
-  actionMapType: 0
+  actionMapType: 2
 --- !u!1 &10075448730968194
 GameObject:
   m_ObjectHideFlags: 0

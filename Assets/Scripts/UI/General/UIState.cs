@@ -25,7 +25,7 @@ namespace Sheldier.UI
         
         private bool _isActivated;
         private TickHandler _tickHandler;
-        private IUIInputProvider _inputProvider;
+        private IInventoryInputProvider _inputProvider;
 
         public void Initialize()
         {
@@ -38,7 +38,7 @@ namespace Sheldier.UI
         }
 
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler, IUIInputProvider inputProvider)
+        private void InjectDependencies(TickHandler tickHandler, IInventoryInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _tickHandler = tickHandler;

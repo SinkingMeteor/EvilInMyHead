@@ -24,13 +24,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Point",
-                    "type": "PassThrough",
+                    "name": "Cursor",
+                    "type": "Value",
                     "id": "79838ade-6848-4ea8-87c1-eb3cee8d4382",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Attack",
@@ -54,24 +54,6 @@
                     "name": "OpenInventory",
                     "type": "Button",
                     "id": "e5b95391-e70f-42ad-8138-88ab19a805f2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UseItem",
-                    "type": "Button",
-                    "id": "50283c97-51ed-44e3-8508-931e12cea048",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RemoveItem",
-                    "type": "Button",
-                    "id": "d599ca6c-e7f6-4d37-96c2-47bddf2c5442",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -169,23 +151,23 @@
                 },
                 {
                     "name": "",
-                    "id": "f797db86-9564-42db-8e0c-314d3f73af9a",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Point",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "62f89b2b-2248-448c-8857-954325a8d0f8",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "GamePad",
-                    "action": "Point",
+                    "action": "Cursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3240108c-97f3-41ac-94d9-cb9745da16af",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -236,7 +218,7 @@
                 {
                     "name": "",
                     "id": "0938c32d-0248-4bf0-9d40-47e277a4bfbe",
-                    "path": "<Mouse>/middleButton",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
@@ -247,55 +229,11 @@
                 {
                     "name": "",
                     "id": "aac86850-8af3-498f-b70d-b39d9a0f83b7",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "GamePad",
                     "action": "OpenInventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d40f9de-1f58-4570-9388-94ff3069aa26",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "UseItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1d39a34c-3905-4fea-91e5-b14fadeeee3b",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "UseItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e3b0a462-9dda-4edc-9cfc-477790bd0360",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "RemoveItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d18fdb61-e7eb-4598-bcf8-676161219805",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "RemoveItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -524,22 +462,22 @@
                 },
                 {
                     "name": "",
-                    "id": "b64ea23e-d486-4c48-8a4f-0ecedd995d1c",
-                    "path": "<Mouse>/position",
+                    "id": "4359a1e2-82d5-4614-aee0-e210dbdea90a",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "GamePad",
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4359a1e2-82d5-4614-aee0-e210dbdea90a",
-                    "path": "<Gamepad>/rightStick",
+                    "id": "12c3e167-89c5-45d7-9504-e7a442d620bb",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamePad",
+                    "groups": "PC",
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -629,6 +567,138 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Inventory",
+            "id": "cc2ff739-a27d-4b65-a507-4a26a9e606e7",
+            "actions": [
+                {
+                    "name": "CloseInventory",
+                    "type": "Button",
+                    "id": "7e63f7b3-47b0-4180-a51e-03c3162d7c6d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "2492b4eb-efba-449a-9341-9a34b85d9da8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RemoveItem",
+                    "type": "Button",
+                    "id": "6631f6a7-804a-42dd-8e7c-9cbfcfc38544",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cursor",
+                    "type": "Value",
+                    "id": "786957da-58c3-48ac-b726-f1294a91be9a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "01ebd0ca-aac6-4c1b-8665-c41ef0902255",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "CloseInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "713a4860-186d-4507-a63b-2e70a5676142",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "CloseInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33d11b64-22c8-4c5b-8121-5690c48d8a1f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dbc02b61-1623-4455-b42e-9ae65d8520ef",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d27f643a-cfc7-48f6-81b8-9e664a20b0bd",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "RemoveItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3098786-dcf1-4a5f-8aff-898a0d944524",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "RemoveItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea830a1a-3b1a-4b3c-a982-6f448f35ab09",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Cursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a66f212-54ba-4d19-a7d3-433d7fe8b95a",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

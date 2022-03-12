@@ -18,9 +18,9 @@ namespace Sheldier.UI
         private int _totalSegments;
         private float _anglePerSegment;
 
-        private IUIInputProvider _inputProvider;
+        private IInventoryInputProvider _inputProvider;
 
-        public void Initialize(IUIInputProvider inputProvider)
+        public void Initialize(IInventoryInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
         }
@@ -34,6 +34,7 @@ namespace Sheldier.UI
         public void Tick()
         {
             Vector2 dir = _inputProvider.CursorScreenCenterDirection;
+            //Debug.Log(dir);
 
             var angle = (Mathf.Atan2(dir.y, dir.x));
             pointerBaseRectTransform.rotation = Quaternion.Slerp(transform.rotation,

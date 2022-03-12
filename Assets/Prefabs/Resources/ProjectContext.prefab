@@ -914,7 +914,7 @@ MonoBehaviour:
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
+  m_PointerBehavior: 2
 --- !u!1 &4147315325093459167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 7511222703471105387}
+  bindHandler: {fileID: 1708024311893767634}
 --- !u!1 &7575885945570313233
 GameObject:
   m_ObjectHideFlags: 0

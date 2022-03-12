@@ -1,24 +1,21 @@
-using System.Collections.Generic;
-using Sheldier.Actors.Inventory;
 using Sheldier.Common;
-using Sheldier.Item;
 using UnityEngine;
 using Zenject;
 
 namespace Sheldier.UI
 {
-    public class InventoryController : MonoBehaviour, IUIActivatable,ITickListener,IUIInitializable
+    public class InventoryController : MonoBehaviour, IUIActivatable, ITickListener, IUIInitializable
     {
         [SerializeField] private InventoryView view;
         
-        private IUIInputProvider _inputProvider;
+        private IInventoryInputProvider _inputProvider;
         private UIStatesController _statesController;
 
-        public void Initialize(IUIInputProvider inputProvider)
+        public void Initialize(IInventoryInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _inputProvider.UIOpenInventoryButton.OnPressed += OpenInventoryWindow;
-            _inputProvider.UIOpenInventoryButton.OnReleased += CloseInventoryWindow;
+            _inputProvider.UICloseInventoryButton.OnPressed += CloseInventoryWindow;
         }
 
         [Inject]
@@ -45,10 +42,18 @@ namespace Sheldier.UI
         public void Dispose()
         {
             _inputProvider.UIOpenInventoryButton.OnPressed -= OpenInventoryWindow;
-            _inputProvider.UIOpenInventoryButton.OnReleased -= CloseInventoryWindow;
+            _inputProvider.UICloseInventoryButton.OnPressed -= CloseInventoryWindow;
+
         }
-        private void CloseInventoryWindow() => _statesController.Remove(UIType.Inventory);
-        private void OpenInventoryWindow() => _statesController.Add(UIType.Inventory);
+        private void CloseInventoryWindow()
+        {
+            _statesController.Remove(UIType.Inventory);
+        }
+
+        private void OpenInventoryWindow()
+        {
+            _statesController.Add(UIType.Inventory);
+        }
     }
 }
 

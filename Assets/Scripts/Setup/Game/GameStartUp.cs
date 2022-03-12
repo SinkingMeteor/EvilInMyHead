@@ -18,7 +18,7 @@ namespace Sheldier.Setup
         
         private LoadingScreenProvider _loadingScreenProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
-        private IInputProvider _inputProvider;
+        private InputProvider _inputProvider;
         private LocalizationProvider _localizationProvider;
         private AudioMixerController _audioMixerController;
         private ActorsEffectFactory _effectFactory;
@@ -33,14 +33,16 @@ namespace Sheldier.Setup
         private InventorySlotPool _inventorySlotPool;
         private ActorBuilder _actorBuilder;
         private UIHintPool _uiHintPool;
+        private InputBindHandler _inputBindHandler;
 
         [Inject]
-        private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, IInputProvider inputProvider, 
+        private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, InputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
             AudioMixerController audioMixerController, ActorsEffectFactory effectFactory, ItemFactory itemFactory, ProjectilePool projectilePool,
             WeaponBlowPool weaponBlowPool, Inventory inventory, PathProvider pathProvider, UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
-            PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool)
+            PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool, InputBindHandler inputBindHandler)
         {
+            _inputBindHandler = inputBindHandler;
             _uiHintPool = uiHintPool;
             _inventorySlotPool = inventorySlotPool;
             _pauseNotifier = pauseNotifier;
@@ -71,10 +73,12 @@ namespace Sheldier.Setup
             _actorBuilder.Initialize();
             
             _pauseNotifier.Initialize();
+            
             _inventory.Initialize();
             _itemFactory.Initialize();
             _audioMixerController.Initialize();
             _localizationProvider.Initialize();
+            _inputBindHandler.Initialize();
             _inputProvider.Initialize();
             _effectFactory.Initialize();
             _pathProvider.Initialize();

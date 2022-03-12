@@ -30,7 +30,6 @@ namespace Sheldier.Common.Pause
         {
             for (int i = 0; i < _pauseListeners.Count; i++)
                 _pauseListeners[i].Pause();
-            Time.timeScale = 0;
             _isPaused = true;
         }
 
@@ -38,7 +37,6 @@ namespace Sheldier.Common.Pause
         {
             for (int i = 0; i < _pauseListeners.Count; i++)
                 _pauseListeners[i].Unpause();
-            Time.timeScale = 1;
             _isPaused = false;
         }
         

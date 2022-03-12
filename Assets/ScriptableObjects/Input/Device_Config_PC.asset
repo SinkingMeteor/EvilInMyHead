@@ -16,8 +16,74 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: -1499166456, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
-    - {fileID: -1681752900, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -369427855, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1435256037, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1825248038, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 24367017, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1130849933, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1159062906, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -279363784, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1236850757, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1896404911, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 869346516, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 211470197, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -911199294, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -2082075381, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1830817986, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 708991722, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 475877198, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 529627498, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1038327534, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1543793500, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -120289563, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1475449504, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1371176890, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1303736707, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1937219569, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 467033393, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 788110500, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1983382578, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -841464632, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 786808043, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -135492117, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1719119252, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1088054108, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -605864543, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1500181809, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 407403827, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -2140109395, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1264622609, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 15295234, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -107218772, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -716741888, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 2105625339, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -829977724, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 460987773, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1164763222, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -447493317, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1695958677, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 707642, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1078575188, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1364568002, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 736081582, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 167972857, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 792051759, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1855234751, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1952796740, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1583689567, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -324541663, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -233679877, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1025274818, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1928059166, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1803676437, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1221588091, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1449614429, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 655202059, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 114498235, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 740279851, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 971708731, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: -1829875704, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 910756255, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -25,8 +91,8 @@ MonoBehaviour:
     SerializationNodes:
     - Name: keyIconCollection
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Sheldier.Common.DeviceKeyIconConfig+KeyIconData,
+        Sheldier]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
@@ -36,7 +102,403 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 69
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
       Data: 2
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 9
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: A
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: B
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: '`'
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: \
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Backspace
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: C
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Caps Lock
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ','
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Alt
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Control
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: D
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 20
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Down
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 21
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 7
       Data: 
@@ -44,8 +506,590 @@ MonoBehaviour:
       Entry: 1
       Data: E
     - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
       Entry: 10
-      Data: 0
+      Data: 22
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Enter
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 23
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: =
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 24
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Esc
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 25
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F1
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 26
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F10
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 27
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F11
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F12
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F2
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F3
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F4
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F5
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 33
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F6
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 34
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F7
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 35
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F8
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 36
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F9
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 37
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: G
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 38
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: H
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 39
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: I
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 40
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: J
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 41
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: K
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 42
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: L
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 43
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Left
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 44
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: '['
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 45
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ']'
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 46
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Ctrl
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Shift
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 47
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: M
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 48
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: '-'
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 49
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: N
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: O
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 51
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: P
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 52
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: .
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 53
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -56,8 +1100,248 @@ MonoBehaviour:
       Entry: 1
       Data: Q
     - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
       Entry: 10
-      Data: 1
+      Data: 54
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ''''
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 55
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: R
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 56
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Right
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 57
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: S
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 58
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: T
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 59
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Space
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 60
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: U
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 61
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: V
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 62
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Up
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 63
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: W
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 64
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: X
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 65
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Y
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 66
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Z
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 67
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 

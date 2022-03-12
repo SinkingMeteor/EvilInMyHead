@@ -4,10 +4,11 @@ namespace Sheldier.Common
     {
         Use,
         Movement,
-        Point,
+        Cursor,
         Attack,
         Reload,
         OpenInventory,
+        CloseInventory,
         UseItem,
         RemoveItem
     }

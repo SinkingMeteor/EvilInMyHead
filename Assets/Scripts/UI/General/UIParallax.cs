@@ -8,9 +8,9 @@ namespace Sheldier.UI
         [SerializeField] private RectTransform rectTransform;
         [SerializeField][Range(0.0f, 100.0f)] private float displaceFactor = 10f;
         [SerializeField] private float speed;
-        private IUIInputProvider _inputProvider;
+        private IInventoryInputProvider _inputProvider;
         
-        public void Initialize(IUIInputProvider inputProvider)
+        public void Initialize(IInventoryInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
         }

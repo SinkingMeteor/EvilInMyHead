@@ -14,13 +14,21 @@ namespace Sheldier.Constants
                 {InputActionType.Use, "Use"},
                 {InputActionType.Attack, "Attack"},
                 {InputActionType.Movement, "Movement"},
-                {InputActionType.Point, "Point"},
+                {InputActionType.Cursor, "Cursor"},
                 {InputActionType.Reload, "Reload"},
                 {InputActionType.OpenInventory, "OpenInventory"},
+                {InputActionType.CloseInventory, "CloseInventory"},
                 {InputActionType.UseItem, "UseItem"},
                 {InputActionType.RemoveItem, "RemoveItem"},
 
             };
+
+        public static readonly Dictionary<ActionMapType, string> ActionMaps = new Dictionary<ActionMapType, string>()
+        {
+            {ActionMapType.Gameplay, "Gameplay"},
+            {ActionMapType.UI, "UI"},
+            {ActionMapType.Inventory, "Inventory"},
+        };
     }
     
 }

@@ -17,7 +17,7 @@ namespace Sheldier.Common
                 rawDevicePath = DEFAULT_RAW_DEVICE_PATH;
             if (!map[rawDevicePath].KeyIconCollection.ContainsKey(actionType))
                 return nullSprite;
-            return map[rawDevicePath].KeyIconCollection[actionType];
+            return map[rawDevicePath].KeyIconCollection[actionType].KeyIcon;
         }
     }
 }

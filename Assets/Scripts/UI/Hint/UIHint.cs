@@ -40,6 +40,7 @@ namespace Sheldier.UI
         public void SetIconImage(Sprite icon)
         {
             hintIcon.sprite = icon;
+            hintIcon.SetNativeSize();
         }
 
         public void SetTitle(string title)

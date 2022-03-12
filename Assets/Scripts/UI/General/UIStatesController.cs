@@ -72,7 +72,7 @@ namespace Sheldier.UI
             _shownStates.Push(state);
             if(state.IsRequirePause && !_pauseNotifier.IsPaused)
                 _pauseNotifier.Pause();
-          //  _inputProvider.SwitchActionMap(state.ActionMap);
+            _inputProvider.SwitchActionMap(state.ActionMap);
         }
 
         public void Remove(UIType uiType)
@@ -88,15 +88,16 @@ namespace Sheldier.UI
             
             if(_shownStates.Count == 0)
             {
+                _inputProvider.SwitchActionMap(ActionMapType.Gameplay);
                 if(_pauseNotifier.IsPaused)
                     _pauseNotifier.Unpause();
                 return;
             };
 
             var previousState = _shownStates.Peek();
+            _inputProvider.SwitchActionMap(previousState.ActionMap);
             if (!previousState.IsRequirePause && _pauseNotifier.IsPaused)
                 _pauseNotifier.Unpause();
-           // _inputProvider.SwitchActionMap(previousState.ActionMap);
             previousState.Activate();
 
         }

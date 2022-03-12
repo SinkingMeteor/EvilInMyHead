@@ -16,9 +16,10 @@ namespace Sheldier.UI
         [OdinSerialize] private InventoryView itemSwitcher;
         [OdinSerialize] private ItemSlotMap itemSlotMap;
         private Inventory _inventory;
+        private IInventoryInputProvider _inventoryInputProvider;
 
 
-        public override void Initialize(IUIInputProvider inputProvider)
+        public override void Initialize(IInventoryInputProvider inputProvider)
         {
             base.Initialize(inputProvider);
             _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<SimpleItem, bool>>()
@@ -34,16 +35,17 @@ namespace Sheldier.UI
             _hintsCollection = new Dictionary<InventoryHintPerformType, UIHint>();
         }
         [Inject]
-        private void InjectDependencies(Inventory inventory)
+        private void InjectDependencies(Inventory inventory, IInventoryInputProvider inventoryInputProvider)
         {
+            _inventoryInputProvider = inventoryInputProvider;
             _inventory = inventory;
         }
         public override void OnActivated()
         {
-            _uiInputProvider.UIUseItemButton.OnPressed += OnUseButtonPressed;
-            _uiInputProvider.UIUseItemButton.OnReleased += OnUseButtonReleased;
-            _uiInputProvider.UIRemoveItemButton.OnPressed += OnRemoveButtonPressed;
-            _uiInputProvider.UIRemoveItemButton.OnReleased += OnRemoveButtonReleased;
+            InventoryInputProvider.UIUseItemButton.OnPressed += OnUseButtonPressed;
+            InventoryInputProvider.UIUseItemButton.OnReleased += OnUseButtonReleased;
+            InventoryInputProvider.UIRemoveItemButton.OnPressed += OnRemoveButtonPressed;
+            InventoryInputProvider.UIRemoveItemButton.OnReleased += OnRemoveButtonReleased;
             base.OnActivated();
         }
 
@@ -55,12 +57,22 @@ namespace Sheldier.UI
                 uiHint.Value.SetTitle(text);
             }
         }
+
+        public override void OnDeviceChanged()
+        {
+            foreach (var uiHint in _hintsCollection)
+            {
+                Sprite icon = _bindIconProvider.GetActionInputSprite(GetActionType(uiHint.Key));
+                uiHint.Value.SetIconImage(icon);
+            }
+        }
+
         public override void OnDeactivated()
         {
-            _uiInputProvider.UIUseItemButton.OnPressed -= OnUseButtonPressed;
-            _uiInputProvider.UIUseItemButton.OnReleased -= OnUseButtonReleased;
-            _uiInputProvider.UIRemoveItemButton.OnPressed -= OnRemoveButtonPressed;
-            _uiInputProvider.UIRemoveItemButton.OnReleased -= OnRemoveButtonReleased;
+            InventoryInputProvider.UIUseItemButton.OnPressed -= OnUseButtonPressed;
+            InventoryInputProvider.UIUseItemButton.OnReleased -= OnUseButtonReleased;
+            InventoryInputProvider.UIRemoveItemButton.OnPressed -= OnRemoveButtonPressed;
+            InventoryInputProvider.UIRemoveItemButton.OnReleased -= OnRemoveButtonReleased;
             base.OnDeactivated();
         }
 
@@ -105,7 +117,8 @@ namespace Sheldier.UI
             return performType switch
             {
                 InventoryHintPerformType.Use => InputActionType.UseItem,
-                InventoryHintPerformType.Remove => InputActionType.RemoveItem
+                InventoryHintPerformType.Remove => InputActionType.RemoveItem,
+                _ => throw new ArgumentOutOfRangeException(nameof(performType), performType, null)
             };
         }
     }
