@@ -16,7 +16,11 @@ namespace Sheldier.Actors
         
         private int _currentSortingOrder;
         private AnimationType _currentPlayingType = AnimationType.None;
-        
+
+        public void SetDependencies(TickHandler tickHandler)
+        {
+            animator.SetDependencies(tickHandler);
+        }
         public void SetMaterial(Material material)
         {
             body.sharedMaterial = material;

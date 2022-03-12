@@ -94,11 +94,8 @@ namespace Sheldier.Actors.Pathfinding
             
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
-#if UNITY_EDITOR
-            if (!GameGlobalSettings.IsStarted) return;
-#endif
             _grid.Dispose();
         }
     }

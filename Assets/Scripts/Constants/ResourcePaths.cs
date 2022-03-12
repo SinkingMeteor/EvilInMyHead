@@ -5,7 +5,7 @@ namespace Sheldier.Constants
 {
     public static class ResourcePaths
     {
-        public const string ACTOR_TEMPLATE = "Actors/A_Yellow";
+        public const string ACTOR_TEMPLATE = "Actors/Actor_Humanoid";
         public const string ACTOR_HAND = "Actors/Hand";
         public const string ACTOR_INTERACT_MODULE = "Actors/InteractModule";
         

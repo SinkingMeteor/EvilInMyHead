@@ -7,7 +7,6 @@ namespace Sheldier.Actors.Data
     [CreateAssetMenu(menuName = "Sheldier/Actor/ActorBuildData", fileName = "ActorBuildData")]
     public class ActorBuildData : BaseScriptableObject
     {
-        public ActorData Data => actorData;
         public bool CanMove => _canMove;
         public bool CanEquip => _canEquip;
         public bool IsEffectsPerceptive => _isEffectPerceptive;
@@ -15,7 +14,6 @@ namespace Sheldier.Actors.Data
         public bool CanAttack => _canAttack;
         public InteractType InteractType => _interactType;
 
-        [SerializeField] private ActorData actorData;
         [SerializeField] private bool _canMove;
         [SerializeField] private bool _canEquip;
         [SerializeField] private bool _isEffectPerceptive;

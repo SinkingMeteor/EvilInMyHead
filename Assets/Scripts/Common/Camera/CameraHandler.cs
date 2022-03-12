@@ -40,8 +40,7 @@ namespace Sheldier.Common
             _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower);
             
         }
-        [Inject]
-        private void InjectDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider, PauseNotifier pauseNotifier)
+        public void SetDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider, PauseNotifier pauseNotifier)
         {
             _pauseNotifier = pauseNotifier;
             _inputProvider = inputProvider;

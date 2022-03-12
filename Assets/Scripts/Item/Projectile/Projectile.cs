@@ -23,9 +23,7 @@ namespace Sheldier.Item
         {
             _poolSetter = poolSetter;
         }
-
-        [Inject]
-        private void InjectDependencies(TickHandler tickHandler)
+        public void SetDependencies(TickHandler tickHandler)
         {
             _tickHandler = tickHandler;
         }

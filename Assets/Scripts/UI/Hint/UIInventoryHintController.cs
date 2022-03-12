@@ -19,9 +19,9 @@ namespace Sheldier.UI
         private IInventoryInputProvider _inventoryInputProvider;
 
 
-        public override void Initialize(IInventoryInputProvider inputProvider)
+        public override void Initialize()
         {
-            base.Initialize(inputProvider);
+            base.Initialize();
             _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<SimpleItem, bool>>()
             {
                 {InventoryHintPerformType.Use, item => !item.IsStackable},
@@ -42,10 +42,10 @@ namespace Sheldier.UI
         }
         public override void OnActivated()
         {
-            InventoryInputProvider.UIUseItemButton.OnPressed += OnUseButtonPressed;
-            InventoryInputProvider.UIUseItemButton.OnReleased += OnUseButtonReleased;
-            InventoryInputProvider.UIRemoveItemButton.OnPressed += OnRemoveButtonPressed;
-            InventoryInputProvider.UIRemoveItemButton.OnReleased += OnRemoveButtonReleased;
+            _inventoryInputProvider.UIUseItemButton.OnPressed += OnUseButtonPressed;
+            _inventoryInputProvider.UIUseItemButton.OnReleased += OnUseButtonReleased;
+            _inventoryInputProvider.UIRemoveItemButton.OnPressed += OnRemoveButtonPressed;
+            _inventoryInputProvider.UIRemoveItemButton.OnReleased += OnRemoveButtonReleased;
             base.OnActivated();
         }
 
@@ -69,10 +69,10 @@ namespace Sheldier.UI
 
         public override void OnDeactivated()
         {
-            InventoryInputProvider.UIUseItemButton.OnPressed -= OnUseButtonPressed;
-            InventoryInputProvider.UIUseItemButton.OnReleased -= OnUseButtonReleased;
-            InventoryInputProvider.UIRemoveItemButton.OnPressed -= OnRemoveButtonPressed;
-            InventoryInputProvider.UIRemoveItemButton.OnReleased -= OnRemoveButtonReleased;
+            _inventoryInputProvider.UIUseItemButton.OnPressed -= OnUseButtonPressed;
+            _inventoryInputProvider.UIUseItemButton.OnReleased -= OnUseButtonReleased;
+            _inventoryInputProvider.UIRemoveItemButton.OnPressed -= OnRemoveButtonPressed;
+            _inventoryInputProvider.UIRemoveItemButton.OnReleased -= OnRemoveButtonReleased;
             base.OnDeactivated();
         }
 

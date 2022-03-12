@@ -26,8 +26,7 @@ namespace Sheldier.Common.Animation
             if (_playOnInitialize && currentAnimation != null)
                 Play();
         }
-        [Inject]
-        public void InjectDependencies(TickHandler tickHandler)
+        public void SetDependencies(TickHandler tickHandler)
         {
             _tickHandler = tickHandler;
         }

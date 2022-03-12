@@ -19,6 +19,11 @@ namespace Sheldier.Item
             _poolSetter = poolSetter;
             animator.Initialize();
         }
+
+        public void SetDependencies(TickHandler tickHandler)
+        {
+            animator.SetDependencies(tickHandler);
+        }
         public void OnInstantiated()
         {
         }
@@ -33,10 +38,6 @@ namespace Sheldier.Item
         {
             animator.OnAnimationEnd -= SetToPool;
             _poolSetter.SetToPull(this);
-        }
-
-        public void Tick()
-        {
         }
 
         public void Reset()

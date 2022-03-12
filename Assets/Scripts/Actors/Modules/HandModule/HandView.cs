@@ -13,7 +13,7 @@ namespace Sheldier.Actors.Hand
 
         public void Initialize(TickHandler tickHandler)
         {
-            simpleAnimator.InjectDependencies(tickHandler);
+            simpleAnimator.SetDependencies(tickHandler);
             simpleAnimator.Initialize();
         }
         public void AddItem(Sprite itemSprite) => spriteRenderer.sprite = itemSprite;

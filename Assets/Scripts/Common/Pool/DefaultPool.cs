@@ -6,25 +6,17 @@ using Zenject;
 
 namespace Sheldier.Common.Pool
 {
-    public class DefaultPool<T> : MonoBehaviour, IPoolSetter<T> where T : MonoBehaviour, IPoolObject<T>
+    public abstract class DefaultPool<T> : MonoBehaviour, IPoolSetter<T> where T : MonoBehaviour, IPoolObject<T>
     {
         [SerializeField] private Transform poolTransform;
         [SerializeField] private int startEntitiesAmount;
         [SerializeField] private T _entity;
 
         private Queue<T> _pooledEntities;
-        private PoolInstaller _poolInstaller;
-
         public void Initialize()
         {
             _pooledEntities = new Queue<T>();
             FillPool();
-        }
-
-        [Inject]
-        private void InjectDependencies(PoolInstaller poolInstaller)
-        {
-            _poolInstaller = poolInstaller;
         }
         public T GetFromPool()
         {
@@ -53,12 +45,12 @@ namespace Sheldier.Common.Pool
         private T InstantiateEntity()
         {
             var entity = Instantiate(_entity, poolTransform, false);
-            _poolInstaller.InjectPoolObject(entity);
+            SetDependenciesToEntity(entity);
             entity.Initialize(this);
             entity.gameObject.SetActive(false);
             return entity;
         }
-
+        protected abstract void SetDependenciesToEntity(T entity);
         private void FillPool()
         {
             for (var i = 0; i < startEntitiesAmount; i++)

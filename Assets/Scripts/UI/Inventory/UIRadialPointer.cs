@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Sheldier.UI
 {
-    public class UIRadialPointer : MonoBehaviour, ITickListener, IUIInitializable
+    public class UIRadialPointer : MonoBehaviour, ITickListener, ICursorRequirer
     {
         public int CurrentSegment => _currentSegment;
 
@@ -18,9 +18,9 @@ namespace Sheldier.UI
         private int _totalSegments;
         private float _anglePerSegment;
 
-        private IInventoryInputProvider _inputProvider;
+        private ICursorProvider _inputProvider;
 
-        public void Initialize(IInventoryInputProvider inputProvider)
+        public void SetCursor(ICursorProvider inputProvider)
         {
             _inputProvider = inputProvider;
         }
@@ -34,7 +34,6 @@ namespace Sheldier.UI
         public void Tick()
         {
             Vector2 dir = _inputProvider.CursorScreenCenterDirection;
-            //Debug.Log(dir);
 
             var angle = (Mathf.Atan2(dir.y, dir.x));
             pointerBaseRectTransform.rotation = Quaternion.Slerp(transform.rotation,
@@ -53,10 +52,6 @@ namespace Sheldier.UI
             pointerImage.color = new Color(colorValue, colorValue, colorValue, colorValue);
             if (delta < 0) return false;
             return true;
-        }
-
-        public void Dispose()
-        {
         }
 
         private void OnDrawGizmos()

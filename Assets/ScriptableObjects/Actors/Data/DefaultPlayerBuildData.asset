@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f521e1a8e9ba468d95b82e94501d8dfe, type: 3}
-  m_Name: ActorBuildData
+  m_Name: DefaultPlayerBuildData
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,7 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  actorData: {fileID: 11400000, guid: 5bcb8642b2698334fb3bbe769e9886bc, type: 2}
   _canMove: 1
   _canEquip: 1
   _isEffectPerceptive: 1

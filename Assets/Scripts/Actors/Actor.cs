@@ -54,19 +54,20 @@ namespace Sheldier.Actors
             _inventoryModule = new ActorsInventoryModule();
             _inventoryModule.Initialize();
 
-            _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody);
+            actorsView.SetDependencies(_tickHandler);
             
+            _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody);
+
             _stateModuleController = new ActorStateModuleController();
             _stateModuleController.Initialize(_internalData);
-            
+
             _tickHandler.AddListener(this);
             _fixedTickHandler.AddListener(this);
 
             _extraModules = new List<IExtraActorModule>();
         }
         
-        [Inject]
-        private void InjectDependencies(TickHandler tickHandler, FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
+        public void SetDependencies(TickHandler tickHandler, FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
         {
             _pauseNotifier = pauseNotifier;
             _fixedTickHandler = fixedTickHandler;

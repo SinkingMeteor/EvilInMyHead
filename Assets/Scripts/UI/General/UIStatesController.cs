@@ -44,8 +44,7 @@ namespace Sheldier.UI
             _loadedStates = null;
         }
 
-        [Inject]
-        private void InjectDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IInputProvider inputProvider)
+        public void SetDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _pauseNotifier = pauseNotifier;

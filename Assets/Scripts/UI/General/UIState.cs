@@ -34,13 +34,12 @@ namespace Sheldier.UI
             for (int i = 0; i < disappearingAnimations.Length; i++)
                 disappearingAnimations[i].Initialize();
             for (int i = 0; i < initializableUIElements.Length; i++)
-                initializableUIElements[i].Initialize(_inputProvider);                
+                initializableUIElements[i].Initialize();                
         }
 
         [Inject]
-        private void InjectDependencies(TickHandler tickHandler, IInventoryInputProvider inputProvider)
+        private void InjectDependencies(TickHandler tickHandler)
         {
-            _inputProvider = inputProvider;
             _tickHandler = tickHandler;
         }
         public void Tick()

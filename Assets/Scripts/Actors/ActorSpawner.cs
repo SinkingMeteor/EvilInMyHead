@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sheldier.Actors.Builder;
-using Sheldier.Actors.Data;
 using Sheldier.Installers;
 using Sheldier.Item;
-using Zenject;
 
 namespace Sheldier.Actors
 {
@@ -23,8 +21,7 @@ namespace Sheldier.Actors
             LoadItems();
         }
 
-        [Inject]
-        private void InjectDependencies(ActorBuilder actorBuilder)
+        public void SetDependencies(ActorBuilder actorBuilder)
         {
             _actorBuilder = actorBuilder;
         }
@@ -34,7 +31,7 @@ namespace Sheldier.Actors
             int counter = 0;
             foreach (var placeholder in _placeholdersKeeper.ActorPlaceholders)
             {
-                Actor actor = _actorBuilder.Build(placeholder.ActorReference);
+                Actor actor = _actorBuilder.Build(placeholder.ActorVisualReference, placeholder.ActorBuildData, placeholder.ActorDataReference);
                 actor.name += counter++;
                 actor.transform.position = placeholder.transform.position;
                 _actorsOnScene.Add(actor);

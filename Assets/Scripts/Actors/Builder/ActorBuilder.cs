@@ -4,22 +4,22 @@ using Sheldier.Actors.Hand;
 using Sheldier.Actors.Interact;
 using Sheldier.Common;
 using Sheldier.Common.Animation;
+using Sheldier.Common.Pause;
 using Sheldier.Constants;
 using Sheldier.Factories;
-using Sheldier.Installers;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Actors.Builder
 {
     public class ActorBuilder
     {
-        private Actor _actorTemplate;
-        private ISubBuilder[] _subBuilders;
-        private ActorsInstaller _actorsInstaller;
-        private ActorsMap _actorsMap;
-        private ActorsEffectFactory _effectFactory;
         private ScenePlayerController _scenePlayerController;
+        private ActorsEffectFactory _effectFactory;
+        private FixedTickHandler _fixedTickHandler;
+        private PauseNotifier _pauseNotifier;
+        private ISubBuilder[] _subBuilders;
+        private TickHandler _tickHandler;
+        private Actor _actorTemplate;
 
         public void Initialize()
         {
@@ -30,25 +30,24 @@ namespace Sheldier.Actors.Builder
                 new ActorInteractBuilder(_scenePlayerController)
             };
         }
-
-        [Inject]
-        private void InjectDependencies(ActorsInstaller actorsInstaller, ActorsMap actorsMap,
-            ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController)
+        
+        public void SetDependencies(ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController, TickHandler tickHandler,
+            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
         {
             _scenePlayerController = scenePlayerController;
+            _fixedTickHandler = fixedTickHandler;
+            _pauseNotifier = pauseNotifier;
             _effectFactory = effectFactory;
-            _actorsMap = actorsMap;
-            _actorsInstaller = actorsInstaller;
+            _tickHandler = tickHandler;
         }
 
-        public Actor Build(ActorAnimationCollection appearance)
+        public Actor Build(ActorAnimationCollection appearance, ActorBuildData buildData, ActorData data)
         {
             Actor actor = GameObject.Instantiate(_actorTemplate);
-            ActorBuildData buildData = _actorsMap.Actors[appearance];
-            _actorsInstaller.InjectActor(actor);
+            actor.SetDependencies(_tickHandler, _fixedTickHandler, _pauseNotifier);
             actor.ActorsView.SetActorAppearance(appearance);
             actor.Initialize();
-            actor.DataModule.AddStaticData(buildData.Data);
+            actor.DataModule.AddStaticData(data);
             
             if(buildData.IsEffectsPerceptive)
                 actor.AddExtraModule(new ActorEffectModule(_effectFactory));

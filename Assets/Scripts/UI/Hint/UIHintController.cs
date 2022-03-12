@@ -24,14 +24,12 @@ namespace Sheldier.UI
         protected Dictionary<V, UIHint> _hintsCollection;
         protected T _currentItem;
         
-        protected IInventoryInputProvider InventoryInputProvider;
         protected UIHintPool _uiHintPool;
         protected ILocalizationProvider _localizationProvider;
         protected IInputBindIconProvider _bindIconProvider;
 
-        public virtual void Initialize(IInventoryInputProvider inputProvider)
+        public virtual void Initialize()
         {
-            InventoryInputProvider = inputProvider;
             appearingAnimation.Initialize();
             disappearingAnimation.Initialize();
         }

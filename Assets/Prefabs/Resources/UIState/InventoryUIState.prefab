@@ -624,12 +624,12 @@ MonoBehaviour:
     - {fileID: 1985209259849459894}
     - {fileID: 5068598925404183195}
     - {fileID: 5605089556466353989}
-    - {fileID: 5892222848040475454}
-    - {fileID: 8661809774064285816}
     - {fileID: 1174495038832356583}
+    - {fileID: 5892222848040475454}
     - {fileID: 10075449080999992}
     - {fileID: 10075447839071162}
     - {fileID: 10075448551822384}
+    - {fileID: 8661809774064285816}
     - {fileID: 10075448730968193}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -701,19 +701,13 @@ MonoBehaviour:
       Data: 2|Sheldier.UI.IUIInitializable[], Sheldier
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 2
     - Name: 
       Entry: 10
       Data: 12
     - Name: 
       Entry: 10
       Data: 13
-    - Name: 
-      Entry: 10
-      Data: 14
-    - Name: 
-      Entry: 10
-      Data: 15
     - Name: 
       Entry: 13
       Data: 
@@ -731,7 +725,10 @@ MonoBehaviour:
       Data: 12
     - Name: 
       Entry: 10
-      Data: 13
+      Data: 14
+    - Name: 
+      Entry: 10
+      Data: 15
     - Name: 
       Entry: 10
       Data: 16
@@ -741,9 +738,6 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 18
-    - Name: 
-      Entry: 10
-      Data: 14
     - Name: 
       Entry: 13
       Data: 
@@ -761,16 +755,16 @@ MonoBehaviour:
       Data: 12
     - Name: 
       Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 10
       Data: 16
     - Name: 
       Entry: 10
       Data: 17
     - Name: 
       Entry: 10
-      Data: 18
-    - Name: 
-      Entry: 10
-      Data: 15
+      Data: 13
     - Name: 
       Entry: 13
       Data: 
@@ -1251,6 +1245,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731177894c1b95a459346096df42b725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 5892222848040475454}
+    - {fileID: 8661809774064285816}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: cursorRequirers
+      Entry: 7
+      Data: 0|Sheldier.UI.ICursorRequirer[], Sheldier
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   view: {fileID: 3008067884413139674}
 --- !u!114 &3008067884413139674
 MonoBehaviour:

@@ -20,8 +20,7 @@ namespace Sheldier.Factories
             _ammoItemFactory = new AmmoItemFactory(_itemMap);
         }
         
-        [Inject]
-        private void InjectDependencies(ItemMap itemMap, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
+        public void SetDependencies(ItemMap itemMap, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
         {
             _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;

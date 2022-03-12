@@ -10,22 +10,22 @@ using Zenject;
 
 namespace Sheldier.Setup
 {
-    public class SceneEntry : MonoBehaviour
+    public class SceneStartUp : MonoBehaviour
     {
         [SerializeField] private ScenePlaceholdersKeeper scenePlaceholdersKeeper;
         [SerializeField] private PathGrid pathfindingGrid;
         [SerializeField] private SceneData sceneData;
-        
-        private InputProvider _inputProvider;
+
         private SceneLoadingOperation _sceneLoadingOperation;
-        private ItemSpawner _itemSpawner;
         private ScenePlayerController _scenePlayerController;
-        private ActorSpawner _actorSpawner;
-        private Pathfinder _pathfinder;
         private UILoadingOperation _uiLoadingOperation;
+        private UIStatesController _uiStatesController;
+        private InputProvider _inputProvider;
         private CameraHandler _cameraHandler;
         private PauseNotifier _pauseNotifier;
-        private UIStatesController _uiStatesController;
+        private ActorSpawner _actorSpawner;
+        private ItemSpawner _itemSpawner;
+        private Pathfinder _pathfinder;
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
@@ -33,16 +33,16 @@ namespace Sheldier.Setup
             UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
             PauseNotifier pauseNotifier, UIStatesController uiStatesController)
         {
+            _scenePlayerController = scenePlayerController;
+            _sceneLoadingOperation = sceneLoadingOperation;
             _uiStatesController = uiStatesController;
+            _uiLoadingOperation = uiLoadingOperation;
             _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
-            _uiLoadingOperation = uiLoadingOperation;
-            _pathfinder = pathfinder;
-            _scenePlayerController = scenePlayerController;
-            _itemSpawner = itemSpawner;
-            _sceneLoadingOperation = sceneLoadingOperation;
             _inputProvider = inputProvider;
             _actorSpawner = actorSpawner;
+            _itemSpawner = itemSpawner;
+            _pathfinder = pathfinder;
         }
 
         private void Start()
@@ -52,29 +52,19 @@ namespace Sheldier.Setup
             
             _cameraHandler.InitializeOnScene();
             _inputProvider.SetSceneCamera(_cameraHandler.CurrentSceneCamera);
-            _itemSpawner.Initialize(scenePlaceholdersKeeper);
+            _itemSpawner.InitializeOnScene(scenePlaceholdersKeeper);
             _actorSpawner.Initialize(scenePlaceholdersKeeper);
             pathfindingGrid.Initialize();
             _pathfinder.InitializeOnScene(pathfindingGrid);
             _uiStatesController.InitializeOnScene();
+            
             //Test
             Actor firstActor = _actorSpawner.ActorsOnScene[0];
             _scenePlayerController.SetControl(firstActor);
             _scenePlayerController.SetFollowTarget(firstActor);
 
         }
-
-       /* private void InstantiateUI()
-        {
-            GameObject uiMain = new GameObject("[UI]");
-            uiMain.transform.position = Vector3.zero;
-            
-            foreach (var uiState in _uiStatesController.States.Values)
-            {
-                Instantiate(uiState, uiMain.transform, true);
-            }
-        }*/
-
+        
         private bool GameIsInitialized()
         {
             if (GameGlobalSettings.IsStarted)
@@ -90,6 +80,7 @@ namespace Sheldier.Setup
             #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
             #endif
+            pathfindingGrid.Dispose();
             _cameraHandler.OnSceneDispose();
             _uiStatesController.OnSceneDispose();
             _pauseNotifier.Clear();

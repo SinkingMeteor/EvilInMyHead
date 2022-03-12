@@ -15,13 +15,6 @@ namespace Sheldier.Installers
             Container.Bind<ActorSpawner>().AsSingle();
             Container.Bind<ActorBuilder>().AsSingle();
             Container.Bind<ActorsMap>().FromInstance(actorsMap).AsSingle();
-            Container.Bind<ActorsInstaller>().FromInstance(this);
-            
-        }
-
-        public void InjectActor(Actor actor)
-        {
-            Container.InjectGameObject(actor.gameObject);
         }
     }
 }

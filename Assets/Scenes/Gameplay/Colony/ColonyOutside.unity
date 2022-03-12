@@ -344,8 +344,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f1716676f940b3ba6bd306316e9503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actorVisualReference: {fileID: 11400000, guid: 52d257960f95b9e4c81c2b43bcc2adc9, type: 2}
+  actorBuildData: {fileID: 11400000, guid: 7fae52e70e1f74743bc0f18fb81bdb3f, type: 2}
+  actorData: {fileID: 11400000, guid: 5bcb8642b2698334fb3bbe769e9886bc, type: 2}
   uniqueID: {fileID: 56227494}
-  actorReference: {fileID: 11400000, guid: 52d257960f95b9e4c81c2b43bcc2adc9, type: 2}
 --- !u!1 &66672584
 GameObject:
   m_ObjectHideFlags: 0
@@ -11593,8 +11595,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f1716676f940b3ba6bd306316e9503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actorVisualReference: {fileID: 11400000, guid: 52d257960f95b9e4c81c2b43bcc2adc9, type: 2}
+  actorBuildData: {fileID: 11400000, guid: 925b661fc77f1f347adb6b7c093e07cb, type: 2}
+  actorData: {fileID: 11400000, guid: 5bcb8642b2698334fb3bbe769e9886bc, type: 2}
   uniqueID: {fileID: 1434116578}
-  actorReference: {fileID: 11400000, guid: 52d257960f95b9e4c81c2b43bcc2adc9, type: 2}
 --- !u!1 &1438798859
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,15 +8,13 @@ namespace Sheldier.Item
         private ScenePlaceholdersKeeper _placeholdersKeeper;
         private ItemFactory _itemFactory;
 
-        public void Initialize(ScenePlaceholdersKeeper placeholdersKeeper)
+        public void InitializeOnScene(ScenePlaceholdersKeeper placeholdersKeeper)
         {
             _placeholdersKeeper = placeholdersKeeper;
-
             LoadItems();
         }
 
-        [Inject]
-        private void InjectDependencies(ItemFactory itemFactory)
+        public void SetDependencies(ItemFactory itemFactory)
         {
             _itemFactory = itemFactory;
         }

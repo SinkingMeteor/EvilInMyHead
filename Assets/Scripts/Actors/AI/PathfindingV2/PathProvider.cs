@@ -18,8 +18,7 @@ namespace Sheldier.Actors.Pathfinding
             _requestsQueue = new Queue<PathRequest>();
         }
 
-        [Inject]
-        public void InjectDependencies(Pathfinder pathfinder)
+        public void SetDependencies(Pathfinder pathfinder)
         {
             _pathfinder = pathfinder;
         }
