@@ -31,6 +31,7 @@ namespace Sheldier.Setup
         private InputBindHandler _inputBindHandler;
         private ActorsEffectFactory _effectFactory;
         private FixedTickHandler _fixedTickHandler;
+        private DialoguesProvider dialoguesProvider;
         private LateTickHandler _lateTickHandler;
         private ProjectilePool _projectilePool;
         private WeaponBlowPool _weaponBlowPool;
@@ -58,7 +59,7 @@ namespace Sheldier.Setup
             PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool, InputBindHandler inputBindHandler,
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
             ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
-            UIStatesController uiStatesControler, UIInstaller uiInstaller)
+            UIStatesController uiStatesControler, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider)
         {
             _itemMap = itemMap;
             _inventory = inventory;
@@ -79,6 +80,7 @@ namespace Sheldier.Setup
             _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;
             _lateTickHandler = lateTickHandler;
+            this.dialoguesProvider = dialoguesProvider;
             _fixedTickHandler = fixedTickHandler;
             _inputBindHandler = inputBindHandler;
             _uiStatesControler = uiStatesControler;
@@ -105,21 +107,24 @@ namespace Sheldier.Setup
             _uiHintPool.Initialize();
             
             _uiStatesControler.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);
+
+            dialoguesProvider.SetDependencies(_actorSpawner);
+            dialoguesProvider.Initialize();
             
-            _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier);
+            _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _actorsMap, dialoguesProvider);
             _actorBuilder.Initialize();
-            
+
             _actorSpawner.SetDependencies(_actorBuilder);
-            
+
             _pauseNotifier.Initialize();
-            
+
             _inventory.Initialize();
-            
+
             _itemFactory.SetDependencies(_itemMap, _projectilePool, _weaponBlowPool);
             _itemFactory.Initialize();
-            
+
             _itemSpawner.SetDependencies(_itemFactory);
-            
+
             _audioMixerController.Initialize();
             _localizationProvider.Initialize();
             _inputBindHandler.Initialize();

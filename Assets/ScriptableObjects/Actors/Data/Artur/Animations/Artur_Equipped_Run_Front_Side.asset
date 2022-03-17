@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d744b92f54eb4e6992f41540c19d07ce, type: 3}
+  m_Name: Artur_Equipped_Run_Front_Side
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  frames:
+  - {fileID: 923353217, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
+  - {fileID: -1852324572, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
+  - {fileID: -1446006934, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
+  - {fileID: 512023406, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
+  - {fileID: 432069643, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
+  - {fileID: -1021354521, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
+  isLoop: 1
+  frameRate: 9.5

@@ -435,7 +435,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  delay: 2
+  delay: 1
   hintImageBackground: {fileID: 8434532781179153474}
   hintIcon: {fileID: 5667991227566122662}
   hintTitle: {fileID: 1004559641807518279}

@@ -55,7 +55,7 @@ namespace Sheldier.Item
 
         public override Vector2 GetRotateDirection()
         {
-            var dir = _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_weaponView.transform.position);
+            var dir = _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_weaponView.transform.position).normalized;
             dir = Quaternion.Euler(new Vector3(0.0f, 0.0f, _shootModule.KickbackAngle)) * dir;
             return dir;
         }

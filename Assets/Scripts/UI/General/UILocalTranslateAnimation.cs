@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Sheldier.Common.Utilities;
 using UnityEngine;
 
 namespace Sheldier.UI

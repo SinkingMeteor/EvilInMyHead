@@ -16,8 +16,9 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 52d257960f95b9e4c81c2b43bcc2adc9, type: 2}
-    - {fileID: 11400000, guid: 7fae52e70e1f74743bc0f18fb81bdb3f, type: 2}
+    - {fileID: 11400000, guid: 4826945468aead7418d28e9730b38dcd, type: 2}
+    - {fileID: 11400000, guid: 5bcb8642b2698334fb3bbe769e9886bc, type: 2}
+    - {fileID: 11400000, guid: 9d822bcea45decc4e83ee734a07aa0a5, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -25,24 +26,36 @@ MonoBehaviour:
     SerializationNodes:
     - Name: _actorsCollection
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Sheldier.Common.Animation.ActorAnimationCollection,
-        Sheldier],[Sheldier.Actors.Data.ActorBuildData, Sheldier]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[Sheldier.Actors.Data.ActorConfig,
+        Sheldier],[Sheldier.Actors.Data.ActorData, Sheldier]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[Sheldier.Common.Animation.ActorAnimationCollection,
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[Sheldier.Actors.Data.ActorConfig,
         Sheldier]], mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 10
       Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 2
     - Name: $v
       Entry: 10
       Data: 1

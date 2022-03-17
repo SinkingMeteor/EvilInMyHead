@@ -1,3 +1,4 @@
+using System.Linq;
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
@@ -59,7 +60,7 @@ namespace Sheldier.Setup
             _uiStatesController.InitializeOnScene();
             
             //Test
-            Actor firstActor = _actorSpawner.ActorsOnScene[0];
+            Actor firstActor = _actorSpawner.ActorsOnScene.First().Value[0];
             _scenePlayerController.SetControl(firstActor);
             _scenePlayerController.SetFollowTarget(firstActor);
 
@@ -83,6 +84,7 @@ namespace Sheldier.Setup
             pathfindingGrid.Dispose();
             _cameraHandler.OnSceneDispose();
             _uiStatesController.OnSceneDispose();
+            _actorSpawner.OnSceneDispose();
             _pauseNotifier.Clear();
         }
     }

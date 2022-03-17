@@ -15,11 +15,13 @@ namespace Sheldier.Actors.Builder
     {
         private ScenePlayerController _scenePlayerController;
         private ActorsEffectFactory _effectFactory;
+        private DialoguesProvider dialoguesProvider;
         private FixedTickHandler _fixedTickHandler;
         private PauseNotifier _pauseNotifier;
         private ISubBuilder[] _subBuilders;
         private TickHandler _tickHandler;
         private Actor _actorTemplate;
+        private ActorsMap _actorsMap;
 
         public void Initialize()
         {
@@ -27,13 +29,15 @@ namespace Sheldier.Actors.Builder
             _subBuilders = new ISubBuilder[]
             {
                 new ActorStatesBuilder(),
-                new ActorInteractBuilder(_scenePlayerController)
+                new ActorInteractBuilder(_scenePlayerController, dialoguesProvider)
             };
         }
         
         public void SetDependencies(ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController, TickHandler tickHandler,
-            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
+            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier, ActorsMap actorsMap, DialoguesProvider dialoguesProvider)
         {
+            _actorsMap = actorsMap;
+            this.dialoguesProvider = dialoguesProvider;
             _scenePlayerController = scenePlayerController;
             _fixedTickHandler = fixedTickHandler;
             _pauseNotifier = pauseNotifier;
@@ -41,13 +45,13 @@ namespace Sheldier.Actors.Builder
             _tickHandler = tickHandler;
         }
 
-        public Actor Build(ActorAnimationCollection appearance, ActorBuildData buildData, ActorData data)
+        public Actor Build(ActorConfig config, ActorBuildData buildData)
         {
             Actor actor = GameObject.Instantiate(_actorTemplate);
             actor.SetDependencies(_tickHandler, _fixedTickHandler, _pauseNotifier);
-            actor.ActorsView.SetActorAppearance(appearance);
+            actor.ActorsView.SetActorAppearance(config.DefaultAppearance);
             actor.Initialize();
-            actor.DataModule.AddStaticData(data);
+            actor.DataModule.AddStaticData(config, _actorsMap.Actors[config]);
             
             if(buildData.IsEffectsPerceptive)
                 actor.AddExtraModule(new ActorEffectModule(_effectFactory));
@@ -94,11 +98,13 @@ namespace Sheldier.Actors.Builder
         {
             private readonly GameObject _interactBase;
             private readonly ScenePlayerController _scenePlayerController;
+            private readonly DialoguesProvider dialoguesProvider;
             private Material _interactMaterial;
 
-            public ActorInteractBuilder(ScenePlayerController scenePlayerController)
+            public ActorInteractBuilder(ScenePlayerController scenePlayerController, DialoguesProvider dialoguesProvider)
             {
                 _scenePlayerController = scenePlayerController;
+                this.dialoguesProvider = dialoguesProvider;
                 _interactBase = Resources.Load<GameObject>(ResourcePaths.ACTOR_INTERACT_MODULE);
                 _interactMaterial = Resources.Load<Material>(ResourcePaths.UNLIT_OUTLINE_MATERIAL);
             }
@@ -116,21 +122,28 @@ namespace Sheldier.Actors.Builder
 
                    if (buildData.InteractType == InteractType.None) return;
 
-                   actor.AddExtraModule(CreateInteractReceiver(body, actor, buildData.InteractType));
+                   actor.AddExtraModule(CreateInteractReceiver(body, buildData.InteractType));
             }
 
-            private IExtraActorModule CreateInteractReceiver(GameObject body, Actor actor, InteractType interactType)
+            private IExtraActorModule CreateInteractReceiver(GameObject body, InteractType interactType)
             {
                 return interactType switch
                 {
-                    InteractType.Replace => CreateReplaceReceiver(body, actor),
-                    InteractType.Talk => throw new NotImplementedException(),
+                    InteractType.Replace => CreateReplaceReceiver(body),
+                    InteractType.Talk => CreateTalkReceiver(body),
                     InteractType.None => throw new ArgumentOutOfRangeException(nameof(interactType), interactType, null),
                     _ => throw new ArgumentOutOfRangeException(nameof(interactType), interactType, null)
                 };
             }
 
-            private IExtraActorModule CreateReplaceReceiver(GameObject body, Actor actor)
+            private IExtraActorModule CreateTalkReceiver(GameObject body)
+            {
+                TalkInteractReceiver receiver = body.AddComponent<TalkInteractReceiver>();
+                receiver.SetDependencies(_interactMaterial, dialoguesProvider);
+                return receiver;
+            }
+
+            private IExtraActorModule CreateReplaceReceiver(GameObject body)
             {
                 ReplaceInteractReceiver receiver = body.AddComponent<ReplaceInteractReceiver>();
                 receiver.SetDependencies(_scenePlayerController, _interactMaterial);

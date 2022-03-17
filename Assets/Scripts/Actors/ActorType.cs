@@ -2,6 +2,7 @@
 {
     public enum ActorType
     {
-        Yellow
+        Yellow,
+        Artur
     }
 }

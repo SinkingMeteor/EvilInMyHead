@@ -8,7 +8,7 @@ using XNode;
 namespace Sheldier.Graphs.DialogueSystem
 {
     [NodeWidth(300), System.Serializable]
-    public class ReplicaNode : Node
+    public class ReplicaNode : Node, IDialogueReplica
     {
         [Input] public ReplicaNode input;
 
@@ -56,9 +56,7 @@ namespace Sheldier.Graphs.DialogueSystem
         {
             RemoveDynamicPort(DynamicPorts.Last());
         }
-        #endif
-
-
+#endif
 
     }
     public interface IDialogueReplica

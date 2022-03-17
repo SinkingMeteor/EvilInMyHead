@@ -1,0 +1,393 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8221217324715347159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -808, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: -8221217324715347159}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: -7067234155362305682}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: -8221217324715347159}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 5937473773684301733}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 1
+  _choices:
+  - _choice: 
+--- !u!114 &-7067234155362305682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: StartPoint
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1144, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: -7067234155362305682}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: -7067234155362305682}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -8221217324715347159}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 0
+  _choices:
+  - _choice: 
+--- !u!114 &-5400255526079256646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1208, y: -168}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: -5400255526079256646}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: 1588114841445226155}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  _replica: 
+  _index: 7
+  _choices: []
+--- !u!114 &-5056995719146985037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 536, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: -5056995719146985037}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: 7615282333881931752}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: -5056995719146985037}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 1588114841445226155}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 5
+  _choices:
+  - _choice: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f6b7a40a6b071548b54dd2a5d887b78, type: 3}
+  m_Name: DialogueYellow0
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -7067234155362305682}
+  - {fileID: -8221217324715347159}
+  - {fileID: 5937473773684301733}
+  - {fileID: 5321624312387975298}
+  - {fileID: 7615282333881931752}
+  - {fileID: -5056995719146985037}
+  - {fileID: 1588114841445226155}
+  - {fileID: -5400255526079256646}
+  _initialReplica: {fileID: -7067234155362305682}
+  _dialogueLocalizationKey: dialogues_1
+  additionalPersons: 
+--- !u!114 &1588114841445226155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 872, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: 1588114841445226155}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: -5056995719146985037}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: 1588114841445226155}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5400255526079256646}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 6
+  _choices:
+  - _choice: 
+--- !u!114 &5321624312387975298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -136, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: 5321624312387975298}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: 5937473773684301733}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: 5321624312387975298}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 7615282333881931752}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 3
+  _choices:
+  - _choice: 
+--- !u!114 &5937473773684301733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -472, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: 5937473773684301733}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: -8221217324715347159}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: 5937473773684301733}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 5321624312387975298}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 2
+  _choices:
+  - _choice: 
+--- !u!114 &7615282333881931752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41911050f63492baa207928f5ec7081, type: 3}
+  m_Name: Replica
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 200, y: -168}
+  ports:
+    keys:
+    - input
+    - 'Choice: 1'
+    values:
+    - _fieldName: input
+      _node: {fileID: 7615282333881931752}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 'Choice: 1'
+        node: {fileID: 5321624312387975298}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 'Choice: 1'
+      _node: {fileID: 7615282333881931752}
+      _typeQualifiedName: Sheldier.Graphs.DialogueSystem.ReplicaNode, Sheldier, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5056995719146985037}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  _replica: 
+  _index: 4
+  _choices:
+  - _choice: 

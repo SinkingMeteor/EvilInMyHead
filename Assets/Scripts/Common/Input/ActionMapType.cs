@@ -4,6 +4,8 @@ namespace Sheldier.Common
     {
         Gameplay,
         UI,
-        Inventory
+        Inventory,
+        Dialogues,
+        Cursor
     }
 }

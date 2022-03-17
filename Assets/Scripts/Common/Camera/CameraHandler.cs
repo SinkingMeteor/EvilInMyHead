@@ -37,7 +37,7 @@ namespace Sheldier.Common
             _cameraFollower = new CameraFollower();
             
             _cameraSideMover = new CameraSideMover();
-            _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower);
+            _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower, _lateTickHandler);
             
         }
         public void SetDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider, PauseNotifier pauseNotifier)
@@ -66,12 +66,14 @@ namespace Sheldier.Common
 
         public void Pause()
         {
-            _lateTickHandler.RemoveListener(this);
+           // _lateTickHandler.RemoveListener(this);
+            _cameraSideMover.Pause();
         }
 
         public void Unpause()
         {
-            _lateTickHandler.AddListener(this);
+         //   _lateTickHandler.AddListener(this);
+            _cameraSideMover.UnPause();
         }
     }
 }

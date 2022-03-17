@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Common.Pause;
-using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 using IInitializable = Sheldier.Setup.IInitializable;
 
 namespace Sheldier.Actors
@@ -15,6 +13,7 @@ namespace Sheldier.Actors
     {
         public event Action OnWillRemoveControl;
         public event Action OnAddedControl;
+        public ActorType ActorType => _dataModule.ActorConfig.ActorType;
         public ActorInputController InputController => _actorInputController;
         public ActorNotifyModule Notifier => _notifier;
         public ActorsInventoryModule InventoryModule => _inventoryModule;
@@ -105,6 +104,7 @@ namespace Sheldier.Actors
             _tickHandler.RemoveListener(this);
             _fixedTickHandler.RemoveListener(this);
             _actorInputController.LockInput();
+            _stateModuleController.Pause();
         }
 
         public void Unpause()
@@ -113,11 +113,8 @@ namespace Sheldier.Actors
             _fixedTickHandler.AddListener(this);
             _actorInputController.UnlockInput();
         }
-        private void OnDestroy()
+        public void Dispose()
         {
-            #if UNITY_EDITOR
-            if (!GameGlobalSettings.IsStarted) return;
-            #endif
             _pauseNotifier.Remove(this);
             _tickHandler.RemoveListener(this);
             _fixedTickHandler.RemoveListener(this);

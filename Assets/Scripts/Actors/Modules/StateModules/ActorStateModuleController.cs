@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using UnityEngine;
 
 namespace Sheldier.Actors
 {
@@ -38,6 +35,11 @@ namespace Sheldier.Actors
             _currentState = newState;
             _currentState.Enter();
         }
+        public void Pause()
+        {
+            _currentState?.Exit();
+        }
+        
         public void Tick()
         {
             _currentState?.Tick();
@@ -58,10 +60,10 @@ namespace Sheldier.Actors
                 SetCurrentState(nextState);
         }
 
-
         public void FixedTick()
         {
             _currentState?.FixedTick();
         }
+
     }
 }

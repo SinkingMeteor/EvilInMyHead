@@ -14,7 +14,7 @@ namespace Sheldier.Common
             get
             {
                 var handler = _mouseHandlers[_currentControlScheme];
-                var inputAction = playerInput.currentActionMap.FindAction(InputConstants.InputActions[InputActionType.Cursor]);
+                var inputAction = playerInput.actions[InputConstants.InputActions[InputActionType.Cursor]];
                 var vec = inputAction.ReadValue<Vector2>();
                 var direction = handler.GetMouseScreenDirection(vec);
                 return direction;
@@ -77,8 +77,8 @@ namespace Sheldier.Common
         }
         public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position)
         {
-            return _cursorDirectionConverter.GetDirectionByTransform(position,
-                playerInput.actions[InputConstants.InputActions[InputActionType.Cursor]].ReadValue<Vector2>());
+            var vec = playerInput.actions[InputConstants.InputActions[InputActionType.Cursor]].ReadValue<Vector2>();
+            return _cursorDirectionConverter.GetDirectionByTransform(position, _mouseHandlers[_currentControlScheme].GetScreenPointOfCursor(vec));
         }
         public void OnChangedControls(PlayerInput newPlayerInput)
         {
@@ -86,17 +86,6 @@ namespace Sheldier.Common
             _currentControlScheme = playerInput.currentControlScheme;
             bindHandler.OnChangedControls();
             RemoveAllBindingOverrides();
-        }
-
-        public void DeviceRegained()
-        {
-  
-        }
-
-        public void DeviceLost()
-        {
-
-
         }
         public void SetSceneCamera(Camera cam)
         {
@@ -109,12 +98,13 @@ namespace Sheldier.Common
         private void ActivateInput()
         {
             playerInput.ActivateInput();
+            playerInput.actions.FindActionMap(InputConstants.ActionMaps[ActionMapType.Cursor]).Enable();
         }
 
         private void DeactivateInput()
         {
             playerInput.DeactivateInput();
-
+            playerInput.actions.FindActionMap(InputConstants.ActionMaps[ActionMapType.Cursor]).Disable();
         }
         private void OnDestroy()
         {
@@ -124,6 +114,7 @@ namespace Sheldier.Common
 
         private interface IInputMouseHandler
         {
+            Vector3 GetScreenPointOfCursor(Vector2 mouseDirection);
             Vector2 GetMouseScreenDirection(Vector2 mousePosition);
         }
         private class CursorDirectionConverter
@@ -157,6 +148,12 @@ namespace Sheldier.Common
             {
                 _cursorDirectionConverter = cursorDirectionConverter;
             }
+
+            public Vector3 GetScreenPointOfCursor(Vector2 mouseDirection)
+            {
+                return mouseDirection;
+            }
+
             public Vector2 GetMouseScreenDirection(Vector2 mousePosition)
             {
                 return _cursorDirectionConverter.GetMouseScreenDirection(mousePosition);
@@ -166,6 +163,11 @@ namespace Sheldier.Common
         {
 
             private Vector2 previousDirection;
+
+            public Vector3 GetScreenPointOfCursor(Vector2 mouseDirection)
+            {
+                return (mouseDirection * 0.5f + new Vector2(0.5f, 0.5f)) * new Vector2(Screen.width, Screen.height);
+            }
             public Vector2 GetMouseScreenDirection(Vector2 mouseDirection)
             {
                 var newDirection = Vector2.Lerp(previousDirection, mouseDirection, Time.deltaTime * 5.0f);

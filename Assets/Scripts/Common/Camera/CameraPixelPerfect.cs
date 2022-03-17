@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Sheldier.Common
 {
@@ -17,7 +18,7 @@ public class CameraPixelPerfect : MonoBehaviour
 
     public void Initialize()
     {
-       AdjustCameraFOV();
+       //AdjustCameraFOV();
     }
 
     private float CalculatePixelPerfectCameraSize(Resolution res)
@@ -62,6 +63,7 @@ public class CameraPixelPerfect : MonoBehaviour
         sceneCamera.orthographicSize = size;
     }
 
+    [Button]
     public void LateTick()
     {
         if (_resolution.width != sceneCamera.pixelWidth || _resolution.height != sceneCamera.pixelHeight)

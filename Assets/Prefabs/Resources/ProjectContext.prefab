@@ -706,6 +706,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 7511222703471105387}
   deviceKeyMap: {fileID: 11400000, guid: 0e47d51c094ced7498d5feee8c5c61fe, type: 2}
+--- !u!1 &3492097211980877544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 547413680211476797}
+  - component: {fileID: 8765102506164157495}
+  m_Layer: 0
+  m_Name: Dialogues
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &547413680211476797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492097211980877544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2407684473881099581}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8765102506164157495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492097211980877544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816edfcc493c40a59f9130e03c826270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3790233001210470979
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +794,7 @@ Transform:
   - {fileID: 753177415272276959}
   - {fileID: 7772149895238599255}
   - {fileID: 5195268326788466622}
+  - {fileID: 547413680211476797}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -781,6 +826,7 @@ MonoBehaviour:
   - {fileID: 1637036953917570412}
   - {fileID: 3617938798966111960}
   - {fileID: 515642825931159310}
+  - {fileID: 8765102506164157495}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 0
   _editorReflectionBakingCoverageMode: 0

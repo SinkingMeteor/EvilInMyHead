@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Cursor",
-                    "type": "Value",
-                    "id": "79838ade-6848-4ea8-87c1-eb3cee8d4382",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "4baa0099-9a6a-489c-95e5-4e28b63da215",
@@ -146,28 +137,6 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "62f89b2b-2248-448c-8857-954325a8d0f8",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Cursor",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3240108c-97f3-41ac-94d9-cb9745da16af",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -602,15 +571,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Cursor",
-                    "type": "Value",
-                    "id": "786957da-58c3-48ac-b726-f1294a91be9a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -679,10 +639,159 @@
                     "action": "RemoveItem",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dialogues",
+            "id": "23ba0181-565c-4e2e-8f1a-7dda8c78bb77",
+            "actions": [
+                {
+                    "name": "LeftChoice",
+                    "type": "Button",
+                    "id": "5ff0546a-4957-43ae-bf2e-6448df6a92be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UpperChoice",
+                    "type": "Button",
+                    "id": "8080f4a0-ddf0-43a5-b75a-e1ce43bb4f9e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightChoice",
+                    "type": "Button",
+                    "id": "cb8b43e5-3ae6-45c4-8e68-57364ffd3291",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LowerChoice",
+                    "type": "Button",
+                    "id": "4c5d3c2e-b034-46e4-82bf-87ed4d04c338",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "28a708dc-6ba1-4383-9419-0e1cf4bdc8c4",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "LeftChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ea830a1a-3b1a-4b3c-a982-6f448f35ab09",
+                    "id": "7a236b81-2c1e-4906-ab6f-d6ca0b0cab0a",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "LeftChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7bdb0ff1-5358-4b64-b4ec-51cdb940e403",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "UpperChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "805cf252-92e1-4563-a265-5b201cbbb838",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "UpperChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e762d014-ea46-400a-951c-8c87eae941e9",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "RightChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecdc4005-6f63-4a29-bae2-6d2cac85c558",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "RightChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c55a8874-8fec-4cf7-a798-8ac6bb530c55",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "LowerChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f40ad51-b719-440a-ba1d-2a2ce10b6414",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "LowerChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cursor",
+            "id": "e8b15b63-96f2-46e3-81c9-67b40258f4cd",
+            "actions": [
+                {
+                    "name": "Cursor",
+                    "type": "Value",
+                    "id": "d9c5094d-47eb-4bbb-b4f4-5e28ffe70df0",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3dc3ff24-ef97-48c0-81ca-3f06adce3ee5",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
@@ -693,7 +802,7 @@
                 },
                 {
                     "name": "",
-                    "id": "9a66f212-54ba-4d19-a7d3-433d7fe8b95a",
+                    "id": "705f1e92-9f18-44ce-884b-612a9400d45d",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",

@@ -47,11 +47,14 @@ namespace Sheldier.Actors.Interact
             if(_currentReceiver == null)
                 return;
             bool interactResult = _currentReceiver.OnInteracted(_actor);
-            if(_inInteractField != null || interactResult)
+            if (_inInteractField != null || interactResult)
                 StopCoroutine(_inInteractField);
-            _currentReceiver.OnExit();
+
             if (interactResult)
+            {
+                _currentReceiver.OnExit();
                 _currentReceiver = null;
+            }
             PopOldReceiver();
         }
 

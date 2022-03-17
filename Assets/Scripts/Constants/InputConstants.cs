@@ -28,6 +28,7 @@ namespace Sheldier.Constants
             {ActionMapType.Gameplay, "Gameplay"},
             {ActionMapType.UI, "UI"},
             {ActionMapType.Inventory, "Inventory"},
+            {ActionMapType.Cursor, "Cursor"},
         };
     }
     

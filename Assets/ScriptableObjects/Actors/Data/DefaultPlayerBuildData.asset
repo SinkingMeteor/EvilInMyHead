@@ -26,4 +26,4 @@ MonoBehaviour:
   _isEffectPerceptive: 1
   _canInteract: 1
   _canAttack: 1
-  _interactType: 1
+  _interactType: 2

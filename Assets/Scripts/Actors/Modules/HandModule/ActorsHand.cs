@@ -10,10 +10,10 @@ namespace Sheldier.Actors.Hand
         [SerializeField] private HandView actorHandObject;
         
         private ActorTransformHandler _transformHandler;
+        private TickHandler _tickHandler;
         private SimpleItem _currentItem;
         private NullItem _nullItem;
         private Actor _actor;
-        private TickHandler _tickHandler;
 
         public void Initialize(ActorInternalData data)
         {
@@ -59,11 +59,10 @@ namespace Sheldier.Actors.Hand
         private void RotateHand()
         {
             var dir = _currentItem.GetRotateDirection();
-            if (dir.magnitude < 0.1f) return;
             var angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
             if (!_transformHandler.LooksToRight)
                 angle -= 180;
-            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(0f, 0f, angle), 0.5f); 
+            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(0f, 0f, angle), Time.deltaTime*7.0f); 
         }
         public void Dispose()
         {

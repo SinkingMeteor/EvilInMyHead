@@ -7,7 +7,6 @@ using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Sheldier.UI
 {
