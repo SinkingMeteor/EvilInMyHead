@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Sheldier.Common
 {
-    public class InputProvider : MonoBehaviour, IInputProvider, IInventoryInputProvider
+    public class InputProvider : MonoBehaviour, IInputProvider, IInventoryInputProvider, IDialoguesInputProvider
     {
         public Vector2 MovementDirection => playerInput.actions[InputConstants.InputActions[InputActionType.Movement]].ReadValue<Vector2>();
         
@@ -27,6 +27,11 @@ namespace Sheldier.Common
         public InputButton UICloseInventoryButton => _uiCloseInventoryButton;
         public InputButton UIUseItemButton => _uiUseItemButton;
         public InputButton UIRemoveItemButton => _uiRemoveItemButton;
+
+        public InputButton LowerChoice => _dialoguesLowerChoice;
+        public InputButton LeftChoice => _dialoguesLeftChoice;
+        public InputButton UpperChoice => _dialoguesUpperChoice;
+        public InputButton RightChoice => _dialoguesRightChoice;
         
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private InputBindHandler bindHandler;
@@ -34,6 +39,7 @@ namespace Sheldier.Common
         private string _currentControlScheme;
         private CursorDirectionConverter _cursorDirectionConverter;
         private Dictionary<string, IInputMouseHandler> _mouseHandlers;
+        private TickHandler _tickHandler;
         
         private InputButton _useButton;
         private InputButton _attackButton;
@@ -43,12 +49,16 @@ namespace Sheldier.Common
         private InputButton _uiCloseInventoryButton;
         private InputButton _uiRemoveItemButton;
         private InputButton _uiUseItemButton;
-        private TickHandler _tickHandler;
+        private InputButton _dialoguesLowerChoice;
+        private InputButton _dialoguesLeftChoice;
+        private InputButton _dialoguesUpperChoice;
+        private InputButton _dialoguesRightChoice;
 
 
         public void Initialize()
         {
             _currentControlScheme = playerInput.currentControlScheme;
+            
             _useButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Use]);
             _attackButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Attack]);
             _reloadButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Reload]);
@@ -57,6 +67,11 @@ namespace Sheldier.Common
             _uiUseItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.UseItem]);
             _uiRemoveItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.RemoveItem]);
             _uiCloseInventoryButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.CloseInventory]);
+
+            _dialoguesLeftChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesLeftChoice]);
+            _dialoguesUpperChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesUpperChoice]);
+            _dialoguesRightChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesRightChoice]);
+            _dialoguesLowerChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesLowerChoice]);
             
             _cursorDirectionConverter = new CursorDirectionConverter();
             _mouseHandlers = new Dictionary<string, IInputMouseHandler>
@@ -111,69 +126,5 @@ namespace Sheldier.Common
             DeactivateInput();
         }
 
-
-        private interface IInputMouseHandler
-        {
-            Vector3 GetScreenPointOfCursor(Vector2 mouseDirection);
-            Vector2 GetMouseScreenDirection(Vector2 mousePosition);
-        }
-        private class CursorDirectionConverter
-        {
-            private Camera _camera;
-            public void SetCamera(Camera camera)
-            {
-                _camera = camera;
-            }
-
-            public Vector2 GetMouseScreenDirection(Vector2 mouseScreenPosition)
-            {
-                var screen = new Vector2(Screen.width, Screen.height);
-                var halfScreen = screen * 0.5f;
-                var directionMinusOneToOne = (mouseScreenPosition - halfScreen) / screen.y * 2.0f;
-                
-                return directionMinusOneToOne;
-            }
-
-            public Vector2 GetDirectionByTransform(Vector3 position, Vector2 cursorPosition)
-            {
-                var worldCursorPosition = _camera.ScreenToWorldPoint(cursorPosition);
-                return (worldCursorPosition - position);
-            }
-        }
-        private class PCMouseDirectionProvider : IInputMouseHandler
-        {
-            private readonly CursorDirectionConverter _cursorDirectionConverter;
-
-            public PCMouseDirectionProvider(CursorDirectionConverter cursorDirectionConverter)
-            {
-                _cursorDirectionConverter = cursorDirectionConverter;
-            }
-
-            public Vector3 GetScreenPointOfCursor(Vector2 mouseDirection)
-            {
-                return mouseDirection;
-            }
-
-            public Vector2 GetMouseScreenDirection(Vector2 mousePosition)
-            {
-                return _cursorDirectionConverter.GetMouseScreenDirection(mousePosition);
-            }
-        }
-        private class GamePadMouseDirectionProvider : IInputMouseHandler
-        {
-
-            private Vector2 previousDirection;
-
-            public Vector3 GetScreenPointOfCursor(Vector2 mouseDirection)
-            {
-                return (mouseDirection * 0.5f + new Vector2(0.5f, 0.5f)) * new Vector2(Screen.width, Screen.height);
-            }
-            public Vector2 GetMouseScreenDirection(Vector2 mouseDirection)
-            {
-                var newDirection = Vector2.Lerp(previousDirection, mouseDirection, Time.deltaTime * 5.0f);
-                previousDirection = newDirection;
-                return newDirection;
-            }
-        }
     }
 }

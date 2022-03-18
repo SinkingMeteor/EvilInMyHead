@@ -20,6 +20,10 @@ namespace Sheldier.Constants
                 {InputActionType.CloseInventory, "CloseInventory"},
                 {InputActionType.UseItem, "UseItem"},
                 {InputActionType.RemoveItem, "RemoveItem"},
+                {InputActionType.DialoguesLeftChoice, "LeftChoice"},
+                {InputActionType.DialoguesUpperChoice, "UpperChoice"},
+                {InputActionType.DialoguesRightChoice, "RightChoice"},
+                {InputActionType.DialoguesLowerChoice, "LowerChoice"},
 
             };
 
@@ -29,6 +33,7 @@ namespace Sheldier.Constants
             {ActionMapType.UI, "UI"},
             {ActionMapType.Inventory, "Inventory"},
             {ActionMapType.Cursor, "Cursor"},
+            {ActionMapType.Dialogues, "Dialogues"},
         };
     }
     

@@ -2,6 +2,7 @@
 using Sheldier.Common;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace Sheldier.UI
@@ -29,6 +30,7 @@ namespace Sheldier.UI
 
         private void EnableState()
         {
+            Debug.Log("Added");
             _statesController.Add(UIType.Dialogue);
         }
 

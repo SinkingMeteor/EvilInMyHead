@@ -14,7 +14,7 @@ namespace Sheldier.Constants
         public static readonly Dictionary<UIType, string> UI_STATE_PATHS = new Dictionary<UIType, string>()
         {
             {UIType.Inventory, "UIState/InventoryUIState"},
-            {UIType.GameplayPauseMenu, ""}
+            {UIType.Dialogue, "UIState/DialoguesUIState"}
         };
 
         public const string COLONY_SCENE_DATA_PATH = "SceneData/ColonyOutside";

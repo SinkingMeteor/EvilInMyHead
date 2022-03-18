@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sheldier.Actors;
 using Sheldier.Graphs.DialogueSystem;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace Sheldier.Common
 {
     public class DialoguesProvider
     {
+        public event Action<DialogueSystemGraph, Actor[]> OnDialogueLoaded;
+        
         private Dictionary<ActorType, DialoguePointer> _pointers;
         private ActorSpawner _spawner;
 
@@ -37,10 +40,7 @@ namespace Sheldier.Common
                     actorsInDialogues[i + 2] = _spawner.ActorsOnScene[actorType][0];
                 }
 
-            foreach (var actor in actorsInDialogues)
-            {
-                Debug.Log(actor.ActorType);
-            }
+            OnDialogueLoaded?.Invoke(graph, actorsInDialogues);
         }
 
         public void SetPointerIndex(ActorType actorType, int index)

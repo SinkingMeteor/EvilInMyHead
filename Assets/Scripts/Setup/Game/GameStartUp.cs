@@ -26,13 +26,14 @@ namespace Sheldier.Setup
         private LocalizationProvider _localizationProvider;
         private AudioMixerController _audioMixerController;
         private UILoadingOperation _uiLoadingOperation;
-        private UIStatesController _uiStatesControler;
+        private UIStatesController _uiStatesController;
         private InventorySlotPool _inventorySlotPool;
+        private DialoguesProvider _dialoguesProvider;
         private InputBindHandler _inputBindHandler;
         private ActorsEffectFactory _effectFactory;
         private FixedTickHandler _fixedTickHandler;
-        private DialoguesProvider dialoguesProvider;
         private LateTickHandler _lateTickHandler;
+        private SpeechCloudPool _speechCloudPool;
         private ProjectilePool _projectilePool;
         private WeaponBlowPool _weaponBlowPool;
         private CameraHandler _cameraHandler;
@@ -41,6 +42,7 @@ namespace Sheldier.Setup
         private ActorBuilder _actorBuilder;
         private PathProvider _pathProvider;
         private ActorSpawner _actorSpawner;
+        private ISoundPlayer _soundPlayer;
         private ItemFactory _itemFactory;
         private ItemSpawner _itemSpawner;
         private UIInstaller _uiInstaller;
@@ -59,7 +61,7 @@ namespace Sheldier.Setup
             PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool, InputBindHandler inputBindHandler,
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
             ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
-            UIStatesController uiStatesControler, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider)
+            UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer)
         {
             _itemMap = itemMap;
             _inventory = inventory;
@@ -70,6 +72,7 @@ namespace Sheldier.Setup
             _tickHandler = tickHandler;
             _itemFactory = itemFactory;
             _uiInstaller = uiInstaller;
+            _soundPlayer = soundPlayer;
             _pathProvider = pathProvider;
             _actorSpawner = actorSpawner;
             _actorBuilder = actorBuilder;
@@ -79,12 +82,13 @@ namespace Sheldier.Setup
             _inputProvider = inputProvider;
             _weaponBlowPool = weaponBlowPool;
             _projectilePool = projectilePool;
+            _speechCloudPool = speechCloudPool;
             _lateTickHandler = lateTickHandler;
-            this.dialoguesProvider = dialoguesProvider;
             _fixedTickHandler = fixedTickHandler;
             _inputBindHandler = inputBindHandler;
-            _uiStatesControler = uiStatesControler;
+            _dialoguesProvider = dialoguesProvider;
             _inventorySlotPool = inventorySlotPool;
+            _uiStatesController = uiStatesController;
             _uiLoadingOperation = uiLoadingOperation;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
@@ -102,16 +106,19 @@ namespace Sheldier.Setup
             _weaponBlowPool.SetDependencies(_tickHandler);
             _weaponBlowPool.Initialize();
             
+            _speechCloudPool.SetDependencies(_soundPlayer);
+            _speechCloudPool.Initialize();
+            
             _inventorySlotPool.Initialize();
             
             _uiHintPool.Initialize();
             
-            _uiStatesControler.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);
+            _uiStatesController.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);
 
-            dialoguesProvider.SetDependencies(_actorSpawner);
-            dialoguesProvider.Initialize();
+            _dialoguesProvider.SetDependencies(_actorSpawner);
+            _dialoguesProvider.Initialize();
             
-            _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _actorsMap, dialoguesProvider);
+            _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _actorsMap, _dialoguesProvider);
             _actorBuilder.Initialize();
 
             _actorSpawner.SetDependencies(_actorBuilder);
@@ -137,6 +144,11 @@ namespace Sheldier.Setup
             _cameraHandler.SetDependencies(_lateTickHandler, _inputProvider, _pauseNotifier);
             _cameraHandler.Initialize();
 
+            LoadNextScene();
+        }
+
+        private void LoadNextScene()
+        {
             ILoadOperation[] loadOperations =
             {
                 _uiLoadingOperation,
@@ -144,9 +156,9 @@ namespace Sheldier.Setup
             };
             
             new GameGlobalSettings().SetStarted();
-            #pragma warning disable 4014
+#pragma warning disable 4014
             _loadingScreenProvider.LoadAndDestroy(loadOperations);
-            #pragma warning restore 4014
+#pragma warning restore 4014
         }
     }
 }

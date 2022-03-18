@@ -10,6 +10,10 @@ namespace Sheldier.Common
         OpenInventory,
         CloseInventory,
         UseItem,
-        RemoveItem
+        RemoveItem,
+        DialoguesLowerChoice,
+        DialoguesLeftChoice,
+        DialoguesUpperChoice,
+        DialoguesRightChoice
     }
 }
