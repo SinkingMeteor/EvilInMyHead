@@ -7,7 +7,9 @@ namespace Sheldier.Actors.Data
     public class ActorData : BaseScriptableObject
     {
         public ActorMovementConfig MovementConfig => movementConfig;
+        public ActorDialogueConfig DialogueConfig => dialogueConfig;
         
         [SerializeField] private ActorMovementConfig movementConfig;
+        [SerializeField] private ActorDialogueConfig dialogueConfig;
     }
 }

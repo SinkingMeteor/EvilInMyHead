@@ -12,6 +12,7 @@ namespace Sheldier.Installers
         {
             Container.Bind<IInputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<IInventoryInputProvider>().FromInstance(inputProvider).AsSingle();
+            Container.Bind<IDialoguesInputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<InputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<IInputRebinder>().FromInstance(bindHandler).AsSingle();
             Container.Bind<InputBindHandler>().FromInstance(bindHandler).AsSingle();

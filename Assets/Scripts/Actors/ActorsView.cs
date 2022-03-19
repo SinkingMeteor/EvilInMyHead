@@ -6,9 +6,10 @@ namespace Sheldier.Actors
 {
     public class ActorsView : MonoBehaviour
     {
-        public int CurrentSortingOrder => _currentSortingOrder;
+        public Transform SpeechPoint => speechPoint;        
         public Material CurrentBodyMaterial => body.sharedMaterial;
 
+        [SerializeField] private Transform speechPoint;
         [SerializeField] private SimpleAnimator animator;
         [SerializeField] private ActorAnimationCollection animationCollection;
         [SerializeField] private SpriteRenderer body;

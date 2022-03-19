@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ce4f21452da4adea25b2a5b9b9d42c0, type: 3}
-  m_Name: ActorData
+  m_Script: {fileID: 11500000, guid: ce4bf78934dd447184e7d71135df5a31, type: 3}
+  m_Name: ActorDialogueConfig
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,5 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  movementConfig: {fileID: 11400000, guid: 48c73798f166dae4a9873f6d5d211d84, type: 2}
-  dialogueConfig: {fileID: 11400000, guid: 4579157a4bf6d7a44bad5e6e59f3afe7, type: 2}
+  typeSpeed: 0.05
+  voiceSound: {fileID: 0}
+  textColor: {r: 1, g: 0.9012066, b: 0.5235849, a: 1}

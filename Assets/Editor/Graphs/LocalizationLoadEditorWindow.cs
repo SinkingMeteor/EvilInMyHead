@@ -5,19 +5,24 @@ using Sheldier.Common.Localization;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
 
 namespace SheldierEditor.DialogueSystem
 {
-    [CreateAssetMenu(fileName = "LocalizationWindow", menuName = "Sheldier/Editor/LocalizationWindow")]
     public class LocalizationLoadEditorWindow : OdinEditorWindow
     {
         private CsvLocalizationLoader _localizationLoader;
         
         [HideInInspector] public List<LocalizationCellData> LocalizationsPairs;
         [TitleGroup("Localization")][TableList] public List<LocalizationCellData> FilteredLocalizations;
+        
+        
+        [MenuItem("Sheldier/DialoguesLocalization")]
+        public static void Open()
+        {
+            GetWindow<LocalizationLoadEditorWindow>().Show();
+        }
         
         [HorizontalGroup("Localization/Load")]
         [Button(ButtonSizes.Large)]
@@ -84,7 +89,6 @@ namespace SheldierEditor.DialogueSystem
         [TitleGroup("Dialogues")]
         
         [Sirenix.OdinInspector.FilePath]  public string GraphsPath;
-        [HorizontalGroup("Dialogues/Load")] [ShowInInspector] public bool IsLoaded => DialoguesGraph.Count > 0;
         [TableList] public List<GraphCellData> DialoguesGraph;
         
         [HorizontalGroup("Dialogues/Load")]

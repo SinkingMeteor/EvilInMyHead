@@ -46,7 +46,7 @@ namespace Sheldier.Common.Animation
         public void Tick()
         {
             int frameCount = FramesCount;
-            _currentFrame = (_currentFrame + _tickHandler.TickDelta * currentAnimation.FrameRate) % frameCount;
+            _currentFrame = Mathf.Clamp((_currentFrame + _tickHandler.TickDelta * currentAnimation.FrameRate) % frameCount, 0.0f, frameCount - 0.01f);
             int frameIndex = (int) _currentFrame;
             spriteRenderer.sprite = currentAnimation.Frames[frameIndex];
             if (!currentAnimation.IsLoop && frameIndex == frameCount - 1)

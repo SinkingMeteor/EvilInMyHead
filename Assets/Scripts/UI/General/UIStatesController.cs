@@ -59,7 +59,7 @@ namespace Sheldier.UI
         public void Add(UIType uiType)
         {
             if (!_states.ContainsKey(uiType))
-                throw new ArgumentNullException($"UI State {uiType.ToString()} doesn't exist in current scene");
+                return;
             
             if(_shownStates.Count > 0)
                 _shownStates.Peek().Deactivate();

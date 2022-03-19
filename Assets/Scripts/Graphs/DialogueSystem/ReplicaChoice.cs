@@ -19,7 +19,7 @@ namespace Sheldier.Graphs.DialogueSystem
         }
 
         [SerializeField] private string _choice;
-        private NodePort _nextNode;
+        [SerializeField] private NodePort _nextNode;
 
         public void SetChoiceLocalizationKey(string localizationKey)
         {

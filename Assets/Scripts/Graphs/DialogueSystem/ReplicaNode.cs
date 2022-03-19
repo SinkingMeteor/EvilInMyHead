@@ -13,16 +13,19 @@ namespace Sheldier.Graphs.DialogueSystem
         [Input] public ReplicaNode input;
 
         public string Replica => _replica;
+        public ConversationPerson Person => _person;
         public IReadOnlyList<ReplicaChoice> Choices => _choices;
 
         public int Index => _index;
         
         [TableColumnWidth(300)]
-        [SerializeField, Multiline, ReadOnly] private string _replica;
+        [SerializeField, Multiline] private string _replica;
         [TableColumnWidth(25)]
         [SerializeField, ReadOnly] private int _index;
         [TableColumnWidth(500)]
-        [SerializeField, ReadOnly] private List<ReplicaChoice> _choices;
+        [SerializeField] private List<ReplicaChoice> _choices;
+
+        [SerializeField] private ConversationPerson _person;
 
         public override object GetValue(NodePort port)
         {
@@ -55,6 +58,7 @@ namespace Sheldier.Graphs.DialogueSystem
         public void RemoveLastPort()
         {
             RemoveDynamicPort(DynamicPorts.Last());
+            _choices.RemoveAt(_choices.Count - 1);
         }
 #endif
 
@@ -62,6 +66,7 @@ namespace Sheldier.Graphs.DialogueSystem
     public interface IDialogueReplica
     {
         public string Replica { get; }
+        public ConversationPerson Person { get; }
         public IReadOnlyList<ReplicaChoice> Choices { get; }
     }
 }

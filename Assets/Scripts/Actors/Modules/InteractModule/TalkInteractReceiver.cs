@@ -9,7 +9,7 @@ namespace Sheldier.Actors.Interact
         private Material _material;
         private Material _defaultMaterial;
         private ActorsView _actorsView;
-        private DialoguesProvider dialoguesProvider;
+        private DialoguesProvider _dialoguesProvider;
         private Actor _selfActor;
 
         public void Initialize(ActorInternalData data)
@@ -21,7 +21,7 @@ namespace Sheldier.Actors.Interact
 
         public void SetDependencies(Material material, DialoguesProvider dialoguesProvider)
         {
-            this.dialoguesProvider = dialoguesProvider;
+            _dialoguesProvider = dialoguesProvider;
             _material = material;
         }
         public void OnEntered()
@@ -31,8 +31,7 @@ namespace Sheldier.Actors.Interact
 
         public bool OnInteracted(Actor interactingActor)
         {
-            Debug.Log("Start talking");
-            dialoguesProvider.FindDialogue(interactingActor, _selfActor);
+            _dialoguesProvider.FindDialogue(interactingActor, _selfActor);
             return false;
         }
 

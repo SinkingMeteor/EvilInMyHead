@@ -8,7 +8,7 @@ namespace Sheldier.Graphs.DialogueSystem
     public class DialogueSystemGraph : NodeGraph
     {
         public string LocalizationKey => _dialogueLocalizationKey;
-        public ReplicaNode StartDialogue() => _initialReplica;
+        public ReplicaNode StartReplica => _initialReplica;
         public ActorType[] AdditionalPersons => additionalPersons;
         
         [SerializeField] private ReplicaNode _initialReplica;
