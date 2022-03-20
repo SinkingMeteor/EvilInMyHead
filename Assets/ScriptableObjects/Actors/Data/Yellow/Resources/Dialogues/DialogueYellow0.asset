@@ -62,6 +62,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   _person: 1
+  _delay: 2
 --- !u!114 &-4530960024304890900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +152,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   _person: 1
+  _delay: 4
 --- !u!114 &-2436642230479771434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +188,7 @@ MonoBehaviour:
   _index: 6
   _choices: []
   _person: 0
+  _delay: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +247,7 @@ MonoBehaviour:
   _index: 4
   _choices: []
   _person: 1
+  _delay: 2
 --- !u!114 &3275014189171934019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +310,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   _person: 1
+  _delay: 2
 --- !u!114 &4205805559244207863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +370,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   _person: 0
+  _delay: 2
 --- !u!114 &5153960701177706528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,3 +433,4 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   _person: 0
+  _delay: 2

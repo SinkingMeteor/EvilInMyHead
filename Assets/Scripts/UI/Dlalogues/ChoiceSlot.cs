@@ -41,7 +41,6 @@ namespace Sheldier.UI
         public void Reset()
         {
             _nextReplica = null;
-
             disappearingAnimation.PlayAnimation();
         }
     }

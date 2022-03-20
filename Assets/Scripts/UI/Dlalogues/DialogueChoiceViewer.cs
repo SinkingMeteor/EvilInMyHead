@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Sheldier.UI
 {
     public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener
     {
 
-        [OdinSerialize] private IUIStateAnimationAppearing[] appearingAnimations;
+        [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
         [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
         [OdinSerialize] private Dictionary<ChoiceType, ChoiceSlot> choiceSlots;
+        [SerializeField] private Image timerImage;
         
         private IDialoguesInputProvider _inputProvider;
         private IInputBindIconProvider _bindIconProvider;
@@ -33,11 +34,12 @@ namespace Sheldier.UI
             _bindIconProvider = bindIconProvider;
             _inputProvider = inputProvider;
         }
-        public void Activate(IReadOnlyList<ReplicaChoice> currentReplicaChoices, float cloudLifetime)
+        public async void Activate(IReadOnlyList<ReplicaChoice> currentReplicaChoices, float cloudLifetime)
         {
             _currentChoices = currentReplicaChoices;
-            for (int i = 0; i < appearingAnimations.Length; i++)
-                appearingAnimations[i].PlayAnimation();
+            timerImage.fillAmount = 1.0f;
+            
+             await appearingAnimation.PlayAnimation();
             
             _localizationProvider.AddListener(this);
             _bindIconProvider.AddListener(this);
@@ -81,26 +83,20 @@ namespace Sheldier.UI
                 slot.SetText(_localizationProvider.LocalizedText[_currentChoices[i].Choice]);
             }
         }
+        
         public void OnLanguageChanged() => FillText();
         public void OnDeviceChanged() => SetBindings();
 
         private void Deactivate()
         {
 
-            
-            _inputProvider.LeftChoice.OnPressed -= OnLeftChoicePressed;
-            _inputProvider.UpperChoice.OnPressed -= OnUpperChoicePressed;
-            _inputProvider.RightChoice.OnPressed -= OnRightChoicePressed;
-            _inputProvider.LowerChoice.OnPressed -= OnLowerChoicePressed;
-            
-            disappearingAnimation.PlayAnimation();
-
             foreach (var choiceSlot in choiceSlots) 
                 choiceSlot.Value.Reset();
-
+            disappearingAnimation.PlayAnimation();
             _localizationProvider.RemoveListener(this);
             _bindIconProvider.RemoveListener(this);
         }
+        
         private void OnLowerChoicePressed() => ApplyChoice(ChoiceType.Lower);
 
         private void OnRightChoicePressed() => ApplyChoice(ChoiceType.Right);
@@ -115,6 +111,12 @@ namespace Sheldier.UI
                 return;
             if(_waitingCoroutine != null)
                 StopCoroutine(_waitingCoroutine);
+            
+            _inputProvider.LeftChoice.OnPressed -= OnLeftChoicePressed;
+            _inputProvider.UpperChoice.OnPressed -= OnUpperChoicePressed;
+            _inputProvider.RightChoice.OnPressed -= OnRightChoicePressed;
+            _inputProvider.LowerChoice.OnPressed -= OnLowerChoicePressed;
+            
             IDialogueReplica nextReplica = choiceSlots[choiceType].Next;
             _dialogueController.SetNext(nextReplica);                        
             await choiceSlots[choiceType].Select();
@@ -134,7 +136,13 @@ namespace Sheldier.UI
 
         private IEnumerator WaitingCoroutine(float delay)
         {
-            yield return new WaitForSeconds(delay);
+            float timeLeft = delay;
+            while (timeLeft > 0.0f)
+            {
+                timeLeft -= Time.deltaTime;
+                timerImage.fillAmount = Mathf.InverseLerp(0.0f, delay, timeLeft);
+                yield return null;
+            }
             ApplyChoice((ChoiceType)UnityEngine.Random.Range(0, _currentChoices.Count));
         }
         private enum ChoiceType
@@ -144,8 +152,5 @@ namespace Sheldier.UI
             Right,
             Left
         }
-
-
-
     }
 }

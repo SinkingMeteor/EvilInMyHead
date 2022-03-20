@@ -47,6 +47,7 @@ namespace Sheldier.UI
         public void SetNext(IDialogueReplica dialogueReplica)
         {
             _currentReplica = dialogueReplica;
+            ProcessReplica();
         }
         private void StartDialogue(DialogueSystemGraph dialogue, Actor[] actors)
         {
@@ -68,16 +69,17 @@ namespace Sheldier.UI
                 return;
             }
             Actor actor = _actorsInDialogue[(int) _currentReplica.Person];
-            var cloudLifetime = actor.DataModule.DialogueDataModule.TypeSpeed * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + WAIT_TIME;
+            var cloudLifetime = actor.DataModule.DialogueDataModule.TypeSpeed * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + _currentReplica.Delay;
 
             if (_currentReplica.Choices.Count > 1)
                 choiceViewer.Activate(_currentReplica.Choices, cloudLifetime);
+            else
+                _waitCoroutine = StartCoroutine(WaitCloudCoroutine(cloudLifetime));
 
             speechCloudController.RevealCloud(_currentReplica, actor);
 
             _currentReplica = _currentReplica.Choices.Count == 0 ? null : _currentReplica.Choices[^1].Next;
 
-            _waitCoroutine = StartCoroutine(WaitCloudCoroutine(cloudLifetime));
 
         }
 

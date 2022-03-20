@@ -14,6 +14,7 @@ namespace Sheldier.Graphs.DialogueSystem
 
         public string Replica => _replica;
         public ConversationPerson Person => _person;
+        public float Delay => _delay;
         public IReadOnlyList<ReplicaChoice> Choices => _choices;
 
         public int Index => _index;
@@ -26,6 +27,7 @@ namespace Sheldier.Graphs.DialogueSystem
         [SerializeField] private List<ReplicaChoice> _choices;
 
         [SerializeField] private ConversationPerson _person;
+        [SerializeField] private float _delay = 2.0f;
 
         public override object GetValue(NodePort port)
         {
@@ -67,6 +69,7 @@ namespace Sheldier.Graphs.DialogueSystem
     {
         public string Replica { get; }
         public ConversationPerson Person { get; }
+        public float Delay { get; }
         public IReadOnlyList<ReplicaChoice> Choices { get; }
     }
 }

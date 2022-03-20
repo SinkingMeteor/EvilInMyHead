@@ -32,7 +32,7 @@ namespace Sheldier.UI
             Transform speechPoint = actor.ActorsView.SpeechPoint;
             _currentReplica = currentReplica;
             SpeechCloud currentSpeechCloud = InstantiateCloud(speechPoint);
-            currentSpeechCloud.SetText(_localizationProvider.LocalizedText[currentReplica.Replica], actor.DataModule.DialogueDataModule);
+            currentSpeechCloud.SetText(_localizationProvider.LocalizedText[currentReplica.Replica], actor);
             _speechClouds.Enqueue(currentSpeechCloud);
         }
 

@@ -14,7 +14,9 @@ namespace Sheldier.UI
     public class SpeechCloud : SerializedMonoBehaviour, IPoolObject<SpeechCloud>
     {
         public Transform Transform => transform;
-    
+
+        [SerializeField] private RectTransform pointerRect;
+        [SerializeField] private RectTransform backgroundRect;
         [SerializeField] private TextMeshProUGUI cloudTMP;
         [SerializeField] private SpeechRectResizer rectResizer;
         [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
@@ -47,13 +49,16 @@ namespace Sheldier.UI
             _stringBuilder.Append(letter);
             cloudTMP.text = _stringBuilder.ToString();
         }
-        public void SetText(string text, ActorDialogueDataModule data)
+        public void SetText(string text, Actor actor)
         {
             rectResizer.Resize(text);
+            float sizeY =  backgroundRect.rect.height;
+            transform.position += new Vector3(0.0f, sizeY * 0.5f, 0.0f);
+            pointerRect.position = new Vector3(actor.transform.position.x, pointerRect.position.y, pointerRect.position.z);
             cloudTMP.text = text;
-            cloudTMP.color = data.TypeColor;
+            cloudTMP.color = actor.DataModule.DialogueDataModule.TypeColor;
 
-            _typingCoroutine = StartCoroutine(TypeCoroutine(text, data.TypeSpeed));
+            _typingCoroutine = StartCoroutine(TypeCoroutine(text, actor.DataModule.DialogueDataModule.TypeSpeed));
         }
         public async void CloseCloud()
         {
