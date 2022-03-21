@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Sheldier.Actors;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
@@ -24,6 +25,7 @@ namespace Sheldier.UI
         private Actor[] _actorsInDialogue;
         private Coroutine _waitCoroutine;
         private ILocalizationProvider _localizationProvider;
+        private Action _onCompleteCallback;
 
         private const float WAIT_TIME = 2.0f;
         public void Initialize()
@@ -49,8 +51,9 @@ namespace Sheldier.UI
             _currentReplica = dialogueReplica;
             ProcessReplica();
         }
-        private void StartDialogue(DialogueSystemGraph dialogue, Actor[] actors)
+        public void StartDialogue(DialogueSystemGraph dialogue, Actor[] actors, Action callback)
         {
+            _onCompleteCallback = callback;
             EnableState();
             _currentReplica = dialogue.StartReplica;
             _actorsInDialogue = actors;
@@ -66,6 +69,7 @@ namespace Sheldier.UI
             if (_currentReplica == null)
             {
                 DisableState();
+                _onCompleteCallback?.Invoke();
                 return;
             }
             Actor actor = _actorsInDialogue[(int) _currentReplica.Person];

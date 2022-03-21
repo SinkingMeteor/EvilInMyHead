@@ -1,4 +1,5 @@
 ﻿using Sheldier.Actors.Inventory;
+using Sheldier.Common.Cutscene;
 using Zenject;
 
 namespace Sheldier.Installers
@@ -8,6 +9,7 @@ namespace Sheldier.Installers
         public override void InstallBindings()
         {
             Container.Bind<Inventory>().AsSingle();
+            Container.Bind<CutsceneController>().AsSingle();
         }
         
     }

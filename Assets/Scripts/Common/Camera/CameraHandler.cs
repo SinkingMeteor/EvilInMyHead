@@ -14,7 +14,7 @@ namespace Sheldier.Common
         private CameraFollower _cameraFollower;
         
         private LateTickHandler _lateTickHandler;
-        private IInputProvider _inputProvider;
+        private IGameplayInputProvider _inputProvider;
         private PauseNotifier _pauseNotifier;
         
         private CameraPixelPerfect _pixelPerfectCameraTemplate;
@@ -40,7 +40,7 @@ namespace Sheldier.Common
             _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower, _lateTickHandler);
             
         }
-        public void SetDependencies(LateTickHandler lateTickHandler, IInputProvider inputProvider, PauseNotifier pauseNotifier)
+        public void SetDependencies(LateTickHandler lateTickHandler, IGameplayInputProvider inputProvider, PauseNotifier pauseNotifier)
         {
             _pauseNotifier = pauseNotifier;
             _inputProvider = inputProvider;

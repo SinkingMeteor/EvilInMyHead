@@ -2,7 +2,7 @@
 {
     public interface IExtraAIModule
     {
-        void Initialize(ActorInternalData data, ActorsAIModule aiModule);
+        void Initialize(ActorInternalData data);
         void Dispose();
     }
 }

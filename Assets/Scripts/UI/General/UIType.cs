@@ -1,6 +1,6 @@
 namespace Sheldier.UI
 {
-    public enum UIType
+    public enum UIType : byte
     {
         Inventory,
         Dialogue

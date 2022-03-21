@@ -13,12 +13,12 @@ namespace Sheldier.Common
         private Actor _followedActor;
         private Actor _controlledActor;
         
-        private IInputProvider _inputProvider;
+        private IGameplayInputProvider _inputProvider;
         private CameraHandler _cameraHandler;
         private Inventory _inventory;
 
         [Inject]
-        private void InjectDependencies(IInputProvider inputProvider, Inventory inventory, CameraHandler cameraHandler)
+        private void InjectDependencies(IGameplayInputProvider inputProvider, Inventory inventory, CameraHandler cameraHandler)
         {
             _cameraHandler = cameraHandler;
             _inventory = inventory;

@@ -15,21 +15,26 @@ namespace Sheldier.Actors
         public event Action OnReloadButtonPressed; 
         public event Action OnReloadButtonReleased; 
         
-        public IInputProvider CurrentInputProvider => _currentInputProvider;
+        public IGameplayInputProvider CurrentInputProvider => _currentInputProvider;
 
-        private IInputProvider _currentInputProvider;
-        private IInputProvider _nullProvider;
-        private IInputProvider _realInputProvider;
+        private IGameplayInputProvider _currentInputProvider;
+        private IGameplayInputProvider _nullProvider;
+        private IGameplayInputProvider _realInputProvider;
         
 
         public void Initialize()
         {
-            _nullProvider = new NullInputProvider();
+            NullInputProvider nullProvider = new NullInputProvider();
+            nullProvider.Initialize();
+            _nullProvider = nullProvider;
+            _realInputProvider = nullProvider;
             _currentInputProvider = _nullProvider;
         }
+
         public Vector2 GetNonNormalizedCursorDirectionByTransform(Vector3 position) => _currentInputProvider.GetNonNormalizedDirectionToCursorFromPosition(position);
-        
-        public void SetInputProvider(IInputProvider inputProvider)
+        public void SetMovementDirection(Vector2 direction) => _currentInputProvider.SetMovementDirection(direction);
+        public void SetViewDirection(Vector2 direction) => _currentInputProvider.SetViewDirection(direction);
+        public void SetInputProvider(IGameplayInputProvider inputProvider)
         {
 
             _currentInputProvider = inputProvider;
@@ -52,6 +57,7 @@ namespace Sheldier.Actors
             _currentInputProvider.ReloadButton.OnReleased -= ReloadButtonReleased;
             
             _currentInputProvider = _nullProvider;
+            _realInputProvider = _nullProvider;
         }
         public void LockInput()
         {
@@ -62,7 +68,7 @@ namespace Sheldier.Actors
         public void UnlockInput()
         {
             _currentInputProvider = _realInputProvider;
-            _realInputProvider = null;
+            _realInputProvider = _nullProvider;
         }
         
         private void UseButtonReleased() => OnUseButtonReleased?.Invoke();
@@ -71,5 +77,7 @@ namespace Sheldier.Actors
         private void AttackButtonPressed() => OnAttackButtonPressed?.Invoke();
         private void ReloadButtonReleased() => OnReloadButtonReleased?.Invoke();
         private void ReloadButtonPressed() => OnReloadButtonPressed?.Invoke();
+
+
     }
 }

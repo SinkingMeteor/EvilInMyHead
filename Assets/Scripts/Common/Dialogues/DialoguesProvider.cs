@@ -8,7 +8,7 @@ namespace Sheldier.Common
 {
     public class DialoguesProvider
     {
-        public event Action<DialogueSystemGraph, Actor[]> OnDialogueLoaded;
+        public event Action<DialogueSystemGraph, Actor[], Action> OnDialogueLoaded;
         
         private Dictionary<ActorType, DialoguePointer> _pointers;
         private ActorSpawner _spawner;
@@ -40,9 +40,13 @@ namespace Sheldier.Common
                     actorsInDialogues[i + 2] = _spawner.ActorsOnScene[actorType][0];
                 }
 
-            OnDialogueLoaded?.Invoke(graph, actorsInDialogues);
+            OnDialogueLoaded?.Invoke(graph, actorsInDialogues, null);
         }
 
+        public void StartDialogue(DialogueSystemGraph graph, Actor[] actors, Action onCompleted)
+        {
+            OnDialogueLoaded?.Invoke(graph, actors, onCompleted);
+        }
         public void SetPointerIndex(ActorType actorType, int index)
         {
             if (!_pointers.ContainsKey(actorType))

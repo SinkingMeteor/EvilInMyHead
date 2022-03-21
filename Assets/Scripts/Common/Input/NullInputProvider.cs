@@ -1,28 +1,38 @@
-﻿using UnityEngine;
+﻿using Sheldier.Common.Utilities;
+using UnityEngine;
 
 namespace Sheldier.Common
 {
-    public class NullInputProvider : IInputProvider
+    public class NullInputProvider : IGameplayInputProvider
     {
-        public void Initialize()
-        {
-             
-        }
-        public Vector2 MovementDirection => Vector2.zero;
-        public Vector2 CursorScreenCenterDirection => Vector2.zero;
+        public Vector2 MovementDirection => _movementDirection;
+        public Vector2 CursorScreenCenterDirection => _viewDirection;
         public InputButton UseButton => _useButton;
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
         public InputButton OpenInventoryButton => _openInventoryButton;
-        public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position) => Vector2.zero;
-        public void SwitchActionMap(ActionMapType actionMapType)
-        {
-            
-        }
+        public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position) => _viewDirection - position.DiscardZ();
 
-        private InputButton _reloadButton = new InputButton();
-        private InputButton _useButton = new InputButton();
-        private InputButton _attackButton = new InputButton();
-        private InputButton _openInventoryButton = new InputButton();
+        private InputButton _reloadButton;
+        private InputButton _useButton;
+        private InputButton _attackButton;
+        private InputButton _openInventoryButton;
+        private Vector2 _movementDirection;
+        private Vector2 _viewDirection;
+
+        public void Initialize()
+        {
+            _reloadButton = new InputButton();
+            _useButton = new InputButton();
+            _attackButton = new InputButton();
+            _openInventoryButton = new InputButton();
+            _movementDirection = Vector2.zero;
+            _viewDirection = Vector2.zero;
+        }
+        
+        public void SwitchActionMap(ActionMapType actionMapType)
+        { }
+        public void SetMovementDirection(Vector2 movementDirection) => _movementDirection = movementDirection;
+        public void SetViewDirection(Vector2 viewDirection) => _viewDirection = viewDirection;
     }
 }

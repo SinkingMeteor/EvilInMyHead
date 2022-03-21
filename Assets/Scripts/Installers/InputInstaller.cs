@@ -10,7 +10,7 @@ namespace Sheldier.Installers
         [SerializeField] private InputBindHandler bindHandler;
         public override void InstallBindings()
         {
-            Container.Bind<IInputProvider>().FromInstance(inputProvider).AsSingle();
+            Container.Bind<IGameplayInputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<IInventoryInputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<IDialoguesInputProvider>().FromInstance(inputProvider).AsSingle();
             Container.Bind<InputProvider>().FromInstance(inputProvider).AsSingle();

@@ -2,7 +2,9 @@ using System.Linq;
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
+using Sheldier.Common.Cutscene;
 using Sheldier.Common.Pause;
+using Sheldier.Constants;
 using Sheldier.Item;
 using Sheldier.UI;
 using UnityEngine;
@@ -21,6 +23,7 @@ namespace Sheldier.Setup
         private ScenePlayerController _scenePlayerController;
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
+        private CutsceneController _cutsceneController;
         private InputProvider _inputProvider;
         private CameraHandler _cameraHandler;
         private PauseNotifier _pauseNotifier;
@@ -30,14 +33,16 @@ namespace Sheldier.Setup
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
-            ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, Pathfinder pathfinder,
+            ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner,
+            Pathfinder pathfinder,
             UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
-            PauseNotifier pauseNotifier, UIStatesController uiStatesController)
+            PauseNotifier pauseNotifier, UIStatesController uiStatesController, CutsceneController cutsceneController)
         {
             _scenePlayerController = scenePlayerController;
             _sceneLoadingOperation = sceneLoadingOperation;
             _uiStatesController = uiStatesController;
             _uiLoadingOperation = uiLoadingOperation;
+            _cutsceneController = cutsceneController;
             _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
             _inputProvider = inputProvider;
@@ -64,6 +69,7 @@ namespace Sheldier.Setup
             _scenePlayerController.SetControl(firstActor);
             _scenePlayerController.SetFollowTarget(firstActor);
 
+            _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
         }
         
         private bool GameIsInitialized()

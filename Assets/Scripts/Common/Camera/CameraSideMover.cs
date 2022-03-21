@@ -6,7 +6,7 @@ namespace Sheldier.Common
 {
     public class CameraSideMover
     {
-        private IInputProvider _inputProvider;
+        private IGameplayInputProvider _inputProvider;
         private Camera _camera;
         private CameraFollower _cameraFollower;
         private float _multiplier;
@@ -20,7 +20,7 @@ namespace Sheldier.Common
             _multiplier = 1;
         }
         
-        public void SetDependencies(IInputProvider inputProvider, CameraFollower cameraFollower,
+        public void SetDependencies(IGameplayInputProvider inputProvider, CameraFollower cameraFollower,
             LateTickHandler lateTickHandler)
         {
             _lateTickHandler = lateTickHandler;

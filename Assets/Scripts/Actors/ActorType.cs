@@ -2,7 +2,8 @@
 {
     public enum ActorType
     {
-        Yellow,
-        Artur
+        CurrentPlayer = 0,
+        Yellow = 1,
+        Artur = 2
     }
 }

@@ -20,7 +20,7 @@ namespace Sheldier.UI
         private UIInstaller _uiInstaller;
         private int _topSortingOrder;
         private PauseNotifier _pauseNotifier;
-        private IInputProvider _inputProvider;
+        private IGameplayInputProvider _inputProvider;
 
         public void InitializeOnScene()
         {
@@ -44,7 +44,7 @@ namespace Sheldier.UI
             _loadedStates = null;
         }
 
-        public void SetDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IInputProvider inputProvider)
+        public void SetDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IGameplayInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _pauseNotifier = pauseNotifier;

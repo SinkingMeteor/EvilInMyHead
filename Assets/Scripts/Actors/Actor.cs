@@ -35,6 +35,7 @@ namespace Sheldier.Actors
         private FixedTickHandler _fixedTickHandler;
         private PauseNotifier _pauseNotifier;
         private ActorDataModule _dataModule;
+        private RigidbodyType2D _previousBodyType;
 
         public void Initialize()
         {
@@ -46,7 +47,7 @@ namespace Sheldier.Actors
             
             _actorInputController = new ActorInputController();
             _actorInputController.Initialize();
-            
+
             _transformHandler = new ActorTransformHandler();
             _transformHandler.SetDependencies(transform, _actorInputController);
 
@@ -78,15 +79,18 @@ namespace Sheldier.Actors
             _extraModules.Add(extraActorModule);
             extraActorModule.Initialize(_internalData);
         }
-        public void Tick()
+
+        public void RemoveExtraModule(IExtraActorModule extraActorModule)
         {
-            _stateModuleController.Tick();
+            if(!_extraModules.Contains(extraActorModule))
+                return;
+            _extraModules.Remove(extraActorModule);
+            extraActorModule.Dispose();
         }
-        public void FixedTick()
-        {
-            _stateModuleController.FixedTick();
-        }
-        public void SetControl(IInputProvider inputProvider)
+        public void Tick() => _stateModuleController.Tick();
+        public void FixedTick() => _stateModuleController.FixedTick();
+
+        public void SetControl(IGameplayInputProvider inputProvider)
         {
             _actorInputController.SetInputProvider(inputProvider);
             actorsRigidbody.bodyType = RigidbodyType2D.Dynamic;
@@ -96,8 +100,21 @@ namespace Sheldier.Actors
         public void RemoveControl()
         {
             OnWillRemoveControl?.Invoke();
-            _actorInputController.RemoveInputProvider();
             actorsRigidbody.bodyType = RigidbodyType2D.Kinematic;
+            _actorInputController.RemoveInputProvider();
+        }
+
+        public void LockInput()
+        {
+            _actorInputController.LockInput();
+            _previousBodyType = actorsRigidbody.bodyType;
+            actorsRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        public void UnlockInput()
+        {
+            _actorInputController.UnlockInput();
+            actorsRigidbody.bodyType = _previousBodyType;
         }
         public void Pause()
         {

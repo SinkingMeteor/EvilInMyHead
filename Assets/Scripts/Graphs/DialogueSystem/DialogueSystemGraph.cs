@@ -20,7 +20,7 @@ namespace Sheldier.Graphs.DialogueSystem
         }
     }
 
-    public enum ConversationPerson
+    public enum ConversationPerson : byte
     {
         Initiator,
         Target,

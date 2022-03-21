@@ -1,64 +1,52 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Sheldier.Actors.Pathfinding;
-using Sheldier.Common;
 using Sheldier.Common.Pause;
 using Sheldier.Common.Utilities;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Actors.AI
 {
-    public class ActorsAIMover : IExtraAIModule, ITickListener, IPausable
+    public class ActorsAIMoveModule : IExtraActorModule, IPausable
     {
-        private Transform _targetTransform;
-        
         private PathProvider _pathProvider;
         private Vector2[] _paths;
         private int _targetIndex;
         
-        private TickHandler _tickHandler;
-        private AIInputProvider _aiInputProvider;
         private Transform _actorTransform;
         private Coroutine _followCoroutine;
 
         private bool _isPaused;
         private PauseNotifier _pauseNotifier;
         private Actor _currentActor;
+        private Action _onFinishedCallback;
 
-        public void Initialize(ActorInternalData data, ActorsAIModule aiModule)
+        public void Initialize(ActorInternalData data)
         {
             _currentActor = data.Actor;
             _actorTransform = data.Actor.transform;
-            _tickHandler = data.TickHandler;
-            _aiInputProvider = aiModule.AIInputProvider;
-            _tickHandler.AddListener(this);
             _pauseNotifier.Add(this);
         }
-
-        [Inject]
-        private void InjectDependencies(PathProvider provider, PauseNotifier pauseNotifier)
+        public void SetDependencies(PathProvider provider, PauseNotifier pauseNotifier)
         {
             _pauseNotifier = pauseNotifier;
             _pathProvider = provider;
         }
-        public void Tick()
+        public void Pause() => _isPaused = true;
+        public void Unpause() => _isPaused = false;
+
+        public void MoveTo(Transform point, Action onFinished)
         {
-            if (_targetTransform == null || _paths != null) return;
-            _pathProvider.RequestPath(_actorTransform.position, _targetTransform.position, OnPathFound);
-        }
-        public void Pause()
-        {
-            _tickHandler.RemoveListener(this);
-            _isPaused = true;
-        }
-        public void Unpause()
-        {
-            _tickHandler.AddListener(this);
-            _isPaused = false;
+            _onFinishedCallback = onFinished;
+            _pathProvider.RequestPath(_actorTransform.position, point.position, OnPathFound);
         }
         private void OnPathFound(Vector2[] waypoints, bool isSuccess)
         {
-            if(!isSuccess) return;
+            if (!isSuccess)
+            {
+                _onFinishedCallback?.Invoke();
+                return;
+            }
             if(_followCoroutine != null)
                 _currentActor.StopCoroutine(_followCoroutine);
             _paths = waypoints;
@@ -86,15 +74,16 @@ namespace Sheldier.Actors.AI
                     if (_targetIndex >= _paths.Length)
                     {
                         _paths = null;
-                        _aiInputProvider.SetMovementDirection(Vector2.zero);
+                        _currentActor.InputController.SetMovementDirection(Vector2.zero);
                         _targetIndex = 0;
+                        _onFinishedCallback?.Invoke();
                         yield break;
                     }
                     currentWaypoint = _paths[_targetIndex];
                 }
 
                 var wayPointDirection = (currentWaypoint.AddZ() - _actorTransform.position).normalized;
-                _aiInputProvider.SetMovementDirection(wayPointDirection);
+                _currentActor.InputController.SetMovementDirection(wayPointDirection);
                 yield return null;
             }
             
@@ -117,7 +106,6 @@ namespace Sheldier.Actors.AI
 
         public void Dispose()
         {
-            _tickHandler.RemoveListener(this);
             _pauseNotifier.Remove(this);
         }
 

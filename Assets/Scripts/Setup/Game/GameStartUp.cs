@@ -3,7 +3,9 @@ using Sheldier.Actors.Builder;
 using Sheldier.Actors.Inventory;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
+using Sheldier.Common.Asyncs;
 using Sheldier.Common.Audio;
+using Sheldier.Common.Cutscene;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pause;
 using Sheldier.Common.Pool;
@@ -27,6 +29,7 @@ namespace Sheldier.Setup
         private AudioMixerController _audioMixerController;
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
+        private CutsceneController _cutsceneController;
         private InventorySlotPool _inventorySlotPool;
         private DialoguesProvider _dialoguesProvider;
         private InputBindHandler _inputBindHandler;
@@ -61,7 +64,8 @@ namespace Sheldier.Setup
             PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool, InputBindHandler inputBindHandler,
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
             ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
-            UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer)
+            UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
+            CutsceneController cutsceneController)
         {
             _itemMap = itemMap;
             _inventory = inventory;
@@ -89,6 +93,7 @@ namespace Sheldier.Setup
             _dialoguesProvider = dialoguesProvider;
             _inventorySlotPool = inventorySlotPool;
             _uiStatesController = uiStatesController;
+            _cutsceneController = cutsceneController;
             _uiLoadingOperation = uiLoadingOperation;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
@@ -131,6 +136,8 @@ namespace Sheldier.Setup
             _itemFactory.Initialize();
 
             _itemSpawner.SetDependencies(_itemFactory);
+            
+            _cutsceneController.SetDependencies(_actorSpawner, _pauseNotifier, _pathProvider, _scenePlayerController, _dialoguesProvider);
 
             _audioMixerController.Initialize();
             _localizationProvider.Initialize();
@@ -144,6 +151,8 @@ namespace Sheldier.Setup
             _cameraHandler.SetDependencies(_lateTickHandler, _inputProvider, _pauseNotifier);
             _cameraHandler.Initialize();
 
+            new AsyncWaitersFactory().SetDependencies(_tickHandler);
+            
             LoadNextScene();
         }
 

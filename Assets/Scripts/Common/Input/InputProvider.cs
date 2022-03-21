@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Sheldier.Common
 {
-    public class InputProvider : MonoBehaviour, IInputProvider, IInventoryInputProvider, IDialoguesInputProvider
+    public class InputProvider : MonoBehaviour, IGameplayInputProvider, IInventoryInputProvider, IDialoguesInputProvider
     {
         public Vector2 MovementDirection => playerInput.actions[InputConstants.InputActions[InputActionType.Movement]].ReadValue<Vector2>();
         
@@ -90,6 +90,13 @@ namespace Sheldier.Common
             playerInput.currentActionMap.Disable();
             playerInput.currentActionMap = newActionMap;
         }
+
+        public void SetMovementDirection(Vector2 movementDirection)
+        { }
+
+        public void SetViewDirection(Vector2 viewDirection)
+        { }
+
         public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position)
         {
             var vec = playerInput.actions[InputConstants.InputActions[InputActionType.Cursor]].ReadValue<Vector2>();
