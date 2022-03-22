@@ -27,7 +27,6 @@ namespace Sheldier.Item
         public void OnInstantiated()
         {
         }
-        
         public void SetAnimation(AnimationData data)
         {
             animator.Play(data);
@@ -43,6 +42,10 @@ namespace Sheldier.Item
         public void Reset()
         {
             animator.Reset();
+        }
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -31,7 +31,6 @@ namespace Sheldier.Item
         {
             _tickHandler.AddListener(this);
         }
-
         public void SetDirection(Vector2 dir)
         {
             _movementDirection = dir;
@@ -58,6 +57,11 @@ namespace Sheldier.Item
             if(_projectileLifetime != null)
                 StopCoroutine(_projectileLifetime);
             _tickHandler.RemoveListener(this);
+        }
+        
+        public void Dispose()
+        {
+            
         }
         private IEnumerator StartLifetimeCoroutine()
         {

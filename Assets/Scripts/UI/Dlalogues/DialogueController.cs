@@ -26,24 +26,23 @@ namespace Sheldier.UI
         private Coroutine _waitCoroutine;
         private ILocalizationProvider _localizationProvider;
         private Action _onCompleteCallback;
-
-        private const float WAIT_TIME = 2.0f;
         public void Initialize()
         {
             _dialoguesProvider.OnDialogueLoaded += StartDialogue;
             speechCloudController.Initialize();
+            choiceViewer.Initialize();
         }
 
         [Inject]
         private void InjectDependencies(DialoguesProvider dialoguesProvider, UIStatesController statesController, IDialoguesInputProvider dialoguesInputProvider,
-            SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider)
+            SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider)
         {
             _dialoguesInputProvider = dialoguesInputProvider;
             _statesController = statesController;
             _dialoguesProvider = dialoguesProvider;
             _localizationProvider = localizationProvider;
             speechCloudController.SetDependencies(speechCloudPool, localizationProvider);
-            choiceViewer.SetDependencies(_dialoguesInputProvider, localizationProvider, bindIconProvider, this);
+            choiceViewer.SetDependencies(_dialoguesInputProvider, localizationProvider, bindIconProvider, this, fontProvider);
         }
 
         public void SetNext(IDialogueReplica dialogueReplica)
@@ -99,6 +98,7 @@ namespace Sheldier.UI
         }
         public void Dispose()
         {
+            choiceViewer.Dispose();
             _dialoguesProvider.OnDialogueLoaded -= StartDialogue;
         }
         

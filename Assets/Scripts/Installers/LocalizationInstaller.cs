@@ -1,16 +1,26 @@
 ﻿using Sheldier.Common.Localization;
+using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Installers
 {
     public class LocalizationInstaller : MonoInstaller
     {
-        private LocalizationProvider provider;
+        [SerializeField] private FontMap fontMap;
+        
+        private LocalizationProvider localizationProvider;
+        private FontProvider _fontProvider;
+
         public override void InstallBindings()
         {
-            provider = new LocalizationProvider();
-            Container.Bind<ILocalizationProvider>().FromInstance(provider).AsSingle();
-            Container.Bind<LocalizationProvider>().FromInstance(provider).AsSingle();
+            localizationProvider = new LocalizationProvider();
+            _fontProvider = new FontProvider();
+            
+            Container.Bind<ILocalizationProvider>().FromInstance(localizationProvider).AsSingle();
+            Container.Bind<LocalizationProvider>().FromInstance(localizationProvider).AsSingle();
+            Container.Bind<FontProvider>().FromInstance(_fontProvider).AsSingle();
+            Container.Bind<IFontProvider>().FromInstance(_fontProvider).AsSingle();
+            Container.Bind<FontMap>().FromInstance(fontMap).AsSingle();
         }
     }
 }

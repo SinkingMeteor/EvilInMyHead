@@ -6,14 +6,16 @@ using Sheldier.Common.Localization;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sheldier.UI
 {
-    public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener
+    public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener, IFontRequier
     {
-
+        public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
+        
         [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
         [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
         [OdinSerialize] private Dictionary<ChoiceType, ChoiceSlot> choiceSlots;
@@ -25,10 +27,21 @@ namespace Sheldier.UI
         private IReadOnlyList<ReplicaChoice> _currentChoices;
         private DialogueController _dialogueController;
         private Coroutine _waitingCoroutine;
+        private IFontProvider _fontProvider;
 
-        public void SetDependencies(IDialoguesInputProvider inputProvider, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider,
-            DialogueController dialogueController)
+
+        public void Initialize()
         {
+            var font = _fontProvider.GetActualFont(FontTypeRequirer);
+            foreach (var slot in choiceSlots)
+                slot.Value.SetFont(font);
+            _fontProvider.AddListener(this);
+        }
+        
+        public void SetDependencies(IDialoguesInputProvider inputProvider, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider,
+            DialogueController dialogueController, IFontProvider fontProvider)
+        {
+            _fontProvider = fontProvider;
             _dialogueController = dialogueController;
             _localizationProvider = localizationProvider;
             _bindIconProvider = bindIconProvider;
@@ -55,7 +68,17 @@ namespace Sheldier.UI
             SetBindings();
             SetNextReplica();
         }
-
+        public void UpdateFont(TMP_FontAsset textAsset)
+        {
+            foreach (var slot in choiceSlots)
+                slot.Value.SetFont(textAsset);
+        }
+        public void OnLanguageChanged() => FillText();
+        public void OnDeviceChanged() => SetBindings();
+        public void Dispose()
+        {
+            _fontProvider.RemoveListener(this);
+        }
         private void SetNextReplica()
         {
             for (int i = 0; i < _currentChoices.Count; i++)
@@ -83,10 +106,6 @@ namespace Sheldier.UI
                 slot.SetText(_localizationProvider.LocalizedText[_currentChoices[i].Choice]);
             }
         }
-        
-        public void OnLanguageChanged() => FillText();
-        public void OnDeviceChanged() => SetBindings();
-
         private void Deactivate()
         {
 
@@ -152,5 +171,8 @@ namespace Sheldier.UI
             Right,
             Left
         }
+
+
+
     }
 }

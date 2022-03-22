@@ -8,5 +8,7 @@ namespace Sheldier.Common.Pool
         void Initialize(IPoolSetter<T> poolSetter);
 
         void OnInstantiated();
+
+        void Dispose();
     }
 }

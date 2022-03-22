@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Sheldier.Common.Localization
 {
@@ -29,7 +30,8 @@ namespace Sheldier.Common.Localization
         {
             _localizationListeners.Remove(listener);
         }
-        public void ChangeLanguage(Language language)
+
+        private void ChangeLanguage(Language language)
         {
             _currentLanguage = Language.RU;
             _localizedText = _localizationLoader.LoadFile(language);

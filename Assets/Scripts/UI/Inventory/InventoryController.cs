@@ -16,6 +16,8 @@ namespace Sheldier.UI
 
         public void Initialize()
         {
+            view.Initialize();
+            
             _inputProvider.UIOpenInventoryButton.OnPressed += OpenInventoryWindow;
             _inputProvider.UICloseInventoryButton.OnPressed += CloseInventoryWindow;
 
@@ -47,6 +49,8 @@ namespace Sheldier.UI
 
         public void Dispose()
         {
+            view.Dispose();
+            
             _inputProvider.UIOpenInventoryButton.OnPressed -= OpenInventoryWindow;
             _inputProvider.UICloseInventoryButton.OnPressed -= CloseInventoryWindow;
 

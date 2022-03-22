@@ -12,8 +12,9 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener
+    public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener, IFontRequier
     {
+        public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
         public event Action<SimpleItem> OnCurrentItemChanged;
         
         [SerializeField] private Image selectedItemImage;
@@ -27,15 +28,25 @@ namespace Sheldier.UI
         private ILocalizationProvider _localizationProvider;
         private List<InventorySlot> _slotsCollection;
         private InventorySlotPool _inventorySlotPool;
+        private IFontProvider _fontProvider;
         private InventorySlot _selectedSlot;
         private Inventory _inventory;
 
         [Inject]
-        private void InjectDependencies(InventorySlotPool inventorySlotPool, Inventory inventory, ILocalizationProvider localizationProvider)
+        private void InjectDependencies(InventorySlotPool inventorySlotPool, Inventory inventory, ILocalizationProvider localizationProvider, IFontProvider fontProvider)
         {
+            _fontProvider = fontProvider;
             _localizationProvider = localizationProvider;
             _inventory = inventory;
             _inventorySlotPool = inventorySlotPool;
+        }
+
+        public void Initialize()
+        {
+            var font = _fontProvider.GetActualFont(FontTypeRequirer);
+            titleTMP.font = font;
+            descriptionTMP.font = font;
+            _fontProvider.AddListener(this);
         }
         public void Activate()
         {
@@ -106,6 +117,16 @@ namespace Sheldier.UI
                 _inventorySlotPool.SetToPull(_slotsCollection[i]);
             }
         }
+        public void UpdateFont(TMP_FontAsset textAsset)
+        {
+            titleTMP.font = textAsset;
+            descriptionTMP.font = textAsset;
+        }
+
+        public void Dispose()
+        {
+            _fontProvider.RemoveListener(this);
+        }
         private List<SimpleItem> GetItemsList()
         {
             List<SimpleItem> inventoryItems = new List<SimpleItem>();
@@ -163,5 +184,6 @@ namespace Sheldier.UI
         }
 
 
+ 
     }
 }

@@ -45,6 +45,7 @@ namespace Sheldier.Setup
         private ActorBuilder _actorBuilder;
         private PathProvider _pathProvider;
         private ActorSpawner _actorSpawner;
+        private FontProvider _fontProvider;
         private ISoundPlayer _soundPlayer;
         private ItemFactory _itemFactory;
         private ItemSpawner _itemSpawner;
@@ -55,6 +56,7 @@ namespace Sheldier.Setup
         private Inventory _inventory;
         private ActorsMap _actorsMap;
         private ItemMap _itemMap;
+        private FontMap _fontMap;
 
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, InputProvider inputProvider, 
@@ -65,9 +67,10 @@ namespace Sheldier.Setup
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
             ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
             UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
-            CutsceneController cutsceneController)
+            CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap)
         {
             _itemMap = itemMap;
+            _fontMap = fontMap;
             _inventory = inventory;
             _actorsMap = actorsMap;
             _pathfinder = pathfinder;
@@ -77,6 +80,7 @@ namespace Sheldier.Setup
             _itemFactory = itemFactory;
             _uiInstaller = uiInstaller;
             _soundPlayer = soundPlayer;
+            _fontProvider = fontProvider;
             _pathProvider = pathProvider;
             _actorSpawner = actorSpawner;
             _actorBuilder = actorBuilder;
@@ -105,17 +109,23 @@ namespace Sheldier.Setup
         {
             sceneContext.Run();
 
+            _localizationProvider.Initialize();
+            
+            _fontProvider.SetDependencies(_localizationProvider, _fontMap);
+            _fontProvider.Initialize();
+            
             _projectilePool.SetDependencies(_tickHandler);
             _projectilePool.Initialize();
             
             _weaponBlowPool.SetDependencies(_tickHandler);
             _weaponBlowPool.Initialize();
             
-            _speechCloudPool.SetDependencies(_soundPlayer);
+            _speechCloudPool.SetDependencies(_soundPlayer, _fontProvider);
             _speechCloudPool.Initialize();
             
             _inventorySlotPool.Initialize();
             
+            _uiHintPool.SetDependencies(_fontProvider);
             _uiHintPool.Initialize();
             
             _uiStatesController.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);
@@ -140,7 +150,7 @@ namespace Sheldier.Setup
             _cutsceneController.SetDependencies(_actorSpawner, _pauseNotifier, _pathProvider, _scenePlayerController, _dialoguesProvider);
 
             _audioMixerController.Initialize();
-            _localizationProvider.Initialize();
+            
             _inputBindHandler.Initialize();
             _inputProvider.Initialize();
             _effectFactory.Initialize();

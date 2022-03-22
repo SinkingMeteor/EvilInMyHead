@@ -45,6 +45,11 @@ namespace Sheldier.UI
         {
         }
 
+        public void Dispose()
+        {
+            
+        }
+
         public void Reset()
         {
             _item = null;

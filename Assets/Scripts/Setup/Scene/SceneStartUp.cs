@@ -69,7 +69,7 @@ namespace Sheldier.Setup
             _scenePlayerController.SetControl(firstActor);
             _scenePlayerController.SetFollowTarget(firstActor);
 
-            _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
+           // _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
         }
         
         private bool GameIsInitialized()

@@ -10,8 +10,9 @@ using UnityEngine.UI;
 
 namespace Sheldier.UI
 {
-    public class UIHint : SerializedMonoBehaviour, IPoolObject<UIHint>
+    public class UIHint : SerializedMonoBehaviour, IPoolObject<UIHint>, IFontRequier
     {
+        public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
         public Transform Transform => transform;
 
         [OdinSerialize] private IUIStateAnimationAppearing[] appearingAnimations;
@@ -23,12 +24,20 @@ namespace Sheldier.UI
             
         private IPoolSetter<UIHint> _poolSetter;
         private Coroutine _waitCoroutine;
+        private IFontProvider _fontProvider;
 
         public void Initialize(IPoolSetter<UIHint> poolSetter)
         {
             for (int i = 0; i < appearingAnimations.Length; i++)
                 appearingAnimations[i].Initialize();
             _poolSetter = poolSetter;
+            hintTitle.font = _fontProvider.GetActualFont(FontTypeRequirer);
+            _fontProvider.AddListener(this);
+            
+        }
+        public void SetDependencies(IFontProvider fontProvider)
+        {
+            _fontProvider = fontProvider;
         }
         public void OnInstantiated()
         {
@@ -41,7 +50,10 @@ namespace Sheldier.UI
             hintIcon.sprite = icon;
             hintIcon.SetNativeSize();
         }
-
+        public void UpdateFont(TMP_FontAsset textAsset)
+        {
+            hintTitle.font = textAsset;
+        }
         public void SetTitle(string title)
         {
             hintTitle.text = title;
@@ -86,6 +98,13 @@ namespace Sheldier.UI
             hintImageBackground.fillAmount = 0.0f;
             callback();
         }
+
+        public void Dispose()
+        {
+            _fontProvider.RemoveListener(this);
+        }
+
+
 
     }
 }

@@ -66,9 +66,10 @@ namespace Sheldier.Common.Pool
 
         private void ResetPool()
         {
-            foreach (var t in _pooledEntities)
+            foreach (var entity in _pooledEntities)
             {
-                Destroy(t.Transform.gameObject);
+                entity.Dispose();
+                Destroy(entity.Transform.gameObject);
             }
             _pooledEntities.Clear();
         }

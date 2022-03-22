@@ -3,6 +3,7 @@ using System.Collections;
 using System.Text;
 using Sheldier.Actors;
 using Sheldier.Common.Audio;
+using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -11,8 +12,9 @@ using UnityEngine;
 
 namespace Sheldier.UI
 {
-    public class SpeechCloud : SerializedMonoBehaviour, IPoolObject<SpeechCloud>
+    public class SpeechCloud : SerializedMonoBehaviour, IPoolObject<SpeechCloud>, IFontRequier
     {
+        public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
         public Transform Transform => transform;
 
         [SerializeField] private RectTransform pointerRect;
@@ -26,6 +28,7 @@ namespace Sheldier.UI
         private IPoolSetter<SpeechCloud> _poolSetter;
         private ISoundPlayer _soundPlayer;
         private Coroutine _typingCoroutine;
+        private IFontProvider _fontProvider;
 
 
         public void Initialize(IPoolSetter<SpeechCloud> poolSetter)
@@ -34,21 +37,22 @@ namespace Sheldier.UI
             appearingAnimation.Initialize();
             disappearingAnimation.Initialize();
             _stringBuilder = new StringBuilder();
+            cloudTMP.font = _fontProvider.GetActualFont(FontTypeRequirer);
+            _fontProvider.AddListener(this);
+
         }
-        public void SetDependencies(ISoundPlayer soundPlayer)
+        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider)
         {
             _soundPlayer = soundPlayer;
+            _fontProvider = fontProvider;
         }
         public void OnInstantiated()
         {
             appearingAnimation.PlayAnimation();
         }
 
-        public void Add(char letter)
-        {
-            _stringBuilder.Append(letter);
-            cloudTMP.text = _stringBuilder.ToString();
-        }
+        public void UpdateFont(TMP_FontAsset textAsset) => cloudTMP.font = textAsset;
+
         public void SetText(string text, Actor actor)
         {
             rectResizer.Resize(text);
@@ -74,6 +78,11 @@ namespace Sheldier.UI
             cloudTMP.text = String.Empty;
         }
 
+        private void Add(char letter)
+        {
+            _stringBuilder.Append(letter);
+            cloudTMP.text = _stringBuilder.ToString();
+        }
         private IEnumerator TypeCoroutine(string text, float typeSpeed)
         {
             var delay = new WaitForSeconds(typeSpeed);
@@ -83,6 +92,10 @@ namespace Sheldier.UI
                 Add(textArr[i]);
                 yield return delay;
             }
+        }
+        public void Dispose()
+        {
+            _fontProvider.RemoveListener(this);
         }
     }
 }

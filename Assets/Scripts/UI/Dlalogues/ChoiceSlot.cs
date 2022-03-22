@@ -43,5 +43,10 @@ namespace Sheldier.UI
             _nextReplica = null;
             disappearingAnimation.PlayAnimation();
         }
+
+        public void SetFont(TMP_FontAsset font)
+        {
+            titleTMP.font = font;
+        }
     }
 }

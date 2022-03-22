@@ -2047,3 +2047,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77237a10052f442abdf0d578396c1eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fontMap: {fileID: 11400000, guid: 2f8e0c197a9a4254a8ccb1fccb4e0240, type: 2}
