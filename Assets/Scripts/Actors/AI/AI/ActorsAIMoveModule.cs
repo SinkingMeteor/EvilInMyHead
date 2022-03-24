@@ -84,6 +84,7 @@ namespace Sheldier.Actors.AI
 
                 var wayPointDirection = (currentWaypoint.AddZ() - _actorTransform.position).normalized;
                 _currentActor.InputController.SetMovementDirection(wayPointDirection);
+                _currentActor.InputController.SetViewDirection(wayPointDirection);
                 yield return null;
             }
             

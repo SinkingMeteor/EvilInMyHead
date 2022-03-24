@@ -11,7 +11,7 @@ namespace Sheldier.Common
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
         public InputButton OpenInventoryButton => _openInventoryButton;
-        public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position) => _viewDirection - position.DiscardZ();
+        public Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position) => _viewDirection;
 
         private InputButton _reloadButton;
         private InputButton _useButton;

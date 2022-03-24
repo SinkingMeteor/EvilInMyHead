@@ -21,7 +21,16 @@ namespace Sheldier.Common
         public Sprite GetActionInputSprite(InputActionType actionType)
         {
             InputAction action = GetInputAction(actionType);
-            int controlBindingIndex = action.GetBindingIndexForControl(action.controls[0]);
+            int controlBindingIndex = 0;
+            try
+            {
+               controlBindingIndex = action.GetBindingIndexForControl(action.controls[0]);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                
+            }
+
             string currentBinding = InputControlPath.ToHumanReadableString(
                 action.bindings[controlBindingIndex].effectivePath,
                 InputControlPath.HumanReadableStringOptions.OmitDevice);

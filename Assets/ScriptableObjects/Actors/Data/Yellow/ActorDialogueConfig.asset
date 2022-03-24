@@ -21,6 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  typeSpeed: 0.05
+  typeSpeed: 0.02
   voiceSound: {fileID: 0}
   textColor: {r: 1, g: 0.9012066, b: 0.5235849, a: 1}

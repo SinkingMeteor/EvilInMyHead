@@ -40,7 +40,8 @@ namespace Sheldier.Common
                     actorsInDialogues[i + 2] = _spawner.ActorsOnScene[actorType][0];
                 }
 
-            OnDialogueLoaded?.Invoke(graph, actorsInDialogues, null);
+            actorsInDialogues[0].LockInput();
+            OnDialogueLoaded?.Invoke(graph, actorsInDialogues, () => actorsInDialogues[0].UnlockInput());
         }
 
         public void StartDialogue(DialogueSystemGraph graph, Actor[] actors, Action onCompleted)

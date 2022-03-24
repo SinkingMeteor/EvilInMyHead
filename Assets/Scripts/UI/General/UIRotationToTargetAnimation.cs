@@ -9,7 +9,6 @@ namespace Sheldier.UI
         [SerializeField] private float targetAngle;
         public void Initialize()
         {
-            rectTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
         protected override Tween GetAnimation()
         {

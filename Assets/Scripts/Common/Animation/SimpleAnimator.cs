@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Common.Animation
 {
@@ -8,7 +7,6 @@ namespace Sheldier.Common.Animation
     public class SimpleAnimator : MonoBehaviour, ITickListener
     {
         public bool IsPlaying => _isPlaying;
-
         public event Action OnAnimationEnd; 
         
         [SerializeField] private AnimationData currentAnimation;
@@ -18,7 +16,7 @@ namespace Sheldier.Common.Animation
         private float _currentFrame;
         private bool _isPlaying;
         private TickHandler _tickHandler;
-
+        
         private int FramesCount => currentAnimation.Frames.Length;
         
         public void Initialize()
@@ -46,12 +44,16 @@ namespace Sheldier.Common.Animation
         public void Tick()
         {
             int frameCount = FramesCount;
-            _currentFrame = Mathf.Clamp((_currentFrame + _tickHandler.TickDelta * currentAnimation.FrameRate) % frameCount, 0.0f, frameCount - 0.01f);
+            _currentFrame += _tickHandler.TickDelta * currentAnimation.FrameRate;
+            if (_currentFrame >= frameCount)
+                RewindAnimation();
             int frameIndex = (int) _currentFrame;
             spriteRenderer.sprite = currentAnimation.Frames[frameIndex];
             if (!currentAnimation.IsLoop && frameIndex == frameCount - 1)
                 StopPlaying();
         }
+        private void RewindAnimation() => _currentFrame %= FramesCount;
+
         public void StopPlaying()
         {
             _isPlaying = false;
@@ -68,10 +70,7 @@ namespace Sheldier.Common.Animation
             currentAnimation = null;
         }
 
-        public void Dispose()
-        {
-            Reset();
-        }
-        
+        public void Dispose() => Reset();
+
     }
 }

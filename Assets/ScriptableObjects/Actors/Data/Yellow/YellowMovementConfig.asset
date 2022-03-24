@@ -22,4 +22,4 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   speed: 2
-  movementSound: {fileID: 0}
+  movementSound: {fileID: 11400000, guid: 0388f2fd025ca49499acf5dddfaf48eb, type: 2}

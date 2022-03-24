@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
@@ -69,9 +70,15 @@ namespace Sheldier.Setup
             _scenePlayerController.SetControl(firstActor);
             _scenePlayerController.SetFollowTarget(firstActor);
 
-           // _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
+          //  StartCoroutine(DialogueTestCoroutine());
         }
-        
+
+        private IEnumerator DialogueTestCoroutine()
+        {
+            yield return new WaitForSeconds(7.0f);
+            _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
+
+        }
         private bool GameIsInitialized()
         {
             if (GameGlobalSettings.IsStarted)

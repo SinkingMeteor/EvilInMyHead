@@ -35,6 +35,8 @@ namespace Sheldier.Common
         {
             _pixelPerfectCameraTemplate = Resources.Load<CameraPixelPerfect>(ResourcePaths.PIXEL_PERFECT_CAMERA);
             _cameraFollower = new CameraFollower();
+            _cameraFollower.SetDependencies(_lateTickHandler);
+            _cameraFollower.Initialize();
             
             _cameraSideMover = new CameraSideMover();
             _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower, _lateTickHandler);

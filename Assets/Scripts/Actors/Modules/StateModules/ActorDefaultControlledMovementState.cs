@@ -1,4 +1,5 @@
-﻿using Sheldier.Common.Animation;
+﻿using System.Collections;
+using Sheldier.Common.Animation;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -14,14 +15,19 @@ namespace Sheldier.Actors
         protected ActorInputController _inputController;
         protected ActorTransformHandler _actorTransformHandler;
         protected AnimationType[] _animationHashes;
+        private ActorSoundController _soundController;
 
         private Rigidbody2D _rigidbody2D;
         private ActorsView _actorsView;
 
         private bool _isLocked;
+        private Coroutine _stepCoroutine;
+        
+        private const float DELAY = 0.5f;
 
         public virtual void SetDependencies(ActorInternalData data)
         {
+            _soundController = data.Actor.SoundController;
             _movementData = data.Actor.DataModule.MovementDataModule;
             _inputController = data.Actor.InputController;
             _actorTransformHandler = data.ActorTransformHandler;
@@ -43,10 +49,12 @@ namespace Sheldier.Actors
 
         public void Enter()
         {
+            _stepCoroutine = _actorsView.StartCoroutine(StepSoundCoroutine());
         }
 
         public void Exit()
         {
+            _actorsView.StopCoroutine(_stepCoroutine);
             _rigidbody2D.velocity = Vector2.zero;
         }
 
@@ -65,6 +73,17 @@ namespace Sheldier.Actors
 
         protected virtual ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateMovementDirection();
         private void SetNewAnimation(AnimationType animationID) => _actorsView.PlayAnimation(animationID);
+
+        private IEnumerator StepSoundCoroutine()
+        {
+            var stepDelay = new WaitForSeconds(DELAY);
+            
+            while (true) 
+            {
+                _soundController.PlayAudio(_movementData.InitialData.MovementSound);
+                yield return stepDelay;
+            }
+        }
 
     }
 }

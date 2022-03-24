@@ -39,6 +39,7 @@ namespace Sheldier.Setup
         private SpeechCloudPool _speechCloudPool;
         private ProjectilePool _projectilePool;
         private WeaponBlowPool _weaponBlowPool;
+        private ChoiceSlotPool _choiceSlotPool;
         private CameraHandler _cameraHandler;
         private PauseNotifier _pauseNotifier;
         private InputProvider _inputProvider;
@@ -67,7 +68,7 @@ namespace Sheldier.Setup
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
             ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
             UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
-            CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap)
+            CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap, ChoiceSlotPool choiceSlotPool)
         {
             _itemMap = itemMap;
             _fontMap = fontMap;
@@ -89,6 +90,7 @@ namespace Sheldier.Setup
             _effectFactory = effectFactory;
             _inputProvider = inputProvider;
             _weaponBlowPool = weaponBlowPool;
+            _choiceSlotPool = choiceSlotPool;
             _projectilePool = projectilePool;
             _speechCloudPool = speechCloudPool;
             _lateTickHandler = lateTickHandler;
@@ -122,6 +124,9 @@ namespace Sheldier.Setup
             
             _speechCloudPool.SetDependencies(_soundPlayer, _fontProvider);
             _speechCloudPool.Initialize();
+            
+            _choiceSlotPool.SetDependencies(_fontProvider);
+            _choiceSlotPool.Initialize();
             
             _inventorySlotPool.Initialize();
             

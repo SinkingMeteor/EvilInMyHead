@@ -18,6 +18,10 @@ namespace Sheldier.Actors
         private int _currentSortingOrder;
         private AnimationType _currentPlayingType = AnimationType.None;
 
+        public void Initialize()
+        {
+            animator.Initialize();
+        }
         public void SetDependencies(TickHandler tickHandler)
         {
             animator.SetDependencies(tickHandler);
@@ -33,12 +37,6 @@ namespace Sheldier.Actors
             shadow.sortingOrder = order;
         }
 
-        public void ResetSortingOrder()
-        {
-            body.sortingOrder = 0;
-            shadow.sortingOrder = 0;
-        }
-        
         public void PlayAnimation(AnimationType animationType)
         {
             if(_currentPlayingType == animationType)

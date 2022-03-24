@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
+using Sheldier.Common.Pool;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sheldier.UI
 {
-    public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener, IFontRequier
+    public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener
     {
-        public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
-        
-        [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
-        [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
-        [OdinSerialize] private Dictionary<ChoiceType, ChoiceSlot> choiceSlots;
+        [OdinSerialize] private IUIStateAnimationAppearing[] appearingAnimations;
+        [OdinSerialize] private IUIStateAnimationDisappearing[] disappearingAnimations;
         [SerializeField] private Image timerImage;
-        
+        [SerializeField] private RectTransform slotsParent;
+
+        private List<ChoiceSlot> choiceSlots;
         private IDialoguesInputProvider _inputProvider;
         private IInputBindIconProvider _bindIconProvider;
         private ILocalizationProvider _localizationProvider;
@@ -28,20 +28,22 @@ namespace Sheldier.UI
         private DialogueController _dialogueController;
         private Coroutine _waitingCoroutine;
         private IFontProvider _fontProvider;
+        private ChoiceSlotPool _choiceSlotPool;
 
 
         public void Initialize()
         {
-            var font = _fontProvider.GetActualFont(FontTypeRequirer);
-            foreach (var slot in choiceSlots)
-                slot.Value.SetFont(font);
-            _fontProvider.AddListener(this);
+            choiceSlots = new List<ChoiceSlot>();
+            for (int i = 0; i < appearingAnimations.Length; i++)
+                appearingAnimations[i].Initialize();
+            for (int i = 0; i < disappearingAnimations.Length; i++)
+                disappearingAnimations[i].Initialize();
         }
         
         public void SetDependencies(IDialoguesInputProvider inputProvider, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider,
-            DialogueController dialogueController, IFontProvider fontProvider)
+            DialogueController dialogueController, ChoiceSlotPool choiceSlotPool)
         {
-            _fontProvider = fontProvider;
+            _choiceSlotPool = choiceSlotPool;
             _dialogueController = dialogueController;
             _localizationProvider = localizationProvider;
             _bindIconProvider = bindIconProvider;
@@ -50,9 +52,13 @@ namespace Sheldier.UI
         public async void Activate(IReadOnlyList<ReplicaChoice> currentReplicaChoices, float cloudLifetime)
         {
             _currentChoices = currentReplicaChoices;
-            timerImage.fillAmount = 1.0f;
-            
-             await appearingAnimation.PlayAnimation();
+            timerImage.fillAmount = 0.25f;
+
+            Task[] tasks = new Task[appearingAnimations.Length];
+            for (int i = 0; i < appearingAnimations.Length; i++)
+                tasks[i] = appearingAnimations[i].PlayAnimation();
+
+            await Task.WhenAll(tasks);
             
             _localizationProvider.AddListener(this);
             _bindIconProvider.AddListener(this);
@@ -63,70 +69,67 @@ namespace Sheldier.UI
             _inputProvider.LowerChoice.OnPressed += OnLowerChoicePressed;
 
             _waitingCoroutine = StartCoroutine(WaitingCoroutine(cloudLifetime - 0.5f));
-            
-            FillText();
-            SetBindings();
-            SetNextReplica();
+
+            InstantiateChoices(currentReplicaChoices);
         }
-        public void UpdateFont(TMP_FontAsset textAsset)
+
+
+
+        public void OnLanguageChanged()
         {
-            foreach (var slot in choiceSlots)
-                slot.Value.SetFont(textAsset);
+            for (int i = 0; i < choiceSlots.Count; i++)
+                choiceSlots[i].SetText(_localizationProvider.LocalizedText[_currentChoices[i].Choice]);
         }
-        public void OnLanguageChanged() => FillText();
-        public void OnDeviceChanged() => SetBindings();
-        public void Dispose()
+
+        public void OnDeviceChanged()
         {
-            _fontProvider.RemoveListener(this);
+            for (int i = 0; i < choiceSlots.Count; i++)
+                choiceSlots[i].SetBindIcon(_bindIconProvider.GetActionInputSprite(GetAction(i)));
+
         }
-        private void SetNextReplica()
+
+        private void InstantiateChoices(IReadOnlyList<ReplicaChoice> currentReplicaChoices)
         {
-            for (int i = 0; i < _currentChoices.Count; i++)
+            for (int i = 0; i < currentReplicaChoices.Count; i++)
             {
-                ChoiceSlot slot = choiceSlots[(ChoiceType) i];
+                ChoiceSlot slot = _choiceSlotPool.GetFromPool();
+                slot.transform.SetParent(slotsParent);
+                slot.transform.localScale = Vector3.one;
+                slot.SetText(_localizationProvider.LocalizedText[currentReplicaChoices[i].Choice]);
+                slot.SetBindIcon(_bindIconProvider.GetActionInputSprite(GetAction(i)));
+                choiceSlots.Add(slot);
                 slot.Activate(_currentChoices[i].Next);
             }
         }
+        private async void Deactivate()
+        {
+            Task[] tasks = new Task[choiceSlots.Count];
+            
+            for(int i =0; i < choiceSlots.Count; i++)
+                tasks[i] = choiceSlots[i].Deactivate();
+            
+            await Task.WhenAll(tasks);
 
-        private void SetBindings()
-        {
-            for (int i = 0; i < _currentChoices.Count; i++)
-            {
-                ChoiceType choice = (ChoiceType) i;
-                ChoiceSlot slot = choiceSlots[choice];
-                slot.SetBindIcon(_bindIconProvider.GetActionInputSprite(GetAction(choice)));
-            }
-        }
-  
-        private void FillText()
-        {
-            for (int i = 0; i < _currentChoices.Count; i++)
-            {
-                ChoiceSlot slot = choiceSlots[(ChoiceType) i];
-                slot.SetText(_localizationProvider.LocalizedText[_currentChoices[i].Choice]);
-            }
-        }
-        private void Deactivate()
-        {
-
-            foreach (var choiceSlot in choiceSlots) 
-                choiceSlot.Value.Reset();
-            disappearingAnimation.PlayAnimation();
+            choiceSlots.Clear();
+#pragma warning disable CS4014
+            for (int i = 0; i < disappearingAnimations.Length; i++)
+                disappearingAnimations[i].PlayAnimation();
+#pragma warning restore CS4014
             _localizationProvider.RemoveListener(this);
             _bindIconProvider.RemoveListener(this);
         }
         
-        private void OnLowerChoicePressed() => ApplyChoice(ChoiceType.Lower);
+        private void OnLowerChoicePressed() => ApplyChoice(0);
+        private void OnLeftChoicePressed() => ApplyChoice(1);
+        private void OnUpperChoicePressed() => ApplyChoice(2);
+        private void OnRightChoicePressed() => ApplyChoice(3);
 
-        private void OnRightChoicePressed() => ApplyChoice(ChoiceType.Right);
 
-        private void OnUpperChoicePressed() => ApplyChoice(ChoiceType.Upper);
-
-        private void OnLeftChoicePressed() => ApplyChoice(ChoiceType.Left);
-
-        private async void ApplyChoice(ChoiceType choiceType)
+        private async void ApplyChoice(int index)
         {
-            if (choiceSlots[choiceType].Next == null)
+            if(index >= choiceSlots.Count)
+                return;
+            if (choiceSlots[index].Next == null)
                 return;
             if(_waitingCoroutine != null)
                 StopCoroutine(_waitingCoroutine);
@@ -136,20 +139,20 @@ namespace Sheldier.UI
             _inputProvider.RightChoice.OnPressed -= OnRightChoicePressed;
             _inputProvider.LowerChoice.OnPressed -= OnLowerChoicePressed;
             
-            IDialogueReplica nextReplica = choiceSlots[choiceType].Next;
+            IDialogueReplica nextReplica = choiceSlots[index].Next;
             _dialogueController.SetNext(nextReplica);                        
-            await choiceSlots[choiceType].Select();
+            await choiceSlots[index].Select();
             Deactivate();
         }
-        private InputActionType GetAction(ChoiceType choiceType)
+        private InputActionType GetAction(int index)
         {
-            return choiceType switch
+            return index switch
             {
-                ChoiceType.Left => InputActionType.DialoguesLeftChoice,
-                ChoiceType.Upper => InputActionType.DialoguesUpperChoice,
-                ChoiceType.Right => InputActionType.DialoguesRightChoice,
-                ChoiceType.Lower => InputActionType.DialoguesLowerChoice,
-                _ => throw new ArgumentOutOfRangeException(nameof(choiceType), choiceType, null)
+                0 => InputActionType.DialoguesLowerChoice,
+                1 => InputActionType.DialoguesLeftChoice,
+                2 => InputActionType.DialoguesUpperChoice,
+                3 => InputActionType.DialoguesRightChoice,
+                _ => throw new ArgumentOutOfRangeException(nameof(gameObject), index, null)
             };
         }
 
@@ -159,20 +162,11 @@ namespace Sheldier.UI
             while (timeLeft > 0.0f)
             {
                 timeLeft -= Time.deltaTime;
-                timerImage.fillAmount = Mathf.InverseLerp(0.0f, delay, timeLeft);
+                timerImage.fillAmount = Mathf.InverseLerp(0.0f, delay, timeLeft) / 4.0f;
                 yield return null;
             }
-            ApplyChoice((ChoiceType)UnityEngine.Random.Range(0, _currentChoices.Count));
+            ApplyChoice(UnityEngine.Random.Range(0, _currentChoices.Count));
         }
-        private enum ChoiceType
-        {
-            Lower,
-            Upper,
-            Right,
-            Left
-        }
-
-
 
     }
 }

@@ -62,6 +62,8 @@ namespace Sheldier.Actors
         public void LockInput()
         {
             _realInputProvider = _currentInputProvider;
+            _nullProvider.SetMovementDirection(_realInputProvider.MovementDirection);
+            _nullProvider.SetViewDirection(_realInputProvider.CursorScreenCenterDirection);
             _currentInputProvider = _nullProvider;
         }
 

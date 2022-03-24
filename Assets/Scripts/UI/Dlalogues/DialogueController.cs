@@ -26,6 +26,8 @@ namespace Sheldier.UI
         private Coroutine _waitCoroutine;
         private ILocalizationProvider _localizationProvider;
         private Action _onCompleteCallback;
+        private CameraHandler _cameraHandler;
+
         public void Initialize()
         {
             _dialoguesProvider.OnDialogueLoaded += StartDialogue;
@@ -35,14 +37,16 @@ namespace Sheldier.UI
 
         [Inject]
         private void InjectDependencies(DialoguesProvider dialoguesProvider, UIStatesController statesController, IDialoguesInputProvider dialoguesInputProvider,
-            SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider)
+            SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider,
+            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler)
         {
+            _cameraHandler = cameraHandler;
             _dialoguesInputProvider = dialoguesInputProvider;
             _statesController = statesController;
             _dialoguesProvider = dialoguesProvider;
             _localizationProvider = localizationProvider;
             speechCloudController.SetDependencies(speechCloudPool, localizationProvider);
-            choiceViewer.SetDependencies(_dialoguesInputProvider, localizationProvider, bindIconProvider, this, fontProvider);
+            choiceViewer.SetDependencies(_dialoguesInputProvider, localizationProvider, bindIconProvider, this, choiceSlotPool);
         }
 
         public void SetNext(IDialogueReplica dialogueReplica)
@@ -68,6 +72,7 @@ namespace Sheldier.UI
             if (_currentReplica == null)
             {
                 DisableState();
+                _cameraHandler.SetFollowTarget(_actorsInDialogue[0].transform);
                 _onCompleteCallback?.Invoke();
                 return;
             }
@@ -79,6 +84,7 @@ namespace Sheldier.UI
             else
                 _waitCoroutine = StartCoroutine(WaitCloudCoroutine(cloudLifetime));
 
+            _cameraHandler.SetFollowTarget(actor.transform);
             speechCloudController.RevealCloud(_currentReplica, actor);
 
             _currentReplica = _currentReplica.Choices.Count == 0 ? null : _currentReplica.Choices[^1].Next;
@@ -98,7 +104,6 @@ namespace Sheldier.UI
         }
         public void Dispose()
         {
-            choiceViewer.Dispose();
             _dialoguesProvider.OnDialogueLoaded -= StartDialogue;
         }
         

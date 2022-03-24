@@ -20,9 +20,11 @@ namespace Sheldier.Actors
         public ActorsView ActorsView => actorsView;
         public ActorStateModuleController StateModuleController => _stateModuleController;
         public ActorDataModule DataModule => _dataModule;
+        public ActorSoundController SoundController => soundController;
 
         [SerializeField] private Rigidbody2D actorsRigidbody;
         [SerializeField] private ActorsView actorsView;
+        [SerializeField] private ActorSoundController soundController;
 
         private List<IExtraActorModule> _extraModules;
         private ActorStateModuleController _stateModuleController;
@@ -55,6 +57,7 @@ namespace Sheldier.Actors
             _inventoryModule.Initialize();
 
             actorsView.SetDependencies(_tickHandler);
+            actorsView.Initialize();
             
             _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody);
 
@@ -74,6 +77,11 @@ namespace Sheldier.Actors
             _tickHandler = tickHandler;
         }
 
+        public void Say()
+        {
+            var clip = _dataModule.DialogueDataModule.TypeVoice;
+            soundController.PlayAudio(clip);
+        }
         public void AddExtraModule(IExtraActorModule extraActorModule)
         {
             _extraModules.Add(extraActorModule);

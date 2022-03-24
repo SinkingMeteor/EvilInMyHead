@@ -30,3 +30,5 @@ MonoBehaviour:
   - {fileID: 1544361397, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
   isLoop: 1
   frameRate: 9.5
+  eventFrameIndices:
+  - 3.5
