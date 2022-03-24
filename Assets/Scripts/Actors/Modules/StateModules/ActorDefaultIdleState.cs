@@ -16,11 +16,15 @@ namespace Sheldier.Actors
         private ActorTransformHandler _actorTransformHandler;
         private ActorsView _actorsView;
 
+        public void Initialize()
+        {
+            InitializeHashes();
+        }
+
         public virtual void SetDependencies(ActorInternalData data)
         {
             _actorTransformHandler = data.ActorTransformHandler;
             _actorsView = data.Actor.ActorsView;
-            InitializeHashes();
         }
 
         protected virtual void InitializeHashes()
@@ -49,6 +53,11 @@ namespace Sheldier.Actors
         }
 
         public void FixedTick()
+        {
+            
+        }
+
+        public void Dispose()
         {
             
         }

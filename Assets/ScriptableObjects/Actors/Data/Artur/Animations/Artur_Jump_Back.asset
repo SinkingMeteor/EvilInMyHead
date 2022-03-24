@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d744b92f54eb4e6992f41540c19d07ce, type: 3}
+  m_Name: Artur_Jump_Back
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  frames:
+  - {fileID: -539624000, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: 848710316, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -999273795, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -1949153155, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -1872722922, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -1116577100, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -652182050, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: 517888537, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -1869637998, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  - {fileID: -1706783998, guid: 7c9bc9a44a69d7742aa91b480867a814, type: 3}
+  isLoop: 0
+  frameRate: 12

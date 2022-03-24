@@ -6,6 +6,7 @@ namespace Sheldier.Actors
 {
     public class ActorsView : MonoBehaviour
     {
+        public SimpleAnimator Animator => animator;
         public Transform SpeechPoint => speechPoint;        
         public Material CurrentBodyMaterial => body.sharedMaterial;
 

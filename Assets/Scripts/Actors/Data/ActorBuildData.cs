@@ -12,6 +12,7 @@ namespace Sheldier.Actors.Data
         public bool IsEffectsPerceptive => _isEffectPerceptive;
         public bool CanInteract => _canInteract;
         public bool CanAttack => _canAttack;
+        public bool CanJump => _canJump;
         public InteractType InteractType => _interactType;
 
         [SerializeField] private bool _canMove;
@@ -19,6 +20,7 @@ namespace Sheldier.Actors.Data
         [SerializeField] private bool _isEffectPerceptive;
         [SerializeField] private bool _canInteract;
         [SerializeField] private bool _canAttack;
+        [SerializeField] private bool _canJump;
         [SerializeField] private InteractType _interactType;
     }
 }

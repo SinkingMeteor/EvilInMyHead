@@ -24,6 +24,7 @@ namespace Sheldier.Actors
         {
             _states.Add(stateComponent);
             stateComponent.SetDependencies(_data);
+            stateComponent.Initialize();
         }
         private void SetCurrentState(IStateComponent newState)
         {
@@ -65,5 +66,12 @@ namespace Sheldier.Actors
             _currentState?.FixedTick();
         }
 
+        public void Dispose()
+        {
+            for (int i = 0; i < _states.Count; i++)
+            {
+                _states[i].Dispose();
+            }
+        }
     }
 }

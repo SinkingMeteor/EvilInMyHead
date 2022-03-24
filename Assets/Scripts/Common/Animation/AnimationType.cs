@@ -23,5 +23,10 @@
         Run_Equipped_Front_Side,
         Run_Equipped_Back_Side,
         Run_Equipped_Back,
+        
+        Jump_Front,
+        Jump_Front_Side,
+        Jump_Back_Side,
+        Jump_Back
     }
 }

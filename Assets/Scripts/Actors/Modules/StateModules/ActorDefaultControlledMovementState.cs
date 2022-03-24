@@ -25,6 +25,11 @@ namespace Sheldier.Actors
         
         private const float DELAY = 0.5f;
 
+        public void Initialize()
+        {
+            InitializeHashes();
+        }
+
         public virtual void SetDependencies(ActorInternalData data)
         {
             _soundController = data.Actor.SoundController;
@@ -33,7 +38,6 @@ namespace Sheldier.Actors
             _actorTransformHandler = data.ActorTransformHandler;
             _rigidbody2D = data.Rigidbody2D;
             _actorsView = data.Actor.ActorsView;
-            InitializeHashes();
         }
 
         protected virtual void InitializeHashes()
@@ -69,6 +73,10 @@ namespace Sheldier.Actors
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
             var movementDistance = movementDirection * _movementData.CurrentSpeed;
             _rigidbody2D.velocity = movementDistance;
+        }
+
+        public void Dispose()
+        {
         }
 
         protected virtual ActorDirectionView GetDirectionView() => _actorTransformHandler.CalculateMovementDirection();

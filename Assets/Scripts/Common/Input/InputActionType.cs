@@ -14,6 +14,7 @@ namespace Sheldier.Common
         DialoguesLowerChoice,
         DialoguesLeftChoice,
         DialoguesUpperChoice,
-        DialoguesRightChoice
+        DialoguesRightChoice,
+        Jump,
     }
 }

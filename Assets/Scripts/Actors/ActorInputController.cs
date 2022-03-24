@@ -13,8 +13,9 @@ namespace Sheldier.Actors
         public event Action OnAttackButtonPressed; 
         public event Action OnAttackButtonReleased; 
         public event Action OnReloadButtonPressed; 
-        public event Action OnReloadButtonReleased; 
-        
+        public event Action OnReloadButtonReleased;
+        public event Action OnJumpButtonPressed;
+        public event Action OnJumpButtonReleased;
         public IGameplayInputProvider CurrentInputProvider => _currentInputProvider;
 
         private IGameplayInputProvider _currentInputProvider;
@@ -36,7 +37,6 @@ namespace Sheldier.Actors
         public void SetViewDirection(Vector2 direction) => _currentInputProvider.SetViewDirection(direction);
         public void SetInputProvider(IGameplayInputProvider inputProvider)
         {
-
             _currentInputProvider = inputProvider;
 
             _currentInputProvider.UseButton.OnPressed += UseButtonPressed;
@@ -45,8 +45,10 @@ namespace Sheldier.Actors
             _currentInputProvider.AttackButton.OnReleased += AttackButtonReleased;
             _currentInputProvider.ReloadButton.OnPressed += ReloadButtonPressed;
             _currentInputProvider.ReloadButton.OnReleased += ReloadButtonReleased;
-
+            _currentInputProvider.JumpButton.OnPressed += JumpButtonPressed;
+            _currentInputProvider.JumpButton.OnReleased += JumpButtonReleased;
         }
+
         public void RemoveInputProvider()
         {
             _currentInputProvider.UseButton.OnPressed -= UseButtonPressed;
@@ -55,6 +57,8 @@ namespace Sheldier.Actors
             _currentInputProvider.AttackButton.OnReleased -= AttackButtonReleased;
             _currentInputProvider.ReloadButton.OnPressed -= ReloadButtonPressed;
             _currentInputProvider.ReloadButton.OnReleased -= ReloadButtonReleased;
+            _currentInputProvider.JumpButton.OnPressed -= JumpButtonPressed;
+            _currentInputProvider.JumpButton.OnReleased -= JumpButtonReleased;
             
             _currentInputProvider = _nullProvider;
             _realInputProvider = _nullProvider;
@@ -72,7 +76,8 @@ namespace Sheldier.Actors
             _currentInputProvider = _realInputProvider;
             _realInputProvider = _nullProvider;
         }
-        
+        private void JumpButtonReleased() => OnJumpButtonReleased?.Invoke();
+        private void JumpButtonPressed() => OnJumpButtonPressed?.Invoke();
         private void UseButtonReleased() => OnUseButtonReleased?.Invoke();
         private void UseButtonPressed() => OnUseButtonPressed?.Invoke();
         private void AttackButtonReleased() => OnAttackButtonReleased?.Invoke();

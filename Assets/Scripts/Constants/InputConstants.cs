@@ -24,6 +24,7 @@ namespace Sheldier.Constants
                 {InputActionType.DialoguesUpperChoice, "UpperChoice"},
                 {InputActionType.DialoguesRightChoice, "RightChoice"},
                 {InputActionType.DialoguesLowerChoice, "LowerChoice"},
+                {InputActionType.Jump, "Jump"},
 
             };
 

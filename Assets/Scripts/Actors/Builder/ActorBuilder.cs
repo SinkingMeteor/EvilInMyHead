@@ -86,6 +86,9 @@ namespace Sheldier.Actors.Builder
                 }
                 if(canEquip && buildData.CanMove)
                     actor.StateModuleController.AddState(new ActorEquippedControlledMovementState());
+                
+                if(buildData.CanJump)
+                    actor.StateModuleController.AddState(new ActorJumpState());
             }
 
             private void AddHand(Actor actor)

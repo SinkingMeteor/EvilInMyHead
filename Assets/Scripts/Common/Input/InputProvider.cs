@@ -23,6 +23,7 @@ namespace Sheldier.Common
         public InputButton UseButton => _useButton;
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
+        public InputButton JumpButton => _jumpButton;
         public InputButton UIOpenInventoryButton => _uiOpenInventoryButton;
         public InputButton UICloseInventoryButton => _uiCloseInventoryButton;
         public InputButton UIUseItemButton => _uiUseItemButton;
@@ -44,7 +45,8 @@ namespace Sheldier.Common
         private InputButton _useButton;
         private InputButton _attackButton;
         private InputButton _reloadButton;
-        
+        private InputButton _jumpButton;
+
         private InputButton _uiOpenInventoryButton;
         private InputButton _uiCloseInventoryButton;
         private InputButton _uiRemoveItemButton;
@@ -62,6 +64,7 @@ namespace Sheldier.Common
             _useButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Use]);
             _attackButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Attack]);
             _reloadButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Reload]);
+            _jumpButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Jump]);
             
             _uiOpenInventoryButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.OpenInventory]);
             _uiUseItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.UseItem]);
