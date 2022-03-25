@@ -37,5 +37,4 @@ namespace Sheldier.Constants
             {ActionMapType.Dialogues, "Dialogues"},
         };
     }
-    
 }

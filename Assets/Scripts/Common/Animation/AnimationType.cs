@@ -27,6 +27,11 @@
         Jump_Front,
         Jump_Front_Side,
         Jump_Back_Side,
-        Jump_Back
+        Jump_Back,
+        
+        Jump_Fall_Front,
+        Jump_Fall_Front_Side,
+        Jump_Fall_Back_Side,
+        Jump_Fall_Back
     }
 }

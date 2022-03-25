@@ -10,11 +10,22 @@ namespace Sheldier.Actors.Hand
         
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private SimpleAnimator simpleAnimator;
+        private ActorStateDataModule _dataModule;
 
-        public void Initialize(TickHandler tickHandler)
+        public void Initialize()
         {
-            simpleAnimator.SetDependencies(tickHandler);
             simpleAnimator.Initialize();
+        }
+
+        public void SetDependencies(TickHandler tickHandler, ActorStateDataModule dataModule)
+        {
+            _dataModule = dataModule;
+            simpleAnimator.SetDependencies(tickHandler);
+        }
+
+        public void Tick()
+        {
+            spriteRenderer.enabled = !(_dataModule.IsFalling || _dataModule.IsJumping);
         }
         public void AddItem(Sprite itemSprite) => spriteRenderer.sprite = itemSprite;
         public void ClearItem() => spriteRenderer.sprite = null;

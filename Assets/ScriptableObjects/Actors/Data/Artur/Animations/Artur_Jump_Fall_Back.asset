@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d744b92f54eb4e6992f41540c19d07ce, type: 3}
-  m_Name: Artur_Idle_Back
+  m_Name: Artur_Jump_Fall_Back
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -22,11 +22,12 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   frames:
-  - {fileID: -1834405618, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
-  - {fileID: -1308033730, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
-  - {fileID: 494541379, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
-  - {fileID: -1955003924, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
-  - {fileID: -1610913936, guid: 0fb8471f67b6fca42910b3881e2c4526, type: 3}
-  isLoop: 1
-  frameRate: 9.5
+  - {fileID: 2031202488, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 79979438, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: -241396835, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1945907698, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1452598653, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1568321251, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  isLoop: 0
+  frameRate: 12
   triggerPoints: []

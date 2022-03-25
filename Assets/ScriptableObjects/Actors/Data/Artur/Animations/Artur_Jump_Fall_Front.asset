@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d744b92f54eb4e6992f41540c19d07ce, type: 3}
+  m_Name: Artur_Jump_Fall_Front
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  frames:
+  - {fileID: -1482840907, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 540621205, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: -719178593, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1717734707, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1051660881, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 971652420, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: -1758478264, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1452598653, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  - {fileID: 1568321251, guid: 38bff867ba42d814393171919e6cf4d5, type: 3}
+  isLoop: 0
+  frameRate: 12
+  triggerPoints: []

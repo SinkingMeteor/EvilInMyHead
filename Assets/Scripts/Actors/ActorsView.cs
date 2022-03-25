@@ -15,7 +15,8 @@ namespace Sheldier.Actors
         [SerializeField] private ActorAnimationCollection animationCollection;
         [SerializeField] private SpriteRenderer body;
         [SerializeField] private SpriteRenderer shadow;
-        
+        private ActorDataModule _stateDataModule;
+
         private int _currentSortingOrder;
         private AnimationType _currentPlayingType = AnimationType.None;
 
@@ -23,21 +24,27 @@ namespace Sheldier.Actors
         {
             animator.Initialize();
         }
-        public void SetDependencies(TickHandler tickHandler)
+        public void SetDependencies(TickHandler tickHandler, ActorDataModule stateDataModule)
         {
+            _stateDataModule = stateDataModule;
             animator.SetDependencies(tickHandler);
         }
         public void SetMaterial(Material material)
         {
             body.sharedMaterial = material;
         }
-        
+
+        public void Tick()
+        {
+            shadow.enabled = !_stateDataModule.StateDataModule.IsFalling;
+        }
         public void SetSortingOrder(int order)
         {
             body.sortingOrder = order;
             shadow.sortingOrder = order;
         }
 
+        
         public void PlayAnimation(AnimationType animationType)
         {
             if(_currentPlayingType == animationType)

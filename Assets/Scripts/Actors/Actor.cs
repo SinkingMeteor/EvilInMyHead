@@ -38,6 +38,7 @@ namespace Sheldier.Actors
         private PauseNotifier _pauseNotifier;
         private ActorDataModule _dataModule;
         private RigidbodyType2D _previousBodyType;
+        private ActorTraceProvider _traceProvider;
 
         public void Initialize()
         {
@@ -56,10 +57,14 @@ namespace Sheldier.Actors
             _inventoryModule = new ActorsInventoryModule();
             _inventoryModule.Initialize();
 
-            actorsView.SetDependencies(_tickHandler);
+            actorsView.SetDependencies(_tickHandler, _dataModule);
             actorsView.Initialize();
             
-            _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody);
+            _traceProvider = new ActorTraceProvider();
+            _traceProvider.SetDependencies(transform);
+            _traceProvider.Initialize();
+            
+            _internalData = new ActorInternalData(_transformHandler,_tickHandler, this, actorsRigidbody, _traceProvider);
 
             _stateModuleController = new ActorStateModuleController();
             _stateModuleController.Initialize(_internalData);
@@ -95,9 +100,14 @@ namespace Sheldier.Actors
             _extraModules.Remove(extraActorModule);
             extraActorModule.Dispose();
         }
-        public void Tick() => _stateModuleController.Tick();
-        public void FixedTick() => _stateModuleController.FixedTick();
+        public void Tick()
+        {
+            _traceProvider.Tick();
+            actorsView.Tick();
+            _stateModuleController.Tick();
+        }
 
+        public void FixedTick() => _stateModuleController.FixedTick();
         public void SetControl(IGameplayInputProvider inputProvider)
         {
             _actorInputController.SetInputProvider(inputProvider);

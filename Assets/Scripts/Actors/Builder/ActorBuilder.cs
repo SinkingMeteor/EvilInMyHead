@@ -77,8 +77,13 @@ namespace Sheldier.Actors.Builder
             {
                 bool canEquip = buildData.CanEquip;
                 actor.StateModuleController.AddState(new ActorDefaultIdleState());
-                if(buildData.CanMove)
+                if (buildData.CanMove)
+                {
                     actor.StateModuleController.AddState(new ActorDefaultControlledMovementState());
+                    actor.StateModuleController.AddState(new ActorFallState());
+                   // var trigger = actor.ActorsView.gameObject.AddComponent<ActorFallTrigger>();
+                  //  actor.AddExtraModule(trigger);
+                }
                 if (canEquip)
                 {
                     AddHand(actor);

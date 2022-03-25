@@ -22,7 +22,8 @@ namespace Sheldier.Actors.Hand
             _tickHandler = data.TickHandler;
             _nullItem = new NullItem();
             _currentItem = _nullItem;
-            actorHandObject.Initialize(_tickHandler);
+            actorHandObject.SetDependencies(_tickHandler, _actor.DataModule.StateDataModule);
+            actorHandObject.Initialize();
             _tickHandler.AddListener(this);
             _actor.InventoryModule.OnUseItem += Equip;
             _actor.OnWillRemoveControl += UnEquip;
@@ -30,6 +31,7 @@ namespace Sheldier.Actors.Hand
         public void Tick()
         {
             RotateHand();
+            actorHandObject.Tick();
         }
         private void Equip(SimpleItem item)
         {

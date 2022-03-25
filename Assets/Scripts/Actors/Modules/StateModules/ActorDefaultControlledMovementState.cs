@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using Sheldier.Common.Animation;
+using Sheldier.Common.Utilities;
+using Sheldier.Constants;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -16,13 +18,15 @@ namespace Sheldier.Actors
         protected ActorTransformHandler _actorTransformHandler;
         protected AnimationType[] _animationHashes;
         private ActorSoundController _soundController;
+        private ActorNotifyModule _notifyModule;
+        private Actor _actor;
 
         private Rigidbody2D _rigidbody2D;
         private ActorsView _actorsView;
 
         private bool _isLocked;
         private Coroutine _stepCoroutine;
-        
+
         private const float DELAY = 0.5f;
 
         public void Initialize()
@@ -33,8 +37,10 @@ namespace Sheldier.Actors
         public virtual void SetDependencies(ActorInternalData data)
         {
             _soundController = data.Actor.SoundController;
+            _actor = data.Actor;
             _movementData = data.Actor.DataModule.MovementDataModule;
             _inputController = data.Actor.InputController;
+            _notifyModule = data.Actor.Notifier;
             _actorTransformHandler = data.ActorTransformHandler;
             _rigidbody2D = data.Rigidbody2D;
             _actorsView = data.Actor.ActorsView;
@@ -66,6 +72,8 @@ namespace Sheldier.Actors
         {
             ActorDirectionView directionView = GetDirectionView();
             SetNewAnimation(_animationHashes[(int)directionView]);
+            if(Physics2D.OverlapCircle(_actor.transform.position.DiscardZ(), 0.1f, EnvironmentConstants.PIT_LAYER_MASK))
+                _notifyModule.NotifyFalling(directionView);
         }
 
         public void FixedTick()

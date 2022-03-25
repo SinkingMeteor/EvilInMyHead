@@ -1,5 +1,5 @@
 ﻿using Sheldier.Common.Utilities;
-using Sheldier.Setup;
+using Sheldier.Constants;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -15,7 +15,6 @@ namespace Sheldier.Actors.Pathfinding
         [SerializeField] private Vector2 gridWorldPosition;
         [SerializeField] private Vector2 gridWorldSize;
         [SerializeField] private float nodeRadius;
-        [SerializeField] private LayerMask obstacleLayer;
 
 #if UNITY_EDITOR
         [SerializeField] private bool _showNodes;
@@ -64,7 +63,7 @@ namespace Sheldier.Actors.Pathfinding
                 for (int y = 0; y < _gridSizeY; y++)
                 {
                     Vector3 worldPoint = gridWorldPosition + Vector2.right * (x * _nodeDiameter + nodeRadius) + Vector2.up * ( y * _nodeDiameter + nodeRadius);
-                    bool walkable = !(Physics2D.OverlapCircle(worldPoint, nodeRadius, obstacleLayer));
+                    bool walkable = !(Physics2D.OverlapCircle(worldPoint, nodeRadius, EnvironmentConstants.OBSTACLE_LAYER_MASK | EnvironmentConstants.PIT_LAYER_MASK));
                     
                     _grid[CalculateIndex(x,y)] = new PathNode
                     {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sheldier.Common.Animation
@@ -7,7 +8,8 @@ namespace Sheldier.Common.Animation
     public class SimpleAnimator : MonoBehaviour, ITickListener
     {
         public bool IsPlaying => _isPlaying;
-        public event Action OnAnimationEnd; 
+        public event Action OnAnimationEnd;
+        public event Action OnAnimationTriggered;
         
         [SerializeField] private AnimationData currentAnimation;
         [SerializeField] private SpriteRenderer spriteRenderer;
@@ -16,11 +18,12 @@ namespace Sheldier.Common.Animation
         private float _currentFrame;
         private bool _isPlaying;
         private TickHandler _tickHandler;
-        
+        private List<bool> _triggers;
         private int FramesCount => currentAnimation.Frames.Length;
         
         public void Initialize()
         {
+            _triggers = new List<bool>();
             if (_playOnInitialize && currentAnimation != null)
                 Play();
         }
@@ -37,27 +40,53 @@ namespace Sheldier.Common.Animation
         {
             if(_isPlaying)
                 StopPlaying();
+
+            for (int i = 0; i < currentAnimation.TriggerPoints.Count; i++)
+                _triggers.Add(true);
+            
             _isPlaying = true;
             _tickHandler.AddListener(this);
         }
 
         public void Tick()
         {
-            int frameCount = FramesCount;
             _currentFrame += _tickHandler.TickDelta * currentAnimation.FrameRate;
-            if (_currentFrame >= frameCount)
-                RewindAnimation();
+            
+            if (_currentFrame >= FramesCount)
+                if (!RewindAnimation())
+                    return;
+            
+            for (int i = 0; i < currentAnimation.TriggerPoints.Count; i++)
+                if (_currentFrame >= currentAnimation.TriggerPoints[i] && _triggers[i])
+                {
+                    OnAnimationTriggered?.Invoke();
+                    _triggers[i] = false;
+                }
+            
             int frameIndex = (int) _currentFrame;
             spriteRenderer.sprite = currentAnimation.Frames[frameIndex];
-            if (!currentAnimation.IsLoop && frameIndex == frameCount - 1)
-                StopPlaying();
+
         }
-        private void RewindAnimation() => _currentFrame %= FramesCount;
+        private bool RewindAnimation()
+        {
+            if (!currentAnimation.IsLoop && (int) _currentFrame >= FramesCount - 1)
+            {
+                StopPlaying();
+                return false;
+            }
+            
+            _currentFrame %= FramesCount;
+
+            for (int i = 0; i < _triggers.Count; i++)
+                _triggers[i] = true;
+            return true;
+        }
 
         public void StopPlaying()
         {
             _isPlaying = false;
             _currentFrame = 0.0f;
+            _triggers.Clear();
             _tickHandler.RemoveListener(this);
             OnAnimationEnd?.Invoke();
         }

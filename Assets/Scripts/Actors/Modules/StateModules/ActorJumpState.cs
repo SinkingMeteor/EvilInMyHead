@@ -1,4 +1,8 @@
-﻿using Sheldier.Common.Animation;
+﻿using System.Collections;
+using Sheldier.Common;
+using Sheldier.Common.Animation;
+using Sheldier.Common.Utilities;
+using Sheldier.Constants;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -6,16 +10,20 @@ namespace Sheldier.Actors
     public class ActorJumpState : IStateComponent
     {
         public bool IsLocked => _isLocked;
-        public bool TransitionConditionIsDone => _isJumping;
+        public bool TransitionConditionIsDone => _data.IsJumping;
         public int Priority => 4;
 
         private bool _isLocked;
-        private bool _isJumping;
+        private bool _isLanded;
         private ActorInputController _inputController;
         private AnimationType[] _animationHashes;
         private Rigidbody2D _actorsRigidbody;
         private ActorTransformHandler _actorTransformHandler;
         private ActorsView _actorsView;
+        private Actor _actor;
+        private ActorDirectionView _directionView;
+        private ActorStateDataModule _data;
+        private TickHandler _tickHandler;
 
         public void Initialize()
         {
@@ -23,7 +31,11 @@ namespace Sheldier.Actors
             InitializeHashes();
         }
 
-        private void JumpButtonPressed() => _isJumping = true;
+        private void JumpButtonPressed()
+        {
+            if(_inputController.MovementDirection != Vector2.zero)
+                _data.SetJump(true);
+        }
 
         private void InitializeHashes()
         {
@@ -38,34 +50,55 @@ namespace Sheldier.Actors
 
         public void SetDependencies(ActorInternalData data)
         {
+            _actor = data.Actor;
+            _data = _actor.DataModule.StateDataModule;
             _inputController = data.Actor.InputController;
             _actorsRigidbody = data.Rigidbody2D;
             _actorsView = data.Actor.ActorsView;
+            _tickHandler = data.TickHandler;
             _actorTransformHandler = data.ActorTransformHandler;
         }
 
         public void Enter()
         {
+            _isLanded = false;
             _actorsRigidbody.AddForce(_inputController.MovementDirection * 135.0f);
-            ActorDirectionView directionView = GetDirectionView();
-            SetNewAnimation(_animationHashes[(int)directionView]);
+            _directionView = GetDirectionView();
+            SetNewAnimation(_animationHashes[(int)_directionView]);
+            _actorsView.Animator.OnAnimationTriggered += OnLanded;
             _actorsView.Animator.OnAnimationEnd += OnJumpingEnd;
+        }
+
+        private void OnLanded()
+        {
+            bool inPit = Physics2D.OverlapCircle(_actor.transform.position.DiscardZ(), 0.17f, EnvironmentConstants.PIT_LAYER_MASK);
+            if (!inPit)
+            {
+                _isLanded = true;
+                return;
+            }
+
+            _actor.Notifier.NotifyFalling(_directionView);
+            OnJumpingEnd();                    
         }
 
         private void OnJumpingEnd()
         {
-            _actorsRigidbody.velocity = Vector2.zero;
-            _isJumping = false;
+            _data.SetJump(false);
+            _isLanded = false;
         }
 
         public void Exit()
         {
+            _actorsRigidbody.velocity = Vector2.zero;
+            _actorsView.Animator.OnAnimationTriggered -= OnLanded;
             _actorsView.Animator.OnAnimationEnd -= OnJumpingEnd;
         }
 
         public void Tick()
         {
-
+            if (_isLanded)
+                _actorsRigidbody.velocity = Vector2.Lerp(_actorsRigidbody.velocity, Vector2.zero, _tickHandler.TickDelta * 10.0f);
         }
 
         public void FixedTick()
