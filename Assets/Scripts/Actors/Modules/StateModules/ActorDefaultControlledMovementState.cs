@@ -12,11 +12,11 @@ namespace Sheldier.Actors
         public virtual bool TransitionConditionIsDone => _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon;
         public virtual int Priority => 1;
 
-
-        private ActorMovementDataModule _movementData;
         protected ActorInputController _inputController;
         protected ActorTransformHandler _actorTransformHandler;
         protected AnimationType[] _animationHashes;
+        
+        private ActorMovementDataModule _movementData;
         private ActorSoundController _soundController;
         private ActorNotifyModule _notifyModule;
         private Actor _actor;

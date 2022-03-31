@@ -14,7 +14,7 @@ namespace Sheldier.Actors.Pathfinding
         private const int DIAGONAL_VALUE = 14;
         private const int CROSS_VALUE = 10;
 
-        public void InitializeOnScene(PathGrid grid)
+        public void InitializeOnNewLocation(PathGrid grid)
         {
             _grid = grid;
         }

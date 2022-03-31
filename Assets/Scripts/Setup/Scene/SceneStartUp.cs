@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
 using Sheldier.Common.Cutscene;
 using Sheldier.Common.Pause;
 using Sheldier.Constants;
+using Sheldier.GameLocation;
 using Sheldier.Item;
 using Sheldier.UI;
 using UnityEngine;
@@ -16,12 +19,12 @@ namespace Sheldier.Setup
 {
     public class SceneStartUp : MonoBehaviour
     {
-        [SerializeField] private ScenePlaceholdersKeeper scenePlaceholdersKeeper;
-        [SerializeField] private PathGrid pathfindingGrid;
         [SerializeField] private SceneData sceneData;
 
         private SceneLoadingOperation _sceneLoadingOperation;
         private ScenePlayerController _scenePlayerController;
+        private SceneLocationController _locationController;
+        private SceneSetupOperation _sceneSetupOperation;
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
         private CutsceneController _cutsceneController;
@@ -29,18 +32,18 @@ namespace Sheldier.Setup
         private CameraHandler _cameraHandler;
         private PauseNotifier _pauseNotifier;
         private ActorSpawner _actorSpawner;
-        private ItemSpawner _itemSpawner;
-        private Pathfinder _pathfinder;
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
-            ItemSpawner itemSpawner, ScenePlayerController scenePlayerController, ActorSpawner actorSpawner,
-            Pathfinder pathfinder,
-            UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
-            PauseNotifier pauseNotifier, UIStatesController uiStatesController, CutsceneController cutsceneController)
+             ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, Pathfinder pathfinder,
+            UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler, PauseNotifier pauseNotifier, UIStatesController uiStatesController,
+             CutsceneController cutsceneController, SceneLocationController locationController,
+            SceneSetupOperation sceneSetupOperation)
         {
             _scenePlayerController = scenePlayerController;
             _sceneLoadingOperation = sceneLoadingOperation;
+            _sceneSetupOperation = sceneSetupOperation;
+            _locationController = locationController;
             _uiStatesController = uiStatesController;
             _uiLoadingOperation = uiLoadingOperation;
             _cutsceneController = cutsceneController;
@@ -48,22 +51,22 @@ namespace Sheldier.Setup
             _cameraHandler = cameraHandler;
             _inputProvider = inputProvider;
             _actorSpawner = actorSpawner;
-            _itemSpawner = itemSpawner;
-            _pathfinder = pathfinder;
         }
 
-        private void Start()
+        public void Start()
         {
-            if (!GameIsInitialized())
-                return;
-            
+            GameIsInitialized();
+        }
+
+        public async Task StartScene()
+        {
             _cameraHandler.InitializeOnScene();
             _inputProvider.SetSceneCamera(_cameraHandler.CurrentSceneCamera);
-            _itemSpawner.InitializeOnScene(scenePlaceholdersKeeper);
-            _actorSpawner.Initialize(scenePlaceholdersKeeper);
-            pathfindingGrid.Initialize();
-            _pathfinder.InitializeOnScene(pathfindingGrid);
             _uiStatesController.InitializeOnScene();
+
+            if (_locationController.IsLocationExists)
+                await _locationController.DisposeLocation();
+            await _locationController.LoadNewLocation(sceneData.SceneStartLocation);
             
             //Test
             Actor firstActor = _actorSpawner.ActorsOnScene.First().Value[0];
@@ -79,14 +82,14 @@ namespace Sheldier.Setup
             _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
 
         }
-        private bool GameIsInitialized()
+        private void GameIsInitialized()
         {
             if (GameGlobalSettings.IsStarted)
-                return true;
+                return;
             _sceneLoadingOperation.SetTargetScene(sceneData);
+            _sceneSetupOperation.SetTargetScene(sceneData);
             _uiLoadingOperation.SetTargetScene(sceneData);
             SceneManager.LoadScene("GameEntry");
-            return false;
         }
 
         private void OnDestroy()
@@ -94,10 +97,11 @@ namespace Sheldier.Setup
             #if UNITY_EDITOR
             if (!GameGlobalSettings.IsStarted) return;
             #endif
-            pathfindingGrid.Dispose();
             _cameraHandler.OnSceneDispose();
             _uiStatesController.OnSceneDispose();
-            _actorSpawner.OnSceneDispose();
+#pragma warning disable CS4014
+            _locationController.DisposeLocation();
+#pragma warning restore CS4014
             _pauseNotifier.Clear();
         }
     }

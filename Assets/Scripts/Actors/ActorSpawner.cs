@@ -10,11 +10,11 @@ namespace Sheldier.Actors
         public IReadOnlyDictionary<ActorType, List<Actor>> ActorsOnScene => _actorsOnScene;
         private Dictionary<ActorType, List<Actor>> _actorsOnScene;
         
-        private ScenePlaceholdersKeeper _placeholdersKeeper;
+        private LocationPlaceholdersKeeper _placeholdersKeeper;
         private ActorsInstaller _actorsInstaller;
         private ActorBuilder _actorBuilder;
 
-        public void Initialize(ScenePlaceholdersKeeper placeholdersKeeper)
+        public void Initialize(LocationPlaceholdersKeeper placeholdersKeeper)
         {
             _placeholdersKeeper = placeholdersKeeper;
             _actorsOnScene = new Dictionary<ActorType, List<Actor>>();
@@ -42,7 +42,7 @@ namespace Sheldier.Actors
             }
         }
 
-        public void OnSceneDispose()
+        public void OnLocationDispose()
         {
             foreach (var actors in _actorsOnScene)
             {

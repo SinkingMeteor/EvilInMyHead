@@ -9,6 +9,7 @@ namespace Sheldier.Installers
         {
             Container.Bind<SceneLoadingOperation>().AsSingle();
             Container.Bind<UILoadingOperation>().AsSingle();
+            Container.Bind<SceneSetupOperation>().AsSingle();
         }
     }
 }

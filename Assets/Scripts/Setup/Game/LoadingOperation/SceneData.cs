@@ -8,9 +8,11 @@ namespace Sheldier.Setup
     public class SceneData : BaseScriptableObject
     {
         public string SceneName => sceneName;
+        public string SceneStartLocation => sceneStartLocation;
         public UIStatesRequest UIStatesRequest => uiStatesRequest;
 
         [SerializeField] private string sceneName;
+        [SerializeField] private string sceneStartLocation;
         [SerializeField] private UIStatesRequest uiStatesRequest;
     }
 }

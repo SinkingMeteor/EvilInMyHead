@@ -10,6 +10,7 @@ using Sheldier.Common.Localization;
 using Sheldier.Common.Pause;
 using Sheldier.Common.Pool;
 using Sheldier.Factories;
+using Sheldier.GameLocation;
 using Sheldier.Installers;
 using Sheldier.Item;
 using Sheldier.UI;
@@ -21,12 +22,14 @@ namespace Sheldier.Setup
     public class GameStartUp : MonoBehaviour
     {
         [SerializeField] private SceneContext sceneContext;
-        
+
+        private SceneLocationController _sceneLocationController;
         private LoadingScreenProvider _loadingScreenProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
         private ScenePlayerController _scenePlayerController;
         private LocalizationProvider _localizationProvider;
         private AudioMixerController _audioMixerController;
+        private SceneSetupOperation _sceneSetupOperation;
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
         private CutsceneController _cutsceneController;
@@ -68,7 +71,8 @@ namespace Sheldier.Setup
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
             ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
             UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
-            CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap, ChoiceSlotPool choiceSlotPool)
+            CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap, ChoiceSlotPool choiceSlotPool, SceneLocationController sceneLocationController,
+            SceneSetupOperation sceneSetupOperation)
         {
             _itemMap = itemMap;
             _fontMap = fontMap;
@@ -101,11 +105,13 @@ namespace Sheldier.Setup
             _uiStatesController = uiStatesController;
             _cutsceneController = cutsceneController;
             _uiLoadingOperation = uiLoadingOperation;
+            _sceneSetupOperation = sceneSetupOperation;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
             _sceneLoadingOperation = sceneLoadingOperation;
             _loadingScreenProvider = loadingScreenProvider;
             _scenePlayerController = scenePlayerController;
+            _sceneLocationController = sceneLocationController;
         }
         private void Start()
         {
@@ -166,6 +172,8 @@ namespace Sheldier.Setup
             _cameraHandler.SetDependencies(_lateTickHandler, _inputProvider, _pauseNotifier);
             _cameraHandler.Initialize();
 
+            _sceneLocationController.SetDependencies(_itemSpawner, _actorSpawner, _pathfinder);
+            
             new AsyncWaitersFactory().SetDependencies(_tickHandler);
             
             LoadNextScene();
@@ -177,6 +185,7 @@ namespace Sheldier.Setup
             {
                 _uiLoadingOperation,
                 _sceneLoadingOperation,
+                _sceneSetupOperation
             };
             
             new GameGlobalSettings().SetStarted();

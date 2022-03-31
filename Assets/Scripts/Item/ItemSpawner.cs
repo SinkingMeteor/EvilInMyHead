@@ -5,10 +5,10 @@ namespace Sheldier.Item
 {
     public class ItemSpawner
     {
-        private ScenePlaceholdersKeeper _placeholdersKeeper;
+        private LocationPlaceholdersKeeper _placeholdersKeeper;
         private ItemFactory _itemFactory;
 
-        public void InitializeOnScene(ScenePlaceholdersKeeper placeholdersKeeper)
+        public void Initialize(LocationPlaceholdersKeeper placeholdersKeeper)
         {
             _placeholdersKeeper = placeholdersKeeper;
             LoadItems();

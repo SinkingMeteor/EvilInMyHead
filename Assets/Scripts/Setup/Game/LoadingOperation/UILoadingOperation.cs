@@ -14,7 +14,7 @@ namespace Sheldier.Setup
         private SceneData _sceneData;
         public string LoadLabel => "Loading UI";
 
-        public UILoadingOperation()
+        public UILoadingOperation(UIStatesController statesController)
         {
             _sceneData = Resources.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
         }
