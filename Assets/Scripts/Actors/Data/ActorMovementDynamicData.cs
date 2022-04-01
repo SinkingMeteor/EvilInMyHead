@@ -2,9 +2,9 @@
 
 namespace Sheldier.Actors.Data
 {
-    public class ActorMovementDynamicData : IStorageItem
+    public class ActorMovementDynamicData : IDatabaseItem
     {
-        public string OwnerID => _currentOwnerID;
+        public string ID => _currentOwnerID;
         public float CurrentSpeed => _currentSpeed;
         public string CurrentMovementSoundID => _currentMovementSoundID;
 
@@ -15,7 +15,7 @@ namespace Sheldier.Actors.Data
         public ActorMovementDynamicData(ActorMovementStaticData staticData)
         {
             _currentSpeed = staticData.DefaultSpeed;
-            _currentOwnerID = staticData.OwnerID;
+            _currentOwnerID = staticData.ID;
             _currentMovementSoundID = staticData.DefaultMovementSoundID;
         }
 

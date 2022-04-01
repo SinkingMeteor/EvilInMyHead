@@ -2,9 +2,9 @@
 
 namespace Sheldier.Actors.Data
 {
-    public class ActorMovementStaticData : IStorageItem
+    public class ActorMovementStaticData : IDatabaseItem
     {
-        public string OwnerID => _ownerOwnerID;
+        public string ID => _ownerOwnerID;
         public string DefaultMovementSoundID => _defaultMovementSoundID;
         public float DefaultSpeed => _defaultSpeed;
         

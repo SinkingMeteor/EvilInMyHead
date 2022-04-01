@@ -28,5 +28,8 @@ namespace Sheldier.Constants
         
         //locations
         public const string LOCATIONS_PATH_TEMPLATE = "Locations/";
+        
+        //sprites
+        public const string SPRITE_PATH_TEMPLATE = "Sprites/";
     }
 }

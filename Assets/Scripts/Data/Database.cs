@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using UnityEngine;
 
-namespace Sheldier.Data{
-
-    public class Storage<T> where T : IStorageItem
+namespace Sheldier.Data
+{
+    public abstract class Database<T> where T : IDatabaseItem
     {
         private Dictionary<string, T> _storageDictionary;
 
         public int Count => _storageDictionary.Count;
 
-        public Storage()
+        public Database()
         {
             _storageDictionary = new Dictionary<string, T>();
         }
@@ -35,4 +33,3 @@ namespace Sheldier.Data{
         public void Load(string JSONedText) => _storageDictionary = JsonConvert.DeserializeObject<Dictionary<string, T>>(JSONedText);
     }
 }
-

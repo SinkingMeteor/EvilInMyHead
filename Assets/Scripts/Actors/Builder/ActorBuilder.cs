@@ -81,8 +81,6 @@ namespace Sheldier.Actors.Builder
                 {
                     actor.StateModuleController.AddState(new ActorDefaultControlledMovementState());
                     actor.StateModuleController.AddState(new ActorFallState());
-                   // var trigger = actor.ActorsView.gameObject.AddComponent<ActorFallTrigger>();
-                  //  actor.AddExtraModule(trigger);
                 }
                 if (canEquip)
                 {
@@ -167,9 +165,9 @@ namespace Sheldier.Actors.Builder
 
     public enum InteractType
     {
-        None,
-        Replace,
-        Talk
+        None = 0,
+        Replace = 1,
+        Talk = 2
     }
     
 }
