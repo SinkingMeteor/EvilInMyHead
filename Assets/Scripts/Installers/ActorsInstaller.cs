@@ -1,20 +1,19 @@
 ﻿using Sheldier.Actors;
 using Sheldier.Actors.Builder;
 using Sheldier.Common;
-using UnityEngine;
+using Sheldier.Constants;
 using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class ActorsInstaller : MonoInstaller
+    public class ActorsInstaller : Installer<ActorsInstaller>
     {
-        [SerializeField] private ActorsMap actorsMap;
         public override void InstallBindings()
         {
+            Container.Bind<ActorsMap>().FromResource(ResourcePaths.ACTOR_MAP).AsSingle();
             Container.Bind<ScenePlayerController>().AsSingle();
             Container.Bind<ActorSpawner>().AsSingle();
             Container.Bind<ActorBuilder>().AsSingle();
-            Container.Bind<ActorsMap>().FromInstance(actorsMap).AsSingle();
         }
     }
 }

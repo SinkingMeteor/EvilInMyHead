@@ -9,6 +9,7 @@ namespace Sheldier.Constants
         public const string ACTOR_TEMPLATE = "Actors/Actor_Humanoid";
         public const string ACTOR_HAND = "Actors/Hand";
         public const string ACTOR_INTERACT_MODULE = "Actors/InteractModule";
+        public const string ACTOR_MAP = "Actors/ActorsMap";
         
         //camera
         public const string PIXEL_PERFECT_CAMERA = "Scene/MainCamera";
@@ -31,5 +32,20 @@ namespace Sheldier.Constants
         
         //sprites
         public const string SPRITE_PATH_TEMPLATE = "Sprites/";
+
+        //fonts
+        public const string FONT_MAP = "Fonts/FontMap";
+        
+        //installers
+        public const string INPUT_INSTALLER = "Installers/Input";
+        public const string TIME_INSTALLER = "Installers/Time";
+        public const string POOLS_INSTALLER = "Installers/Pools";
+        public const string AUDIO_INSTALLER = "Installers/Audio";
+        
+        //effects
+        public const string EFFECTS_MAP = "Effects/EffectsDataMap";
+
+        //items
+        public const string ITEMS_MAP = "Items/ItemMap";
     }
 }

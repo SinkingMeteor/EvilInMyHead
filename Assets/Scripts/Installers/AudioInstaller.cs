@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class AudioInstaller : MonoInstaller
+    public class AudioInstaller : MonoInstaller<AudioInstaller>
     {
         [SerializeField] private AudioMixerController audioMixerController;
         [SerializeField] private SoundPlayer soundPlayer;

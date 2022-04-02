@@ -14,8 +14,7 @@ namespace Sheldier.Common
         private PauseNotifier _pauseNotifier;
         private float _tickDelta;
         
-        [Inject]
-        private void InjectDependencies(PauseNotifier pauseNotifier)
+        public void SetDependencies(PauseNotifier pauseNotifier)
         {
             _pauseNotifier = pauseNotifier;
         }

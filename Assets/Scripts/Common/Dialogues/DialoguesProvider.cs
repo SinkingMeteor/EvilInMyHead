@@ -17,7 +17,7 @@ namespace Sheldier.Common
         {
             _pointers = new Dictionary<ActorType, DialoguePointer>()
             {
-                {ActorType.Yellow, new DialoguePointer("Dialogues/DialogueYellow")}
+                {ActorType.Yellow, new DialoguePointer("Dialogues/Fred/TestDialogue")}
             };
         }
 

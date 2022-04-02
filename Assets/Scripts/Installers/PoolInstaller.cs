@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class PoolInstaller : MonoInstaller
+    public class PoolInstaller : MonoInstaller<PoolInstaller>
     {
         [SerializeField] private ProjectilePool projectilePool;
         [SerializeField] private WeaponBlowPool weaponBlowPool;

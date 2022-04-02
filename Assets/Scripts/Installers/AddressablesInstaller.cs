@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class AdressablesInstaller : MonoInstaller
+    public class AddressablesInstaller : Installer<AddressablesInstaller>
     {
         public override void InstallBindings()
         {

@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class LocationInstaller : MonoInstaller
+    public class LocationInstaller : Installer<LocationInstaller>
     {
         public override void InstallBindings()
         {

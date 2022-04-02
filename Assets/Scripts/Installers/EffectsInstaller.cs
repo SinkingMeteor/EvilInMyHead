@@ -1,16 +1,15 @@
-﻿using Sheldier.Factories;
+﻿using Sheldier.Constants;
+using Sheldier.Factories;
 using Sheldier.Gameplay.Effects;
-using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class EffectsInstaller : MonoInstaller
+    public class EffectsInstaller : Installer<EffectsInstaller>
     {
-        [SerializeField] private EffectsDataMap effectsDataMap;
         public override void InstallBindings()
         {
-            Container.Bind<EffectsDataMap>().FromInstance(effectsDataMap).AsSingle();
+            Container.Bind<EffectsDataMap>().FromResource(ResourcePaths.EFFECTS_MAP).AsSingle();
             Container.Bind<ActorsEffectFactory>().AsSingle();
         }
     }

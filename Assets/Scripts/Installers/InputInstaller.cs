@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class InputInstaller : MonoInstaller
+    public class InputInstaller : MonoInstaller<InputInstaller>
     {
         [SerializeField] private InputProvider inputProvider;
         [SerializeField] private InputBindHandler bindHandler;

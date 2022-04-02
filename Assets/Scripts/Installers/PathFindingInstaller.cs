@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class PathFindingInstaller : MonoInstaller
+    public class PathFindingInstaller : Installer<PathFindingInstaller>
     {
         public override void InstallBindings()
         {

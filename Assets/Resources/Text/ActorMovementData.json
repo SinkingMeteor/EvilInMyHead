@@ -1,0 +1,12 @@
+{
+  "ActorMovementData": {
+    "Fred": {
+      "Speed": 2,
+      "StepSound": "TomStepSound"
+    },
+    "Tom": {
+      "Speed": 2,
+      "StepSound": "TomStepSound"
+    }
+  }
+}

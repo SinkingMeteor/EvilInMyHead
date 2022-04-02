@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class UIInstaller : MonoInstaller
+    public class UIInstaller : Installer<UIInstaller>
     {
         public override void InstallBindings()
         {

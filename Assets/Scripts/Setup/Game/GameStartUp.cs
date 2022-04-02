@@ -117,66 +117,57 @@ namespace Sheldier.Setup
         {
             sceneContext.Run();
 
-            _localizationProvider.Initialize();
+            LoadStaticData();
+            SetDependenciesToSystems();
+            InitializeSystems();
+            LoadNextScene();
+        }
+
+        private void LoadStaticData()
+        {
             
+        }
+        private void SetDependenciesToSystems()
+        {
             _fontProvider.SetDependencies(_localizationProvider, _fontMap);
-            _fontProvider.Initialize();
-            
             _projectilePool.SetDependencies(_tickHandler);
-            _projectilePool.Initialize();
-            
             _weaponBlowPool.SetDependencies(_tickHandler);
-            _weaponBlowPool.Initialize();
-            
             _speechCloudPool.SetDependencies(_soundPlayer, _fontProvider);
-            _speechCloudPool.Initialize();
-            
             _choiceSlotPool.SetDependencies(_fontProvider);
-            _choiceSlotPool.Initialize();
-            
-            _inventorySlotPool.Initialize();
-            
             _uiHintPool.SetDependencies(_fontProvider);
-            _uiHintPool.Initialize();
-            
             _uiStatesController.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);
-
             _dialoguesProvider.SetDependencies(_actorSpawner);
-            _dialoguesProvider.Initialize();
-            
             _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _actorsMap, _dialoguesProvider);
-            _actorBuilder.Initialize();
-
             _actorSpawner.SetDependencies(_actorBuilder);
-
-            _pauseNotifier.Initialize();
-
-            _inventory.Initialize();
-
             _itemFactory.SetDependencies(_itemMap, _projectilePool, _weaponBlowPool);
-            _itemFactory.Initialize();
-
             _itemSpawner.SetDependencies(_itemFactory);
-            
             _cutsceneController.SetDependencies(_actorSpawner, _pauseNotifier, _pathProvider, _scenePlayerController, _dialoguesProvider);
-
+            _pathProvider.SetDependencies(_pathfinder);
+            _cameraHandler.SetDependencies(_lateTickHandler, _inputProvider, _pauseNotifier);
+            _sceneLocationController.SetDependencies(_itemSpawner, _actorSpawner, _pathfinder);
+            new AsyncWaitersFactory().SetDependencies(_tickHandler);
+        }
+        private void InitializeSystems()
+        {
+            _localizationProvider.Initialize();
+            _fontProvider.Initialize();
+            _projectilePool.Initialize();
+            _weaponBlowPool.Initialize();
+            _speechCloudPool.Initialize();
+            _choiceSlotPool.Initialize();
+            _inventorySlotPool.Initialize();
+            _uiHintPool.Initialize();
+            _dialoguesProvider.Initialize();
+            _actorBuilder.Initialize();
+            _pauseNotifier.Initialize();
+            _inventory.Initialize();
+            _itemFactory.Initialize();
             _audioMixerController.Initialize();
-            
             _inputBindHandler.Initialize();
             _inputProvider.Initialize();
             _effectFactory.Initialize();
-            
-            _pathProvider.SetDependencies(_pathfinder);
             _pathProvider.Initialize();
-            
-            _cameraHandler.SetDependencies(_lateTickHandler, _inputProvider, _pauseNotifier);
             _cameraHandler.Initialize();
-
-            _sceneLocationController.SetDependencies(_itemSpawner, _actorSpawner, _pathfinder);
-            
-            new AsyncWaitersFactory().SetDependencies(_tickHandler);
-            
-            LoadNextScene();
         }
 
         private void LoadNextScene()

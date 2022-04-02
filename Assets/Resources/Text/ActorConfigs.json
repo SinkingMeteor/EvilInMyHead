@@ -1,0 +1,12 @@
+{
+  "ActorConfig": {
+    "Fred": {
+      "ActorAppearance": "FredAppearance",
+      "ActorAvatar": "FredAvatar"
+    },
+    "Tom": {
+      "ActorAppearance": "TomAppearance",
+      "ActorAvatar": "TomAvatar"
+    }
+  }
+}

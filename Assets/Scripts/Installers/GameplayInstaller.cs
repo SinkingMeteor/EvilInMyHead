@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Sheldier.Installers
 {
-    public class GameplayInstaller : MonoInstaller
+    public class GameplayInstaller : Installer<GameplayInstaller>
     {
         public override void InstallBindings()
         {
