@@ -6,7 +6,7 @@ namespace Sheldier.Gameplay.Effects
 {
     public class FreezeMovementEffect : IEffect
     {
-        public ActorEffectType EffectType => ActorEffectType.Freeze;
+        public int EffectID => (int) ActorEffectType.Freeze;
         public bool IsExpired => _timeLeft <= 0;
 
         private float _timeLeft;
@@ -20,8 +20,8 @@ namespace Sheldier.Gameplay.Effects
 
         public void Tick()
         {
-            var movementDataModule = _owner.DataModule.MovementDataModule;
-            movementDataModule.SetSpeed(movementDataModule.CurrentSpeed / 2);
+           // var movementDataModule = _owner.DataModule.MovementDataModule;
+         //   movementDataModule.SetSpeed(movementDataModule.CurrentSpeed / 2);
             _timeLeft -= Time.deltaTime;
         }
         

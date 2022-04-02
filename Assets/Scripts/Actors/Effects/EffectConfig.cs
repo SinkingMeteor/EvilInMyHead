@@ -22,6 +22,6 @@ namespace Sheldier.Gameplay.Effects
 
     public enum ActorEffectType
     {
-        Freeze
+        Freeze = 0,
     }
 }

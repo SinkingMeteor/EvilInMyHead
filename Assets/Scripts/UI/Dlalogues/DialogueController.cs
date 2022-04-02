@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using Sheldier.Actors;
+using Sheldier.Actors.Data;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
+using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -21,10 +23,11 @@ namespace Sheldier.UI
         private UIStatesController _statesController;
         private IDialoguesInputProvider _dialoguesInputProvider;
 
+        private Database<ActorDynamicDialogueData> _actorsDynamicDialogueDatabase;
+        private ILocalizationProvider _localizationProvider;
         private IDialogueReplica _currentReplica;
         private Actor[] _actorsInDialogue;
         private Coroutine _waitCoroutine;
-        private ILocalizationProvider _localizationProvider;
         private Action _onCompleteCallback;
         private CameraHandler _cameraHandler;
 
@@ -38,8 +41,9 @@ namespace Sheldier.UI
         [Inject]
         private void InjectDependencies(DialoguesProvider dialoguesProvider, UIStatesController statesController, IDialoguesInputProvider dialoguesInputProvider,
             SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider,
-            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler)
+            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler, Database<ActorDynamicDialogueData> actorsDynamicDialogueDatabase)
         {
+            _actorsDynamicDialogueDatabase = actorsDynamicDialogueDatabase;
             _cameraHandler = cameraHandler;
             _dialoguesInputProvider = dialoguesInputProvider;
             _statesController = statesController;
@@ -77,7 +81,8 @@ namespace Sheldier.UI
                 return;
             }
             Actor actor = _actorsInDialogue[(int) _currentReplica.Person];
-            var cloudLifetime = actor.DataModule.DialogueDataModule.TypeSpeed * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + _currentReplica.Delay;
+            var cloudLifetime = _actorsDynamicDialogueDatabase.Get(actor.DynamicConfig.Guid).TypeSpeed
+                * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + _currentReplica.Delay;
 
             if (_currentReplica.Choices.Count > 1)
                 choiceViewer.Activate(_currentReplica.Choices, cloudLifetime);

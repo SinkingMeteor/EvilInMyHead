@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Text;
 using Sheldier.Actors;
+using Sheldier.Actors.Data;
 using Sheldier.Common.Audio;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
+using Sheldier.Data;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TMPro;
@@ -24,6 +26,7 @@ namespace Sheldier.UI
         [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
         [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
 
+        private Database<ActorDynamicDialogueData> _dynamicDialogueDatabase;
         private StringBuilder _stringBuilder;
         private IPoolSetter<SpeechCloud> _poolSetter;
         private ISoundPlayer _soundPlayer;
@@ -41,8 +44,9 @@ namespace Sheldier.UI
             _fontProvider.AddListener(this);
 
         }
-        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider)
+        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorDynamicDialogueData> dialogueDatabase)
         {
+            _dynamicDialogueDatabase = dialogueDatabase;
             _soundPlayer = soundPlayer;
             _fontProvider = fontProvider;
         }
@@ -60,9 +64,9 @@ namespace Sheldier.UI
             transform.position += new Vector3(0.0f, sizeY * 0.5f, 0.0f);
             pointerRect.position = new Vector3(actor.transform.position.x, pointerRect.position.y, pointerRect.position.z);
             cloudTMP.text = text;
-            cloudTMP.color = actor.DataModule.DialogueDataModule.TypeColor;
 
-            _typingCoroutine = StartCoroutine(TypeCoroutine(text, actor.DataModule.DialogueDataModule.TypeSpeed));
+            ActorDynamicDialogueData dynamicDialogueData = _dynamicDialogueDatabase.Get(actor.DynamicConfig.Guid);
+            _typingCoroutine = StartCoroutine(TypeCoroutine(text, dynamicDialogueData.TypeSpeed));
         }
         public async void CloseCloud()
         {

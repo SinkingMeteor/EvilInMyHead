@@ -10,14 +10,14 @@ namespace Sheldier.Common
     {
         public event Action<DialogueSystemGraph, Actor[], Action> OnDialogueLoaded;
         
-        private Dictionary<ActorType, DialoguePointer> _pointers;
+        private Dictionary<string, DialoguePointer> _pointers;
         private ActorSpawner _spawner;
 
         public void Initialize()
         {
-            _pointers = new Dictionary<ActorType, DialoguePointer>()
+            _pointers = new Dictionary<string, DialoguePointer>()
             {
-                {ActorType.Yellow, new DialoguePointer("Dialogues/Fred/TestDialogue")}
+                {"Fred", new DialoguePointer("Dialogues/Fred/TestDialogue")}
             };
         }
 
@@ -27,17 +27,17 @@ namespace Sheldier.Common
         }
         public void FindDialogue(Actor dialogueInitiator, Actor dialogueTarget)
         {
-            DialogueSystemGraph graph = _pointers[dialogueTarget.ActorType].GetDialogue();
+            DialogueSystemGraph graph = _pointers[dialogueTarget.TypeID].GetDialogue();
             Actor[] actorsInDialogues = new Actor[2 + (graph.AdditionalPersons?.Length ?? 0)];
             actorsInDialogues[0] = dialogueInitiator;
             actorsInDialogues[1] = dialogueTarget;
             if (graph.AdditionalPersons != null)
                 for (int i = 0; i < graph.AdditionalPersons.Length; i++)
                 {
-                    ActorType actorType = graph.AdditionalPersons[i];
-                    if (!_spawner.ActorsOnScene.ContainsKey(actorType))
+                    string typeID = graph.AdditionalPersons[i].Reference;
+                    if (!_spawner.ActorsOnScene.ContainsKey(typeID))
                         return;
-                    actorsInDialogues[i + 2] = _spawner.ActorsOnScene[actorType][0];
+                    actorsInDialogues[i + 2] = _spawner.ActorsOnScene[typeID][0];
                 }
 
             actorsInDialogues[0].LockInput();
@@ -47,12 +47,6 @@ namespace Sheldier.Common
         public void StartDialogue(DialogueSystemGraph graph, Actor[] actors, Action onCompleted)
         {
             OnDialogueLoaded?.Invoke(graph, actors, onCompleted);
-        }
-        public void SetPointerIndex(ActorType actorType, int index)
-        {
-            if (!_pointers.ContainsKey(actorType))
-                return;
-            _pointers[actorType].SetIndex(index);
         }
     }
 

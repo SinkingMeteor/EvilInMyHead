@@ -1,4 +1,5 @@
 using Sheldier.Actors;
+using Sheldier.Common;
 using UnityEngine;
 using XNode;
 
@@ -9,11 +10,11 @@ namespace Sheldier.Graphs.DialogueSystem
     {
         public string LocalizationKey => _dialogueLocalizationKey;
         public ReplicaNode StartReplica => _initialReplica;
-        public ActorType[] AdditionalPersons => additionalPersons;
+        public DataReference[] AdditionalPersons => additionalPersons;
         
         [SerializeField] private ReplicaNode _initialReplica;
         [SerializeField] private string _dialogueLocalizationKey;
-        [SerializeField] private ActorType[] additionalPersons;
+        [SerializeField] private DataReference[] additionalPersons;
         public void SetLocalizationKey(string key)
         {
             _dialogueLocalizationKey = key;

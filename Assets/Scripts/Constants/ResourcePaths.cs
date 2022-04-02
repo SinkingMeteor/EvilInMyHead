@@ -10,6 +10,7 @@ namespace Sheldier.Constants
         public const string ACTOR_HAND = "Actors/Hand";
         public const string ACTOR_INTERACT_MODULE = "Actors/InteractModule";
         public const string ACTOR_MAP = "Actors/ActorsMap";
+        public const string ACTOR_APPEARANCE_DIRECTORY = "Appearance/";
         
         //camera
         public const string PIXEL_PERFECT_CAMERA = "Scene/MainCamera";
@@ -47,5 +48,11 @@ namespace Sheldier.Constants
 
         //items
         public const string ITEMS_MAP = "Items/ItemMap";
+        
+        //cutscenes
+        public const string TEST_CUTSCENE = "Cutscenes/TestCutScene";
+        
+        //data
+        public const string JSON_PATH_DIRECTORY = "Text/";
     }
 }

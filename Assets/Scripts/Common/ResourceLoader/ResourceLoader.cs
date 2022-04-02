@@ -8,7 +8,7 @@ namespace Sheldier.Common
 {
     public class ResourceLoader
     {
-        public T Load<T>(string filepath) where T : Object
+        public static T Load<T>(string filepath) where T : Object
         {
             var data = Resources.Load<T>(filepath);
             if(data == null)
@@ -17,7 +17,7 @@ namespace Sheldier.Common
             return data;
         }
         
-        public T[] LoadAll<T>(string path) where T : Object
+        public static T[] LoadAll<T>(string path) where T : Object
         {
             var data = Resources.LoadAll<T>(path);
             if(data == null)
@@ -26,7 +26,7 @@ namespace Sheldier.Common
             return data;
         }
 
-        public async Task<T> LoadAsync<T>(string filepath) where T : Object
+        public static async Task<T> LoadAsync<T>(string filepath) where T : Object
         {
             var asyncHandle = Resources.LoadAsync<T>(filepath);
             await AsyncWaitersFactory.WaitUntil(() => asyncHandle.isDone);

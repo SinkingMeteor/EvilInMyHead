@@ -15,9 +15,9 @@ namespace Sheldier.Factories
             };
         }
         
-        public IEffect GetEffect(ActorEffectType effectType)
+        public IEffect GetEffect(int effectID)
         {
-            return _effects[effectType].Clone();
+            return _effects[(ActorEffectType)effectID].Clone();
         }
     }
 }

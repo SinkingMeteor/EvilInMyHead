@@ -1,0 +1,12 @@
+[
+  {
+    "NameID": "Fred",
+    "ActorAppearance": "FredAppearance",
+    "ActorAvatar": "FredAvatar"
+  },
+  {
+    "NameID": "Tom",
+    "ActorAppearance": "TomAppearance",
+    "ActorAvatar": "TomAvatar"
+  }
+]

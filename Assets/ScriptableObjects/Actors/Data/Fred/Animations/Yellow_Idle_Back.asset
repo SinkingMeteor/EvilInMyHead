@@ -29,3 +29,4 @@ MonoBehaviour:
   - {fileID: -1210898578, guid: bf6398543ff36da43928b4701d46d07a, type: 3}
   isLoop: 1
   frameRate: 9.5
+  triggerPoints: []

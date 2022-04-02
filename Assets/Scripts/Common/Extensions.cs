@@ -1,5 +1,7 @@
+using System;
 using Sheldier.Actors;
 using Sheldier.Constants;
+using Sheldier.Data;
 using UnityEngine;
 
 namespace Sheldier.Common
@@ -25,6 +27,15 @@ namespace Sheldier.Common
             var segmentCenterAngle = anglePerSegment / 2;
             var currentSegmentCenter = segmentCenterAngle + anglePerSegment * segmentIndex;
             return new Vector2(-1.0f * Mathf.Cos(currentSegmentCenter), -1.0f * Mathf.Sin(currentSegmentCenter));
+        }
+
+        public static void FillDatabase<T>(this Database<T> database, string filename) where T : IDatabaseItem
+        {
+            T[] itemArrays = JSONLoader.Load<T>(filename);
+            if (itemArrays == null)
+                throw new NullReferenceException($"Items of type {typeof(T)} can't be loaded and added to database");
+            for (int i = 0; i < itemArrays.Length; i++)
+                database.Add(itemArrays[i].ID, itemArrays[i]);
         }
     }
 

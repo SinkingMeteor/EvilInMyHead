@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Sheldier.Actors;
 using Sheldier.Actors.AI;
 using Sheldier.Common.Asyncs;
+using Sheldier.Constants;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Sheldier.Common.Cutscene
         public bool WaitElement => waitIt;
         
         [SerializeField] private Transform moveToPoint;
-        [SerializeField] private ActorType actorToMove;
+        [SerializeField] private DataReference actorToMove;
         [SerializeField] private bool waitIt;
 
         private bool _isFinished;
@@ -26,7 +27,7 @@ namespace Sheldier.Common.Cutscene
 
         public async Task PlayCutScene()
         {
-            ActorType currentActorToMove = actorToMove == ActorType.CurrentPlayer ? _data.CurrentPlayer.ActorType : actorToMove; 
+            string currentActorToMove = actorToMove.Reference == TextDataConstants.CURRENT_PLAYER ? _data.CurrentPlayer.TypeID : actorToMove.Reference; 
             if(!_data.ActorSpawner.ActorsOnScene.ContainsKey(currentActorToMove))
                 return;
             _isFinished = false;

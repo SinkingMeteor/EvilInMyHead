@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sheldier.Actors.Data;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Common.Pause;
@@ -13,7 +14,7 @@ namespace Sheldier.Actors
     {
         public event Action OnWillRemoveControl;
         public event Action OnAddedControl;
-        public ActorType ActorType => _dataModule.ActorConfig.ActorType;
+        public string TypeID => _dynamicConfigData.NameID;
         public ActorInputController InputController => _actorInputController;
         public ActorNotifyModule Notifier => _notifier;
         public ActorsInventoryModule InventoryModule => _inventoryModule;
@@ -21,6 +22,7 @@ namespace Sheldier.Actors
         public ActorStateModuleController StateModuleController => _stateModuleController;
         public ActorDataModule DataModule => _dataModule;
         public ActorSoundController SoundController => soundController;
+        public ActorDynamicConfigData DynamicConfig => _dynamicConfigData;
 
         [SerializeField] private Rigidbody2D actorsRigidbody;
         [SerializeField] private ActorsView actorsView;
@@ -32,6 +34,7 @@ namespace Sheldier.Actors
         private ActorTransformHandler _transformHandler;
         private ActorInputController _actorInputController;
         private ActorInternalData _internalData;
+        private ActorDynamicConfigData _dynamicConfigData;
         private ActorsInventoryModule _inventoryModule;
         private TickHandler _tickHandler;
         private FixedTickHandler _fixedTickHandler;
@@ -75,17 +78,12 @@ namespace Sheldier.Actors
             _extraModules = new List<IExtraActorModule>();
         }
         
-        public void SetDependencies(TickHandler tickHandler, FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
+        public void SetDependencies(ActorDynamicConfigData dynamicConfigData, TickHandler tickHandler, FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier)
         {
+            _dynamicConfigData = dynamicConfigData;
             _pauseNotifier = pauseNotifier;
             _fixedTickHandler = fixedTickHandler;
             _tickHandler = tickHandler;
-        }
-
-        public void Say()
-        {
-            var clip = _dataModule.DialogueDataModule.TypeVoice;
-            soundController.PlayAudio(clip);
         }
         public void AddExtraModule(IExtraActorModule extraActorModule)
         {

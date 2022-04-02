@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Sheldier.Common;
 using Sheldier.Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ namespace Sheldier.Setup
         
         public SceneSetupOperation()
         {
-            _sceneData = Resources.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
+            _sceneData = ResourceLoader.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
         }
         public void SetTargetScene(SceneData targetSceneData)
         {
@@ -22,10 +23,10 @@ namespace Sheldier.Setup
         public async Task Load(Action<float> SetProgress)
         {
             Scene scene = SceneManager.GetSceneByName(_sceneData.SceneName);
-            SceneStartUp startUp = null;
+            ISceneStartup startUp = null;
             foreach (var rootGameObject in scene.GetRootGameObjects())
             {
-                if(rootGameObject.TryGetComponent(out startUp))
+                if(rootGameObject.TryGetComponent<ISceneStartup>(out startUp))
                     break;
             }
             if(startUp == null)

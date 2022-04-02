@@ -7,8 +7,8 @@ namespace Sheldier.Actors
 {
     public class ActorSpawner
     {
-        public IReadOnlyDictionary<ActorType, List<Actor>> ActorsOnScene => _actorsOnScene;
-        private Dictionary<ActorType, List<Actor>> _actorsOnScene;
+        public IReadOnlyDictionary<string, List<Actor>> ActorsOnScene => _actorsOnScene;
+        private Dictionary<string, List<Actor>> _actorsOnScene;
         
         private LocationPlaceholdersKeeper _placeholdersKeeper;
         private ActorsInstaller _actorsInstaller;
@@ -17,7 +17,7 @@ namespace Sheldier.Actors
         public void Initialize(LocationPlaceholdersKeeper placeholdersKeeper)
         {
             _placeholdersKeeper = placeholdersKeeper;
-            _actorsOnScene = new Dictionary<ActorType, List<Actor>>();
+            _actorsOnScene = new Dictionary<string, List<Actor>>();
             LoadItems();
         }
 
@@ -31,12 +31,12 @@ namespace Sheldier.Actors
             int counter = 0;
             foreach (var placeholder in _placeholdersKeeper.ActorPlaceholders)
             {
-                Actor actor = _actorBuilder.Build(placeholder.ActorConfig, placeholder.ActorBuildData);
+                Actor actor = _actorBuilder.Build(placeholder.Reference.Reference);
                 actor.name += counter++;
                 actor.transform.position = placeholder.transform.position;
-                if(!_actorsOnScene.ContainsKey(placeholder.ActorConfig.ActorType))
-                    _actorsOnScene.Add(placeholder.ActorConfig.ActorType, new List<Actor>());
-                _actorsOnScene[placeholder.ActorConfig.ActorType].Add(actor);
+                if(!_actorsOnScene.ContainsKey(placeholder.Reference.Reference))
+                    _actorsOnScene.Add(placeholder.Reference.Reference, new List<Actor>());
+                _actorsOnScene[placeholder.Reference.Reference].Add(actor);
                 placeholder.Deactivate();
                 
             }

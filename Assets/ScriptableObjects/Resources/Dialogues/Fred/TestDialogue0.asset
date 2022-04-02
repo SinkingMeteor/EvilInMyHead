@@ -211,7 +211,7 @@ MonoBehaviour:
   - {fileID: -2436642230479771434}
   _initialReplica: {fileID: 4205805559244207863}
   _dialogueLocalizationKey: dialogues_2
-  additionalPersons: 
+  additionalPersons: []
 --- !u!114 &671067918027488287
 MonoBehaviour:
   m_ObjectHideFlags: 0

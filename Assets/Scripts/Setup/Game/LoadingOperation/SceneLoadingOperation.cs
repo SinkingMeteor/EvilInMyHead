@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Sheldier.Common;
 using Sheldier.Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ namespace Sheldier.Setup
         
         public SceneLoadingOperation()
         {
-            _sceneData = Resources.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
+            _sceneData = ResourceLoader.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
         }
         public void SetTargetScene(SceneData targetSceneData)
         {

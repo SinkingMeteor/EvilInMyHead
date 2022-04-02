@@ -1,22 +1,22 @@
-{
-  "ActorBuildData": {
-    "Fred": {
-      "CanMove": 1,
-      "CanEquip": 0,
-      "IsEffectPerceptive": 1,
-      "CanInteract": 0,
-      "CanAttack": 0,
-      "CanJump": 0,
-      "InteractType": 2
-    },
-    "Tom": {
-      "CanMove": 1,
-      "CanEquip": 1,
-      "IsEffectPerceptive": 1,
-      "CanInteract": 1,
-      "CanAttack": 1,
-      "CanJump": 1,
-      "InteractType": 1
-    }
+[
+  {
+    "NameID": "Fred",
+    "CanMove": true,
+    "CanEquip": false,
+    "IsEffectPerceptive": true,
+    "CanInteract": false,
+    "CanAttack": false,
+    "CanJump": false,
+    "InteractType": 2
+  },
+  {
+    "NameID": "Tom",
+    "CanMove": true,
+    "CanEquip": true,
+    "IsEffectPerceptive": true,
+    "CanInteract": true,
+    "CanAttack": true,
+    "CanJump": true,
+    "InteractType": 1
   }
-}
+]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sheldier.Common;
 using Sheldier.Constants;
 using Sheldier.UI;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Sheldier.Setup
 
         public UILoadingOperation(UIStatesController statesController)
         {
-            _sceneData = Resources.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
+            _sceneData = ResourceLoader.Load<SceneData>(ResourcePaths.COLONY_SCENE_DATA_PATH);
         }
         
         [Inject]

@@ -17,7 +17,7 @@ using Zenject;
 
 namespace Sheldier.Setup
 {
-    public class SceneStartUp : MonoBehaviour
+    public class SceneStartUp : MonoBehaviour, ISceneStartup
     {
         [SerializeField] private SceneData sceneData;
 
@@ -53,11 +53,6 @@ namespace Sheldier.Setup
             _actorSpawner = actorSpawner;
         }
 
-        public void Start()
-        {
-            GameIsInitialized();
-        }
-
         public async Task StartScene()
         {
             _cameraHandler.InitializeOnScene();
@@ -76,10 +71,15 @@ namespace Sheldier.Setup
           //  StartCoroutine(DialogueTestCoroutine());
         }
 
+        private void Start()
+        {
+            GameIsInitialized();
+        }
+
         private IEnumerator DialogueTestCoroutine()
         {
             yield return new WaitForSeconds(7.0f);
-            _cutsceneController.StartCutscene(CutscenePaths.TEST_CUTSCENE);
+            _cutsceneController.StartCutscene(ResourcePaths.TEST_CUTSCENE);
 
         }
         private void GameIsInitialized()
@@ -105,5 +105,4 @@ namespace Sheldier.Setup
             _pauseNotifier.Clear();
         }
     }
-
 }

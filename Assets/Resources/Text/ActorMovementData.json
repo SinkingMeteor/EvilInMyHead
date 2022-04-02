@@ -1,12 +1,12 @@
-{
-  "ActorMovementData": {
-    "Fred": {
-      "Speed": 2,
-      "StepSound": "TomStepSound"
-    },
-    "Tom": {
-      "Speed": 2,
-      "StepSound": "TomStepSound"
-    }
+[
+  {
+    "NameID": "Fred",
+    "Speed": 2,
+    "StepSound": "TomStepSound"
+  },
+  {
+    "NameID": "Tom",
+    "Speed": 2,
+    "StepSound": "TomStepSound"
   }
-}
+]

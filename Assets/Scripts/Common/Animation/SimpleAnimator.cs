@@ -13,7 +13,7 @@ namespace Sheldier.Common.Animation
         
         [SerializeField] private AnimationData currentAnimation;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private bool _playOnInitialize;
+        [SerializeField] private bool playOnInitialize;
         
         private float _currentFrame;
         private bool _isPlaying;
@@ -24,7 +24,7 @@ namespace Sheldier.Common.Animation
         public void Initialize()
         {
             _triggers = new List<bool>();
-            if (_playOnInitialize && currentAnimation != null)
+            if (playOnInitialize && currentAnimation != null)
                 Play();
         }
         public void SetDependencies(TickHandler tickHandler)
@@ -41,8 +41,9 @@ namespace Sheldier.Common.Animation
             if(_isPlaying)
                 StopPlaying();
 
-            for (int i = 0; i < currentAnimation.TriggerPoints.Count; i++)
-                _triggers.Add(true);
+            if (currentAnimation.TriggerPoints != null) 
+                for (int i = 0; i < currentAnimation.TriggerPoints.Count; i++)
+                    _triggers.Add(true);
             
             _isPlaying = true;
             _tickHandler.AddListener(this);
@@ -56,12 +57,13 @@ namespace Sheldier.Common.Animation
                 if (!RewindAnimation())
                     return;
             
-            for (int i = 0; i < currentAnimation.TriggerPoints.Count; i++)
-                if (_currentFrame >= currentAnimation.TriggerPoints[i] && _triggers[i])
-                {
-                    OnAnimationTriggered?.Invoke();
-                    _triggers[i] = false;
-                }
+            if(currentAnimation.TriggerPoints != null)
+                for (int i = 0; i < currentAnimation.TriggerPoints.Count; i++)
+                    if (_currentFrame >= currentAnimation.TriggerPoints[i] && _triggers[i])
+                    {
+                        OnAnimationTriggered?.Invoke();
+                        _triggers[i] = false;
+                    }
             
             int frameIndex = (int) _currentFrame;
             spriteRenderer.sprite = currentAnimation.Frames[frameIndex];

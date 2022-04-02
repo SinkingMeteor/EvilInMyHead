@@ -171,7 +171,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   moveToPoint: {fileID: 288301849171487069}
-  actorToMove: 1
+  actorToMove: {fileID: 11400000, guid: 5b987489c2a535a4d85b2e26453b75ea, type: 2}
   waitIt: 1
 --- !u!1 &416612305733113957
 GameObject:
@@ -259,7 +259,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   moveToPoint: {fileID: 2205725718165705118}
-  actorToMove: 0
+  actorToMove: {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
   waitIt: 1
 --- !u!1 &4139318298162501029
 GameObject:
@@ -346,7 +346,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   waitElement: 1
-  actorsInDialogue: 0000000001000000
+  actorsInDialogue:
+  - {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
+  - {fileID: 11400000, guid: 5b987489c2a535a4d85b2e26453b75ea, type: 2}
   dialogue: {fileID: 11400000, guid: b3ef6ea87bc20eb428c4ca14d0dcf9e4, type: 2}
 --- !u!1 &7853075101337971551
 GameObject:
@@ -403,5 +405,5 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   moveToPoint: {fileID: 7843586643139694752}
-  actorToMove: 0
+  actorToMove: {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
   waitIt: 1

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Sheldier.Actors.Data;
 using Sheldier.Common.Animation;
 using Sheldier.Common.Utilities;
 using Sheldier.Constants;
@@ -15,8 +16,8 @@ namespace Sheldier.Actors
         protected ActorInputController _inputController;
         protected ActorTransformHandler _actorTransformHandler;
         protected AnimationType[] _animationHashes;
-        
-        private ActorMovementDataModule _movementData;
+
+        private readonly ActorDynamicMovementData _movementData;
         private ActorSoundController _soundController;
         private ActorNotifyModule _notifyModule;
         private Actor _actor;
@@ -34,11 +35,14 @@ namespace Sheldier.Actors
             InitializeHashes();
         }
 
+        public ActorDefaultControlledMovementState(ActorDynamicMovementData movementData)
+        {
+            _movementData = movementData;
+        }
         public virtual void SetDependencies(ActorInternalData data)
         {
             _soundController = data.Actor.SoundController;
             _actor = data.Actor;
-            _movementData = data.Actor.DataModule.MovementDataModule;
             _inputController = data.Actor.InputController;
             _notifyModule = data.Actor.Notifier;
             _actorTransformHandler = data.ActorTransformHandler;
@@ -79,7 +83,7 @@ namespace Sheldier.Actors
         public void FixedTick()
         {
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
-            var movementDistance = movementDirection * _movementData.CurrentSpeed;
+            var movementDistance = movementDirection * _movementData.Speed;
             _rigidbody2D.velocity = movementDistance;
         }
 
@@ -96,7 +100,7 @@ namespace Sheldier.Actors
             
             while (true) 
             {
-                _soundController.PlayAudio(_movementData.InitialData.MovementSound);
+             //   _soundController.PlayAudio(_movementData.StepSound);
                 yield return stepDelay;
             }
         }
