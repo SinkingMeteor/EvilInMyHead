@@ -5,19 +5,19 @@ namespace Sheldier.Factories
 {
     public class ActorsEffectFactory
     {
-        private Dictionary<ActorEffectType, IEffect> _effects;
+        private Dictionary<int, IEffect> _effects;
 
         public void Initialize()
         {
-            _effects = new Dictionary<ActorEffectType, IEffect>
+            _effects = new Dictionary<int, IEffect>
             {
-                {ActorEffectType.Freeze, new FreezeMovementEffect()}
+                {0, new FreezeMovementEffect(0)}
             };
         }
         
         public IEffect GetEffect(int effectID)
         {
-            return _effects[(ActorEffectType)effectID].Clone();
+            return _effects[effectID].Clone();
         }
     }
 }

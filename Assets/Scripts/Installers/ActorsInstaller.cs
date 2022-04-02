@@ -10,7 +10,6 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<ActorsMap>().FromResource(ResourcePaths.ACTOR_MAP).AsSingle();
             Container.Bind<ScenePlayerController>().AsSingle();
             Container.Bind<ActorSpawner>().AsSingle();
             Container.Bind<ActorBuilder>().AsSingle();

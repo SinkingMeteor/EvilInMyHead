@@ -1,6 +1,4 @@
-﻿using Sheldier.Constants;
-using Sheldier.Factories;
-using Sheldier.Gameplay.Effects;
+﻿using Sheldier.Factories;
 using Zenject;
 
 namespace Sheldier.Installers
@@ -9,7 +7,6 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<EffectsDataMap>().FromResource(ResourcePaths.EFFECTS_MAP).AsSingle();
             Container.Bind<ActorsEffectFactory>().AsSingle();
         }
     }

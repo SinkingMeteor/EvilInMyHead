@@ -33,8 +33,7 @@ namespace Sheldier.Actors
         private void AddEffect(int effectID)
         {
             var effect = _factory.GetEffect(effectID);
-            effect.Setup(_actor, 10.0f);
-            //TODO: Set duration
+            effect.Setup(_actor);
             _influencingEffects.Add(effect);
         }
 

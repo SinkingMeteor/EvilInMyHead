@@ -63,7 +63,6 @@ namespace Sheldier.Setup
         private UIHintPool _uiHintPool;
         private Pathfinder _pathfinder;
         private Inventory _inventory;
-        private ActorsMap _actorsMap;
         private ItemMap _itemMap;
         private FontMap _fontMap;
 
@@ -74,7 +73,7 @@ namespace Sheldier.Setup
             WeaponBlowPool weaponBlowPool, Inventory inventory, PathProvider pathProvider, UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler,
             PauseNotifier pauseNotifier, InventorySlotPool inventorySlotPool, ActorBuilder actorBuilder, UIHintPool uiHintPool, InputBindHandler inputBindHandler,
             Pathfinder pathfinder, TickHandler tickHandler, FixedTickHandler fixedTickHandler, LateTickHandler lateTickHandler, ItemMap itemMap,
-            ActorsMap actorsMap, ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
+            ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
             UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
             CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap, ChoiceSlotPool choiceSlotPool, SceneLocationController sceneLocationController,
             SceneSetupOperation sceneSetupOperation, StaticDataLoader staticDataLoader, ActorDataFactory actorDataFactory, Database<ActorDynamicDialogueData> dynamicDialogueDatabase)
@@ -82,7 +81,6 @@ namespace Sheldier.Setup
             _itemMap = itemMap;
             _fontMap = fontMap;
             _inventory = inventory;
-            _actorsMap = actorsMap;
             _pathfinder = pathfinder;
             _uiHintPool = uiHintPool;
             _itemSpawner = itemSpawner;
@@ -145,7 +143,7 @@ namespace Sheldier.Setup
             _uiHintPool.SetDependencies(_fontProvider);
             _uiStatesController.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);
             _dialoguesProvider.SetDependencies(_actorSpawner);
-            _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _actorsMap, _dialoguesProvider, _actorDataFactory);
+            _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _dialoguesProvider, _actorDataFactory);
             _actorSpawner.SetDependencies(_actorBuilder);
             _itemFactory.SetDependencies(_itemMap, _projectilePool, _weaponBlowPool);
             _itemSpawner.SetDependencies(_itemFactory);

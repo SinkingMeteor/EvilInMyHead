@@ -11,6 +11,7 @@ using Sheldier.Constants;
 using Sheldier.GameLocation;
 using Sheldier.Item;
 using Sheldier.UI;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -68,7 +69,9 @@ namespace Sheldier.Setup
             _scenePlayerController.SetControl(firstActor);
             _scenePlayerController.SetFollowTarget(firstActor);
 
-          //  StartCoroutine(DialogueTestCoroutine());
+
+
+            //  StartCoroutine(DialogueTestCoroutine());
         }
 
         private void Start()

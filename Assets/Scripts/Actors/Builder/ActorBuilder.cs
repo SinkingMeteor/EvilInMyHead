@@ -19,7 +19,6 @@ namespace Sheldier.Actors.Builder
         private ISubBuilder[] _subBuilders;
         private TickHandler _tickHandler;
         private Actor _actorTemplate;
-        private ActorsMap _actorsMap;
         private Database<ActorStaticBuildData> _staticBuildDatabase;
         private ActorDataFactory _actorDataFactory;
 
@@ -34,10 +33,9 @@ namespace Sheldier.Actors.Builder
         }
         
         public void SetDependencies(ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController, TickHandler tickHandler,
-            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier, ActorsMap actorsMap, DialoguesProvider dialoguesProvider, ActorDataFactory actorDataFactory)
+            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier, DialoguesProvider dialoguesProvider, ActorDataFactory actorDataFactory)
         {
             _actorDataFactory = actorDataFactory;
-            _actorsMap = actorsMap;
             _dialoguesProvider = dialoguesProvider;
             _scenePlayerController = scenePlayerController;
             _fixedTickHandler = fixedTickHandler;

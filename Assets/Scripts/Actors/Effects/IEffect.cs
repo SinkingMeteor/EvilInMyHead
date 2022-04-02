@@ -6,7 +6,7 @@ namespace Sheldier.Gameplay.Effects
     {
         int EffectID { get; }
         bool IsExpired { get; }
-        void Setup(Actor owner, float duration);
+        void Setup(Actor owner);
         void Tick();
         IEffect Clone();
     }
