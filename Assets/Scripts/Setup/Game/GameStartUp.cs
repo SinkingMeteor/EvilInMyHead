@@ -25,6 +25,7 @@ namespace Sheldier.Setup
     {
         [SerializeField] private SceneContext sceneContext;
 
+        private Database<ItemStaticProjectileData> _staticProjectileDatabase;
         private Database<ActorDynamicDialogueData> _dynamicDialogueDatabase;
         private SceneLocationController _sceneLocationController;
         private LoadingScreenProvider _loadingScreenProvider;
@@ -46,6 +47,7 @@ namespace Sheldier.Setup
         private ActorDataFactory _actorDataFactory;
         private LateTickHandler _lateTickHandler;
         private SpeechCloudPool _speechCloudPool;
+        private AnimationLoader _animationLoader;
         private ProjectilePool _projectilePool;
         private WeaponBlowPool _weaponBlowPool;
         private ChoiceSlotPool _choiceSlotPool;
@@ -56,6 +58,7 @@ namespace Sheldier.Setup
         private PathProvider _pathProvider;
         private ActorSpawner _actorSpawner;
         private FontProvider _fontProvider;
+        private SpriteLoader _spriteLoader;
         private ISoundPlayer _soundPlayer;
         private ItemFactory _itemFactory;
         private ItemSpawner _itemSpawner;
@@ -78,8 +81,10 @@ namespace Sheldier.Setup
             UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
             CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap, ChoiceSlotPool choiceSlotPool, SceneLocationController sceneLocationController,
             SceneSetupOperation sceneSetupOperation, ActorStaticDataLoader actorStaticDataLoader, ActorDataFactory actorDataFactory,
-            Database<ActorDynamicDialogueData> dynamicDialogueDatabase, ItemStaticDataLoader itemStaticDataLoader)
+            Database<ActorDynamicDialogueData> dynamicDialogueDatabase, ItemStaticDataLoader itemStaticDataLoader, Database<ItemStaticProjectileData> staticProjectileDatabase,
+            SpriteLoader spriteLoader, AnimationLoader animationLoader)
         {
+
             _itemMap = itemMap;
             _fontMap = fontMap;
             _inventory = inventory;
@@ -94,6 +99,7 @@ namespace Sheldier.Setup
             _pathProvider = pathProvider;
             _actorSpawner = actorSpawner;
             _actorBuilder = actorBuilder;
+            _spriteLoader = spriteLoader;
             _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
             _effectFactory = effectFactory;
@@ -101,6 +107,7 @@ namespace Sheldier.Setup
             _weaponBlowPool = weaponBlowPool;
             _choiceSlotPool = choiceSlotPool;
             _projectilePool = projectilePool;
+            _animationLoader = animationLoader;
             _speechCloudPool = speechCloudPool;
             _lateTickHandler = lateTickHandler;
             _actorDataFactory = actorDataFactory;
@@ -121,6 +128,7 @@ namespace Sheldier.Setup
             _scenePlayerController = scenePlayerController;
             _dynamicDialogueDatabase = dynamicDialogueDatabase;
             _sceneLocationController = sceneLocationController;
+            _staticProjectileDatabase = staticProjectileDatabase;
         }
         private void Start()
         {
@@ -140,8 +148,8 @@ namespace Sheldier.Setup
         private void SetDependenciesToSystems()
         {
             _fontProvider.SetDependencies(_localizationProvider, _fontMap);
-            _projectilePool.SetDependencies(_tickHandler);
-            _weaponBlowPool.SetDependencies(_tickHandler);
+            _projectilePool.SetDependencies(_tickHandler, _staticProjectileDatabase, _spriteLoader);
+            _weaponBlowPool.SetDependencies(_tickHandler, _animationLoader);
             _speechCloudPool.SetDependencies(_soundPlayer, _fontProvider, _dynamicDialogueDatabase);
             _choiceSlotPool.SetDependencies(_fontProvider);
             _uiHintPool.SetDependencies(_fontProvider);
@@ -149,7 +157,6 @@ namespace Sheldier.Setup
             _dialoguesProvider.SetDependencies(_actorSpawner);
             _actorBuilder.SetDependencies(_effectFactory, _scenePlayerController, _tickHandler, _fixedTickHandler, _pauseNotifier, _dialoguesProvider, _actorDataFactory);
             _actorSpawner.SetDependencies(_actorBuilder);
-            _itemFactory.SetDependencies(_itemMap, _projectilePool, _weaponBlowPool);
             _itemSpawner.SetDependencies(_itemFactory);
             _cutsceneController.SetDependencies(_actorSpawner, _pauseNotifier, _pathProvider, _scenePlayerController, _dialoguesProvider);
             _pathProvider.SetDependencies(_pathfinder);

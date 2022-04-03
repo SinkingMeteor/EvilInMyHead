@@ -10,23 +10,14 @@ namespace Sheldier.Item
 {
     public abstract class SimpleItem
     {
-        public ItemConfig ItemConfig => _itemConfig;
-        public virtual bool IsEquippable => true;
-        public virtual bool IsStackable => false;
-        public virtual bool IsQuest => false;
-        public Counter ItemAmount => _itemAmount;
-        public int FreeAmount => _itemConfig.MaxStack - _itemAmount.Amount; 
+        public ItemDynamicConfigData ItemConfig => _itemConfig;
 
-        protected Counter _itemAmount;
-
-        protected readonly ItemConfig _itemConfig;
-
-        public SimpleItem(ItemConfig itemConfig)
+        protected ItemDynamicConfigData _itemConfig;
+        public void SetDynamicConfig(ItemDynamicConfigData dynamicConfigData)
         {
-            _itemConfig = itemConfig;
-            _itemAmount = new Counter(1);
+            _itemConfig = dynamicConfigData;
         }
-
+        
         public virtual Vector2 GetRotateDirection()
         {
             return Vector2.zero;

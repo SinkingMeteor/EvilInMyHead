@@ -1,20 +1,28 @@
-﻿using Sheldier.Item;
+﻿using System.Collections.Generic;
+using Sheldier.Item;
 
 namespace Sheldier.Factories
 {
-    public class AmmoItemFactory
+    public class AmmoItemFactory: ISubItemFactory
     {
-        private readonly ItemMap _itemMap;
+        private Dictionary<string, AmmoItem> _ammosCollection;
 
-        public AmmoItemFactory(ItemMap itemMap)
+        public AmmoItemFactory()
         {
-            _itemMap = itemMap;
+            _ammosCollection = new Dictionary<string, AmmoItem>()
+            {
+                {"PistolAmmo", new AmmoItem()}
+            };
         }
 
-        public AmmoItem GetItem(ItemConfig itemConfig)
+        public void CreateItemData(string guid, string typeName)
         {
-            var itemType = itemConfig.ItemType;
-            return new AmmoItem(_itemMap.AmmoMap[itemType]);
+            
+        }
+
+        public SimpleItem GetItem(string typeName)
+        {
+            return _ammosCollection[typeName].CleanClone();
         }
     }
 }

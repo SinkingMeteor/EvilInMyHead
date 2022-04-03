@@ -2,6 +2,7 @@
 using Sheldier.Actors;
 using Sheldier.Actors.Interact;
 using Sheldier.Actors.Inventory;
+using Sheldier.Common;
 using Sheldier.Factories;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,24 +15,28 @@ namespace Sheldier.Item
     {
         public Transform Transform => transform;
         public string ID => uniqueID.ID;
+        public DataReference Reference => itemReference;
 
         [SerializeField] private UniqueID uniqueID;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private ItemConfig itemReference;
+        [SerializeField] private DataReference itemReference;
         [SerializeField] private Material onInteractMaterial;
         [SerializeField] private int amount = 1;
 
-        private Material _defaulMaterial;
+        private Material _defaultMaterial;
         private ItemFactory _itemFactory;
+        private ItemDynamicConfigData _dynamicConfigData;
 
-        public void Initialize(ItemFactory itemFactory)
+        public void Initialize(ItemDynamicConfigData dynamicConfigData)
         {
-            _itemFactory = itemFactory;
-            spriteRenderer.sprite = itemReference.Icon;
-            _defaulMaterial = spriteRenderer.sharedMaterial;
+            _dynamicConfigData = dynamicConfigData;
+            _defaultMaterial = spriteRenderer.sharedMaterial;
         }
 
-
+        public void SetItemIcon(Sprite icon)
+        {
+            spriteRenderer.sprite = icon;
+        }
         public void OnEntered()
         {
             spriteRenderer.sharedMaterial = onInteractMaterial;
@@ -39,9 +44,8 @@ namespace Sheldier.Item
 
         public bool OnInteracted(Actor actor)
         {
-            SimpleItem item = _itemFactory.GetItem(itemReference);
-            item.ItemAmount.Set(amount);
-            InventoryOperationReport report = actor.InventoryModule.AddItem(item);
+            _dynamicConfigData.Amount = amount;
+            InventoryOperationReport report = actor.InventoryModule.AddItem(_dynamicConfigData);
             if (!report.IsCompleted)
                 amount -= report.Amount;
             else
@@ -55,7 +59,7 @@ namespace Sheldier.Item
 
         public void OnExit()
         {
-            spriteRenderer.sharedMaterial = _defaulMaterial;
+            spriteRenderer.sharedMaterial = _defaultMaterial;
         }
         private void Deactivate() => gameObject.SetActive(false);
 
@@ -69,7 +73,7 @@ namespace Sheldier.Item
         private void OnValidate()
         {
             if (itemReference == null) return;
-            amount = Mathf.Clamp(amount, 1, itemReference.MaxStack);
+            amount = Mathf.Clamp(amount, 1, _dynamicConfigData.MaxStack);
         }
 
         [Button("Setup")]

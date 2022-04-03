@@ -1,6 +1,8 @@
 using System.Collections;
 using Sheldier.Common;
 using Sheldier.Common.Pool;
+using Sheldier.Constants;
+using Sheldier.Data;
 using UnityEngine;
 using Zenject;
 
@@ -12,19 +14,23 @@ namespace Sheldier.Item
         public Transform Transform => transform;
 
         [SerializeField] private SpriteRenderer spriteRenderer;
-        
-        private ProjectileConfig _config;
+
+        private Database<ItemStaticProjectileData> _staticProjectileData;
+        private ItemStaticProjectileData _config;
         private Coroutine _projectileLifetime;
         private IPoolSetter<Projectile> _poolSetter;
         private TickHandler _tickHandler;
+        private SpriteLoader _spriteLoader;
         private bool _isPaused;
 
         public void Initialize(IPoolSetter<Projectile> poolSetter)
         {
             _poolSetter = poolSetter;
         }
-        public void SetDependencies(TickHandler tickHandler)
+        public void SetDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileData, SpriteLoader spriteLoader)
         {
+            _spriteLoader = spriteLoader;
+            _staticProjectileData = staticProjectileData;
             _tickHandler = tickHandler;
         }
         public void OnInstantiated()
@@ -39,11 +45,11 @@ namespace Sheldier.Item
         {
             transform.rotation = rotation;
         }
-        public void SetConfig(ProjectileConfig config)
+        public void SetData(string typeName)
         {
-            _config = config;
+            _config = _staticProjectileData.Get(typeName);
             _projectileLifetime = StartCoroutine(StartLifetimeCoroutine());
-            spriteRenderer.sprite = _config.Icon;
+            spriteRenderer.sprite = _spriteLoader.Get(_config.Icon, TextDataConstants.PROJECTILES_ICONS_DIRECTORY);
         }
 
         public void Tick()

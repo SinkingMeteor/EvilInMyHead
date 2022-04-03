@@ -50,7 +50,7 @@ namespace Sheldier.UI
         }
         public void Activate()
         {
-            var inventoryItems = GetItemsList();
+         /*   var inventoryItems = GetItemsList();
             _localizationProvider.AddListener(this);
             radialPointer.SetSegments(inventoryItems.Count);
             _slotsCollection = new List<InventorySlot>();
@@ -60,7 +60,7 @@ namespace Sheldier.UI
                 _slotsCollection.Add(slot);
                 var offsetVector =  i.UnitVectorFromSegment(inventoryItems.Count) * slotsSpawnDistance;
                 slot.RectTransform.anchoredPosition = slotsParent.anchoredPosition + offsetVector;
-            }
+            }*/
         }
         public void OnLanguageChanged()
         {
@@ -90,7 +90,7 @@ namespace Sheldier.UI
         }
         public void Refresh()
         {
-            List<SimpleItem> itemsList = GetItemsList();
+          /*  List<SimpleItem> itemsList = GetItemsList();
             radialPointer.SetSegments(itemsList.Count);
             for (int i = 0; i < _slotsCollection.Count; i++)
             {
@@ -107,7 +107,7 @@ namespace Sheldier.UI
                 _slotsCollection[i].RectTransform.anchoredPosition = slotsParent.anchoredPosition + offsetVector;
             }
 
-            Tick();
+            Tick();*/
         }
         public void Deactivate()
         {
@@ -127,11 +127,11 @@ namespace Sheldier.UI
         {
             _fontProvider.RemoveListener(this);
         }
-        private List<SimpleItem> GetItemsList()
+        private List<ItemDynamicConfigData> GetItemsList()
         {
-            List<SimpleItem> inventoryItems = new List<SimpleItem>();
+            List<ItemDynamicConfigData> inventoryItems = new List<ItemDynamicConfigData>();
             foreach (var inventoryGroup in _inventory.ItemsCollection)
-                inventoryItems.AddRange(inventoryGroup.Value.Items);
+                inventoryItems.AddRange(inventoryGroup.Value.Items.Values);
             return inventoryItems;
         }
         private InventorySlot InstantiateSlot(SimpleItem inventoryItem)
@@ -172,10 +172,10 @@ namespace Sheldier.UI
         }
         private void SetNewInfo()
         {
-            ItemSlotData data = itemSlotMap.SlotMap[_selectedSlot.Item.ItemConfig];
-            titleTMP.text = _localizationProvider.LocalizedText[data.Title];
-            descriptionTMP.text = _localizationProvider.LocalizedText[data.Description];
-            selectedItemImage.sprite = data.PreviewSprite;
+          //  ItemSlotData data = itemSlotMap.SlotMap[_selectedSlot.Item.ItemConfig];
+          //  titleTMP.text = _localizationProvider.LocalizedText[data.Title];
+          //  descriptionTMP.text = _localizationProvider.LocalizedText[data.Description];
+         //   selectedItemImage.sprite = data.PreviewSprite;
         }
         private void OnDrawGizmos()
         {

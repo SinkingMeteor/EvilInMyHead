@@ -23,7 +23,8 @@ namespace Sheldier.Item
         {
             foreach (var placeholder in _placeholdersKeeper.ItemPlaceholders)
             {
-                placeholder.Initialize(_itemFactory);                
+                ItemDynamicConfigData dynamicConfigData = _itemFactory.CreateItem(placeholder.Reference.Reference);
+                placeholder.Initialize(dynamicConfigData);                
             }
         }
     }

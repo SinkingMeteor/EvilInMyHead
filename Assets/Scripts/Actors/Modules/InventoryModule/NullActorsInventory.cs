@@ -5,26 +5,23 @@ namespace Sheldier.Actors.Inventory
 {
     public class NullActorsInventory : IActorsInventory
     {
-        #pragma warning disable
-        public event Action<SimpleItem> OnItemUse;
-        #pragma warning restore
+        public event Action<ItemDynamicConfigData> OnItemUse;
+        public bool IsItemTypeExists(string typeName) => false;
+        public bool IsItemExists(string guid) => false;
 
-        public bool IsItemExists(ItemConfig itemConfig) => true;
-
-        public InventoryOperationReport AddItem(SimpleItem item)
+        public InventoryOperationReport AddItem(ItemDynamicConfigData item)
         {
-            return new InventoryOperationReport() {IsCompleted = true, Amount = item.ItemAmount.Amount};
+            return InventoryOperationReport.FailReport;
         }
 
-        public InventoryOperationReport RemoveItem(SimpleItem item)
+        public InventoryOperationReport RemoveItem(string guid)
         {
-            return new InventoryOperationReport() {IsCompleted = true, Amount = item.ItemAmount.Amount};
+            return InventoryOperationReport.FailReport;
         }
 
-        public InventoryOperationReport RemoveItemAmount(ItemConfig item, int amount = 1)
+        public InventoryOperationReport RemoveItemAmount(string typeName, int amount = 1)
         {
-            return new InventoryOperationReport() {IsCompleted = true, Amount = amount};
+            return InventoryOperationReport.FailReport;
         }
-
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Sheldier.Common.Pool;
+using Sheldier.Constants;
+using Sheldier.Data;
 using Sheldier.Item;
 using TMPro;
 using UnityEngine;
@@ -20,15 +22,22 @@ namespace Sheldier.UI
         [SerializeField] private Image itemIcon;
 
         private SimpleItem _item;
+        private SpriteLoader _spriteLoader;
 
         public void Initialize(IPoolSetter<InventorySlot> poolSetter)
         {
             InitializeAnimations();
             itemInfoTransform.gameObject.SetActive(false);
         }
+
+        public void SetDependencies(SpriteLoader spriteLoader)
+        {
+            _spriteLoader = spriteLoader;
+        }
+        
         public void SetItem(SimpleItem item)
         {
-            itemIcon.sprite = item.ItemConfig.Icon;
+            itemIcon.sprite = _spriteLoader.Get(item.ItemConfig.GameIcon, TextDataConstants.ITEM_ICONS_DIRECTORY);
             _item = item;
             UpdateInfo();
             itemInfoTransform.gameObject.SetActive(true);

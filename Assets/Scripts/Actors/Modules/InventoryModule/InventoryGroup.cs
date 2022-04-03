@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Sheldier.Item;
 using UnityEngine;
 
@@ -6,60 +7,62 @@ namespace Sheldier.Actors.Inventory
 {
     public class InventoryGroup
     {
-        public IReadOnlyList<SimpleItem> Items => _collection;
+        public IReadOnlyDictionary<string, ItemDynamicConfigData> Items => _collection;
 
         protected readonly IItemStorage _itemStorage;
-        protected List<SimpleItem> _collection;
+        protected Dictionary<string, ItemDynamicConfigData>  _collection;
 
         public int Count => _collection.Count;
 
         public InventoryGroup(IItemStorage itemStorage)
         {
             _itemStorage = itemStorage;
-            _collection = new List<SimpleItem>();
+            _collection = new Dictionary<string, ItemDynamicConfigData>();
         }
 
-        public bool IsExists(SimpleItem item) => _collection.Contains(item);
+        public bool IsExists(string guid) => _collection.ContainsKey(guid);
 
-        public virtual InventoryOperationReport AddItem(SimpleItem item)
+        public virtual InventoryOperationReport AddItem(ItemDynamicConfigData dynamicConfigData)
         {
             if (_itemStorage.GetFreeSlotsAmount() == 0)
                 return InventoryOperationReport.FailReport;
-            _collection.Add(item);
+            _collection.Add(dynamicConfigData.Guid, dynamicConfigData);
             return new InventoryOperationReport() {IsCompleted = true, Amount = 1};
         }
 
-        public InventoryOperationReport RemoveSlot(SimpleItem item)
+        public InventoryOperationReport RemoveSlot(string guid)
         {
-            if (!IsExists(item))
+            if (!IsExists(guid))
                 return InventoryOperationReport.FailReport;
-            _collection.Remove(item);
-            item.Drop();
-            return new InventoryOperationReport() {IsCompleted = true, Amount = item.ItemAmount.Amount};
+            int itemAmount = _collection[guid].Amount;
+            _collection.Remove(guid);
+            return new InventoryOperationReport() {IsCompleted = true, Amount = itemAmount};
         }
 
         public virtual InventoryOperationReport RemoveAmount(int amountToRemove)
         {
             int remainsToRemove = amountToRemove;
-            for (int i = 0; i < _collection.Count; i++)
+            List<string> guidsToRemove = new List<string>();
+            foreach (var dynamicConfigData in _collection)
             {
-                var currentItemAmount = _collection[i].ItemAmount.Amount;
+                var currentItemAmount = dynamicConfigData.Value.Amount;
                 int clampedAmount = Mathf.Min(currentItemAmount, remainsToRemove);
-                _collection[i].ItemAmount.Remove(clampedAmount);
+                dynamicConfigData.Value.Amount -= clampedAmount;
                 remainsToRemove -= clampedAmount;
                 
-                if (_collection[i].ItemAmount.Amount == 0)
-                {
-                    _collection[i].Drop();
-                    int lastIndex = _collection.Count - 1;
-                    (_collection[i], _collection[lastIndex]) = (_collection[lastIndex], _collection[i]);
-                    _collection.RemoveAt(lastIndex);
-                    i -= 1;
-                }
+                if (dynamicConfigData.Value.Amount == 0)
+                    guidsToRemove.Add(dynamicConfigData.Key);
                 
                 if (remainsToRemove <= 0)
-                    return new InventoryOperationReport(){IsCompleted = true, Amount = amountToRemove};
+                    break;
             }
+
+            for (int i = 0; i < guidsToRemove.Count; i++)
+                _collection.Remove(guidsToRemove[i]);
+            
+            if(remainsToRemove <= 0)
+                return new InventoryOperationReport(){IsCompleted = true, Amount = amountToRemove};
+
             return new InventoryOperationReport(){IsCompleted = false, Amount = amountToRemove-remainsToRemove};
         }
     }

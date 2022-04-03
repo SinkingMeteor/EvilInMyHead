@@ -6,14 +6,14 @@ namespace Sheldier.Actors.Inventory
 {
     public class Inventory : IActorsInventory, IItemStorage
     {
-        public event Action<SimpleItem> OnItemUse;
-        public IReadOnlyDictionary<ItemConfig, InventoryGroup> ItemsCollection => _itemsCollection;
-        private Dictionary<ItemConfig, InventoryGroup> _itemsCollection;
+        public event Action<ItemDynamicConfigData> OnItemUse;
+        public IReadOnlyDictionary<string, InventoryGroup> ItemsCollection => _itemsCollection;
+        private Dictionary<string, InventoryGroup> _itemsCollection;
         private int _capacity = 12;
     
         public void Initialize()
         {
-            _itemsCollection = new Dictionary<ItemConfig, InventoryGroup>();
+            _itemsCollection = new Dictionary<string, InventoryGroup>();
         }
         public int GetFreeSlotsAmount()
         {
@@ -22,46 +22,66 @@ namespace Sheldier.Actors.Inventory
                 slotsCount += inventoryGroup.Value.Count;
             return _capacity - slotsCount;
         }
-        public bool IsItemExists(ItemConfig itemConfig)
+
+        public void UseItem(string guid)
         {
-            return  _itemsCollection.ContainsKey(itemConfig);
+            if(TryGetItem(guid, out ItemDynamicConfigData dynamicConfigData))
+                OnItemUse?.Invoke(dynamicConfigData);
         }
 
-        public InventoryOperationReport AddItem(SimpleItem item)
+        public bool IsItemTypeExists(string typeName) => _itemsCollection.ContainsKey(typeName);
+
+        public bool IsItemExists(string guid)
         {
-            if (!IsItemExists(item.ItemConfig) && GetFreeSlotsAmount() == 0)
+            foreach (var itemGroup in _itemsCollection)
+            {
+                if (itemGroup.Value.Items.ContainsKey(guid))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool TryGetItem(string guid, out ItemDynamicConfigData dynamicConfigData)
+        {
+            foreach (var itemGroup in _itemsCollection)
+            {
+                if (itemGroup.Value.IsExists(guid))
+                {
+                    dynamicConfigData = itemGroup.Value.Items[guid];
+                    return true;
+                }
+            }
+
+            dynamicConfigData = null;
+            return false;
+        }
+        public InventoryOperationReport AddItem(ItemDynamicConfigData item)
+        {
+            if (!IsItemTypeExists(item.ItemName) && GetFreeSlotsAmount() == 0)
                 return InventoryOperationReport.FailReport;
-            if(!IsItemExists(item.ItemConfig))
-                _itemsCollection.Add(item.ItemConfig, item.IsStackable ? new StackableInventoryGroup(this) : new InventoryGroup(this));
-            return _itemsCollection[item.ItemConfig].AddItem(item);
-            
+            if(!IsItemTypeExists(item.ItemName))
+                _itemsCollection.Add(item.ItemName, item.IsStackable ? new StackableInventoryGroup(this) : new InventoryGroup(this));
+            return _itemsCollection[item.ItemName].AddItem(item);
         }
 
-        public InventoryOperationReport RemoveItem(SimpleItem item)
+        public InventoryOperationReport RemoveItem(string guid)
         {
-            if (!IsItemExists(item.ItemConfig))
+            foreach (var inventoryGroup in _itemsCollection)
+            {
+                if (inventoryGroup.Value.IsExists(guid))
+                   return inventoryGroup.Value.RemoveSlot(guid);
+            }
+            return InventoryOperationReport.FailReport;
+        }
+
+        public InventoryOperationReport RemoveItemAmount(string typeName, int amount = 1)
+        {
+            if(!IsItemTypeExists(typeName))
                 return InventoryOperationReport.FailReport;
-            InventoryOperationReport report = _itemsCollection[item.ItemConfig].RemoveSlot(item);
-            if (_itemsCollection[item.ItemConfig].Count == 0)
-                _itemsCollection.Remove(item.ItemConfig);
-            return report;
+            return _itemsCollection[typeName].RemoveAmount(amount);
         }
-
-        public void UseItem(SimpleItem item)
-        {
-            OnItemUse?.Invoke(item);
-        }
-        public InventoryOperationReport RemoveItemAmount(ItemConfig item, int amount = 1)
-        {
-            if (!IsItemExists(item))
-                return InventoryOperationReport.FailReport;
-            InventoryOperationReport report = _itemsCollection[item].RemoveAmount(amount);
-            if (_itemsCollection[item].Count == 0)
-                _itemsCollection.Remove(item);
-            return report;
-        }
-
-
+        
     }
 
     public struct InventoryOperationReport

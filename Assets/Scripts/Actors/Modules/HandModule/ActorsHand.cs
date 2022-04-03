@@ -1,4 +1,5 @@
 ﻿using Sheldier.Common;
+using Sheldier.Factories;
 using Sheldier.Item;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Sheldier.Actors.Hand
         
         private ActorTransformHandler _transformHandler;
         private TickHandler _tickHandler;
+        private ItemFactory _itemFactory;
         private SimpleItem _currentItem;
         private NullItem _nullItem;
         private Actor _actor;
@@ -28,14 +30,20 @@ namespace Sheldier.Actors.Hand
             _actor.InventoryModule.OnUseItem += Equip;
             _actor.OnWillRemoveControl += UnEquip;
         }
+
+        public void SetDependencies(ItemFactory itemFactory)
+        {
+            _itemFactory = itemFactory;
+        }
         public void Tick()
         {
             RotateHand();
             actorHandObject.Tick();
         }
-        private void Equip(SimpleItem item)
+        private void Equip(ItemDynamicConfigData dynamicConfigData)
         {
-            if (!item.IsEquippable)
+            SimpleItem item = _itemFactory.GetItem(dynamicConfigData.Guid);
+            if (!dynamicConfigData.IsEquippable)
                 return;
             if (_currentItem == item)
             {

@@ -20,22 +20,27 @@ namespace Sheldier.Item
         private float _kickbackAngle;
         private float _kickbackPower;
 
-        private readonly WeaponConfig _weaponConfig;
         private readonly ProjectilePool _projectilePool;
         private readonly WeaponBlowPool _weaponBlowPool;
-        private readonly WaitForSeconds _shootCooldown;
+        
+        private ItemDynamicWeaponData _weaponConfig;
+        private WaitForSeconds _shootCooldown;
         private GameObject _aim;
 
 
-        public WeaponShootModule(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
+        public WeaponShootModule(ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
         {
-            _weaponConfig = weaponConfig;
             _projectilePool = projectilePool;
             _weaponBlowPool = weaponBlowPool;
             _canShoot = true;
-            _shootCooldown = new WaitForSeconds(_weaponConfig.FireRate);
         }
 
+        public void SetWeaponData(ItemDynamicWeaponData dynamicWeaponData)
+        {
+            _weaponConfig = dynamicWeaponData;
+            _shootCooldown = new WaitForSeconds(_weaponConfig.FireRate);
+        }
+        
         public void SetView(HandView weaponView)
         {
             _weaponView = weaponView;
@@ -45,7 +50,7 @@ namespace Sheldier.Item
         {
             _aim = new GameObject("Aim");
             _aim.transform.SetParent(_weaponView.transform);
-            _aim.transform.localPosition = _weaponConfig.AimLocalPosition;
+            _aim.transform.localPosition = new Vector3(_weaponConfig.AimLocalX, _weaponConfig.AimLocalY, 0.0f);
             _aim.transform.localRotation = Quaternion.Euler(Vector3.zero);
             _aim.transform.localScale = Vector3.one;
         }
@@ -63,13 +68,13 @@ namespace Sheldier.Item
             projectile.SetDirection(direction);
             projectile.SetRotation(rotation);
             projectile.Transform.localScale = scale;
-            projectile.SetConfig(_weaponConfig.ProjectileConfig);
+            projectile.SetData(_weaponConfig.ProjectileName);
 
             WeaponBlow blow = _weaponBlowPool.GetFromPool();
             blow.transform.position = position;
             blow.transform.rotation = rotation;
             blow.transform.localScale = scale;
-            blow.SetAnimation(_weaponConfig.WeaponBlowAnimation);
+            blow.SetAnimation(_weaponConfig.BlowAnimation);
 
             _shootCooldownCoroutine = _weaponView.StartCoroutine(ShootCooldownCoroutine());
         }

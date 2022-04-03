@@ -21,8 +21,10 @@ namespace Sheldier.Item
         public float AimLocalX;
         public float AimLocalY;
         public string BlowAnimation;
+        public string ReloadAnimation;
         public string UseAudio;
         public string ReloadAudio;
+        public string RequiredAmmoItemName;
         public int AmmoLeft;
 
         public ItemDynamicWeaponData(string guid, ItemStaticWeaponData staticWeaponData)

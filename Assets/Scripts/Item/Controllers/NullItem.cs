@@ -5,10 +5,6 @@ namespace Sheldier.Item
 {
     public class NullItem : SimpleItem
     {
-        public NullItem(ItemConfig itemConfig = null) : base(itemConfig)
-        {
-        }
-
         public override void Drop()
         {
             

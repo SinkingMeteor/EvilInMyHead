@@ -5,11 +5,11 @@ namespace Sheldier.Actors.Inventory
 {
     public interface IActorsInventory
     {
-
-        public event Action<SimpleItem> OnItemUse;
-        bool IsItemExists(ItemConfig itemConfig);
-        InventoryOperationReport AddItem(SimpleItem item);
-        InventoryOperationReport RemoveItem(SimpleItem item);
-        InventoryOperationReport RemoveItemAmount(ItemConfig item, int amount = 1);
+        public event Action<ItemDynamicConfigData> OnItemUse;
+        bool IsItemTypeExists(string typeName);
+        bool IsItemExists(string guid);
+        InventoryOperationReport AddItem(ItemDynamicConfigData item);
+        InventoryOperationReport RemoveItem(string guid);
+        InventoryOperationReport RemoveItemAmount(string typeName, int amount = 1);
     }
 }

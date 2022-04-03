@@ -1818,9 +1818,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueID: {fileID: 900251763515350165}
   spriteRenderer: {fileID: 900251763515350163}
-  itemReference: {fileID: 11400000, guid: 405ed6c204a6cd94a9469da5fb16145d, type: 2}
+  itemReference: {fileID: 11400000, guid: dcc6695bdf9e0bc40ac32970470a8dde, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
-  amount: 5
+  amount: 0
 --- !u!1 &900251763528667252
 GameObject:
   m_ObjectHideFlags: 0
@@ -9632,9 +9632,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueID: {fileID: 900251764473314534}
   spriteRenderer: {fileID: 900251764473314532}
-  itemReference: {fileID: 11400000, guid: ddf5d3a233a69c34da60372b48843766, type: 2}
+  itemReference: {fileID: 11400000, guid: b8f87892dbcd86b41a13b6e85dd9b3f4, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
-  amount: 1
+  amount: 0
 --- !u!1 &900251764475957548
 GameObject:
   m_ObjectHideFlags: 0
@@ -11157,9 +11157,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueID: {fileID: 900251764672193043}
   spriteRenderer: {fileID: 900251764672193041}
-  itemReference: {fileID: 11400000, guid: 405ed6c204a6cd94a9469da5fb16145d, type: 2}
+  itemReference: {fileID: 11400000, guid: dcc6695bdf9e0bc40ac32970470a8dde, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
-  amount: 8
+  amount: 0
 --- !u!1 &900251764673273184
 GameObject:
   m_ObjectHideFlags: 0
@@ -11522,7 +11522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueID: {fileID: 900251764696600820}
   spriteRenderer: {fileID: 900251764696600818}
-  itemReference: {fileID: 11400000, guid: ddf5d3a233a69c34da60372b48843766, type: 2}
+  itemReference: {fileID: 11400000, guid: b8f87892dbcd86b41a13b6e85dd9b3f4, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
   amount: 1
 --- !u!1 &900251764701053067

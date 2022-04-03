@@ -5,7 +5,7 @@ namespace Sheldier.Actors.Inventory
 {
     public class ActorsInventoryModule
     {
-        public event Action<SimpleItem> OnUseItem;
+        public event Action<ItemDynamicConfigData> OnUseItem;
         public bool IsEquipped => _isEquipped;
         
         private IActorsInventory _currentInventory;
@@ -16,29 +16,34 @@ namespace Sheldier.Actors.Inventory
             _currentInventory = new NullActorsInventory();
         }
 
-        private void UseItem(SimpleItem item)
+        private void UseItem(ItemDynamicConfigData dynamicConfigData)
         {
-            OnUseItem?.Invoke(item);
+            OnUseItem?.Invoke(dynamicConfigData);
         }
 
-        public bool IsItemExists(ItemConfig itemConfig)
+        public bool IsItemExists(string guid)
         {
-            return _currentInventory.IsItemExists(itemConfig);
+            return _currentInventory.IsItemExists(guid);
         }
 
-        public InventoryOperationReport AddItem(SimpleItem item)
+        public bool IsItemTypeExists(string typeName)
+        {
+            return _currentInventory.IsItemTypeExists(typeName);
+        }
+
+        public InventoryOperationReport AddItem(ItemDynamicConfigData item)
         {
             return _currentInventory.AddItem(item);
         }
 
-        public void RemoveItem(SimpleItem item)
+        public InventoryOperationReport RemoveItem(string guid)
         {
-            _currentInventory.RemoveItem(item);
+            return _currentInventory.RemoveItem(guid);
         }
         
-        public InventoryOperationReport RemoveItem(ItemConfig item, int amount = 1)
+        public InventoryOperationReport RemoveItem(string typeName, int amount = 1)
         {
-            return _currentInventory.RemoveItemAmount(item, amount);
+            return _currentInventory.RemoveItemAmount(typeName, amount);
         }
         public void SetInventory(IActorsInventory actorsInventory)
         {

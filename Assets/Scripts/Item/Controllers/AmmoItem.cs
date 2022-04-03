@@ -7,13 +7,6 @@ namespace Sheldier.Item
 {
     public class AmmoItem : SimpleItem
     {
-        public override bool IsEquippable => false;
-        public override bool IsStackable => true;
-
-        public AmmoItem(ItemConfig itemConfig) : base(itemConfig)
-        {
-        }
-
         public override void Drop()
         {
             Debug.Log("Ammo dropped");
@@ -31,7 +24,9 @@ namespace Sheldier.Item
 
         public override string GetExtraInfo()
         {
-            return _itemAmount.Amount.ToString();
+            return _itemConfig.Amount.ToString();
         }
+
+        public AmmoItem CleanClone() => new AmmoItem();
     }
 }

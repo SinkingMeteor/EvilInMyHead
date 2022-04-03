@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using Sheldier.Actors.Hand;
+using Sheldier.Common.Animation;
+using Sheldier.Constants;
+using Sheldier.Data;
 using UnityEngine;
 
 namespace Sheldier.Item
@@ -9,23 +12,27 @@ namespace Sheldier.Item
     {
         public bool CanShoot => !_isReloading;
         public bool IsReloading => _isReloading;
-        
-        private readonly WeaponConfig _weaponConfig;
+
+        private readonly AnimationLoader _animationLoader;
+        private ItemDynamicWeaponData _weaponConfig;
         private Coroutine _reloadingCoroutine;
         private HandView _weaponView;
         private bool _isReloading;
         private bool _canShoot;
 
-        public WeaponReloadModule(WeaponConfig weaponConfig)
+        public WeaponReloadModule(AnimationLoader animationLoader)
         {
-            _weaponConfig = weaponConfig;
+            _animationLoader = animationLoader;
         }
-
+        
+        public void SetWeaponData(ItemDynamicWeaponData weaponData)
+        {
+            _weaponConfig = weaponData;
+        }
         public void SetView(HandView handView)
         {
             _weaponView = handView;
         }
-
         public void StartReloading(Action onComplete) => _reloadingCoroutine = _weaponView.StartCoroutine(ReloadingCoroutine(onComplete));
 
         public void InterruptReloading()
@@ -38,10 +45,10 @@ namespace Sheldier.Item
         private IEnumerator ReloadingCoroutine(Action onComplete)
         {
             _isReloading = true;
-            
-            _weaponView.Animator.Play(_weaponConfig.ReloadAnimation);
+            AnimationData animationData = _animationLoader.Get(_weaponConfig.ReloadAnimation, TextDataConstants.RELOAD_ANIMATIONS_DIRECTORY);
+            _weaponView.Animator.Play();
 
-            yield return new WaitForSeconds(_weaponConfig.ReloadAnimation.Frames.Length / _weaponConfig.ReloadAnimation.FrameRate);
+            yield return new WaitForSeconds(animationData.Frames.Length / animationData.FrameRate);
 
             _isReloading = false;
             Debug.Log("Reloaded");

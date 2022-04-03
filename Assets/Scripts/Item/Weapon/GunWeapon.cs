@@ -1,16 +1,24 @@
 ﻿using System;
 using Sheldier.Actors;
 using Sheldier.Actors.Hand;
+using Sheldier.Common.Animation;
 using Sheldier.Common.Pool;
+using Sheldier.Constants;
+using Sheldier.Data;
 using UnityEngine;
 
 namespace Sheldier.Item
 {
     public class GunWeapon : SimpleItem
     {
-        private readonly WeaponConfig _weaponConfig;
+        private ItemDynamicWeaponData _dynamicWeaponData;
+        
         private readonly WeaponShootModule _shootModule;
         private readonly WeaponReloadModule _reloadModule;
+        private readonly AnimationLoader _animationLoader;
+        private readonly ProjectilePool _projectilePool;
+        private readonly SpriteLoader _spriteLoader;
+        private readonly WeaponBlowPool _weaponBlowPool;
 
         private HandView _weaponView;
 
@@ -18,19 +26,26 @@ namespace Sheldier.Item
 
         private int _ammoLeft;
 
-        public GunWeapon(WeaponConfig weaponConfig, ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool) : base(weaponConfig)
+        public GunWeapon(ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool, AnimationLoader animationLoader, SpriteLoader spriteLoader)
         {
-            _weaponConfig = weaponConfig;
-            _ammoLeft = 4;
-            _reloadModule = new WeaponReloadModule(_weaponConfig);
-            _shootModule = new WeaponShootModule(_weaponConfig, projectilePool, weaponBlowPool);
+            _spriteLoader = spriteLoader;
+            _animationLoader = animationLoader;
+            _projectilePool = projectilePool;
+            _weaponBlowPool = weaponBlowPool;
+            _reloadModule = new WeaponReloadModule(animationLoader);
+            _shootModule = new WeaponShootModule(projectilePool, weaponBlowPool);
         }
 
+        public void SetDynamicWeaponData(ItemDynamicWeaponData dynamicWeaponData)
+        {
+            _dynamicWeaponData = dynamicWeaponData;
+        }
+        
         public override void Equip(HandView handView, Actor owner)
         {
             _owner = owner;
             _weaponView = handView;
-            _weaponView.AddItem(_itemConfig.Icon);
+            _weaponView.AddItem(_spriteLoader.Get(_itemConfig.GameIcon, TextDataConstants.ITEM_ICONS_DIRECTORY));
             _reloadModule.SetView(handView);
             _shootModule.SetView(handView);
             _shootModule.CreateAim();
@@ -70,9 +85,9 @@ namespace Sheldier.Item
 
         private void Reload()
         {
-            if (!_owner.InventoryModule.IsItemExists(_weaponConfig.RequiredAmmoType))
+            if (!_owner.InventoryModule.IsItemTypeExists(_dynamicWeaponData.RequiredAmmoItemName))
                 return;
-            if (_ammoLeft >= _weaponConfig.Capacity)
+            if (_ammoLeft >= _dynamicWeaponData.Capacity)
                 return;
             if (_reloadModule.IsReloading)
                 return;
@@ -80,13 +95,15 @@ namespace Sheldier.Item
         }
         private void AddAmmoAfterReloading()
         {
-            int newAmmo = _owner.InventoryModule.RemoveItem(_weaponConfig.RequiredAmmoType, _weaponConfig.Capacity - _ammoLeft).Amount;
+            int newAmmo = _owner.InventoryModule.RemoveItem(_dynamicWeaponData.RequiredAmmoItemName, _dynamicWeaponData.Capacity - _ammoLeft).Amount;
             _ammoLeft += newAmmo;
         }
 
         public override string GetExtraInfo()
         {
-            return $"{_ammoLeft}/{_weaponConfig.Capacity}";
+            return $"{_ammoLeft}/{_dynamicWeaponData.Capacity}";
         }
+
+        public GunWeapon CleanClone() => new GunWeapon(_projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader);
     }
 }

@@ -21,6 +21,8 @@ namespace Sheldier.Item
         public float AimLocalY;
         public string BlowAnimation;
         public string UseAudio;
+        public string ReloadAnimation;
+        public string RequiredAmmoItemName;
         public string ReloadAudio;
     }
 }

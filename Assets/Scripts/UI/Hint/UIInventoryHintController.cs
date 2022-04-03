@@ -24,13 +24,13 @@ namespace Sheldier.UI
             base.Initialize();
             _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<SimpleItem, bool>>()
             {
-                {InventoryHintPerformType.Use, item => !item.IsStackable},
-                {InventoryHintPerformType.Remove, item => !item.IsQuest}
+                {InventoryHintPerformType.Use, item => !item.ItemConfig.IsStackable},
+                {InventoryHintPerformType.Remove, item => !item.ItemConfig.IsQuest}
             };
             _performDictionary = new Dictionary<InventoryHintPerformType, Action>()
             {
-                {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItem); itemSwitcher.Refresh();}},
-                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItem); itemSwitcher.Refresh();}}
+                {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItem.ItemConfig.Guid); itemSwitcher.Refresh();}},
+                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItem.ItemConfig.Guid); itemSwitcher.Refresh();}}
             };
             _hintsCollection = new Dictionary<InventoryHintPerformType, UIHint>();
         }
