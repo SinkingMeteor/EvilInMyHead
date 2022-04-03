@@ -1,0 +1,18 @@
+[
+  {
+    "ItemName": "Pistol",
+    "TypeID": 0,
+    "GroupName": "Weapon",
+    "GroupID": 0,
+    "ProjectileName": "PistolProjectile",
+    "ProjectileID": 0,
+    "Damage": 0,
+    "FireRate": "0.5",
+    "Capacity": 7,
+    "AimLocalX": "0.21",
+    "AimLocalY": "0.09",
+    "BlowAnimation": "PistolWeaponBlowAnimation",
+    "UseAudio": "PistolShootAudio",
+    "ReloadAudio": "PistolReloadAudio"
+  }
+]

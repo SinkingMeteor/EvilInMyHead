@@ -7,7 +7,8 @@
     "CanInteract": false,
     "CanAttack": false,
     "CanJump": false,
-    "InteractType": 2
+    "InteractType": "Talk",
+    "InteractID": 2
   },
   {
     "NameID": "Tom",
@@ -17,6 +18,7 @@
     "CanInteract": true,
     "CanAttack": true,
     "CanJump": true,
-    "InteractType": 1
+    "InteractType": "Replace",
+    "InteractID": 1
   }
 ]

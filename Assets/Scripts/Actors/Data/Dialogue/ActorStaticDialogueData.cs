@@ -1,5 +1,6 @@
 ﻿using System;
 using Sheldier.Data;
+using UnityEngine;
 
 namespace Sheldier.Actors.Data
 {
@@ -9,5 +10,8 @@ namespace Sheldier.Actors.Data
         public string ID => NameID;
         public string NameID;
         public float TypeSpeed;
+        public float TextColorR;
+        public float TextColorG;
+        public float TextColorB;
     }
 }

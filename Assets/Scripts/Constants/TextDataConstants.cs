@@ -8,5 +8,9 @@
         public const string ACTOR_MOVEMENT_DATA = "ActorMovementData";
 
         public const string CURRENT_PLAYER = "CurrentPlayer";
+
+        public const string ITEM_CONFIG = "ItemConfig";
+        public const string WEAPON_CONFIG = "WeaponConfig";
+        public const string PROJECTILE_CONFIG = "ProjectileConfig";
     }
 }

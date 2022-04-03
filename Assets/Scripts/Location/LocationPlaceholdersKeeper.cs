@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Sheldier.Actors;
+using Sheldier.Item;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Sheldier.Item
+namespace Sheldier.GameLocation
 {
     public class LocationPlaceholdersKeeper : MonoBehaviour
     {

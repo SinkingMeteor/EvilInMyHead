@@ -1,5 +1,5 @@
 ﻿using Sheldier.Factories;
-using Zenject;
+using Sheldier.GameLocation;
 
 namespace Sheldier.Item
 {

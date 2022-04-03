@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
+using Sheldier.Common;
 using Sheldier.Common.Asyncs;
 using Sheldier.Constants;
 using Sheldier.Item;
@@ -29,10 +30,8 @@ namespace Sheldier.GameLocation
             if (_currentLocation != null)
                 await DisposeLocation();
             string path = ResourcePaths.LOCATIONS_PATH_TEMPLATE + locationName;
-            var asyncHandle = Resources.LoadAsync<Location>(path);
-            //Locations/MainColonyLocation
-            await AsyncWaitersFactory.WaitUntil(() => asyncHandle.isDone);
-            _currentLocation = GameObject.Instantiate((Location)asyncHandle.asset);
+            var asyncHandle = await ResourceLoader.LoadAsync<Location>(path);
+            _currentLocation = GameObject.Instantiate(asyncHandle);
             
             _itemSpawner.Initialize(_currentLocation.Placeholders);
             _actorSpawner.Initialize(_currentLocation.Placeholders);

@@ -29,8 +29,10 @@ namespace Sheldier.Setup
         private SceneLocationController _sceneLocationController;
         private LoadingScreenProvider _loadingScreenProvider;
         private SceneLoadingOperation _sceneLoadingOperation;
+        private ActorStaticDataLoader _actorStaticDataLoader;
         private ScenePlayerController _scenePlayerController;
         private LocalizationProvider _localizationProvider;
+        private ItemStaticDataLoader _itemStaticDataLoader;
         private AudioMixerController _audioMixerController;
         private SceneSetupOperation _sceneSetupOperation;
         private UILoadingOperation _uiLoadingOperation;
@@ -40,7 +42,6 @@ namespace Sheldier.Setup
         private DialoguesProvider _dialoguesProvider;
         private InputBindHandler _inputBindHandler;
         private ActorsEffectFactory _effectFactory;
-        private StaticDataLoader _staticDataLoader;
         private FixedTickHandler _fixedTickHandler;
         private ActorDataFactory _actorDataFactory;
         private LateTickHandler _lateTickHandler;
@@ -76,7 +77,8 @@ namespace Sheldier.Setup
             ScenePlayerController scenePlayerController, ItemSpawner itemSpawner, ActorSpawner actorSpawner,
             UIStatesController uiStatesController, UIInstaller uiInstaller, DialoguesProvider dialoguesProvider, SpeechCloudPool speechCloudPool, ISoundPlayer soundPlayer,
             CutsceneController cutsceneController, FontProvider fontProvider, FontMap fontMap, ChoiceSlotPool choiceSlotPool, SceneLocationController sceneLocationController,
-            SceneSetupOperation sceneSetupOperation, StaticDataLoader staticDataLoader, ActorDataFactory actorDataFactory, Database<ActorDynamicDialogueData> dynamicDialogueDatabase)
+            SceneSetupOperation sceneSetupOperation, ActorStaticDataLoader actorStaticDataLoader, ActorDataFactory actorDataFactory,
+            Database<ActorDynamicDialogueData> dynamicDialogueDatabase, ItemStaticDataLoader itemStaticDataLoader)
         {
             _itemMap = itemMap;
             _fontMap = fontMap;
@@ -104,15 +106,16 @@ namespace Sheldier.Setup
             _actorDataFactory = actorDataFactory;
             _fixedTickHandler = fixedTickHandler;
             _inputBindHandler = inputBindHandler;
-            _staticDataLoader = staticDataLoader;
             _dialoguesProvider = dialoguesProvider;
             _inventorySlotPool = inventorySlotPool;
             _uiStatesController = uiStatesController;
             _cutsceneController = cutsceneController;
             _uiLoadingOperation = uiLoadingOperation;
             _sceneSetupOperation = sceneSetupOperation;
+            _itemStaticDataLoader = itemStaticDataLoader;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
+            _actorStaticDataLoader = actorStaticDataLoader;
             _sceneLoadingOperation = sceneLoadingOperation;
             _loadingScreenProvider = loadingScreenProvider;
             _scenePlayerController = scenePlayerController;
@@ -131,7 +134,8 @@ namespace Sheldier.Setup
 
         private void LoadStaticData()
         {
-            _staticDataLoader.LoadStaticData();
+            _actorStaticDataLoader.LoadStaticData();
+            _itemStaticDataLoader.LoadStaticData();
         }
         private void SetDependenciesToSystems()
         {

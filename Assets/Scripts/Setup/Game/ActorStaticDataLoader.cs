@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Sheldier.Setup
 {
-    public class StaticDataLoader
+    public class ActorStaticDataLoader
     {
         private Database<ActorStaticBuildData> _actorStaticBuildDatabase;
         private Database<ActorStaticConfigData> _actorStaticConfigDatabase;

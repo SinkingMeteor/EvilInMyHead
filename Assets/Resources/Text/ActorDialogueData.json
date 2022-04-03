@@ -1,10 +1,16 @@
 [
   {
     "NameID": "Fred",
-    "TypeSpeed": 0.02
+    "TypeSpeed": "0.02",
+    "TextColorR": "1.0",
+    "TextColorG": "0.9",
+    "TextColorB": "0.52"
   },
   {
     "NameID": "Tom",
-    "TypeSpeed": 0.02
+    "TypeSpeed": "0.02",
+    "TextColorR": "1.0",
+    "TextColorG": "0.9",
+    "TextColorB": "0.52"
   }
 ]

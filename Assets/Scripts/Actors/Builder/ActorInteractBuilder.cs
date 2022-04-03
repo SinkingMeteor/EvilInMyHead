@@ -26,7 +26,7 @@ namespace Sheldier.Actors.Builder
         }
         public void Build(Actor actor, ActorStaticBuildData buildData)
         {
-            if (!buildData.CanInteract && buildData.InteractType == (int)InteractType.None) return;
+            if (!buildData.CanInteract && buildData.InteractID == (int)InteractType.None) return;
                 
             GameObject body = GameObject.Instantiate(_interactBase, actor.transform, true);
 
@@ -36,9 +36,9 @@ namespace Sheldier.Actors.Builder
                 actor.AddExtraModule(interactNotifier);
             }
 
-            if (buildData.InteractType == (int)InteractType.None) return;
+            if (buildData.InteractID == (int)InteractType.None) return;
 
-            actor.AddExtraModule(CreateInteractReceiver(body, buildData.InteractType));
+            actor.AddExtraModule(CreateInteractReceiver(body, buildData.InteractID));
         }
 
         private IExtraActorModule CreateInteractReceiver(GameObject body, int interactType)

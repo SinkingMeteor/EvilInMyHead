@@ -66,6 +66,7 @@ namespace Sheldier.UI
             cloudTMP.text = text;
 
             ActorDynamicDialogueData dynamicDialogueData = _dynamicDialogueDatabase.Get(actor.DynamicConfig.Guid);
+            cloudTMP.color = dynamicDialogueData.TextColor;
             _typingCoroutine = StartCoroutine(TypeCoroutine(text, dynamicDialogueData.TypeSpeed));
         }
         public async void CloseCloud()

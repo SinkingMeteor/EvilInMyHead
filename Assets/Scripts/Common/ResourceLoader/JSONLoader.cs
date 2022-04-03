@@ -10,7 +10,7 @@ namespace Sheldier.Common
     {
         public static T[] Load<T>(string filename)
         {
-            var data = Resources.Load<TextAsset>(ResourcePaths.JSON_PATH_DIRECTORY + filename);
+            var data = ResourceLoader.Load<TextAsset>(ResourcePaths.JSON_PATH_DIRECTORY + filename);
             if(data == null)
                 throw new NullReferenceException($"Asset of type {typeof(T)} can't be loaded");
             string rawText = data.text;

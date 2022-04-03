@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sheldier.Actors.Builder;
+using Sheldier.GameLocation;
 using Sheldier.Installers;
-using Sheldier.Item;
 
 namespace Sheldier.Actors
 {
