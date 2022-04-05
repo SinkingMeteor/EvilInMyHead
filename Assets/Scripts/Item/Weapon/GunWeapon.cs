@@ -11,41 +11,53 @@ namespace Sheldier.Item
 {
     public class GunWeapon : SimpleItem
     {
-        private ItemDynamicWeaponData _dynamicWeaponData;
-        
-        private readonly WeaponShootModule _shootModule;
-        private readonly WeaponReloadModule _reloadModule;
-        private readonly AnimationLoader _animationLoader;
-        private readonly ProjectilePool _projectilePool;
-        private readonly SpriteLoader _spriteLoader;
-        private readonly WeaponBlowPool _weaponBlowPool;
+        private readonly Database<ItemDynamicWeaponData> _dynamicWeaponDatabase;
+        private readonly Database<ItemDynamicConfigData> _dynamicConfigDatabase;
+        private readonly AssetProvider<AnimationData> _animationLoader;
+        private readonly AssetProvider<Sprite> _spriteLoader;
+        private readonly IPool<Projectile> _projectilePool;
+        private readonly IPool<WeaponBlow> _weaponBlowPool;
 
-        private HandView _weaponView;
+        private WeaponShootModule _shootModule;
+        private WeaponReloadModule _reloadModule;
+        private IHandView _weaponView;
 
         private Actor _owner;
+        
+        private ItemDynamicConfigData _dynamicConfigData;
+        private ItemDynamicWeaponData _dynamicWeaponData;
 
-        private int _ammoLeft;
 
-        public GunWeapon(ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool, AnimationLoader animationLoader, SpriteLoader spriteLoader)
+        public GunWeapon(string guid,
+                         IPool<Projectile> projectilePool,
+                         IPool<WeaponBlow> weaponBlowPool,
+                         AssetProvider<AnimationData> animationLoader,
+                         AssetProvider<Sprite> spriteLoader, 
+                         Database<ItemDynamicConfigData> dynamicConfigDatabase,
+                         Database<ItemDynamicWeaponData> dynamicWeaponDatabase) : base(guid)
         {
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _dynamicWeaponDatabase = dynamicWeaponDatabase;
             _spriteLoader = spriteLoader;
             _animationLoader = animationLoader;
             _projectilePool = projectilePool;
             _weaponBlowPool = weaponBlowPool;
-            _reloadModule = new WeaponReloadModule(animationLoader);
-            _shootModule = new WeaponShootModule(projectilePool, weaponBlowPool);
-        }
-
-        public void SetDynamicWeaponData(ItemDynamicWeaponData dynamicWeaponData)
-        {
-            _dynamicWeaponData = dynamicWeaponData;
         }
         
-        public override void Equip(HandView handView, Actor owner)
+        public override void Initialize()
+        {
+            _dynamicConfigData = _dynamicConfigDatabase.Get(Guid);
+            _dynamicWeaponData = _dynamicWeaponDatabase.Get(Guid);
+            _reloadModule = new WeaponReloadModule(_dynamicWeaponData, _animationLoader);
+            _shootModule = new WeaponShootModule(_dynamicWeaponData, _projectilePool, _weaponBlowPool);
+
+        }
+
+        public override void Equip(IHandView handView, Actor owner)
         {
             _owner = owner;
             _weaponView = handView;
-            _weaponView.AddItem(_spriteLoader.Get(_itemConfig.GameIcon, TextDataConstants.ITEM_ICONS_DIRECTORY));
+            _weaponView.AddItem(_spriteLoader.Get( _dynamicConfigData.GameIcon));
             _reloadModule.SetView(handView);
             _shootModule.SetView(handView);
             _shootModule.CreateAim();
@@ -64,21 +76,23 @@ namespace Sheldier.Item
             _owner = null;
             _weaponView = null;
         }
+
+    
         public override void Drop()
         {
         }
 
         public override Vector2 GetRotateDirection()
         {
-            var dir = _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_weaponView.transform.position).normalized;
+            var dir = _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_weaponView.Transform.position).normalized;
             dir = Quaternion.Euler(new Vector3(0.0f, 0.0f, _shootModule.KickbackAngle)) * dir;
             return dir;
         }
         private void Shoot()
         {
-            if (_ammoLeft == 0 || !_shootModule.CanShoot || !_reloadModule.CanShoot)
+            if (_dynamicWeaponData.AmmoLeft == 0 || !_shootModule.CanShoot || !_reloadModule.CanShoot)
                 return;
-            _ammoLeft -= 1;
+            _dynamicWeaponData.AmmoLeft -= 1;
             
             _shootModule.Shoot( _owner.InputController.GetNonNormalizedCursorDirectionByTransform(_shootModule.Aim.position).normalized);
         }
@@ -87,7 +101,7 @@ namespace Sheldier.Item
         {
             if (!_owner.InventoryModule.IsItemTypeExists(_dynamicWeaponData.RequiredAmmoItemName))
                 return;
-            if (_ammoLeft >= _dynamicWeaponData.Capacity)
+            if (_dynamicWeaponData.AmmoLeft >= _dynamicWeaponData.Capacity)
                 return;
             if (_reloadModule.IsReloading)
                 return;
@@ -95,15 +109,15 @@ namespace Sheldier.Item
         }
         private void AddAmmoAfterReloading()
         {
-            int newAmmo = _owner.InventoryModule.RemoveItem(_dynamicWeaponData.RequiredAmmoItemName, _dynamicWeaponData.Capacity - _ammoLeft).Amount;
-            _ammoLeft += newAmmo;
+            int newAmmo = _owner.InventoryModule.RemoveItem(_dynamicWeaponData.RequiredAmmoItemName, _dynamicWeaponData.Capacity - _dynamicWeaponData.AmmoLeft).Amount;
+            _dynamicWeaponData.AmmoLeft += newAmmo;
         }
 
         public override string GetExtraInfo()
         {
-            return $"{_ammoLeft}/{_dynamicWeaponData.Capacity}";
+            return $"{_dynamicWeaponData.AmmoLeft}/{_dynamicWeaponData.Capacity}";
         }
 
-        public GunWeapon CleanClone() => new GunWeapon(_projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader);
+        public GunWeapon CleanClone(string guid) => new GunWeapon(guid, _projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader, _dynamicConfigDatabase, _dynamicWeaponDatabase);
     }
 }

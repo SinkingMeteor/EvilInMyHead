@@ -27,7 +27,7 @@ namespace Sheldier.Common
         }
         public void FindDialogue(Actor dialogueInitiator, Actor dialogueTarget)
         {
-            DialogueSystemGraph graph = _pointers[dialogueTarget.TypeID].GetDialogue();
+            DialogueSystemGraph graph = _pointers[dialogueTarget.Type].GetDialogue();
             Actor[] actorsInDialogues = new Actor[2 + (graph.AdditionalPersons?.Length ?? 0)];
             actorsInDialogues[0] = dialogueInitiator;
             actorsInDialogues[1] = dialogueTarget;

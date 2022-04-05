@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +8,7 @@ using Sheldier.Common.Cutscene;
 using Sheldier.Common.Pause;
 using Sheldier.Constants;
 using Sheldier.GameLocation;
-using Sheldier.Item;
 using Sheldier.UI;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;

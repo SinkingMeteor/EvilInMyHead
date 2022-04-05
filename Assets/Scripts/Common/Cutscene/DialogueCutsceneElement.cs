@@ -29,7 +29,7 @@ namespace Sheldier.Common.Cutscene
             Actor[] actors = new Actor[actorsInDialogue.Length];
             for (int i = 0; i < actorsInDialogue.Length; i++)
             {
-                if (actorsInDialogue[i].Reference == TextDataConstants.CURRENT_PLAYER)
+                if (actorsInDialogue[i].Reference == AssetPathProvidersPaths.CURRENT_PLAYER)
                 {
                     actors[i] = _data.CurrentPlayer;
                     continue;

@@ -6,14 +6,11 @@ namespace Sheldier.Item
     [Serializable]
     public class ItemStaticWeaponData : IDatabaseItem
     {
-        public string ID => ItemName;
+        public string ID => TypeName;
         
-        public string ItemName;
-        public int TypeID;
+        public string TypeName;
         public string GroupName;
-        public int GroupID;
         public string ProjectileName;
-        public string ProjectileID;
         public float Damage;
         public float FireRate;
         public int Capacity;
@@ -21,8 +18,8 @@ namespace Sheldier.Item
         public float AimLocalY;
         public string BlowAnimation;
         public string UseAudio;
-        public string ReloadAnimation;
         public string RequiredAmmoItemName;
+        public string ReloadAnimation;
         public string ReloadAudio;
     }
 }

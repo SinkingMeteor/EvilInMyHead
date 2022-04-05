@@ -6,18 +6,17 @@ namespace Sheldier.Item
     [Serializable]
     public class ItemStaticConfigData : IDatabaseItem
     {
-        public string ID => ItemName;
+        public string ID => TypeName;
 
-        public string ItemName;
-        public int TypeID;
+        public string TypeName;
         public string GroupName;
-        public int GroupID;
         public int Cost;
         public int MaxStack;
         public string GameIcon;
         public bool IsEquippable;
         public bool IsStackable;
         public bool IsQuest;
+        public bool IsUsable;
         
     }
 }

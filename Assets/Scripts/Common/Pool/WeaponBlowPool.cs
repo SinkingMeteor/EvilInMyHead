@@ -1,4 +1,5 @@
-﻿using Sheldier.Data;
+﻿using Sheldier.Common.Animation;
+using Sheldier.Data;
 using Sheldier.Item;
 
 namespace Sheldier.Common.Pool
@@ -6,9 +7,9 @@ namespace Sheldier.Common.Pool
     public class WeaponBlowPool : DefaultPool<WeaponBlow>
     {
         private TickHandler _tickHandler;
-        private AnimationLoader _animationLoader;
+        private AssetProvider<AnimationData> _animationLoader;
 
-        public void SetDependencies(TickHandler tickHandler, AnimationLoader animationLoader)
+        public void SetDependencies(TickHandler tickHandler, AssetProvider<AnimationData> animationLoader)
         {
             _animationLoader = animationLoader;
             _tickHandler = tickHandler;

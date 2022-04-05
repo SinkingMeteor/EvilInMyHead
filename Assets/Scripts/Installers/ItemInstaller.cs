@@ -9,7 +9,6 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<ItemMap>().FromResource(ResourcePaths.ITEMS_MAP).AsSingle();
             Container.Bind<ItemSpawner>().AsSingle();
             Container.Bind<ItemFactory>().AsSingle();
         }

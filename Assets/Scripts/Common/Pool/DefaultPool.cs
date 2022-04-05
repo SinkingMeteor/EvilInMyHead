@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Sheldier.Common.Pool
 {
-    public abstract class DefaultPool<T> : MonoBehaviour, IPoolSetter<T> where T : MonoBehaviour, IPoolObject<T>
+    public abstract class DefaultPool<T> : MonoBehaviour, IPool<T> where T : MonoBehaviour, IPoolObject<T>
     {
         [SerializeField] private Transform poolTransform;
         [SerializeField] private int startEntitiesAmount;

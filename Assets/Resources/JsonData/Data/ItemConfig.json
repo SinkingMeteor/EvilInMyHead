@@ -1,0 +1,1 @@
+{"Items":[{"TypeName":"Pistol","GroupName":"Weapon","Cost":999,"MaxStack":1,"GameIcon":"PistolGameIcon","IsEquippable":true,"IsStackable":false,"IsQuest":false,"IsUsable":false},{"TypeName":"PistolAmmo","GroupName":"Ammo","Cost":5,"MaxStack":14,"GameIcon":"PistolAmmoGameIcon","IsEquippable":false,"IsStackable":true,"IsQuest":false,"IsUsable":false}]}

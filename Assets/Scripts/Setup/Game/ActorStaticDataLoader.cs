@@ -2,6 +2,7 @@
 using Sheldier.Common;
 using Sheldier.Constants;
 using Sheldier.Data;
+using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Setup
@@ -12,11 +13,13 @@ namespace Sheldier.Setup
         private Database<ActorStaticConfigData> _actorStaticConfigDatabase;
         private Database<ActorStaticDialogueData> _actorStaticDialogueDatabase;
         private Database<ActorStaticMovementData> _actorStaticMovementDatabase;
+        private AssetProvider<TextAsset> _dataLoader;
 
         [Inject]
         private void InjectDependencies(Database<ActorStaticBuildData> actorStaticBuildDatabase, Database<ActorStaticConfigData> actorStaticConfigDatabase,
-            Database<ActorStaticDialogueData> actorStaticDialogueDatabase, Database<ActorStaticMovementData> actorStaticMovementDatabase)
+            Database<ActorStaticDialogueData> actorStaticDialogueDatabase, Database<ActorStaticMovementData> actorStaticMovementDatabase, AssetProvider<TextAsset> dataLoader)
         {
+            _dataLoader = dataLoader;
             _actorStaticBuildDatabase = actorStaticBuildDatabase;
             _actorStaticConfigDatabase = actorStaticConfigDatabase;
             _actorStaticDialogueDatabase = actorStaticDialogueDatabase;
@@ -25,10 +28,10 @@ namespace Sheldier.Setup
         
         public void LoadStaticData()
         {
-            _actorStaticBuildDatabase.FillDatabase(TextDataConstants.ACTOR_BUILD_DATA);
-            _actorStaticConfigDatabase.FillDatabase(TextDataConstants.ACTOR_CONFIG);
-            _actorStaticDialogueDatabase.FillDatabase(TextDataConstants.ACTOR_DIALOGUE_DATA);
-            _actorStaticMovementDatabase.FillDatabase(TextDataConstants.ACTOR_MOVEMENT_DATA);
+            _actorStaticBuildDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_BUILD_DATA));
+            _actorStaticConfigDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_CONFIG));
+            _actorStaticDialogueDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_DIALOGUE_DATA));
+            _actorStaticMovementDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_MOVEMENT_DATA));
         }
     }
 }

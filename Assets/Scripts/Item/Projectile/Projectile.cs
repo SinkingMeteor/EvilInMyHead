@@ -18,16 +18,16 @@ namespace Sheldier.Item
         private Database<ItemStaticProjectileData> _staticProjectileData;
         private ItemStaticProjectileData _config;
         private Coroutine _projectileLifetime;
-        private IPoolSetter<Projectile> _poolSetter;
+        private IPool<Projectile> _pool;
         private TickHandler _tickHandler;
-        private SpriteLoader _spriteLoader;
+        private AssetProvider<Sprite> _spriteLoader;
         private bool _isPaused;
 
-        public void Initialize(IPoolSetter<Projectile> poolSetter)
+        public void Initialize(IPool<Projectile> pool)
         {
-            _poolSetter = poolSetter;
+            _pool = pool;
         }
-        public void SetDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileData, SpriteLoader spriteLoader)
+        public void SetDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileData, AssetProvider<Sprite> spriteLoader)
         {
             _spriteLoader = spriteLoader;
             _staticProjectileData = staticProjectileData;
@@ -49,7 +49,7 @@ namespace Sheldier.Item
         {
             _config = _staticProjectileData.Get(typeName);
             _projectileLifetime = StartCoroutine(StartLifetimeCoroutine());
-            spriteRenderer.sprite = _spriteLoader.Get(_config.Icon, TextDataConstants.PROJECTILES_ICONS_DIRECTORY);
+            spriteRenderer.sprite = _spriteLoader.Get(_config.Icon);
         }
 
         public void Tick()
@@ -78,7 +78,7 @@ namespace Sheldier.Item
                 totalTime -= Time.deltaTime;
                 yield return null;
             }
-            _poolSetter.SetToPull(this);
+            _pool.SetToPull(this);
         }
 
 

@@ -58,11 +58,11 @@ namespace Sheldier.Actors.Inventory
         }
         public InventoryOperationReport AddItem(ItemDynamicConfigData item)
         {
-            if (!IsItemTypeExists(item.ItemName) && GetFreeSlotsAmount() == 0)
+            if (!IsItemTypeExists(item.TypeName) && GetFreeSlotsAmount() == 0)
                 return InventoryOperationReport.FailReport;
-            if(!IsItemTypeExists(item.ItemName))
-                _itemsCollection.Add(item.ItemName, item.IsStackable ? new StackableInventoryGroup(this) : new InventoryGroup(this));
-            return _itemsCollection[item.ItemName].AddItem(item);
+            if(!IsItemTypeExists(item.TypeName))
+                _itemsCollection.Add(item.TypeName, item.IsStackable ? new StackableInventoryGroup(this) : new InventoryGroup(this));
+            return _itemsCollection[item.TypeName].AddItem(item);
         }
 
         public InventoryOperationReport RemoveItem(string guid)

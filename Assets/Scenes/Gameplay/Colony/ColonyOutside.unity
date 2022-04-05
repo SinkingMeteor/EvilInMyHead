@@ -172,6 +172,196 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &825246618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825246619}
+  - component: {fileID: 825246620}
+  m_Layer: 0
+  m_Name: ActorExcelLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &825246619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825246618}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1000075881}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &825246620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825246618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6f57e154f0014b41a35e7037adeee9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _sheets
+      Entry: 7
+      Data: 0|Sheldier.Data.SheetLoader+RSheetDict, Sheldier
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ActorConfig
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 1280810898
+    - Name: TableID
+      Entry: 1
+      Data: 1kufhhrXXnZhmvxoFsErUqesZOuoCIPf0L-gXXI3HNG0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ActorBuildData
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 406629531
+    - Name: TableID
+      Entry: 1
+      Data: 1kufhhrXXnZhmvxoFsErUqesZOuoCIPf0L-gXXI3HNG0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ActorMovementData
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 437723383
+    - Name: TableID
+      Entry: 1
+      Data: 1kufhhrXXnZhmvxoFsErUqesZOuoCIPf0L-gXXI3HNG0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ActorDialogueData
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 1440554938
+    - Name: TableID
+      Entry: 1
+      Data: 1kufhhrXXnZhmvxoFsErUqesZOuoCIPf0L-gXXI3HNG0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  _prettyPrint: 0
+--- !u!1 &1000075880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000075881}
+  m_Layer: 0
+  m_Name: ExcelLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1000075881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000075880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 825246619}
+  - {fileID: 1588100108}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1546267473
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +425,163 @@ Transform:
   m_Father: {fileID: 1936077392}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1588100107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1588100108}
+  - component: {fileID: 1588100109}
+  m_Layer: 0
+  m_Name: ItemExcelLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1588100108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588100107}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1000075881}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1588100109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588100107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b138169db74ac88bd2878138bead8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _sheets
+      Entry: 7
+      Data: 0|Sheldier.Data.SheetLoader+RSheetDict, Sheldier
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ItemConfig
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 0
+    - Name: TableID
+      Entry: 1
+      Data: 1Tf9ZhOxQgaWTtB00ZrX3eYU9oAdyhVTia0FwCN64toI
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: WeaponConfig
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 425416934
+    - Name: TableID
+      Entry: 1
+      Data: 1Tf9ZhOxQgaWTtB00ZrX3eYU9oAdyhVTia0FwCN64toI
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ProjectileConfig
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 218250153
+    - Name: TableID
+      Entry: 1
+      Data: 1Tf9ZhOxQgaWTtB00ZrX3eYU9oAdyhVTia0FwCN64toI
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: InventorySlot
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Data.SheetLoader+Sheet, Sheldier
+    - Name: Gid
+      Entry: 1
+      Data: 2082413005
+    - Name: TableID
+      Entry: 1
+      Data: 1Tf9ZhOxQgaWTtB00ZrX3eYU9oAdyhVTia0FwCN64toI
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  _prettyPrint: 0
 --- !u!1 &1936077390
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +731,10 @@ PrefabInstance:
     - target: {fileID: 5985473700246864413, guid: c642df762ffc11b49878bfa67588745c, type: 3}
       propertyPath: m_Name
       value: ColonyBedroomLocation
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985473700246864413, guid: c642df762ffc11b49878bfa67588745c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5985473700246864414, guid: c642df762ffc11b49878bfa67588745c, type: 3}
       propertyPath: m_RootOrder

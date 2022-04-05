@@ -14,7 +14,7 @@ namespace Sheldier.Actors
     {
         public event Action OnWillRemoveControl;
         public event Action OnAddedControl;
-        public string TypeID => _dynamicConfigData.NameID;
+        public string Type => _dynamicConfigData.TypeName;
         public ActorInputController InputController => _actorInputController;
         public ActorNotifyModule Notifier => _notifier;
         public ActorsInventoryModule InventoryModule => _inventoryModule;

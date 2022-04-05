@@ -2,7 +2,7 @@
 
 namespace Sheldier.UI
 {
-    public interface IUISimpleItemSwitcher : IUIItemSwitcher<SimpleItem>
+    public interface IUISimpleItemSwitcher : IUIItemSwitcher<ItemDynamicConfigData>
     {
     }
 }

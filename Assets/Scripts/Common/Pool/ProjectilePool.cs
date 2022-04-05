@@ -1,5 +1,6 @@
 ﻿using Sheldier.Data;
 using Sheldier.Item;
+using UnityEngine;
 
 namespace Sheldier.Common.Pool
 {
@@ -7,9 +8,9 @@ namespace Sheldier.Common.Pool
     {
         private Database<ItemStaticProjectileData> _staticProjectileDatabase;
         private TickHandler _tickHandler;
-        private SpriteLoader _spriteLoader;
+        private AssetProvider<Sprite> _spriteLoader;
 
-        public void SetDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileDatabase, SpriteLoader spriteLoader)
+        public void SetDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileDatabase, AssetProvider<Sprite> spriteLoader)
         {
             _staticProjectileDatabase = staticProjectileDatabase;
             _spriteLoader = spriteLoader;

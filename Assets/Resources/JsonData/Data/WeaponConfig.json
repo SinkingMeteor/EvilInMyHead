@@ -1,0 +1,1 @@
+{"Items":[{"TypeName":"Pistol","GroupName":"Weapon","ProjectileName":"PistolProjectile","Damage":0.0,"FireRate":0.5,"Capacity":7,"AimLocalX":0.20999999344348908,"AimLocalY":0.09000000357627869,"BlowAnimation":"PistolWeaponBlowAnimation","UseAudio":"PistolShootAudio","RequiredAmmoItemName":"PistolAmmo","ReloadAnimation":"PistolReloadAnimation","ReloadAudio":"PistolReloadAudio"}]}

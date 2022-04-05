@@ -15,33 +15,29 @@ namespace Sheldier.Item
         
         private Coroutine _reduceKickbackCoroutine;
         private Coroutine _shootCooldownCoroutine;
-        private HandView _weaponView;
+        private IHandView _weaponView;
 
         private float _kickbackAngle;
         private float _kickbackPower;
 
-        private readonly ProjectilePool _projectilePool;
-        private readonly WeaponBlowPool _weaponBlowPool;
+        private readonly IPool<Projectile> _projectilePool;
+        private readonly IPool<WeaponBlow> _weaponBlowPool;
         
         private ItemDynamicWeaponData _weaponConfig;
         private WaitForSeconds _shootCooldown;
         private GameObject _aim;
 
 
-        public WeaponShootModule(ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool)
+        public WeaponShootModule(ItemDynamicWeaponData staticWeaponData, IPool<Projectile> projectilePool, IPool<WeaponBlow> weaponBlowPool)
         {
+            _weaponConfig = staticWeaponData;
             _projectilePool = projectilePool;
             _weaponBlowPool = weaponBlowPool;
+            _shootCooldown = new WaitForSeconds(_weaponConfig.FireRate);
             _canShoot = true;
         }
 
-        public void SetWeaponData(ItemDynamicWeaponData dynamicWeaponData)
-        {
-            _weaponConfig = dynamicWeaponData;
-            _shootCooldown = new WaitForSeconds(_weaponConfig.FireRate);
-        }
-        
-        public void SetView(HandView weaponView)
+        public void SetView(IHandView weaponView)
         {
             _weaponView = weaponView;
         }
@@ -49,7 +45,7 @@ namespace Sheldier.Item
         public void CreateAim()
         {
             _aim = new GameObject("Aim");
-            _aim.transform.SetParent(_weaponView.transform);
+            _aim.transform.SetParent(_weaponView.Transform);
             _aim.transform.localPosition = new Vector3(_weaponConfig.AimLocalX, _weaponConfig.AimLocalY, 0.0f);
             _aim.transform.localRotation = Quaternion.Euler(Vector3.zero);
             _aim.transform.localScale = Vector3.one;
@@ -61,7 +57,7 @@ namespace Sheldier.Item
             Projectile projectile = _projectilePool.GetFromPool();
             CreateKickback();
             var position = _aim.transform.position;
-            var rotation = _weaponView.transform.rotation;
+            var rotation = _weaponView.Transform.rotation;
             var scale = _aim.transform.lossyScale;
 
             projectile.transform.position = position;
@@ -76,14 +72,14 @@ namespace Sheldier.Item
             blow.transform.localScale = scale;
             blow.SetAnimation(_weaponConfig.BlowAnimation);
 
-            _shootCooldownCoroutine = _weaponView.StartCoroutine(ShootCooldownCoroutine());
+            _shootCooldownCoroutine = _weaponView.Behaviour.StartCoroutine(ShootCooldownCoroutine());
         }
         private void CreateKickback()
         {
             _kickbackAngle = Random.value > 0.5 ?  Random.Range(-20.0f, -10.0f) : Random.Range(10.0f, 20.0f);
             if (_reduceKickbackCoroutine != null)
-                _weaponView.StopCoroutine(_reduceKickbackCoroutine);
-            _reduceKickbackCoroutine = _weaponView.StartCoroutine(ReduceKickbackPower());
+                _weaponView.Behaviour.StopCoroutine(_reduceKickbackCoroutine);
+            _reduceKickbackCoroutine = _weaponView.Behaviour.StartCoroutine(ReduceKickbackPower());
         }
         private IEnumerator ReduceKickbackPower()
         {
@@ -105,9 +101,9 @@ namespace Sheldier.Item
         public void Dispose()
         {
             if(_reduceKickbackCoroutine != null)
-                _weaponView.StopCoroutine(_reduceKickbackCoroutine);
+                _weaponView.Behaviour.StopCoroutine(_reduceKickbackCoroutine);
             if(_shootCooldownCoroutine != null)
-                _weaponView.StopCoroutine(_shootCooldownCoroutine);
+                _weaponView.Behaviour.StopCoroutine(_shootCooldownCoroutine);
             GameObject.Destroy(_aim);
             _weaponView = null;
         }

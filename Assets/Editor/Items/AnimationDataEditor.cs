@@ -23,7 +23,7 @@ namespace SheldierEditor.Item
         {
             DrawDefaultInspector();
 
-            Rect previewRect = EditorGUILayout.GetControlRect(false, WeaponPreview.IconSize);
+            Rect previewRect = EditorGUILayout.GetControlRect(false, 256);
             var texture = _weaponPreview.Render();
             GUI.DrawTexture(previewRect, texture, ScaleMode.ScaleToFit, false);
             EditorUtility.SetDirty(target);

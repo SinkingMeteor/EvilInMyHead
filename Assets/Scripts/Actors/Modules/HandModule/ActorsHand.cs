@@ -1,4 +1,5 @@
-﻿using Sheldier.Common;
+﻿using System;
+using Sheldier.Common;
 using Sheldier.Factories;
 using Sheldier.Item;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace Sheldier.Actors.Hand
         }
         private void Equip(ItemDynamicConfigData dynamicConfigData)
         {
-            SimpleItem item = _itemFactory.GetItem(dynamicConfigData.Guid);
+            SimpleItem item = _itemFactory.GetItem(dynamicConfigData.ID);
             if (!dynamicConfigData.IsEquippable)
                 return;
             if (_currentItem == item)

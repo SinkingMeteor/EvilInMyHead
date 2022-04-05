@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sheldier.Common.Animation;
 using Sheldier.Common.Pool;
 using Sheldier.Data;
 using Sheldier.Item;
+using UnityEngine;
 using Zenject;
 
 namespace Sheldier.Factories
@@ -12,10 +14,10 @@ namespace Sheldier.Factories
         
         private WeaponItemFactory _weaponItemFactory;
         private AmmoItemFactory _ammoItemFactory;
-        private ProjectilePool _projectilePool;
-        private WeaponBlowPool _weaponBlowPool;
-        private AnimationLoader _animationLoader;
-        private SpriteLoader _spriteLoader;
+        private IPool<Projectile> _projectilePool;
+        private IPool<WeaponBlow> _weaponBlowPool;
+        private AssetProvider<Sprite> _spriteLoader;
+        private AssetProvider<AnimationData> _animationLoader;
 
         private Database<ItemStaticWeaponData> _staticWeaponDatabase;
         private Database<ItemDynamicWeaponData> _dynamicWeaponDatabase;
@@ -28,14 +30,15 @@ namespace Sheldier.Factories
         {
             _subFactories = new Dictionary<string, ISubItemFactory>()
             {
-                {"Weapon", new WeaponItemFactory(_projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader, _staticWeaponDatabase, _dynamicWeaponDatabase)},
+                {"Weapon", new WeaponItemFactory(_projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader,
+                    _staticWeaponDatabase, _dynamicWeaponDatabase, _dynamicConfigDatabase)},
                 {"Ammo", new AmmoItemFactory()}
             };
         }
         [Inject]
-        public void InjectDependencies(ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool, AnimationLoader animationLoader, SpriteLoader spriteLoader, 
-            Database<ItemStaticWeaponData> staticWeaponDatabase, Database<ItemDynamicWeaponData> dynamicWeaponDatabase, Database<ItemStaticConfigData> staticConfigDatabase,
-            Database<ItemDynamicConfigData> dynamicConfigDatabase)
+        public void InjectDependencies(IPool<Projectile> projectilePool, IPool<WeaponBlow> weaponBlowPool, AssetProvider<Sprite> spriteLoader, 
+            AssetProvider<AnimationData> animationLoader, Database<ItemStaticWeaponData> staticWeaponDatabase, Database<ItemDynamicWeaponData> dynamicWeaponDatabase, 
+            Database<ItemStaticConfigData> staticConfigDatabase, Database<ItemDynamicConfigData> dynamicConfigDatabase)
         {
             _staticConfigDatabase = staticConfigDatabase;
             _dynamicConfigDatabase = dynamicConfigDatabase;
@@ -62,8 +65,7 @@ namespace Sheldier.Factories
         public SimpleItem GetItem(string guid)
         {
             ItemDynamicConfigData dynamicConfigData = _dynamicConfigDatabase.Get(guid);
-            SimpleItem item = _subFactories[dynamicConfigData.ItemName].GetItem(guid);
-            item.SetDynamicConfig(dynamicConfigData);
+            SimpleItem item = _subFactories[dynamicConfigData.TypeName].GetItem(guid, dynamicConfigData.TypeName);
             return item;
         }
         

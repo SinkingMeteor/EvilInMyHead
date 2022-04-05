@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sheldier.Common.Animation;
 using Sheldier.Common.Pool;
 using Sheldier.Data;
 using Sheldier.Item;
+using UnityEngine;
 
 namespace Sheldier.Factories
 {
     public class WeaponItemFactory : ISubItemFactory
     {
-        private readonly ProjectilePool _projectilePool;
-        private readonly WeaponBlowPool _weaponBlowPool;
-        private readonly SpriteLoader _spriteLoader;
-        private readonly AnimationLoader _animationLoader;
+        private readonly IPool<Projectile> _projectilePool;
+        private readonly IPool<WeaponBlow> _weaponBlowPool;
+        private readonly AssetProvider<Sprite> _spriteLoader;
+        private readonly AssetProvider<AnimationData> _animationLoader;
 
         private readonly Database<ItemStaticWeaponData> _staticWeaponDatabse;
+        private readonly Database<ItemDynamicConfigData> _dynamicConfigDatabase;
         private readonly Database<ItemDynamicWeaponData> _dynamicWeaponDatabase;
-        
+
         private Dictionary<string, GunWeapon> _gunsCollection;
 
-        public WeaponItemFactory(ProjectilePool projectilePool, WeaponBlowPool weaponBlowPool, AnimationLoader animationLoader, SpriteLoader spriteLoader,
-            Database<ItemStaticWeaponData> staticWeaponDatabse, Database<ItemDynamicWeaponData> dynamicWeaponDatabase)
+        public WeaponItemFactory(IPool<Projectile> projectilePool, IPool<WeaponBlow> weaponBlowPool, AssetProvider<AnimationData> animationLoader, AssetProvider<Sprite> spriteLoader,
+            Database<ItemStaticWeaponData> staticWeaponDatabse, Database<ItemDynamicWeaponData> dynamicWeaponDatabase, Database<ItemDynamicConfigData> dynamicConfigDatabase)
         {
+            _dynamicConfigDatabase = dynamicConfigDatabase;
             _staticWeaponDatabse = staticWeaponDatabse;
             _dynamicWeaponDatabase = dynamicWeaponDatabase;
             _animationLoader = animationLoader;
@@ -30,7 +34,7 @@ namespace Sheldier.Factories
 
             _gunsCollection = new Dictionary<string, GunWeapon>()
             {
-                {"Pistol", new GunWeapon(_projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader)}
+                {"Pistol", new GunWeapon(Guid.NewGuid().ToString(), _projectilePool, _weaponBlowPool, _animationLoader, _spriteLoader, _dynamicConfigDatabase, _dynamicWeaponDatabase)}
             };
         }
 
@@ -41,11 +45,10 @@ namespace Sheldier.Factories
             _dynamicWeaponDatabase.Add(guid, dynamicWeaponData);
         }
 
-        public SimpleItem GetItem(string guid)
+        public SimpleItem GetItem(string guid, string typeName)
         {
             ItemDynamicWeaponData dynamicWeaponData = _dynamicWeaponDatabase.Get(guid);
-             GunWeapon gunWeapon = _gunsCollection[dynamicWeaponData.ItemName].CleanClone();
-             gunWeapon.SetDynamicWeaponData(dynamicWeaponData);
+             GunWeapon gunWeapon = _gunsCollection[dynamicWeaponData.TypeName].CleanClone(guid);
              return gunWeapon;
         }
     }

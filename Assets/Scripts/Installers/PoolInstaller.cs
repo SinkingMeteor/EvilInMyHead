@@ -15,12 +15,12 @@ namespace Sheldier.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<ProjectilePool>().FromInstance(projectilePool).AsSingle();
-            Container.Bind<WeaponBlowPool>().FromInstance(weaponBlowPool).AsSingle();
-            Container.Bind<SpeechCloudPool>().FromInstance(speechCloudPool).AsSingle();
-            Container.Bind<InventorySlotPool>().FromInstance(inventorySlotPool).AsSingle();
-            Container.Bind<ChoiceSlotPool>().FromInstance(choiceSlotPool).AsSingle();
-            Container.Bind<UIHintPool>().FromInstance(uiHintPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<ProjectilePool>().FromInstance(projectilePool).AsSingle();
+            Container.BindInterfacesAndSelfTo<WeaponBlowPool>().FromInstance(weaponBlowPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<SpeechCloudPool>().FromInstance(speechCloudPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<InventorySlotPool>().FromInstance(inventorySlotPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<ChoiceSlotPool>().FromInstance(choiceSlotPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIHintPool>().FromInstance(uiHintPool).AsSingle();
         }
     }
 }

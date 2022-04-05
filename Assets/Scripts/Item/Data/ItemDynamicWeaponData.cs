@@ -7,42 +7,51 @@ namespace Sheldier.Item
     public class ItemDynamicWeaponData : IDatabaseItem
     {
         public string ID => Guid;
+        public float AimLocalX => _aimLocalX;
+        public float AimLocalY => _aimLocalY;
+        public string ProjectileName => _projectileName;
+        public string TypeName => _typeName;
+        public string GroupName => _groupName;
+        public string BlowAnimation => _blowAnimation;
+        public string UseAudio => _useAudio;
+        public string RequiredAmmoItemName => _requiredAmmoItemName;
+        public string ReloadAnimation => _reloadAnimation;
+        public string ReloadAudio => _reloadAudio;
 
         public string Guid;
-        public string ItemName;
-        public int TypeID;
-        public string GroupName;
-        public int GroupID;
-        public string ProjectileName;
-        public string ProjectileID;
         public float Damage;
         public float FireRate;
         public int Capacity;
-        public float AimLocalX;
-        public float AimLocalY;
-        public string BlowAnimation;
-        public string ReloadAnimation;
-        public string UseAudio;
-        public string ReloadAudio;
-        public string RequiredAmmoItemName;
         public int AmmoLeft;
+
+        private float _aimLocalX;
+        private float _aimLocalY;
+        private string _projectileName;
+        private string _typeName;
+        private string _groupName;
+        private string _blowAnimation;
+        private string _useAudio;
+        private string _requiredAmmoItemName;
+        private string _reloadAnimation;
+        private string _reloadAudio;
 
         public ItemDynamicWeaponData(string guid, ItemStaticWeaponData staticWeaponData)
         {
-            ItemName = staticWeaponData.ItemName;
-            TypeID = staticWeaponData.TypeID;
-            GroupName = staticWeaponData.GroupName;
-            GroupID = staticWeaponData.GroupID;
-            ProjectileName = staticWeaponData.ProjectileName;
-            ProjectileID = staticWeaponData.ProjectileID;
+            Guid = guid;
+            _typeName = staticWeaponData.TypeName;
+            _groupName = staticWeaponData.GroupName;
+            _projectileName = staticWeaponData.ProjectileName;
             Damage = staticWeaponData.Damage;
             FireRate = staticWeaponData.FireRate;
             Capacity = staticWeaponData.Capacity;
-            AimLocalX = staticWeaponData.AimLocalX;
-            AimLocalY = staticWeaponData.AimLocalY;
-            BlowAnimation = staticWeaponData.BlowAnimation;
-            UseAudio = staticWeaponData.UseAudio;
-            ReloadAudio = staticWeaponData.ReloadAudio;
+            _aimLocalX = staticWeaponData.AimLocalX;
+            _aimLocalY = staticWeaponData.AimLocalY;
+            _blowAnimation = staticWeaponData.BlowAnimation;
+            _useAudio = staticWeaponData.UseAudio;
+            _requiredAmmoItemName = staticWeaponData.RequiredAmmoItemName;
+            _reloadAnimation = staticWeaponData.ReloadAnimation;
+            _reloadAudio = staticWeaponData.ReloadAudio;
+            AmmoLeft = UnityEngine.Random.Range(0, Capacity);
         }
     }
 }

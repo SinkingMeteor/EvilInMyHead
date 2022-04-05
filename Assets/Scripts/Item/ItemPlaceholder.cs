@@ -70,12 +70,6 @@ namespace Sheldier.Item
             Gizmos.DrawSphere(transform.position, 0.1f);
         }
 
-        private void OnValidate()
-        {
-            if (itemReference == null) return;
-            amount = Mathf.Clamp(amount, 1, _dynamicConfigData.MaxStack);
-        }
-
         [Button("Setup")]
         private void SetupPlaceholder()
         {

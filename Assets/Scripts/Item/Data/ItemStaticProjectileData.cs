@@ -6,10 +6,9 @@ namespace Sheldier.Item
     [Serializable]
     public class ItemStaticProjectileData : IDatabaseItem
     {
-        public string ID => TypeID;
+        public string ID => TypeName;
         
-        public string ItemName;
-        public string TypeID;
+        public string TypeName;
         public float Duration;
         public float Speed;
         public string Icon;

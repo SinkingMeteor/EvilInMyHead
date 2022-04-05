@@ -18,8 +18,8 @@ namespace Sheldier.GameLocation
         [Button]
         private void FindAllPlaceholders()
         {
-            itemPlaceholders = FindObjectsOfType<ItemPlaceholder>();
-            actorPlaceholders = FindObjectsOfType<ActorPlaceholder>();
+            itemPlaceholders = GetComponentsInChildren<ItemPlaceholder>();
+            actorPlaceholders =  GetComponentsInChildren<ActorPlaceholder>();
 
         }
 #endif

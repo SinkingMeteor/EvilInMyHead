@@ -18,7 +18,7 @@ namespace Sheldier.Actors.Data
         public ActorDynamicDialogueData(string guid, ActorStaticDialogueData staticDialogueData)
         {
             Guid = guid;
-            NameID = staticDialogueData.NameID;
+            NameID = staticDialogueData.TypeName;
             TypeSpeed = staticDialogueData.TypeSpeed;
             ColorData = new[]
                 {staticDialogueData.TextColorR, staticDialogueData.TextColorG, staticDialogueData.TextColorB};

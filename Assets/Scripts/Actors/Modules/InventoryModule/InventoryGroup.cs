@@ -26,7 +26,7 @@ namespace Sheldier.Actors.Inventory
         {
             if (_itemStorage.GetFreeSlotsAmount() == 0)
                 return InventoryOperationReport.FailReport;
-            _collection.Add(dynamicConfigData.Guid, dynamicConfigData);
+            _collection.Add(dynamicConfigData.ID, dynamicConfigData);
             return new InventoryOperationReport() {IsCompleted = true, Amount = 1};
         }
 

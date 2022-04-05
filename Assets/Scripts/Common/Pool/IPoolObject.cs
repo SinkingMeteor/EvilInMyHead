@@ -5,7 +5,7 @@ namespace Sheldier.Common.Pool
 {
     public interface IPoolObject<T> : ITransformable, IResetable where T : MonoBehaviour
     {
-        void Initialize(IPoolSetter<T> poolSetter);
+        void Initialize(IPool<T> pool);
 
         void OnInstantiated();
 

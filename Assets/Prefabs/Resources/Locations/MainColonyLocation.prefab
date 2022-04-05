@@ -8021,10 +8021,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPlaceholders:
-  - {fileID: 900251763515350160}
-  - {fileID: 900251764473314533}
   - {fileID: 900251764696600821}
+  - {fileID: 900251764473314533}
   - {fileID: 900251764672193042}
+  - {fileID: 900251763515350160}
   actorPlaceholders:
   - {fileID: 900251763378160681}
   - {fileID: 900251764688687981}
@@ -8926,7 +8926,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5ee3889215fb77847be91041987692af, type: 3}
-  m_Color: {r: 0.509434, g: 0.507031, b: 0.507031, a: 1}
+  m_Color: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

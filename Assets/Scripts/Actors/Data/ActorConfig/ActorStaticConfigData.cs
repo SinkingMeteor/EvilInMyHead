@@ -6,9 +6,9 @@ namespace Sheldier.Actors.Data
     [Serializable]
     public struct ActorStaticConfigData : IDatabaseItem
     {
-        public string ID => NameID;
+        public string ID => TypeName;
 
-        public string NameID;
+        public string TypeName;
         public string ActorAppearance;
         public string ActorAvatar;
     }

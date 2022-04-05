@@ -22,15 +22,15 @@ namespace Sheldier.UI
         [SerializeField] private Image hintIcon;
         [SerializeField] private TextMeshProUGUI hintTitle;
             
-        private IPoolSetter<UIHint> _poolSetter;
+        private IPool<UIHint> _pool;
         private Coroutine _waitCoroutine;
         private IFontProvider _fontProvider;
 
-        public void Initialize(IPoolSetter<UIHint> poolSetter)
+        public void Initialize(IPool<UIHint> pool)
         {
             for (int i = 0; i < appearingAnimations.Length; i++)
                 appearingAnimations[i].Initialize();
-            _poolSetter = poolSetter;
+            _pool = pool;
             hintTitle.font = _fontProvider.GetActualFont(FontTypeRequirer);
             _fontProvider.AddListener(this);
             
@@ -60,7 +60,7 @@ namespace Sheldier.UI
         }
         public void Deactivate()
         {
-            _poolSetter.SetToPull(this);
+            _pool.SetToPull(this);
         }
 
         public void Reset()

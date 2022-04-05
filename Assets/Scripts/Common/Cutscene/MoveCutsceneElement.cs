@@ -27,7 +27,7 @@ namespace Sheldier.Common.Cutscene
 
         public async Task PlayCutScene()
         {
-            string currentActorToMove = actorToMove.Reference == TextDataConstants.CURRENT_PLAYER ? _data.CurrentPlayer.TypeID : actorToMove.Reference; 
+            string currentActorToMove = actorToMove.Reference == AssetPathProvidersPaths.CURRENT_PLAYER ? _data.CurrentPlayer.Type : actorToMove.Reference; 
             if(!_data.ActorSpawner.ActorsOnScene.ContainsKey(currentActorToMove))
                 return;
             _isFinished = false;

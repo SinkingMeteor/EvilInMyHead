@@ -8,15 +8,13 @@ namespace Sheldier.Actors.Data
     {
         public string ID => Guid;
         public string Guid;
-        public string NameID;
-        public string StepSound;
-        public int Speed;
+        public string TypeName;
+        public float Speed;
 
         public ActorDynamicMovementData(string guid, ActorStaticMovementData staticMovementData)
         {
             Guid = guid;
-            NameID = staticMovementData.NameID;
-            StepSound = staticMovementData.StepSound;
+            TypeName = staticMovementData.TypeName;
             Speed = staticMovementData.Speed;
         }
     }

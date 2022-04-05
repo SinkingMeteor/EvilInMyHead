@@ -15,7 +15,7 @@ namespace Sheldier.UI
     public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener, IFontRequier
     {
         public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
-        public event Action<SimpleItem> OnCurrentItemChanged;
+        public event Action<ItemDynamicConfigData> OnCurrentItemChanged;
         
         [SerializeField] private Image selectedItemImage;
         [SerializeField] private TextMeshProUGUI titleTMP;
@@ -134,7 +134,7 @@ namespace Sheldier.UI
                 inventoryItems.AddRange(inventoryGroup.Value.Items.Values);
             return inventoryItems;
         }
-        private InventorySlot InstantiateSlot(SimpleItem inventoryItem)
+        private InventorySlot InstantiateSlot(ItemDynamicConfigData inventoryItem)
         {
             InventorySlot slot = _inventorySlotPool.GetFromPool();
             slot.transform.SetParent(slotsParent);

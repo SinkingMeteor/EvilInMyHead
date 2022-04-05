@@ -29,7 +29,7 @@ namespace Sheldier.Actors.Inventory
                 return new InventoryOperationReport()
                     {IsCompleted = false, Amount = totalAmountToAdd - remainedAmountToAdd};
 
-            _collection.Add(item.Guid, item);
+            _collection.Add(item.ID, item);
             item.Amount = remainedAmountToAdd;
             return new InventoryOperationReport() {IsCompleted = true, Amount = totalAmountToAdd};
         }

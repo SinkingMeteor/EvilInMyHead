@@ -26,11 +26,11 @@ namespace Sheldier.UI
         
         private IDialogueReplica _nextReplica;
         private IFontProvider _fontProvider;
-        private IPoolSetter<ChoiceSlot> _poolSetter;
+        private IPool<ChoiceSlot> _pool;
 
-        public void Initialize(IPoolSetter<ChoiceSlot> poolSetter)
+        public void Initialize(IPool<ChoiceSlot> pool)
         {
-            _poolSetter = poolSetter;
+            _pool = pool;
             _fontProvider.AddListener(this);
             titleTMP.font = _fontProvider.GetActualFont(FontTypeRequirer);
         }
@@ -62,7 +62,7 @@ namespace Sheldier.UI
         public async Task Deactivate()
         {
             await disappearingAnimation.PlayAnimation();
-            _poolSetter.SetToPull(this);
+            _pool.SetToPull(this);
         }
 
         public void Reset()

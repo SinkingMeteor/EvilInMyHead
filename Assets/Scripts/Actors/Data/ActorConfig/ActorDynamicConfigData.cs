@@ -9,14 +9,14 @@ namespace Sheldier.Actors.Data
         public string ID => Guid;
 
         public string Guid;
-        public string NameID;
+        public string TypeName;
         public string ActorAppearance;
         public string ActorAvatar;
 
         public ActorDynamicConfigData(string guid, ActorStaticConfigData staticConfigData)
         {
             Guid = guid;
-            NameID = staticConfigData.NameID;
+            TypeName = staticConfigData.TypeName;
             ActorAppearance = staticConfigData.ActorAppearance;
             ActorAvatar = staticConfigData.ActorAvatar;
         }

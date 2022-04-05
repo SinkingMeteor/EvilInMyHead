@@ -14,16 +14,16 @@ namespace Sheldier.Item
         public Transform Transform => transform;
         
         [SerializeField] private SimpleAnimator animator;
-        private IPoolSetter<WeaponBlow> _poolSetter;
-        private AnimationLoader _animationLoader;
+        private IPool<WeaponBlow> _pool;
+        private AssetProvider<AnimationData> _animationLoader;
 
-        public void Initialize(IPoolSetter<WeaponBlow> poolSetter)
+        public void Initialize(IPool<WeaponBlow> pool)
         {
-            _poolSetter = poolSetter;
+            _pool = pool;
             animator.Initialize();
         }
 
-        public void SetDependencies(TickHandler tickHandler, AnimationLoader animationLoader)
+        public void SetDependencies(TickHandler tickHandler, AssetProvider<AnimationData> animationLoader)
         {
             _animationLoader = animationLoader;
             animator.SetDependencies(tickHandler);
@@ -33,14 +33,14 @@ namespace Sheldier.Item
         }
         public void SetAnimation(string data)
         {
-            animator.Play(_animationLoader.Get(data, TextDataConstants.WEAPON_BLOW_ANIMATIONS_DIRECTORY));
+            animator.Play(_animationLoader.Get(data));
             animator.OnAnimationEnd += SetToPool;
         }
 
         private void SetToPool()
         {
             animator.OnAnimationEnd -= SetToPool;
-            _poolSetter.SetToPull(this);
+            _pool.SetToPull(this);
         }
 
         public void Reset()

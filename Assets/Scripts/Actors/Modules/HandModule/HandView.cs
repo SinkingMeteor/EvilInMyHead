@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace Sheldier.Actors.Hand
 {
-    public class HandView : MonoBehaviour
+    public class HandView : MonoBehaviour, IHandView
     {
+        public Transform Transform => transform;
+        public MonoBehaviour Behaviour => this;
         public SimpleAnimator Animator => simpleAnimator;
         
         [SerializeField] private SpriteRenderer spriteRenderer;
@@ -33,5 +35,7 @@ namespace Sheldier.Actors.Hand
         {
             simpleAnimator.Dispose();
         }
+
+
     }
 }

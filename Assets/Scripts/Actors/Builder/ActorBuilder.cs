@@ -6,11 +6,13 @@ using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Factories;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.Actors.Builder
 {
     public class ActorBuilder
     {
+        private AssetProvider<ActorAnimationCollection> _appearanceLoader;
         private ScenePlayerController _scenePlayerController;
         private ActorsEffectFactory _effectFactory;
         private DialoguesProvider _dialoguesProvider;
@@ -19,22 +21,26 @@ namespace Sheldier.Actors.Builder
         private ISubBuilder[] _subBuilders;
         private TickHandler _tickHandler;
         private Actor _actorTemplate;
-        private Database<ActorStaticBuildData> _staticBuildDatabase;
         private ActorDataFactory _actorDataFactory;
+        private ItemFactory _itemFactory;
 
         public void Initialize()
         {
             _actorTemplate = Resources.Load<Actor>(ResourcePaths.ACTOR_TEMPLATE);
             _subBuilders = new ISubBuilder[]
             {
-                new ActorStatesBuilder(_actorDataFactory),
+                new ActorStatesBuilder(_actorDataFactory, _itemFactory),
                 new ActorInteractBuilder(_scenePlayerController, _dialoguesProvider, _actorDataFactory)
             };
         }
         
-        public void SetDependencies(ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController, TickHandler tickHandler,
-            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier, DialoguesProvider dialoguesProvider, ActorDataFactory actorDataFactory)
+        [Inject]
+        private void InjectDependencies(ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController, TickHandler tickHandler,
+            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier, DialoguesProvider dialoguesProvider, ActorDataFactory actorDataFactory,
+            ItemFactory itemFactory, AssetProvider<ActorAnimationCollection> appearanceLoader)
         {
+            _appearanceLoader = appearanceLoader;
+            _itemFactory = itemFactory;
             _actorDataFactory = actorDataFactory;
             _dialoguesProvider = dialoguesProvider;
             _scenePlayerController = scenePlayerController;
@@ -48,8 +54,7 @@ namespace Sheldier.Actors.Builder
         {
             ActorStaticBuildData buildData = _actorDataFactory.GetBuildData(typeID);
             ActorDynamicConfigData dynamicConfigData = _actorDataFactory.CreateDynamicActorConfig(typeID);
-            ActorAnimationCollection actorAppearance = 
-                ResourceLoader.Load<ActorAnimationCollection>(ResourcePaths.ACTOR_APPEARANCE_DIRECTORY + dynamicConfigData.ActorAppearance);
+            ActorAnimationCollection actorAppearance = _appearanceLoader.Get(dynamicConfigData.ActorAppearance);
             _actorDataFactory.CreateDynamicDialogueData(dynamicConfigData.Guid);
             
             
@@ -73,12 +78,4 @@ namespace Sheldier.Actors.Builder
             return actor;
         }
     }
-
-    public enum InteractType
-    {
-        None = 0,
-        Replace = 1,
-        Talk = 2
-    }
-    
 }

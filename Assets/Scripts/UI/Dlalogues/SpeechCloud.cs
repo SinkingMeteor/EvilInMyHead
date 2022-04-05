@@ -28,15 +28,15 @@ namespace Sheldier.UI
 
         private Database<ActorDynamicDialogueData> _dynamicDialogueDatabase;
         private StringBuilder _stringBuilder;
-        private IPoolSetter<SpeechCloud> _poolSetter;
+        private IPool<SpeechCloud> _pool;
         private ISoundPlayer _soundPlayer;
         private Coroutine _typingCoroutine;
         private IFontProvider _fontProvider;
 
 
-        public void Initialize(IPoolSetter<SpeechCloud> poolSetter)
+        public void Initialize(IPool<SpeechCloud> pool)
         {
-            _poolSetter = poolSetter;
+            _pool = pool;
             appearingAnimation.Initialize();
             disappearingAnimation.Initialize();
             _stringBuilder = new StringBuilder();
@@ -74,7 +74,7 @@ namespace Sheldier.UI
             await disappearingAnimation.PlayAnimation();
             if(_typingCoroutine != null)
                 StopCoroutine(_typingCoroutine);
-            _poolSetter.SetToPull(this);
+            _pool.SetToPull(this);
         }
         public void Reset()
         {

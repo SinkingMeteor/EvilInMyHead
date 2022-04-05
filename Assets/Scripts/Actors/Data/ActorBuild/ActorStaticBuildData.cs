@@ -6,9 +6,9 @@ namespace Sheldier.Actors.Data
     [Serializable]
     public struct ActorStaticBuildData : IDatabaseItem
     {
-        public string ID => NameID;
+        public string ID => TypeName;
 
-        public string NameID;
+        public string TypeName;
         public bool CanMove;
         public bool CanEquip;
         public bool IsEffectPerceptive;
@@ -16,6 +16,5 @@ namespace Sheldier.Actors.Data
         public bool CanAttack;
         public bool CanJump;
         public string InteractType;
-        public int InteractID;
     }
 }

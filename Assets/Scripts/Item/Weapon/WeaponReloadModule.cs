@@ -13,39 +13,36 @@ namespace Sheldier.Item
         public bool CanShoot => !_isReloading;
         public bool IsReloading => _isReloading;
 
-        private readonly AnimationLoader _animationLoader;
+        private readonly AssetProvider<AnimationData> _animationLoader;
+        
         private ItemDynamicWeaponData _weaponConfig;
         private Coroutine _reloadingCoroutine;
-        private HandView _weaponView;
+        private IHandView _weaponView;
         private bool _isReloading;
         private bool _canShoot;
 
-        public WeaponReloadModule(AnimationLoader animationLoader)
+        public WeaponReloadModule(ItemDynamicWeaponData weaponData, AssetProvider<AnimationData> animationLoader)
         {
             _animationLoader = animationLoader;
-        }
-        
-        public void SetWeaponData(ItemDynamicWeaponData weaponData)
-        {
             _weaponConfig = weaponData;
         }
-        public void SetView(HandView handView)
+        public void SetView(IHandView handView)
         {
             _weaponView = handView;
         }
-        public void StartReloading(Action onComplete) => _reloadingCoroutine = _weaponView.StartCoroutine(ReloadingCoroutine(onComplete));
+        public void StartReloading(Action onComplete) => _reloadingCoroutine = _weaponView.Behaviour.StartCoroutine(ReloadingCoroutine(onComplete));
 
         public void InterruptReloading()
         {
             if (_reloadingCoroutine == null) return;
             
-            _weaponView.StopCoroutine(_reloadingCoroutine);
+            _weaponView.Behaviour.StopCoroutine(_reloadingCoroutine);
             _weaponView.Animator.StopPlaying();
         }
         private IEnumerator ReloadingCoroutine(Action onComplete)
         {
             _isReloading = true;
-            AnimationData animationData = _animationLoader.Get(_weaponConfig.ReloadAnimation, TextDataConstants.RELOAD_ANIMATIONS_DIRECTORY);
+            AnimationData animationData = _animationLoader.Get(_weaponConfig.ReloadAnimation);
             _weaponView.Animator.Play();
 
             yield return new WaitForSeconds(animationData.Frames.Length / animationData.FrameRate);
@@ -61,5 +58,8 @@ namespace Sheldier.Item
             InterruptReloading();
             _weaponView = null;
         }
+
+
+
     }
 }

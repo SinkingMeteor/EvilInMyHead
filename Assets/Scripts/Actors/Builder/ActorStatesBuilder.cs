@@ -1,6 +1,7 @@
 ﻿using Sheldier.Actors.Data;
 using Sheldier.Actors.Hand;
 using Sheldier.Constants;
+using Sheldier.Factories;
 using UnityEngine;
 
 namespace Sheldier.Actors.Builder
@@ -8,10 +9,12 @@ namespace Sheldier.Actors.Builder
     public class ActorStatesBuilder : ISubBuilder
     {
         private readonly ActorDataFactory _actorDataFactory;
+        private readonly ItemFactory _itemFactory;
         private ActorsHand _handTemplate;
 
-        public ActorStatesBuilder(ActorDataFactory actorDataFactory)
+        public ActorStatesBuilder(ActorDataFactory actorDataFactory, ItemFactory itemFactory)
         {
+            _itemFactory = itemFactory;
             _actorDataFactory = actorDataFactory;
             _handTemplate = Resources.Load<ActorsHand>(ResourcePaths.ACTOR_HAND);
         }
@@ -43,6 +46,7 @@ namespace Sheldier.Actors.Builder
         private void AddHand(Actor actor)
         {
             ActorsHand actorsHand = GameObject.Instantiate(_handTemplate, actor.ActorsView.transform, true);
+            actorsHand.SetDependencies(_itemFactory);
             actor.AddExtraModule(actorsHand);
         }
     }

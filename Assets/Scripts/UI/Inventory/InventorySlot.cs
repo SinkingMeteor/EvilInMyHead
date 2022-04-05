@@ -11,7 +11,7 @@ namespace Sheldier.UI
 {
     public class InventorySlot : SelectableSlot, IPoolObject<InventorySlot>
     {
-        public SimpleItem Item => _item;
+        public ItemDynamicConfigData Item => _item;
         public Transform Transform => transform;
 
         public RectTransform RectTransform => rectTransform;
@@ -21,33 +21,30 @@ namespace Sheldier.UI
         [SerializeField] private TextMeshProUGUI itemInfoTMP;
         [SerializeField] private Image itemIcon;
 
-        private SimpleItem _item;
-        private SpriteLoader _spriteLoader;
+        private ItemDynamicConfigData _item;
+        private AssetProvider<Sprite> _spriteLoader;
 
-        public void Initialize(IPoolSetter<InventorySlot> poolSetter)
+        public void Initialize(IPool<InventorySlot> pool)
         {
             InitializeAnimations();
             itemInfoTransform.gameObject.SetActive(false);
         }
 
-        public void SetDependencies(SpriteLoader spriteLoader)
+        public void SetDependencies(AssetProvider<Sprite> spriteLoader)
         {
             _spriteLoader = spriteLoader;
         }
         
-        public void SetItem(SimpleItem item)
+        public void SetItem(ItemDynamicConfigData data)
         {
-            itemIcon.sprite = _spriteLoader.Get(item.ItemConfig.GameIcon, TextDataConstants.ITEM_ICONS_DIRECTORY);
-            _item = item;
+            _item = data;
+            itemIcon.sprite = _spriteLoader.Get(_item.GameIcon);
             UpdateInfo();
             itemInfoTransform.gameObject.SetActive(true);
         }
 
         public void UpdateInfo()
         {
-            string extraInfo = _item.GetExtraInfo();
-            if (extraInfo == String.Empty) return;
-            itemInfoTMP.text = extraInfo;
 
         }
         public void OnInstantiated()

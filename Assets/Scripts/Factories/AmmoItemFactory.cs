@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sheldier.Item;
 
 namespace Sheldier.Factories
@@ -11,7 +12,7 @@ namespace Sheldier.Factories
         {
             _ammosCollection = new Dictionary<string, AmmoItem>()
             {
-                {"PistolAmmo", new AmmoItem()}
+                {"PistolAmmo", new AmmoItem(Guid.NewGuid().ToString())}
             };
         }
 
@@ -20,9 +21,9 @@ namespace Sheldier.Factories
             
         }
 
-        public SimpleItem GetItem(string typeName)
+        public SimpleItem GetItem(string guid,string typeName)
         {
-            return _ammosCollection[typeName].CleanClone();
+            return _ammosCollection[typeName].CleanClone(guid);
         }
     }
 }

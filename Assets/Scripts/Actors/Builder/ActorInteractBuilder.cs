@@ -26,7 +26,7 @@ namespace Sheldier.Actors.Builder
         }
         public void Build(Actor actor, ActorStaticBuildData buildData)
         {
-            if (!buildData.CanInteract && buildData.InteractID == (int)InteractType.None) return;
+            if (!buildData.CanInteract && buildData.InteractType == GameplayConstants.INTERACT_TYPE_NONE) return;
                 
             GameObject body = GameObject.Instantiate(_interactBase, actor.transform, true);
 
@@ -36,18 +36,18 @@ namespace Sheldier.Actors.Builder
                 actor.AddExtraModule(interactNotifier);
             }
 
-            if (buildData.InteractID == (int)InteractType.None) return;
+            if (buildData.InteractType == GameplayConstants.INTERACT_TYPE_NONE) return;
 
-            actor.AddExtraModule(CreateInteractReceiver(body, buildData.InteractID));
+            actor.AddExtraModule(CreateInteractReceiver(body, buildData.InteractType));
         }
 
-        private IExtraActorModule CreateInteractReceiver(GameObject body, int interactType)
+        private IExtraActorModule CreateInteractReceiver(GameObject body, string interactType)
         {
-            return (InteractType)interactType switch
+            return interactType switch
             {
-                InteractType.Replace => CreateReplaceReceiver(body),
-                InteractType.Talk => CreateTalkReceiver(body),
-                InteractType.None => throw new ArgumentOutOfRangeException(nameof(interactType), interactType, null),
+                GameplayConstants.INTERACT_TYPE_REPLACE => CreateReplaceReceiver(body),
+                GameplayConstants.INTERACT_TYPE_TALK => CreateTalkReceiver(body),
+                GameplayConstants.INTERACT_TYPE_NONE => throw new ArgumentOutOfRangeException(nameof(interactType), interactType, null),
                 _ => throw new ArgumentOutOfRangeException(nameof(interactType), interactType, null)
             };
         }

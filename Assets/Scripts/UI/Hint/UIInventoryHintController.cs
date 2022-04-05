@@ -9,9 +9,9 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class UIInventoryHintController : UIHintController<SimpleItem, InventoryHintPerformType>
+    public class UIInventoryHintController : UIHintController<ItemDynamicConfigData, InventoryHintPerformType>
     {
-        protected override IUIItemSwitcher<SimpleItem> ItemSwitcher => itemSwitcher;
+        protected override IUIItemSwitcher<ItemDynamicConfigData> ItemSwitcher => itemSwitcher;
 
         [OdinSerialize] private InventoryView itemSwitcher;
         [OdinSerialize] private ItemSlotMap itemSlotMap;
@@ -22,15 +22,15 @@ namespace Sheldier.UI
         public override void Initialize()
         {
             base.Initialize();
-            _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<SimpleItem, bool>>()
+            _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<ItemDynamicConfigData, bool>>()
             {
-                {InventoryHintPerformType.Use, item => !item.ItemConfig.IsStackable},
-                {InventoryHintPerformType.Remove, item => !item.ItemConfig.IsQuest}
+                {InventoryHintPerformType.Use, item => !item.IsStackable},
+                {InventoryHintPerformType.Remove, item => !item.IsQuest}
             };
             _performDictionary = new Dictionary<InventoryHintPerformType, Action>()
             {
-                {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItem.ItemConfig.Guid); itemSwitcher.Refresh();}},
-                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItem.ItemConfig.Guid); itemSwitcher.Refresh();}}
+                {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItem.ID); itemSwitcher.Refresh();}},
+                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItem.ID); itemSwitcher.Refresh();}}
             };
             _hintsCollection = new Dictionary<InventoryHintPerformType, UIHint>();
         }
