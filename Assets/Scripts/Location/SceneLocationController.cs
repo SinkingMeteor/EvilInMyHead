@@ -6,6 +6,7 @@ using Sheldier.Common.Asyncs;
 using Sheldier.Constants;
 using Sheldier.Item;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.GameLocation
 {

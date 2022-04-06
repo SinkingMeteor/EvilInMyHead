@@ -1,19 +1,20 @@
 ﻿using System;
 using Sheldier.Actors;
 using Sheldier.Actors.Hand;
+using Sheldier.Data;
 using UnityEngine;
 
 namespace Sheldier.Item
 {
-    public abstract class SimpleItem
+    public abstract class SimpleItem : IDatabaseItem
     {
-        public string Guid => _guid;
+        public string ID => _guid;
 
         protected string _guid;
 
-        protected SimpleItem(string guid = null)
+        protected SimpleItem(string id = null)
         {
-            _guid = guid;
+            _guid = id;
         }
         
         public virtual Vector2 GetRotateDirection()

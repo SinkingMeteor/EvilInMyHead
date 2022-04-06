@@ -1820,7 +1820,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 900251763515350163}
   itemReference: {fileID: 11400000, guid: dcc6695bdf9e0bc40ac32970470a8dde, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
-  amount: 0
+  amount: 4
 --- !u!1 &900251763528667252
 GameObject:
   m_ObjectHideFlags: 0
@@ -11159,7 +11159,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 900251764672193041}
   itemReference: {fileID: 11400000, guid: dcc6695bdf9e0bc40ac32970470a8dde, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
-  amount: 0
+  amount: 10
 --- !u!1 &900251764673273184
 GameObject:
   m_ObjectHideFlags: 0

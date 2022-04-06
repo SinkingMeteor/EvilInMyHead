@@ -11,7 +11,7 @@ namespace Sheldier.UI
 {
     public class InventorySlot : SelectableSlot, IPoolObject<InventorySlot>
     {
-        public ItemDynamicConfigData Item => _item;
+        public string ID => _guid;
         public Transform Transform => transform;
 
         public RectTransform RectTransform => rectTransform;
@@ -21,8 +21,9 @@ namespace Sheldier.UI
         [SerializeField] private TextMeshProUGUI itemInfoTMP;
         [SerializeField] private Image itemIcon;
 
-        private ItemDynamicConfigData _item;
+        private Database<ItemDynamicConfigData> _itemDynamicConfigDatabase;
         private AssetProvider<Sprite> _spriteLoader;
+        private string _guid;
 
         public void Initialize(IPool<InventorySlot> pool)
         {
@@ -30,15 +31,17 @@ namespace Sheldier.UI
             itemInfoTransform.gameObject.SetActive(false);
         }
 
-        public void SetDependencies(AssetProvider<Sprite> spriteLoader)
+        public void SetDependencies(AssetProvider<Sprite> spriteLoader, Database<ItemDynamicConfigData> itemDynamicConfigDatabase)
         {
+            _itemDynamicConfigDatabase = itemDynamicConfigDatabase;
             _spriteLoader = spriteLoader;
         }
         
-        public void SetItem(ItemDynamicConfigData data)
+        public void SetItem(string guid)
         {
-            _item = data;
-            itemIcon.sprite = _spriteLoader.Get(_item.GameIcon);
+            _guid = guid;
+            var dynamicData = _itemDynamicConfigDatabase.Get(guid);
+            itemIcon.sprite = _spriteLoader.Get(dynamicData.GameIcon);
             UpdateInfo();
             itemInfoTransform.gameObject.SetActive(true);
         }
@@ -58,7 +61,7 @@ namespace Sheldier.UI
 
         public void Reset()
         {
-            _item = null;
+            _guid = null;
             itemIcon.sprite = null;
             itemInfoTransform.gameObject.SetActive(false);
         }

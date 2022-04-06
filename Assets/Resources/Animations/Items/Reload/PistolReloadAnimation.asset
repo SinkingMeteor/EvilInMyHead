@@ -35,4 +35,4 @@ MonoBehaviour:
   - {fileID: -514648643, guid: 3d22e2b67be0c5943ae4e3e814bb1399, type: 3}
   isLoop: 0
   frameRate: 12
-  animationName: 
+  triggerPoints: []

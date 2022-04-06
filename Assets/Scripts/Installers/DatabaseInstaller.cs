@@ -6,6 +6,7 @@ using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
 using Sheldier.Item;
 using Sheldier.Setup;
+using Sheldier.UI;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,9 @@ namespace Sheldier.Installers
         {
             Container.Bind<ActorStaticDataLoader>().AsSingle();
             Container.Bind<ItemStaticDataLoader>().AsSingle();
+            Container.Bind<UIStaticDataLoader>().AsSingle();
+            
+            
             Container.Bind<ActorDataFactory>().AsSingle();
 
             Container.Bind<AssetProvider<AudioUnit>>().To<AudioLoader>().AsSingle();
@@ -43,8 +47,11 @@ namespace Sheldier.Installers
             
             Container.Bind<Database<ItemDynamicConfigData>>().To<ItemDynamicConfigDatabase>().AsSingle();
             Container.Bind<Database<ItemDynamicWeaponData>>().To<ItemDynamicWeaponDatabase>().AsSingle();
-            
-            
+
+            Container.Bind<Database<UIPerformStaticData>>().To<UIPerformStaticDatabase>().AsSingle();
+
+            Container.Bind<Database<SimpleItem>>().To<SimpleItemDatabase>().AsSingle();
+
         }
     }
 }

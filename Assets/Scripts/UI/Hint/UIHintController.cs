@@ -19,10 +19,10 @@ namespace Sheldier.UI
 
         [SerializeField] protected RectTransform parentContainer;
 
-        protected Dictionary<V, Func<T, bool>> _conditionDictionary;
+        protected Dictionary<V, Func<string, bool>> _conditionDictionary;
         protected Dictionary<V, Action> _performDictionary;
         protected Dictionary<V, UIHint> _hintsCollection;
-        protected T _currentItem;
+        protected string _currentItemId;
         
         protected UIHintPool _uiHintPool;
         protected ILocalizationProvider _localizationProvider;
@@ -64,20 +64,20 @@ namespace Sheldier.UI
         public void Dispose()
         {
         }
-        private void OnItemChanged(T item)
+        private void OnItemChanged(string id)
         {
-            if (Equals(item, _currentItem)) return;
-            if (Equals(item, null))
+            if (id == _currentItemId) return;
+            if (id == null)
             {
-                _currentItem = default;
+                _currentItemId = default;
                 RemoveAllHints();
                 return;
             }
-            _currentItem = item;
+            _currentItemId = id;
 
             foreach (var condition in _conditionDictionary)
             {
-                bool isConditionPerformed = condition.Value(_currentItem);
+                bool isConditionPerformed = condition.Value(_currentItemId);
                 if (!isConditionPerformed)
                     RemoveHint(condition.Key);
                 else if (!_hintsCollection.ContainsKey(condition.Key))

@@ -43,7 +43,7 @@ namespace Sheldier.Item
         {
             _isReloading = true;
             AnimationData animationData = _animationLoader.Get(_weaponConfig.ReloadAnimation);
-            _weaponView.Animator.Play();
+            _weaponView.Animator.Play(animationData);
 
             yield return new WaitForSeconds(animationData.Frames.Length / animationData.FrameRate);
 

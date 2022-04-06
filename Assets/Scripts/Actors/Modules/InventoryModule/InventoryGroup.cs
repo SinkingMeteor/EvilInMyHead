@@ -39,7 +39,7 @@ namespace Sheldier.Actors.Inventory
             return new InventoryOperationReport() {IsCompleted = true, Amount = itemAmount};
         }
 
-        public virtual InventoryOperationReport RemoveAmount(int amountToRemove)
+        public InventoryOperationReport RemoveAmount(int amountToRemove)
         {
             int remainsToRemove = amountToRemove;
             List<string> guidsToRemove = new List<string>();

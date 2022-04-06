@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
+using Sheldier.Data;
 using Sheldier.Item;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -14,29 +15,35 @@ namespace Sheldier.UI
         protected override IUIItemSwitcher<ItemDynamicConfigData> ItemSwitcher => itemSwitcher;
 
         [OdinSerialize] private InventoryView itemSwitcher;
-        [OdinSerialize] private ItemSlotMap itemSlotMap;
         private Inventory _inventory;
         private IInventoryInputProvider _inventoryInputProvider;
+        private Database<ItemDynamicConfigData> _dynamicConfigDatabase;
+        private Database<UIPerformStaticData> _uiPerformStaticDatabase;
 
 
         public override void Initialize()
         {
             base.Initialize();
-            _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<ItemDynamicConfigData, bool>>()
+            
+            
+            _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<string, bool>>()
             {
-                {InventoryHintPerformType.Use, item => !item.IsStackable},
-                {InventoryHintPerformType.Remove, item => !item.IsQuest}
+                {InventoryHintPerformType.Use, id => !_dynamicConfigDatabase.Get(id).IsStackable},
+                {InventoryHintPerformType.Remove, id => !_dynamicConfigDatabase.Get(id).IsQuest}
             };
             _performDictionary = new Dictionary<InventoryHintPerformType, Action>()
             {
-                {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItem.ID); itemSwitcher.Refresh();}},
-                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItem.ID); itemSwitcher.Refresh();}}
+                {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItemId); itemSwitcher.Refresh();}},
+                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItemId); itemSwitcher.Refresh();}}
             };
             _hintsCollection = new Dictionary<InventoryHintPerformType, UIHint>();
         }
         [Inject]
-        private void InjectDependencies(Inventory inventory, IInventoryInputProvider inventoryInputProvider)
+        private void InjectDependencies(Inventory inventory, IInventoryInputProvider inventoryInputProvider, Database<ItemDynamicConfigData> dynamicConfigDatabase,
+            Database<UIPerformStaticData> uiPerformStaticDatabase)
         {
+            _uiPerformStaticDatabase = uiPerformStaticDatabase;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
             _inventoryInputProvider = inventoryInputProvider;
             _inventory = inventory;
         }
@@ -53,7 +60,7 @@ namespace Sheldier.UI
         {
             foreach (var uiHint in _hintsCollection)
             {
-                string text = _localizationProvider.LocalizedText[itemSlotMap.HintTitleMap[uiHint.Key]];
+                string text = _localizationProvider.LocalizedText[_uiPerformStaticDatabase.Get(uiHint.Key.ToString()).Localization];
                 uiHint.Value.SetTitle(text);
             }
         }
@@ -107,7 +114,7 @@ namespace Sheldier.UI
             hint.Transform.SetParent(parentContainer);
             hint.Transform.localScale = Vector3.one;
             hint.SetIconImage(_bindIconProvider.GetActionInputSprite(GetActionType(conditionKey)));
-            hint.SetTitle(_localizationProvider.LocalizedText[itemSlotMap.HintTitleMap[conditionKey]]);
+            hint.SetTitle(_localizationProvider.LocalizedText[_uiPerformStaticDatabase.Get(conditionKey.ToString()).Localization]);
             
             _hintsCollection.Add(conditionKey, hint);
         }

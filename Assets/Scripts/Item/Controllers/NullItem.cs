@@ -5,7 +5,7 @@ namespace Sheldier.Item
 {
     public class NullItem : SimpleItem
     {
-        public NullItem(string guid = null) : base(guid)
+        public NullItem(string id = null) : base(id)
         {
         }
         

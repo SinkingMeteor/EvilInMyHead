@@ -4,6 +4,7 @@ using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
+using Sheldier.Data;
 using Sheldier.Item;
 using TMPro;
 using UnityEngine;
@@ -15,26 +16,34 @@ namespace Sheldier.UI
     public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener, IFontRequier
     {
         public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
-        public event Action<ItemDynamicConfigData> OnCurrentItemChanged;
+        public event Action<string> OnCurrentItemChanged;
         
         [SerializeField] private Image selectedItemImage;
         [SerializeField] private TextMeshProUGUI titleTMP;
         [SerializeField] private TextMeshProUGUI descriptionTMP;
         [SerializeField] private UIRadialPointer radialPointer;
         [SerializeField] private RectTransform slotsParent;
-        [SerializeField] private ItemSlotMap itemSlotMap;
         [SerializeField] private float slotsSpawnDistance = 4.0f;
 
+        private Database<ItemStaticInventorySlotData> _staticInventorySlotDatabase;
+        private Database<ItemDynamicConfigData> _dynamicConfigDatabase;
         private ILocalizationProvider _localizationProvider;
         private List<InventorySlot> _slotsCollection;
-        private InventorySlotPool _inventorySlotPool;
+        private IPool<InventorySlot> _inventorySlotPool;
+        private AssetProvider<Sprite> _spriteLoader;
         private IFontProvider _fontProvider;
         private InventorySlot _selectedSlot;
         private Inventory _inventory;
 
+        private const string CANCEL_ID = "Cancel";
+        
         [Inject]
-        private void InjectDependencies(InventorySlotPool inventorySlotPool, Inventory inventory, ILocalizationProvider localizationProvider, IFontProvider fontProvider)
+        private void InjectDependencies(IPool<InventorySlot> inventorySlotPool, Inventory inventory, ILocalizationProvider localizationProvider, IFontProvider fontProvider,
+            Database<ItemDynamicConfigData> dynamicConfigDatabase, Database<ItemStaticInventorySlotData> staticInventorySlotDatabase, AssetProvider<Sprite> spriteLoader)
         {
+            _spriteLoader = spriteLoader;
+            _staticInventorySlotDatabase = staticInventorySlotDatabase;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
             _fontProvider = fontProvider;
             _localizationProvider = localizationProvider;
             _inventory = inventory;
@@ -50,24 +59,26 @@ namespace Sheldier.UI
         }
         public void Activate()
         {
-         /*   var inventoryItems = GetItemsList();
+            var inventoryItems = GetItemsList();
             _localizationProvider.AddListener(this);
             radialPointer.SetSegments(inventoryItems.Count);
             _slotsCollection = new List<InventorySlot>();
-            for (int i = 0; i < inventoryItems.Count; i++)
+            int counter = 0;
+            foreach(var item in inventoryItems)
             {
-                InventorySlot slot = InstantiateSlot(inventoryItems[i]);
+                InventorySlot slot = InstantiateSlot(item.Key);
                 _slotsCollection.Add(slot);
-                var offsetVector =  i.UnitVectorFromSegment(inventoryItems.Count) * slotsSpawnDistance;
+                var offsetVector =  counter.UnitVectorFromSegment(inventoryItems.Count) * slotsSpawnDistance;
                 slot.RectTransform.anchoredPosition = slotsParent.anchoredPosition + offsetVector;
-            }*/
+                counter++;
+            }
         }
         public void OnLanguageChanged()
         {
             if (_selectedSlot == null)
                 CleanInfo();
             else
-                SetNewInfo();                
+                SetNewInfo(_dynamicConfigDatabase.Get(_selectedSlot.ID).TypeName);                
         }
         public void Tick()
         {
@@ -90,11 +101,11 @@ namespace Sheldier.UI
         }
         public void Refresh()
         {
-          /*  List<SimpleItem> itemsList = GetItemsList();
+            IReadOnlyDictionary<string, ItemDynamicConfigData> itemsList = GetItemsList();
             radialPointer.SetSegments(itemsList.Count);
             for (int i = 0; i < _slotsCollection.Count; i++)
             {
-                if (!itemsList.Contains(_slotsCollection[i].Item))
+                if (!itemsList.ContainsKey(_slotsCollection[i].ID))
                 {
                     (_slotsCollection[i], _slotsCollection[^1]) = (_slotsCollection[^1], _slotsCollection[i]);
                     _inventorySlotPool.SetToPull(_slotsCollection[^1]);
@@ -107,7 +118,7 @@ namespace Sheldier.UI
                 _slotsCollection[i].RectTransform.anchoredPosition = slotsParent.anchoredPosition + offsetVector;
             }
 
-            Tick();*/
+            Tick();
         }
         public void Deactivate()
         {
@@ -127,18 +138,19 @@ namespace Sheldier.UI
         {
             _fontProvider.RemoveListener(this);
         }
-        private List<ItemDynamicConfigData> GetItemsList()
+        private IReadOnlyDictionary<string, ItemDynamicConfigData> GetItemsList()
         {
-            List<ItemDynamicConfigData> inventoryItems = new List<ItemDynamicConfigData>();
+            Dictionary<string, ItemDynamicConfigData> inventoryItems = new Dictionary<string, ItemDynamicConfigData>();
             foreach (var inventoryGroup in _inventory.ItemsCollection)
-                inventoryItems.AddRange(inventoryGroup.Value.Items.Values);
+                foreach (var data in inventoryGroup.Value.Items)
+                    inventoryItems.Add(data.Key, data.Value);
             return inventoryItems;
         }
-        private InventorySlot InstantiateSlot(ItemDynamicConfigData inventoryItem)
+        private InventorySlot InstantiateSlot(string id)
         {
             InventorySlot slot = _inventorySlotPool.GetFromPool();
             slot.transform.SetParent(slotsParent);
-            slot.SetItem(inventoryItem);
+            slot.SetItem(id);
             slot.transform.localScale = Vector3.one;
             return slot;
         }
@@ -149,16 +161,14 @@ namespace Sheldier.UI
             DeselectOldSlot();
             _selectedSlot = slot;
             _selectedSlot.Select();
-            OnCurrentItemChanged?.Invoke(slot.Item);
-            SetNewInfo();
+            OnCurrentItemChanged?.Invoke(slot.ID);
+            SetNewInfo(_dynamicConfigDatabase.Get(_selectedSlot.ID).TypeName);
         }
 
         private void CleanInfo()
         {
             DeselectOldSlot();
-            titleTMP.text = _localizationProvider.LocalizedText[itemSlotMap.CancelSlot.Title];
-            descriptionTMP.text = _localizationProvider.LocalizedText[itemSlotMap.CancelSlot.Description];
-            selectedItemImage.sprite = itemSlotMap.CancelSlot.PreviewSprite;
+            SetNewInfo(CANCEL_ID);
         }
 
         private void DeselectOldSlot()
@@ -170,12 +180,12 @@ namespace Sheldier.UI
             }
 
         }
-        private void SetNewInfo()
+        private void SetNewInfo(string typeID)
         {
-          //  ItemSlotData data = itemSlotMap.SlotMap[_selectedSlot.Item.ItemConfig];
-          //  titleTMP.text = _localizationProvider.LocalizedText[data.Title];
-          //  descriptionTMP.text = _localizationProvider.LocalizedText[data.Description];
-         //   selectedItemImage.sprite = data.PreviewSprite;
+            var inventorySlotData = _staticInventorySlotDatabase.Get(typeID);
+            titleTMP.text = _localizationProvider.LocalizedText[inventorySlotData.ItemTitle];
+            descriptionTMP.text = _localizationProvider.LocalizedText[inventorySlotData.ItemDescription];
+            selectedItemImage.sprite = _spriteLoader.Get(inventorySlotData.Icon);
         }
         private void OnDrawGizmos()
         {

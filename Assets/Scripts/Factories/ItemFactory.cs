@@ -23,6 +23,7 @@ namespace Sheldier.Factories
         private Database<ItemDynamicWeaponData> _dynamicWeaponDatabase;
         private Database<ItemDynamicConfigData> _dynamicConfigDatabase;
         private Database<ItemStaticConfigData> _staticConfigDatabase;
+        private Database<SimpleItem> _simpleItemDatabase;
 
         private Dictionary<string, ISubItemFactory> _subFactories;
 
@@ -38,8 +39,9 @@ namespace Sheldier.Factories
         [Inject]
         public void InjectDependencies(IPool<Projectile> projectilePool, IPool<WeaponBlow> weaponBlowPool, AssetProvider<Sprite> spriteLoader, 
             AssetProvider<AnimationData> animationLoader, Database<ItemStaticWeaponData> staticWeaponDatabase, Database<ItemDynamicWeaponData> dynamicWeaponDatabase, 
-            Database<ItemStaticConfigData> staticConfigDatabase, Database<ItemDynamicConfigData> dynamicConfigDatabase)
+            Database<ItemStaticConfigData> staticConfigDatabase, Database<ItemDynamicConfigData> dynamicConfigDatabase, Database<SimpleItem> simpleItemDatabase)
         {
+            _simpleItemDatabase = simpleItemDatabase;
             _staticConfigDatabase = staticConfigDatabase;
             _dynamicConfigDatabase = dynamicConfigDatabase;
             _staticWeaponDatabase = staticWeaponDatabase;
@@ -64,8 +66,13 @@ namespace Sheldier.Factories
         
         public SimpleItem GetItem(string guid)
         {
+            if (_simpleItemDatabase.IsItemExists(guid))
+                return _simpleItemDatabase.Get(guid);
+            
             ItemDynamicConfigData dynamicConfigData = _dynamicConfigDatabase.Get(guid);
-            SimpleItem item = _subFactories[dynamicConfigData.TypeName].GetItem(guid, dynamicConfigData.TypeName);
+            SimpleItem item = _subFactories[dynamicConfigData.GroupName].GetItem(guid, dynamicConfigData.TypeName);
+            _simpleItemDatabase.Add(item.ID, item);
+            item.Initialize();
             return item;
         }
         

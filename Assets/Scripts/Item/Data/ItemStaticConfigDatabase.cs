@@ -4,5 +4,4 @@ namespace Sheldier.Item
 {
     public class ItemStaticConfigDatabase : Database<ItemStaticConfigData>
     { }
-    
 }

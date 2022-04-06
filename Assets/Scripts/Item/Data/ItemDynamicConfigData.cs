@@ -43,7 +43,7 @@ namespace Sheldier.Item
             _isStackable = staticConfigData.IsStackable;
             _isQuest = staticConfigData.IsQuest;
             _isUsable = staticConfigData.IsUsable;
-            Amount = 1;
+            Amount = UnityEngine.Random.Range(1, MaxStack + 1);
         }
     }
 }

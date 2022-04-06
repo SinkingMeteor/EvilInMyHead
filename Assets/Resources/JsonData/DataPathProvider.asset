@@ -34,7 +34,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -113,6 +113,18 @@ MonoBehaviour:
     - Name: $k
       Entry: 1
       Data: ProjectileConfig
+    - Name: $v
+      Entry: 1
+      Data: JsonData/Data/
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: UIPerformData
     - Name: $v
       Entry: 1
       Data: JsonData/Data/

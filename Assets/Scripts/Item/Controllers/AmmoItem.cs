@@ -29,7 +29,7 @@ namespace Sheldier.Item
         
         public AmmoItem CleanClone(string guid) => new AmmoItem(guid);
 
-        public AmmoItem(string guid) : base(guid)
+        public AmmoItem(string id) : base(id)
         {
         }
     }

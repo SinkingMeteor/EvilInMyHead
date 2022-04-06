@@ -71,10 +71,14 @@ namespace Sheldier.Setup
         private Inventory _inventory;
         private FontMap _fontMap;
         private AssetProvider<ActorAnimationCollection> _animationCollectionLoader;
+        private Database<ItemDynamicConfigData> _dynamicConfigDatabase;
         private AssetProvider<AudioUnit> _audioLoader;
         private AssetProvider<TextAsset> _dataLoader;
         private AssetProvider<DialogueSystemGraph> _dialoguesLoader;
+        private UIStaticDataLoader _uiStaticDataLoader;
 
+    
+        
         [Inject]
         private void InjectDependencies(LoadingScreenProvider loadingScreenProvider, InputProvider inputProvider, 
             SceneLoadingOperation sceneLoadingOperation, LocalizationProvider localizationProvider,
@@ -88,8 +92,11 @@ namespace Sheldier.Setup
             SceneSetupOperation sceneSetupOperation, ActorStaticDataLoader actorStaticDataLoader, ActorDataFactory actorDataFactory,
             Database<ActorDynamicDialogueData> dynamicDialogueDatabase, ItemStaticDataLoader itemStaticDataLoader, Database<ItemStaticProjectileData> staticProjectileDatabase,
             AssetProvider<Sprite> spriteLoader, AssetProvider<AnimationData> animationLoader, AssetProvider<ActorAnimationCollection> animationCollectionLoader,
-            AssetProvider<AudioUnit> audioLoader, AssetProvider<TextAsset> dataLoader, AssetProvider<DialogueSystemGraph> dialoguesLoader)
+            AssetProvider<AudioUnit> audioLoader, AssetProvider<TextAsset> dataLoader, AssetProvider<DialogueSystemGraph> dialoguesLoader, 
+            Database<ItemDynamicConfigData> dynamicConfigDatabase, UIStaticDataLoader uiStaticDataLoader)
         {
+            _uiStaticDataLoader = uiStaticDataLoader;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
             _animationCollectionLoader = animationCollectionLoader;
             _dialoguesLoader = dialoguesLoader;
             _dataLoader = dataLoader;
@@ -152,6 +159,7 @@ namespace Sheldier.Setup
         {
             _actorStaticDataLoader.LoadStaticData();
             _itemStaticDataLoader.LoadStaticData();
+            _uiStaticDataLoader.LoadStaticData();
         }
         private void SetDependenciesToSystems()
         {
@@ -159,7 +167,7 @@ namespace Sheldier.Setup
             _projectilePool.SetDependencies(_tickHandler, _staticProjectileDatabase, _spriteLoader);
             _weaponBlowPool.SetDependencies(_tickHandler, _animationLoader);
             _speechCloudPool.SetDependencies(_soundPlayer, _fontProvider, _dynamicDialogueDatabase);
-            _inventorySlotPool.SetDependencies(_spriteLoader);
+            _inventorySlotPool.SetDependencies(_spriteLoader, _dynamicConfigDatabase);
             _choiceSlotPool.SetDependencies(_fontProvider);
             _uiHintPool.SetDependencies(_fontProvider);
             _uiStatesController.SetDependencies(_uiInstaller, _pauseNotifier, _inputProvider);

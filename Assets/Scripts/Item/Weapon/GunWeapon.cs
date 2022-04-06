@@ -28,13 +28,13 @@ namespace Sheldier.Item
         private ItemDynamicWeaponData _dynamicWeaponData;
 
 
-        public GunWeapon(string guid,
+        public GunWeapon(string id,
                          IPool<Projectile> projectilePool,
                          IPool<WeaponBlow> weaponBlowPool,
                          AssetProvider<AnimationData> animationLoader,
                          AssetProvider<Sprite> spriteLoader, 
                          Database<ItemDynamicConfigData> dynamicConfigDatabase,
-                         Database<ItemDynamicWeaponData> dynamicWeaponDatabase) : base(guid)
+                         Database<ItemDynamicWeaponData> dynamicWeaponDatabase) : base(id)
         {
             _dynamicConfigDatabase = dynamicConfigDatabase;
             _dynamicWeaponDatabase = dynamicWeaponDatabase;
@@ -46,8 +46,8 @@ namespace Sheldier.Item
         
         public override void Initialize()
         {
-            _dynamicConfigData = _dynamicConfigDatabase.Get(Guid);
-            _dynamicWeaponData = _dynamicWeaponDatabase.Get(Guid);
+            _dynamicConfigData = _dynamicConfigDatabase.Get(ID);
+            _dynamicWeaponData = _dynamicWeaponDatabase.Get(ID);
             _reloadModule = new WeaponReloadModule(_dynamicWeaponData, _animationLoader);
             _shootModule = new WeaponShootModule(_dynamicWeaponData, _projectilePool, _weaponBlowPool);
 

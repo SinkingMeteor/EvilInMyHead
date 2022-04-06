@@ -1,10 +1,12 @@
 ﻿using System;
+using Zenject;
 
 namespace Sheldier.Common.Asyncs
 {
     public class AsyncWaitersFactory
     {
         private static TickHandler _tickHandler;
+        
         public void SetDependencies(TickHandler tickHandler)
         {
             _tickHandler = tickHandler;

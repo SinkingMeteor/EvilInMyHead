@@ -19,6 +19,8 @@ namespace Sheldier.Constants
         public const string ITEM_CONFIG = "ItemConfig";
         public const string WEAPON_CONFIG = "WeaponConfig";
         public const string PROJECTILE_CONFIG = "ProjectileConfig";
+
+        public const string UI_PERFORM_CONFIG = "UIPerformData";
         
         public const string CURRENT_PLAYER = "CurrentPlayer";
 
