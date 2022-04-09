@@ -48,14 +48,23 @@ namespace Sheldier.Actors.Data
                 return _dynamicConfigDatabase.Get(guid);
             
             string newGuid = GenerateNewGuid();
+            CreateStats(newGuid);
             ActorDynamicConfigData dynamicConfigData = new ActorDynamicConfigData(newGuid, staticConfig);
-            _dynamicConfigDatabase.Add(newGuid, dynamicConfigData);
+            _dynamicConfigDatabase.Add(dynamicConfigData);
             return dynamicConfigData;
         }
+
+  
+
         public bool IsDynamicConfigExists(string guid)
         {
             return _dynamicConfigDatabase.IsItemExists(guid);
         }
+        
+        private void CreateStats(string newGuid)
+        {
+        }
+        
         public void RemoveDynamicActorConfig(string guid)
         {
             if (!_staticConfigDatabase.IsItemExists(guid))
@@ -74,7 +83,7 @@ namespace Sheldier.Actors.Data
                 return _dynamicMovementDatabase.Get(guid);
                 
             ActorDynamicMovementData dynamicMovementData = new ActorDynamicMovementData(dynamicConfigData.ID, staticMovementData);
-            _dynamicMovementDatabase.Add(dynamicMovementData.ID, dynamicMovementData);
+            _dynamicMovementDatabase.Add(dynamicMovementData);
             return dynamicMovementData;
         }
 
@@ -94,7 +103,7 @@ namespace Sheldier.Actors.Data
                 return _dynamicEffectDatabase.Get(dynamicConfigData.Guid);
             
             ActorDynamicEffectData dynamicEffectData = new ActorDynamicEffectData(dynamicConfigData.Guid);
-            _dynamicEffectDatabase.Add(dynamicEffectData.ID, dynamicEffectData);
+            _dynamicEffectDatabase.Add(dynamicEffectData);
             return dynamicEffectData;
         }
         

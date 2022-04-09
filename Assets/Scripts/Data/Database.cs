@@ -11,12 +11,12 @@ namespace Sheldier.Data
 
         public int Count => _storageDictionary.Count;
 
-        public Database()
+        protected Database()
         {
             _storageDictionary = new Dictionary<string, T>();
         }
 
-        public IReadOnlyDictionary<string, T> GetItems() => _storageDictionary;
+        public IEnumerable<T> GetItems() => _storageDictionary.Values;
 
         public bool IsItemExists(string ID) => _storageDictionary.ContainsKey(ID);
 
@@ -24,7 +24,7 @@ namespace Sheldier.Data
 
         public bool TryGet(string ID, out T item) => _storageDictionary.TryGetValue(ID, out item);
         
-        public void Add(string ID, T item) => _storageDictionary.Add(ID, item);
+        public void Add(T item) => _storageDictionary.Add(item.ID, item);
 
         public void Remove(string ID) => _storageDictionary.Remove(ID);
         

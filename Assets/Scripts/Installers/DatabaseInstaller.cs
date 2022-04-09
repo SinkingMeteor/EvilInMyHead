@@ -19,7 +19,7 @@ namespace Sheldier.Installers
             Container.Bind<ActorStaticDataLoader>().AsSingle();
             Container.Bind<ItemStaticDataLoader>().AsSingle();
             Container.Bind<UIStaticDataLoader>().AsSingle();
-            
+            Container.Bind<StatsStaticDataLoader>().AsSingle();
             
             Container.Bind<ActorDataFactory>().AsSingle();
 
@@ -49,6 +49,13 @@ namespace Sheldier.Installers
 
             Container.Bind<Database<UIPerformStaticData>>().To<UIPerformStaticDatabase>().AsSingle();
 
+            Container.Bind<Database<StaticNumericalStatData>>().To<StaticNumericalStatDatabase>().AsSingle();
+            Container.Bind<Database<StaticStringStatData>>().To<StaticStringStatDatabase>().AsSingle();
+            Container.Bind<Database<DynamicNumericalEntityStatsCollection>>().To<DynamicNumericalStatsDatabase>().AsSingle();
+            Container.Bind<Database<DynamicNumericalStatData>>().To<DynamicNumericalEntityStatsCollection>().AsSingle();
+            Container.Bind<Database<DynamicStringEntityStatsCollection>>().To<DynamicStringStatsDatabase>().AsSingle();
+            Container.Bind<Database<DynamicStringStatData>>().To<DynamicStringEntityStatsCollection>().AsSingle();
+            
             Container.Bind<SceneActorsDatabase>().AsSingle();
             Container.Bind<Database<SimpleItem>>().To<SimpleItemDatabase>().AsSingle();
 

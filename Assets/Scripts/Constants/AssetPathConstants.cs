@@ -21,7 +21,10 @@ namespace Sheldier.Constants
         public const string PROJECTILE_CONFIG = "ProjectileConfig";
 
         public const string UI_PERFORM_CONFIG = "UIPerformData";
-        
+
+        public const string STAT_NUMERICAL_CONFIG = "NumericalStatsData";
+        public const string STAT_STRING_CONFIG = "StringStatsData";
+
 
     }
 }

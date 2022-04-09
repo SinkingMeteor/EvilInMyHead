@@ -35,7 +35,7 @@ namespace Sheldier.Common
             if (itemArrays == null)
                 throw new NullReferenceException($"Items of type {typeof(T)} can't be loaded and added to database");
             for (int i = 0; i < itemArrays.Length; i++)
-                database.Add(itemArrays[i].ID, itemArrays[i]);
+                database.Add(itemArrays[i]);
         }
     }
 

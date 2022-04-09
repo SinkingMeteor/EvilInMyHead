@@ -42,7 +42,7 @@ namespace Sheldier.Factories
         {
             ItemStaticWeaponData staticWeaponData = _staticWeaponDatabse.Get(typeName);
             ItemDynamicWeaponData dynamicWeaponData = new ItemDynamicWeaponData(guid, staticWeaponData);
-            _dynamicWeaponDatabase.Add(guid, dynamicWeaponData);
+            _dynamicWeaponDatabase.Add(dynamicWeaponData);
         }
 
         public SimpleItem GetItem(string guid, string typeName)

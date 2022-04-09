@@ -13,7 +13,7 @@ namespace Sheldier.Data
         [SerializeField] private bool _prettyPrint = false;
 
         [Button]
-        private void ActorStaticConfigToJson()
+        public void ActorStaticConfigToJson()
         {
             Load("ActorConfig", data =>
             {
@@ -35,7 +35,7 @@ namespace Sheldier.Data
             });
         }
         [Button]
-        private void ActorStaticBuildDataToJson()
+        public void ActorStaticBuildDataToJson()
         {
             Load("ActorBuildData", data =>
             {
@@ -62,7 +62,7 @@ namespace Sheldier.Data
             });
         }
         [Button]
-        private void ActorStaticMovementDataToJson()
+        public void ActorStaticMovementDataToJson()
         {
             Load("ActorMovementData", data =>
             {
@@ -84,7 +84,7 @@ namespace Sheldier.Data
             });
         }
         [Button]
-        private void ActorStaticDialogueDataToJson()
+        public void ActorStaticDialogueDataToJson()
         {
             Load("ActorDialogueData", data =>
             {

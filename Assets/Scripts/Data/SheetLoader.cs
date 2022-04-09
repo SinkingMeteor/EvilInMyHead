@@ -19,11 +19,7 @@ namespace Sheldier.Data
             public string TableID;
         }
         [Serializable] private class RSheetDict : Dictionary<string, Sheet> { }
-
-        [Tooltip("Table sheet contains sheet id and tableId." +
-                 "Table id on Google Spreadsheet. Let's say your table has the following url " +
-                 "https://docs.google.com/spreadsheets/d/1RvKY3VE_y5FPhEECCa5dv4F7REJ7rBtGzQg9Z_B_DE4/edit#gid=331980525So " +
-                 "your table id will be '1RvKY3VE_y5FPhEECCa5dv4F7REJ7rBtGzQg9Z_B_DE4' and sheet id will be '331980525' (gid parameter)")]
+        
         [OdinSerialize] private RSheetDict _sheets = new RSheetDict();
 
         private readonly List<string> _loading = new List<string> ();
@@ -50,6 +46,41 @@ namespace Sheldier.Data
             
             _loading.Add(sheetName);
             StartCoroutine(LoadCoroutine(sheetName, onLoaded));
+        }
+
+        protected void LoadAll(string[] sheetNames, Action<string[]> onLoaded)
+        {
+            foreach (var sheetName in sheetNames)
+            {
+                _loading.Add(sheetName);
+            }
+
+            StartCoroutine(LoadAllCoroutine(sheetNames, onLoaded));
+        }
+
+        private IEnumerator LoadAllCoroutine(string[] sheetNames, Action<string[]> onLoaded)
+        {
+            string[] results = new string[sheetNames.Length];
+            
+            for (int i = 0; i < sheetNames.Length; i++)
+            {
+                var sheet = _sheets[sheetNames[i]];
+                var url = string.Format(_urlPattern, sheet.TableID, sheet.Gid);
+                Debug.Log($"Downloading: <color=yellow>{sheetNames[i]}</color> ...");
+                var request = UnityWebRequest.Get(url);
+                if (!request.isDone)
+                {
+                    yield return request.SendWebRequest();
+                }
+                if (request.error == null)
+                {
+
+                    Debug.Log($"Downloaded : <color=green>{sheetNames[i]}</color>");
+                    _loading.Remove(sheetNames[i]);
+                    results[i] = request.downloadHandler.text;
+                }
+            }
+            onLoaded?.Invoke(results);
         }
 
         private IEnumerator LoadCoroutine(string sheetName, Action<string> onLoaded)

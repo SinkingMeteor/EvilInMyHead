@@ -57,7 +57,7 @@ namespace Sheldier.Factories
             ItemStaticConfigData staticConfigData = _staticConfigDatabase.Get(typeName);
             string guid = Guid.NewGuid().ToString();
             ItemDynamicConfigData dynamicConfigData = new ItemDynamicConfigData(guid, staticConfigData);
-            _dynamicConfigDatabase.Add(guid, dynamicConfigData);
+            _dynamicConfigDatabase.Add(dynamicConfigData);
             
             var group = staticConfigData.GroupName;
             _subFactories[group].CreateItemData(guid, typeName);
@@ -71,7 +71,7 @@ namespace Sheldier.Factories
             
             ItemDynamicConfigData dynamicConfigData = _dynamicConfigDatabase.Get(guid);
             SimpleItem item = _subFactories[dynamicConfigData.GroupName].GetItem(guid, dynamicConfigData.TypeName);
-            _simpleItemDatabase.Add(item.ID, item);
+            _simpleItemDatabase.Add(item);
             item.Initialize();
             return item;
         }

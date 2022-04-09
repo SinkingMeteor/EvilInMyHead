@@ -13,7 +13,7 @@ namespace Sheldier.Data
         [SerializeField] private bool _prettyPrint = false;
 
         [Button]
-        private void ActorStaticConfigToJson()
+        public void ItemStaticConfigToJson()
         {
             Load("ItemConfig", data =>
             {
@@ -41,7 +41,7 @@ namespace Sheldier.Data
             });
         }
         [Button]
-        private void ActorStaticWeaponDataToJson()
+        public void ItemStaticWeaponDataToJson()
         {
             Load("WeaponConfig", data =>
             {
@@ -73,7 +73,7 @@ namespace Sheldier.Data
             });
         }
         [Button]
-        private void ActorStaticProjectileDataToJson()
+        public void ItemStaticProjectileDataToJson()
         {
             Load("ProjectileConfig", data =>
             {
@@ -96,7 +96,7 @@ namespace Sheldier.Data
             });
         }
         [Button]
-        private void ActorStaticInventorySlotDataToJson()
+        public void ItemStaticInventorySlotDataToJson()
         {
             Load("InventorySlot", data =>
             {
