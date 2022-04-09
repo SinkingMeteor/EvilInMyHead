@@ -44,7 +44,7 @@ namespace Sheldier.UI
             _loadedStates = null;
         }
 
-        public void SetDependencies(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IGameplayInputProvider inputProvider)
+        public UIStatesController(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IGameplayInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
             _pauseNotifier = pauseNotifier;

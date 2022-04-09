@@ -7,7 +7,7 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<CameraHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CameraHandler>().AsSingle();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Sheldier.Common.Pool;
+using Sheldier.UI;
 using UnityEngine;
 using Zenject;
 
@@ -18,9 +19,11 @@ namespace Sheldier.Installers
             Container.BindInterfacesAndSelfTo<ProjectilePool>().FromInstance(projectilePool).AsSingle();
             Container.BindInterfacesAndSelfTo<WeaponBlowPool>().FromInstance(weaponBlowPool).AsSingle();
             Container.BindInterfacesAndSelfTo<SpeechCloudPool>().FromInstance(speechCloudPool).AsSingle();
-            Container.BindInterfacesAndSelfTo<InventorySlotPool>().FromInstance(inventorySlotPool).AsSingle();
+            Container.Bind<InventorySlotPool>().FromInstance(inventorySlotPool).AsSingle();
+            Container.Bind<IPool<InventorySlot>>().FromInstance(inventorySlotPool).AsSingle();
             Container.BindInterfacesAndSelfTo<ChoiceSlotPool>().FromInstance(choiceSlotPool).AsSingle();
-            Container.BindInterfacesAndSelfTo<UIHintPool>().FromInstance(uiHintPool).AsSingle();
+            Container.Bind<UIHintPool>().FromInstance(uiHintPool).AsSingle();
+            Container.Bind<IPool<UIHint>>().FromInstance(uiHintPool).AsSingle();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Sheldier.GameLocation
         private ActorSpawner _actorSpawner;
         private Pathfinder _pathfinder;
 
-        public void SetDependencies(ItemSpawner itemSpawner, ActorSpawner actorSpawner, Pathfinder pathfinder)
+        public SceneLocationController(ItemSpawner itemSpawner, ActorSpawner actorSpawner, Pathfinder pathfinder)
         {
             _itemSpawner = itemSpawner;
             _actorSpawner = actorSpawner;
@@ -31,8 +31,8 @@ namespace Sheldier.GameLocation
             if (_currentLocation != null)
                 await DisposeLocation();
             string path = ResourcePaths.LOCATIONS_PATH_TEMPLATE + locationName;
-            var asyncHandle = await ResourceLoader.LoadAsync<Location>(path);
-            _currentLocation = GameObject.Instantiate(asyncHandle);
+            var location = ResourceLoader.Load<Location>(path);
+            _currentLocation = GameObject.Instantiate(location);
             
             _itemSpawner.Initialize(_currentLocation.Placeholders);
             _actorSpawner.Initialize(_currentLocation.Placeholders);

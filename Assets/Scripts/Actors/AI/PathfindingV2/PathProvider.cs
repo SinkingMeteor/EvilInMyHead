@@ -12,15 +12,13 @@ namespace Sheldier.Actors.Pathfinding
         private PathRequest _currentRequest;
         private bool _isProcessingPath;
         private Pathfinder _pathfinder;
-
+        public PathProvider(Pathfinder pathfinder)
+        {
+            _pathfinder = pathfinder;
+        }
         public void Initialize()
         {
             _requestsQueue = new Queue<PathRequest>();
-        }
-
-        public void SetDependencies(Pathfinder pathfinder)
-        {
-            _pathfinder = pathfinder;
         }
         
         public void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector2[], bool> callBack)

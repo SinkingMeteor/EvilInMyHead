@@ -9,16 +9,15 @@ namespace Sheldier.Actors.Builder
 {
     public class ActorInteractBuilder : ISubBuilder
     {
-        private readonly GameObject _interactBase;
         private readonly ScenePlayerController _scenePlayerController;
-        private readonly ActorDataFactory _actorDataFactory;
         private readonly DialoguesProvider dialoguesProvider;
+        private readonly ICameraFollower _cameraFollower;
+        private readonly GameObject _interactBase;
         private Material _interactMaterial;
 
-        public ActorInteractBuilder(ScenePlayerController scenePlayerController, DialoguesProvider dialoguesProvider,
-            ActorDataFactory actorDataFactory)
+        public ActorInteractBuilder(ScenePlayerController scenePlayerController, DialoguesProvider dialoguesProvider, ICameraFollower cameraFollower)
         {
-            _actorDataFactory = actorDataFactory;
+            _cameraFollower = cameraFollower;
             _scenePlayerController = scenePlayerController;
             this.dialoguesProvider = dialoguesProvider;
             _interactBase = Resources.Load<GameObject>(ResourcePaths.ACTOR_INTERACT_MODULE);
@@ -62,7 +61,7 @@ namespace Sheldier.Actors.Builder
         private IExtraActorModule CreateReplaceReceiver(GameObject body)
         {
             ReplaceInteractReceiver receiver = body.AddComponent<ReplaceInteractReceiver>();
-            receiver.SetDependencies(_scenePlayerController, _interactMaterial);
+            receiver.SetDependencies(_scenePlayerController, _interactMaterial, _cameraFollower);
             return receiver;
         }
             

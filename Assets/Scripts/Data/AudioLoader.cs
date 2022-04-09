@@ -5,6 +5,6 @@ namespace Sheldier.Data
 {
     public class AudioLoader : AssetProvider<AudioUnit>
     {
-        protected override string Path => AssetPathProvidersPaths.AUDIO_PROVIDER;
+        protected override string Path => AssetPathConstants.AUDIO_PROVIDER;
     }
 }

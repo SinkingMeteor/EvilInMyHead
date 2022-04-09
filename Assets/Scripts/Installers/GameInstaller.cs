@@ -1,5 +1,4 @@
-﻿using Sheldier.Constants;
-using Zenject;
+﻿using Zenject;
 
 namespace Sheldier.Installers
 {
@@ -7,10 +6,6 @@ namespace Sheldier.Installers
     {
         public override void InstallBindings()
         {
-            InputInstaller.InstallFromResource(ResourcePaths.INPUT_INSTALLER, Container);
-            AudioInstaller.InstallFromResource(ResourcePaths.AUDIO_INSTALLER, Container);
-            PoolInstaller.InstallFromResource(ResourcePaths.POOLS_INSTALLER, Container);
-            TimeInstaller.InstallFromResource(ResourcePaths.TIME_INSTALLER, Container);
             LocalizationInstaller.Install(Container);
             AddressablesInstaller.Install(Container);
             PathFindingInstaller.Install(Container);
@@ -22,6 +17,7 @@ namespace Sheldier.Installers
             ActorsInstaller.Install(Container);
             CameraInstaller.Install(Container);
             SetupInstaller.Install(Container);
+            SaveInstaller.Install(Container);
             ItemInstaller.Install(Container);
             UIInstaller.Install(Container);
         }

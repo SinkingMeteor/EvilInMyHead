@@ -23,7 +23,8 @@ namespace Sheldier.UI
         private UIStatesController _statesController;
         private IDialoguesInputProvider _dialoguesInputProvider;
 
-        private Database<ActorDynamicDialogueData> _actorsDynamicDialogueDatabase;
+        private Database<ActorStaticDialogueData> _actorsStaticDialogueDatabase;
+        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
         private ILocalizationProvider _localizationProvider;
         private IDialogueReplica _currentReplica;
         private Actor[] _actorsInDialogue;
@@ -41,9 +42,11 @@ namespace Sheldier.UI
         [Inject]
         private void InjectDependencies(DialoguesProvider dialoguesProvider, UIStatesController statesController, IDialoguesInputProvider dialoguesInputProvider,
             SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider,
-            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler, Database<ActorDynamicDialogueData> actorsDynamicDialogueDatabase)
+            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler, Database<ActorStaticDialogueData> actorsStaticDialogueDatabase, 
+            Database<ActorDynamicConfigData> dynamicConfigDatabase)
         {
-            _actorsDynamicDialogueDatabase = actorsDynamicDialogueDatabase;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _actorsStaticDialogueDatabase = actorsStaticDialogueDatabase;
             _cameraHandler = cameraHandler;
             _dialoguesInputProvider = dialoguesInputProvider;
             _statesController = statesController;
@@ -81,7 +84,8 @@ namespace Sheldier.UI
                 return;
             }
             Actor actor = _actorsInDialogue[(int) _currentReplica.Person];
-            var cloudLifetime = _actorsDynamicDialogueDatabase.Get(actor.DynamicConfig.Guid).TypeSpeed
+            var typeName = _dynamicConfigDatabase.Get(actor.Guid).TypeName;
+            var cloudLifetime = _actorsStaticDialogueDatabase.Get(typeName).TypeSpeed
                 * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + _currentReplica.Delay;
 
             if (_currentReplica.Choices.Count > 1)

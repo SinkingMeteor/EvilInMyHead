@@ -1,8 +1,10 @@
 using System;
 using Sheldier.Actors;
 using Sheldier.Actors.AI;
+using Sheldier.Actors.Data;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common.Pause;
+using Sheldier.Data;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 
@@ -14,12 +16,12 @@ namespace Sheldier.Common.Cutscene
         
         private CutsceneInternalData _internalData;
         
-        public void SetDependencies(ActorSpawner actorSpawner, PauseNotifier pauseNotifier, PathProvider pathProvider, ScenePlayerController scenePlayerController,
-            DialoguesProvider dialoguesProvider)
+        public void SetDependencies(SceneActorsDatabase sceneActorsDatabase, PauseNotifier pauseNotifier, PathProvider pathProvider,
+            DialoguesProvider dialoguesProvider, Database<ActorDynamicConfigData> dynamicConfigDatabase, Actor controlledActor)
         {
             ActorsAIMoveModule moveModule = new ActorsAIMoveModule();
             moveModule.SetDependencies(pathProvider, pauseNotifier);
-            _internalData = new CutsceneInternalData(actorSpawner, moveModule, scenePlayerController.ControlledActor, dialoguesProvider);
+            _internalData = new CutsceneInternalData(sceneActorsDatabase, moveModule, controlledActor, dialoguesProvider, dynamicConfigDatabase);
         }
 
         public void Play(Action onCutsceneComplete)

@@ -26,7 +26,8 @@ namespace Sheldier.UI
         [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
         [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
 
-        private Database<ActorDynamicDialogueData> _dynamicDialogueDatabase;
+        private Database<ActorStaticDialogueData> _staticDialogueDatabase;
+        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
         private StringBuilder _stringBuilder;
         private IPool<SpeechCloud> _pool;
         private ISoundPlayer _soundPlayer;
@@ -44,9 +45,11 @@ namespace Sheldier.UI
             _fontProvider.AddListener(this);
 
         }
-        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorDynamicDialogueData> dialogueDatabase)
+        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorStaticDialogueData> dialogueDatabase, 
+            Database<ActorDynamicConfigData> dynamicConfigDatabase)
         {
-            _dynamicDialogueDatabase = dialogueDatabase;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _staticDialogueDatabase = dialogueDatabase;
             _soundPlayer = soundPlayer;
             _fontProvider = fontProvider;
         }
@@ -65,8 +68,9 @@ namespace Sheldier.UI
             pointerRect.position = new Vector3(actor.transform.position.x, pointerRect.position.y, pointerRect.position.z);
             cloudTMP.text = text;
 
-            ActorDynamicDialogueData dynamicDialogueData = _dynamicDialogueDatabase.Get(actor.DynamicConfig.Guid);
-            cloudTMP.color = dynamicDialogueData.TextColor;
+            var typeName = _dynamicConfigDatabase.Get(actor.Guid).TypeName;
+            ActorStaticDialogueData dynamicDialogueData = _staticDialogueDatabase.Get(typeName);
+            cloudTMP.color = new Color(dynamicDialogueData.TextColorR, dynamicDialogueData.TextColorG, dynamicDialogueData.TextColorB);
             _typingCoroutine = StartCoroutine(TypeCoroutine(text, dynamicDialogueData.TypeSpeed));
         }
         public async void CloseCloud()

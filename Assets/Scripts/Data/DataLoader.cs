@@ -5,6 +5,6 @@ namespace Sheldier.Data
 {
     public class DataLoader : AssetProvider<TextAsset>
     {
-        protected override string Path => AssetPathProvidersPaths.DATA_PROVIDER;
+        protected override string Path => AssetPathConstants.DATA_PROVIDER;
     }
 }

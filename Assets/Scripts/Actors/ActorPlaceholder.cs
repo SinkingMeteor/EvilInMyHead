@@ -6,8 +6,10 @@ namespace Sheldier.Actors
 {
     public class ActorPlaceholder : MonoBehaviour
     {
+        public string Guid => guid.ID;
         public DataReference Reference => reference;
 
+        [SerializeField] private UniqueID guid;
         [SerializeField] private DataReference reference;
         public void Deactivate() => gameObject.SetActive(false);
         private void OnDrawGizmos()

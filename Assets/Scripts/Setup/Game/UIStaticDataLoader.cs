@@ -21,7 +21,7 @@ namespace Sheldier.Setup
 
         public void LoadStaticData()
         {
-            _staticUIPerformDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.UI_PERFORM_CONFIG));
+            _staticUIPerformDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.UI_PERFORM_CONFIG));
         }
     }
 }

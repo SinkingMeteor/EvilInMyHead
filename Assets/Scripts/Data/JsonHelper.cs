@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Sheldier.Data
@@ -7,18 +8,13 @@ namespace Sheldier.Data
     {
         public static T[] FromJson<T>(string json)
         {
-            return JsonUtility.FromJson<Wrapper<T>>(json).Items;
+            return JsonConvert.DeserializeObject<Wrapper<T>>(json).Items;
         }
 
         public static string ToJson<T>(T[] array)
         {
-            return JsonUtility.ToJson(new Wrapper<T> {Items = array});
-        }        
-        public static string ToJson<T>(T item, bool prettyPrint = false)
-        {
-            return JsonUtility.ToJson(new Wrapper<T> {Items = new []{item}}, prettyPrint);
+            return JsonConvert.SerializeObject(new Wrapper<T> {Items = array});
         }
-
         public static string ToJson<T>(T[] array, bool prettyPrint)
         {
             return JsonUtility.ToJson(new Wrapper<T> {Items = array}, prettyPrint);

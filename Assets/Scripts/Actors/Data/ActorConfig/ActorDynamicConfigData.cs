@@ -1,5 +1,6 @@
 ﻿using System;
 using Sheldier.Data;
+using UnityEngine;
 
 namespace Sheldier.Actors.Data
 {
@@ -10,15 +11,12 @@ namespace Sheldier.Actors.Data
 
         public string Guid;
         public string TypeName;
-        public string ActorAppearance;
-        public string ActorAvatar;
+        public Vector2 Position;
 
         public ActorDynamicConfigData(string guid, ActorStaticConfigData staticConfigData)
         {
             Guid = guid;
             TypeName = staticConfigData.TypeName;
-            ActorAppearance = staticConfigData.ActorAppearance;
-            ActorAvatar = staticConfigData.ActorAvatar;
         }
     }
 }

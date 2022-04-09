@@ -16,7 +16,7 @@ namespace Sheldier.Common.Localization
             _localizationProvider.AddListener(this);
         }
 
-        public void SetDependencies(ILocalizationProvider localizationProvider, FontMap fontMap)
+        public FontProvider(ILocalizationProvider localizationProvider, FontMap fontMap)
         {
             _fontMap = fontMap;
             _localizationProvider = localizationProvider;

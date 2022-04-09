@@ -1,6 +1,7 @@
 ﻿using Sheldier.Common.Animation;
 using Sheldier.Data;
 using Sheldier.Item;
+using Zenject;
 
 namespace Sheldier.Common.Pool
 {
@@ -9,7 +10,8 @@ namespace Sheldier.Common.Pool
         private TickHandler _tickHandler;
         private AssetProvider<AnimationData> _animationLoader;
 
-        public void SetDependencies(TickHandler tickHandler, AssetProvider<AnimationData> animationLoader)
+        [Inject]
+        private void InjectDependencies(TickHandler tickHandler, AssetProvider<AnimationData> animationLoader)
         {
             _animationLoader = animationLoader;
             _tickHandler = tickHandler;

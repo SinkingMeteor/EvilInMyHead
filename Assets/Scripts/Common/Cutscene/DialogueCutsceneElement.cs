@@ -29,16 +29,16 @@ namespace Sheldier.Common.Cutscene
             Actor[] actors = new Actor[actorsInDialogue.Length];
             for (int i = 0; i < actorsInDialogue.Length; i++)
             {
-                if (actorsInDialogue[i].Reference == AssetPathProvidersPaths.CURRENT_PLAYER)
+                if (actorsInDialogue[i].Reference == GameplayConstants.CURRENT_PLAYER)
                 {
                     actors[i] = _data.CurrentPlayer;
                     continue;
                 }
 
-                if (!_data.ActorSpawner.ActorsOnScene.ContainsKey(actorsInDialogue[i].Reference))
+                if (!_data.SceneActorsDatabase.ContainsKey(actorsInDialogue[i].Reference))
                     return;
                 _isFinished = false;
-                actors[i] = _data.ActorSpawner.ActorsOnScene[actorsInDialogue[i].Reference][0];
+                actors[i] = _data.SceneActorsDatabase.GetFirst(actorsInDialogue[i].Reference);
                 _data.DialoguesProvider.StartDialogue(dialogue, actors, OnFinished);
                 await AsyncWaitersFactory.WaitUntil(() => _isFinished);
             }

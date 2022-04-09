@@ -28,10 +28,10 @@ namespace Sheldier.Setup
         
         public void LoadStaticData()
         {
-            _staticConfigDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ITEM_CONFIG));
-            _staticWeaponDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.WEAPON_CONFIG));
-            _staticProjectileDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.PROJECTILE_CONFIG));
-            _staticInventorySlotDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.INVENTORY_SLOT));
+            _staticConfigDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ITEM_CONFIG));
+            _staticWeaponDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.WEAPON_CONFIG));
+            _staticProjectileDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.PROJECTILE_CONFIG));
+            _staticInventorySlotDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.INVENTORY_SLOT));
         }
     }
 }

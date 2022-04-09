@@ -9,41 +9,53 @@ namespace Sheldier.Actors.Data
     {
         private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
         private Database<ActorDynamicMovementData> _dynamicMovementDatabase;
-        private Database<ActorDynamicDialogueData> _dynamicDialogueDatabase;
         private Database<ActorDynamicEffectData> _dynamicEffectDatabase;
 
         private Database<ActorStaticConfigData> _staticConfigDatabase;
         private Database<ActorStaticMovementData> _staticMovementDatabase;
-        private Database<ActorStaticDialogueData> _staticDialogueDatabase;
         private Database<ActorStaticBuildData> _staticBuildDatabase;
 
         [Inject]
         public void InjectDependencies(Database<ActorDynamicConfigData> dynamicConfigDatabase, Database<ActorDynamicMovementData> dynamicMovementDatabase,
-            Database<ActorDynamicDialogueData> dynamicDialogueDatabase, Database<ActorDynamicEffectData> dynamicEffectDatabase, Database<ActorStaticConfigData> staticConfigDatabase,
+             Database<ActorDynamicEffectData> dynamicEffectDatabase, Database<ActorStaticConfigData> staticConfigDatabase,
             Database<ActorStaticMovementData> staticMovementDatabase, Database<ActorStaticDialogueData> staticDialogueDatabase, Database<ActorStaticBuildData> staticBuildDatabase)
         {
             
             _staticBuildDatabase = staticBuildDatabase;
             _staticConfigDatabase = staticConfigDatabase;
             _staticMovementDatabase = staticMovementDatabase;
-            _staticDialogueDatabase = staticDialogueDatabase;
             
             _dynamicMovementDatabase = dynamicMovementDatabase;
             _dynamicConfigDatabase = dynamicConfigDatabase;
-            _dynamicDialogueDatabase = dynamicDialogueDatabase;
             _dynamicEffectDatabase = dynamicEffectDatabase;
         }
 
-        public ActorDynamicConfigData CreateDynamicActorConfig(string typeID)
+        public ActorStaticConfigData GetStaticConfigData(string typeID)
+        {
+            return _staticConfigDatabase.Get(typeID);
+        }
+
+        public ActorDynamicConfigData GetDynamicConfigData(string guid)
+        {
+            return _dynamicConfigDatabase.Get(guid);
+        }
+        public ActorDynamicConfigData GetDynamicActorConfig(string typeID, string guid)
         {
             if (!_staticConfigDatabase.TryGet(typeID, out ActorStaticConfigData staticConfig))
                 throw new NullReferenceException($"Can't create dynamic config with {typeID} reference");
+
+            if (_dynamicConfigDatabase.IsItemExists(guid))
+                return _dynamicConfigDatabase.Get(guid);
+            
             string newGuid = GenerateNewGuid();
             ActorDynamicConfigData dynamicConfigData = new ActorDynamicConfigData(newGuid, staticConfig);
             _dynamicConfigDatabase.Add(newGuid, dynamicConfigData);
             return dynamicConfigData;
         }
-
+        public bool IsDynamicConfigExists(string guid)
+        {
+            return _dynamicConfigDatabase.IsItemExists(guid);
+        }
         public void RemoveDynamicActorConfig(string guid)
         {
             if (!_staticConfigDatabase.IsItemExists(guid))
@@ -51,14 +63,16 @@ namespace Sheldier.Actors.Data
             _dynamicConfigDatabase.Remove(guid);
         }
 
-        public ActorDynamicMovementData CreateDynamicMovementData(string guid)
+        public ActorDynamicMovementData GetDynamicMovementData(string guid)
         {
             if (!_dynamicConfigDatabase.TryGet(guid, out ActorDynamicConfigData dynamicConfigData))
                 throw new NullReferenceException(
                     $"You are trying to create movement data before creating config. Config is a heart of actors data.");
             if(!_staticMovementDatabase.TryGet(dynamicConfigData.TypeName, out ActorStaticMovementData staticMovementData))
                 throw new NullReferenceException($"Can't create dynamic config with {dynamicConfigData.TypeName} reference due to absence of static movement data");
-            
+            if (_dynamicMovementDatabase.IsItemExists(guid))
+                return _dynamicMovementDatabase.Get(guid);
+                
             ActorDynamicMovementData dynamicMovementData = new ActorDynamicMovementData(dynamicConfigData.ID, staticMovementData);
             _dynamicMovementDatabase.Add(dynamicMovementData.ID, dynamicMovementData);
             return dynamicMovementData;
@@ -71,40 +85,19 @@ namespace Sheldier.Actors.Data
             _dynamicMovementDatabase.Remove(guid);
         }
 
-        public ActorDynamicDialogueData CreateDynamicDialogueData(string guid)
-        {
-            if (!_dynamicConfigDatabase.TryGet(guid, out ActorDynamicConfigData dynamicConfigData))
-                throw new NullReferenceException(
-                    $"You are trying to create dialogue data before creating config. Config is a heart of actors data.");
-            if(!_staticDialogueDatabase.TryGet(dynamicConfigData.TypeName, out ActorStaticDialogueData staticDialogueData))
-                throw new NullReferenceException($"Can't create dynamic config with {dynamicConfigData.TypeName} reference due to absence of static dialogue data");
-            
-            ActorDynamicDialogueData dynamicDialogueData = new ActorDynamicDialogueData(dynamicConfigData.ID, staticDialogueData);
-            _dynamicDialogueDatabase.Add(dynamicDialogueData.ID, dynamicDialogueData);
-            return dynamicDialogueData;
-        }
-
-        public void RemoveDynamicDialogueData(string guid)
-        {
-            if (!_staticDialogueDatabase.IsItemExists(guid))
-                return;
-            _dynamicDialogueDatabase.Remove(guid);
-        }
-
         public ActorDynamicEffectData CreateDynamicEffectData(string typeID)
         {
             if (!_dynamicConfigDatabase.TryGet(typeID, out ActorDynamicConfigData dynamicConfigData))
                 throw new NullReferenceException(
                     $"You are trying to create effect data before creating config. Config is a heart of actors data.");
-            ActorDynamicEffectData dynamicEffectData = new ActorDynamicEffectData(dynamicConfigData.ID);
+            if (_dynamicEffectDatabase.IsItemExists(dynamicConfigData.Guid))
+                return _dynamicEffectDatabase.Get(dynamicConfigData.Guid);
+            
+            ActorDynamicEffectData dynamicEffectData = new ActorDynamicEffectData(dynamicConfigData.Guid);
             _dynamicEffectDatabase.Add(dynamicEffectData.ID, dynamicEffectData);
             return dynamicEffectData;
         }
-
-        public void RemoveDynamicEffectData(string guid)
-        {
-            
-        }
+        
         public ActorStaticBuildData GetBuildData(string typeID)
         {
             if(!_staticBuildDatabase.TryGet(typeID, out ActorStaticBuildData buildData))
@@ -112,5 +105,7 @@ namespace Sheldier.Actors.Data
             return buildData;
         }
         private string GenerateNewGuid() => Guid.NewGuid().ToString();
+
+        
     }
 }

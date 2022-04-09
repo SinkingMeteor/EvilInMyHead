@@ -14,7 +14,7 @@ namespace Sheldier.Item
             LoadItems();
         }
 
-        public void SetDependencies(ItemFactory itemFactory)
+        public ItemSpawner(ItemFactory itemFactory)
         {
             _itemFactory = itemFactory;
         }

@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Sheldier.Common
 {
-    public class CameraHandler : ILateTickListener, IPausable
+    public class CameraHandler : ILateTickListener, IPausable, ICameraFollower
     {
         public Camera CurrentSceneCamera => _camera.SceneCamera;
 
@@ -20,6 +20,13 @@ namespace Sheldier.Common
         private CameraPixelPerfect _pixelPerfectCameraTemplate;
         private CameraPixelPerfect _camera;
 
+        public CameraHandler(LateTickHandler lateTickHandler, IGameplayInputProvider inputProvider, PauseNotifier pauseNotifier)
+        {
+            _pauseNotifier = pauseNotifier;
+            _inputProvider = inputProvider;
+            _lateTickHandler = lateTickHandler;
+        }
+        
         public void InitializeOnScene()
         {
             _camera = GameObject.Instantiate(_pixelPerfectCameraTemplate);
@@ -41,12 +48,6 @@ namespace Sheldier.Common
             _cameraSideMover = new CameraSideMover();
             _cameraSideMover.SetDependencies(_inputProvider, _cameraFollower, _lateTickHandler);
             
-        }
-        public void SetDependencies(LateTickHandler lateTickHandler, IGameplayInputProvider inputProvider, PauseNotifier pauseNotifier)
-        {
-            _pauseNotifier = pauseNotifier;
-            _inputProvider = inputProvider;
-            _lateTickHandler = lateTickHandler;
         }
 
         public void LateTick()

@@ -5,6 +5,6 @@ namespace Sheldier.Data
 {
     public class DialoguesLoader : AssetProvider<DialogueSystemGraph>
     {
-        protected override string Path => AssetPathProvidersPaths.DIALOGUES_PROVIDER;
+        protected override string Path => AssetPathConstants.DIALOGUES_PROVIDER;
     }
 }

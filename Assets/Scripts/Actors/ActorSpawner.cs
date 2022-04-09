@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
-using Sheldier.Actors.Builder;
+﻿using Sheldier.Actors.Builder;
+using Sheldier.Actors.Data;
+using Sheldier.Common;
+using Sheldier.Constants;
+using Sheldier.Data;
 using Sheldier.GameLocation;
 using Sheldier.Installers;
 
@@ -7,50 +10,52 @@ namespace Sheldier.Actors
 {
     public class ActorSpawner
     {
-        public IReadOnlyDictionary<string, List<Actor>> ActorsOnScene => _actorsOnScene;
-        private Dictionary<string, List<Actor>> _actorsOnScene;
-        
+        private readonly Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private readonly ScenePlayerController _scenePlayerController;
+        private readonly SceneActorsDatabase _sceneActorsDatabase;
+        private readonly IActorBuilder _actorBuilder;
+
         private LocationPlaceholdersKeeper _placeholdersKeeper;
         private ActorsInstaller _actorsInstaller;
-        private ActorBuilder _actorBuilder;
 
+        public ActorSpawner(IActorBuilder actorBuilder, SceneActorsDatabase sceneActorsDatabase, ScenePlayerController scenePlayerController, 
+            Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        {
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _scenePlayerController = scenePlayerController;
+            _sceneActorsDatabase = sceneActorsDatabase;
+            _actorBuilder = actorBuilder;
+        }
         public void Initialize(LocationPlaceholdersKeeper placeholdersKeeper)
         {
             _placeholdersKeeper = placeholdersKeeper;
-            _actorsOnScene = new Dictionary<string, List<Actor>>();
             LoadItems();
         }
-
-        public void SetDependencies(ActorBuilder actorBuilder)
-        {
-            _actorBuilder = actorBuilder;
-        }
-        
         private void LoadItems()
         {
             int counter = 0;
             foreach (var placeholder in _placeholdersKeeper.ActorPlaceholders)
             {
-                Actor actor = _actorBuilder.Build(placeholder.Reference.Reference);
+                string typeName = null;
+
+                if (placeholder.Reference.Reference == GameplayConstants.CURRENT_PLAYER)
+                {
+                    var controlledActorGuid = _scenePlayerController.ControlledActorGuid;
+                    typeName = _dynamicConfigDatabase.Get(controlledActorGuid).TypeName;
+                }
+                else
+                    typeName = placeholder.Reference.Reference;
+                Actor actor = _actorBuilder.Build(typeName, placeholder.Guid);
                 actor.name += counter++;
                 actor.transform.position = placeholder.transform.position;
-                if(!_actorsOnScene.ContainsKey(placeholder.Reference.Reference))
-                    _actorsOnScene.Add(placeholder.Reference.Reference, new List<Actor>());
-                _actorsOnScene[placeholder.Reference.Reference].Add(actor);
+                _sceneActorsDatabase.Add(placeholder.Reference.Reference, actor);
                 placeholder.Deactivate();
                 
             }
         }
-
         public void OnLocationDispose()
         {
-            foreach (var actors in _actorsOnScene)
-            {
-                for (int i = 0; i < actors.Value.Count; i++)
-                {
-                    actors.Value[i].Dispose();
-                }
-            }
+           _sceneActorsDatabase.Clear();
         }
     }
 }

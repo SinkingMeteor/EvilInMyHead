@@ -37,7 +37,6 @@ namespace Sheldier.Installers
             
             Container.Bind<Database<ActorDynamicConfigData>>().To<ActorDynamicConfigDatabase>().AsSingle();
             Container.Bind<Database<ActorDynamicMovementData>>().To<ActorDynamicMovementDatabase>().AsSingle();
-            Container.Bind<Database<ActorDynamicDialogueData>>().To<ActorDynamicDialogueDatabase>().AsSingle();
             Container.Bind<Database<ActorDynamicEffectData>>().To<ActorDynamicEffectDatabase>().AsSingle();
             
             Container.Bind<Database<ItemStaticConfigData>>().To<ItemStaticConfigDatabase>().AsSingle();
@@ -50,6 +49,7 @@ namespace Sheldier.Installers
 
             Container.Bind<Database<UIPerformStaticData>>().To<UIPerformStaticDatabase>().AsSingle();
 
+            Container.Bind<SceneActorsDatabase>().AsSingle();
             Container.Bind<Database<SimpleItem>>().To<SimpleItemDatabase>().AsSingle();
 
         }

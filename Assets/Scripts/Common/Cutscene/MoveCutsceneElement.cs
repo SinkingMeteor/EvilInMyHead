@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using Sheldier.Actors;
 using Sheldier.Actors.AI;
+using Sheldier.Actors.Data;
 using Sheldier.Common.Asyncs;
 using Sheldier.Constants;
+using Sheldier.Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -27,11 +29,12 @@ namespace Sheldier.Common.Cutscene
 
         public async Task PlayCutScene()
         {
-            string currentActorToMove = actorToMove.Reference == AssetPathProvidersPaths.CURRENT_PLAYER ? _data.CurrentPlayer.Type : actorToMove.Reference; 
-            if(!_data.ActorSpawner.ActorsOnScene.ContainsKey(currentActorToMove))
+            var typeNameOfCurrentPlayer = _data.DynamicConfigDatabase.Get(_data.CurrentPlayer.Guid).TypeName;
+            string currentActorToMove = actorToMove.Reference == GameplayConstants.CURRENT_PLAYER ? typeNameOfCurrentPlayer : actorToMove.Reference; 
+            if(!_data.SceneActorsDatabase.ContainsKey(currentActorToMove))
                 return;
             _isFinished = false;
-            Actor actor = _data.ActorSpawner.ActorsOnScene[currentActorToMove][0];
+            Actor actor = _data.SceneActorsDatabase.GetFirst(currentActorToMove);
             actor.AddExtraModule(_data.ActorsAIMoveModule);
             _data.ActorsAIMoveModule.MoveTo(moveToPoint, OnFinished);
             await AsyncWaitersFactory.WaitUntil(() => _isFinished);

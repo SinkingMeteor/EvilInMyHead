@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sheldier.Actors;
+using Sheldier.Actors.Data;
+using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
 using UnityEngine;
 
@@ -12,7 +14,15 @@ namespace Sheldier.Common
         
         private Dictionary<string, DialoguePointer> _pointers;
         private ActorSpawner _spawner;
+        private readonly Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private readonly SceneActorsDatabase _sceneActorsDatabase;
 
+        public DialoguesProvider(SceneActorsDatabase sceneActorsDatabase, Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        {
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _sceneActorsDatabase = sceneActorsDatabase;
+        }
+        
         public void Initialize()
         {
             _pointers = new Dictionary<string, DialoguePointer>()
@@ -21,13 +31,10 @@ namespace Sheldier.Common
             };
         }
 
-        public void SetDependencies(ActorSpawner spawner)
-        {
-            _spawner = spawner;
-        }
         public void FindDialogue(Actor dialogueInitiator, Actor dialogueTarget)
         {
-            DialogueSystemGraph graph = _pointers[dialogueTarget.Type].GetDialogue();
+            var typeName = _dynamicConfigDatabase.Get(dialogueTarget.Guid).TypeName;
+            DialogueSystemGraph graph = _pointers[typeName].GetDialogue();
             Actor[] actorsInDialogues = new Actor[2 + (graph.AdditionalPersons?.Length ?? 0)];
             actorsInDialogues[0] = dialogueInitiator;
             actorsInDialogues[1] = dialogueTarget;
@@ -35,9 +42,9 @@ namespace Sheldier.Common
                 for (int i = 0; i < graph.AdditionalPersons.Length; i++)
                 {
                     string typeID = graph.AdditionalPersons[i].Reference;
-                    if (!_spawner.ActorsOnScene.ContainsKey(typeID))
+                    if (!_sceneActorsDatabase.ContainsKey(typeID))
                         return;
-                    actorsInDialogues[i + 2] = _spawner.ActorsOnScene[typeID][0];
+                    actorsInDialogues[i + 2] = _sceneActorsDatabase.GetFirst(typeID);
                 }
 
             actorsInDialogues[0].LockInput();

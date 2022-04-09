@@ -1,5 +1,6 @@
 ﻿using Sheldier.Common.Localization;
 using Sheldier.UI;
+using Zenject;
 
 namespace Sheldier.Common.Pool
 {
@@ -12,7 +13,8 @@ namespace Sheldier.Common.Pool
             entity.SetDependencies(_fontProvider);
         }
 
-        public void SetDependencies(IFontProvider fontProvider)
+        [Inject]
+        private void InjectDependencies(IFontProvider fontProvider)
         {
             _fontProvider = fontProvider;
         }

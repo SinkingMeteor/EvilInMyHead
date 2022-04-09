@@ -5,6 +5,6 @@ namespace Sheldier.Data
 {
     public class SpriteLoader : AssetProvider<Sprite>
     {
-        protected override string Path => AssetPathProvidersPaths.SPRITES_PROVIDER;
+        protected override string Path => AssetPathConstants.SPRITES_PROVIDER;
     }
 }

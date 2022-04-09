@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Sheldier.Actors;
+using Sheldier.Actors.Data;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
 using Sheldier.Common.Cutscene;
@@ -23,21 +24,22 @@ namespace Sheldier.Setup
         private ScenePlayerController _scenePlayerController;
         private SceneLocationController _locationController;
         private SceneSetupOperation _sceneSetupOperation;
+        private SceneActorsDatabase _sceneActorsDatabase;
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
         private CutsceneController _cutsceneController;
         private InputProvider _inputProvider;
         private CameraHandler _cameraHandler;
         private PauseNotifier _pauseNotifier;
-        private ActorSpawner _actorSpawner;
 
         [Inject]
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
-             ScenePlayerController scenePlayerController, ActorSpawner actorSpawner, Pathfinder pathfinder,
+             ScenePlayerController scenePlayerController, Pathfinder pathfinder,
             UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler, PauseNotifier pauseNotifier, UIStatesController uiStatesController,
              CutsceneController cutsceneController, SceneLocationController locationController,
-            SceneSetupOperation sceneSetupOperation)
+            SceneSetupOperation sceneSetupOperation, SceneActorsDatabase sceneActorsDatabase)
         {
+            _sceneActorsDatabase = sceneActorsDatabase;
             _scenePlayerController = scenePlayerController;
             _sceneLoadingOperation = sceneLoadingOperation;
             _sceneSetupOperation = sceneSetupOperation;
@@ -48,7 +50,6 @@ namespace Sheldier.Setup
             _pauseNotifier = pauseNotifier;
             _cameraHandler = cameraHandler;
             _inputProvider = inputProvider;
-            _actorSpawner = actorSpawner;
         }
 
         public async Task StartScene()
@@ -62,12 +63,9 @@ namespace Sheldier.Setup
             await _locationController.LoadNewLocation(sceneData.SceneStartLocation);
             
             //Test
-            Actor firstActor = _actorSpawner.ActorsOnScene.First().Value[0];
-            _scenePlayerController.SetControl(firstActor);
-            _scenePlayerController.SetFollowTarget(firstActor);
-
-
-
+            Actor firstActor = _sceneActorsDatabase.GetFirst();
+            _scenePlayerController.SetControl(firstActor.Guid);
+            _cameraHandler.SetFollowTarget(firstActor.transform);
             //  StartCoroutine(DialogueTestCoroutine());
         }
 

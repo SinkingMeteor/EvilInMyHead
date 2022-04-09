@@ -1,51 +1,55 @@
-using System.Collections.Generic;
 using Sheldier.Actors;
+using Sheldier.Actors.Data;
 using Sheldier.Actors.Inventory;
+using Sheldier.Data;
 using Zenject;
 
 namespace Sheldier.Common
 {
     public class ScenePlayerController
     {
-        public Actor FollowedActor => _followedActor;
-        public Actor ControlledActor => _controlledActor;
+        public string ControlledActorGuid => _controlledActorsGuid;
 
-        private Actor _followedActor;
-        private Actor _controlledActor;
-        
+        private string _controlledActorsGuid;
+
+        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private SceneActorsDatabase _sceneActorsDatabase;
         private IGameplayInputProvider _inputProvider;
-        private CameraHandler _cameraHandler;
         private Inventory _inventory;
 
         [Inject]
-        private void InjectDependencies(IGameplayInputProvider inputProvider, Inventory inventory, CameraHandler cameraHandler)
+        private void InjectDependencies(IGameplayInputProvider inputProvider, Inventory inventory, SceneActorsDatabase sceneActorsDatabase,
+            Database<ActorDynamicConfigData> dynamicConfigDatabase)
         {
-            _cameraHandler = cameraHandler;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _sceneActorsDatabase = sceneActorsDatabase;
             _inventory = inventory;
             _inputProvider = inputProvider;
         }
-
-        public void SetFollowTarget(Actor actor)
+        
+        public void SetControl(string guid)
         {
-            _followedActor = actor;
-            _cameraHandler.SetFollowTarget(actor.transform);
+            var controlledActorData = _dynamicConfigDatabase.Get(guid);
+            var controlledActor = _sceneActorsDatabase.Get(controlledActorData.TypeName, guid);
+            
+            SetControl(controlledActor);
         }
 
-        public void SetControl(Actor actor)
+        public void SetControl(Actor controlledActor)
         {
-            if (_controlledActor != null)
+            if (controlledActor != null)
             {
-                _controlledActor.RemoveControl();
-                _controlledActor.InventoryModule.RemoveInventory();
+                controlledActor.RemoveControl();
+                controlledActor.InventoryModule.RemoveInventory();
             }
             
-            _controlledActor = actor;
-            
-            _controlledActor.SetControl(_inputProvider);
-            _controlledActor.InventoryModule.SetInventory(_inventory);
-        }
+            controlledActor.SetControl(_inputProvider);
+            controlledActor.InventoryModule.SetInventory(_inventory);
 
-        public bool IsCurrentActor(Actor actor) => _controlledActor == actor;
+            _controlledActorsGuid = controlledActor.Guid;
+        }
+        
+        public bool IsCurrentActor(string guid) => _controlledActorsGuid == guid;
     }
 
 }

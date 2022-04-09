@@ -904,8 +904,9 @@ GameObject:
   m_Component:
   - component: {fileID: 900251763378160683}
   - component: {fileID: 900251763378160681}
+  - component: {fileID: 1790065946722945001}
   m_Layer: 0
-  m_Name: Tom_PH
+  m_Name: CurrentActor_PH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -938,7 +939,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f1716676f940b3ba6bd306316e9503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guid: {fileID: 1790065946722945001}
   reference: {fileID: 11400000, guid: 178916bd591ab714fba94ce89bd21295, type: 2}
+--- !u!114 &1790065946722945001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900251763378160682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bff18066f334223b1117783eb899efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  _id: MainColonyLocation_3b8a03cd-67ce-4a3c-8edb-a2b79096d728
 --- !u!1 &900251763423948662
 GameObject:
   m_ObjectHideFlags: 0
@@ -11338,6 +11362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 900251764688687983}
   - component: {fileID: 900251764688687981}
+  - component: {fileID: 1990354907665697059}
   m_Layer: 0
   m_Name: Fred_PH
   m_TagString: Untagged
@@ -11372,7 +11397,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f1716676f940b3ba6bd306316e9503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guid: {fileID: 1990354907665697059}
   reference: {fileID: 11400000, guid: 5b987489c2a535a4d85b2e26453b75ea, type: 2}
+--- !u!114 &1990354907665697059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900251764688687982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bff18066f334223b1117783eb899efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  _id: MainColonyLocation_fd953169-8924-45a1-801a-ce2378dfe503
 --- !u!1 &900251764696600827
 GameObject:
   m_ObjectHideFlags: 0

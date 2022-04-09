@@ -2,6 +2,7 @@
 using Sheldier.Item;
 using Sheldier.UI;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.Common.Pool
 {
@@ -10,7 +11,8 @@ namespace Sheldier.Common.Pool
         private Database<ItemDynamicConfigData> _dynamicConfigDatabase;
         private AssetProvider<Sprite> _spriteProvider;
 
-        public void SetDependencies(AssetProvider<Sprite> spriteProvider, Database<ItemDynamicConfigData> dynamicConfigDatabase)
+        [Inject]
+        public void InjectDependencies(AssetProvider<Sprite> spriteProvider, Database<ItemDynamicConfigData> dynamicConfigDatabase)
         {
             _dynamicConfigDatabase = dynamicConfigDatabase;
             _spriteProvider = spriteProvider;

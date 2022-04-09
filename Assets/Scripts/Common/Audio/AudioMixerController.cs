@@ -2,6 +2,7 @@
 using System.Text;
 using UnityEngine;
 using UnityEngine.Audio;
+using Zenject;
 
 namespace Sheldier.Common.Audio
 {
@@ -24,7 +25,7 @@ namespace Sheldier.Common.Audio
                 {AudioTrackType.UI, new AudioTrackExposedData("UI")},
             };
         }
-
+        
         private float ConvertToDB(float volume01)
         {
             return Mathf.Lerp(MINIMAL_DB_VOLUME, MAXIMAL_DB_VOLUME, volume01);

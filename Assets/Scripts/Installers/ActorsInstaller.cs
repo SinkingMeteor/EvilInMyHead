@@ -12,7 +12,7 @@ namespace Sheldier.Installers
         {
             Container.Bind<ScenePlayerController>().AsSingle();
             Container.Bind<ActorSpawner>().AsSingle();
-            Container.Bind<ActorBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ActorBuilder>().AsSingle();
         }
     }
 }

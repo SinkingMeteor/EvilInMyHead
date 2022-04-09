@@ -3,6 +3,7 @@ using Sheldier.Common.Audio;
 using Sheldier.Common.Localization;
 using Sheldier.Data;
 using Sheldier.UI;
+using Zenject;
 
 namespace Sheldier.Common.Pool
 {
@@ -10,18 +11,24 @@ namespace Sheldier.Common.Pool
     {
         private ISoundPlayer _soundPlayer;
         private IFontProvider _fontProvider;
-        private Database<ActorDynamicDialogueData> _dynamicDialogueDatabase;
+        private Database<ActorStaticDialogueData> _staticDialogueDatabase;
+        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
 
-        protected override void SetDependenciesToEntity(SpeechCloud entity)
+        [Inject]
+        private void InjectDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorStaticDialogueData> staticDialogueDatabase,
+            Database<ActorDynamicConfigData> dynamicConfigDatabase)
         {
-            entity.SetDependencies(_soundPlayer, _fontProvider, _dynamicDialogueDatabase);
-        }
-
-        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorDynamicDialogueData> dynamicDialogueDatabase)
-        {
-            _dynamicDialogueDatabase = dynamicDialogueDatabase;
+            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _staticDialogueDatabase = staticDialogueDatabase;
             _soundPlayer = soundPlayer;
             _fontProvider = fontProvider;
         }
+        
+        protected override void SetDependenciesToEntity(SpeechCloud entity)
+        {
+            entity.SetDependencies(_soundPlayer, _fontProvider, _staticDialogueDatabase, _dynamicConfigDatabase);
+        }
+
+
     }
 }

@@ -6,39 +6,37 @@ using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Factories;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.Actors.Builder
 {
-    public class ActorBuilder
+    public class ActorBuilder : IActorBuilder
     {
-        private AssetProvider<ActorAnimationCollection> _appearanceLoader;
-        private ScenePlayerController _scenePlayerController;
-        private ActorsEffectFactory _effectFactory;
-        private DialoguesProvider _dialoguesProvider;
-        private FixedTickHandler _fixedTickHandler;
-        private PauseNotifier _pauseNotifier;
-        private ISubBuilder[] _subBuilders;
-        private TickHandler _tickHandler;
-        private Actor _actorTemplate;
-        private ActorDataFactory _actorDataFactory;
-        private ItemFactory _itemFactory;
-
-        public void Initialize()
-        {
-            _actorTemplate = Resources.Load<Actor>(ResourcePaths.ACTOR_TEMPLATE);
-            _subBuilders = new ISubBuilder[]
-            {
-                new ActorStatesBuilder(_actorDataFactory, _itemFactory),
-                new ActorInteractBuilder(_scenePlayerController, _dialoguesProvider, _actorDataFactory)
-            };
-        }
+        private readonly AssetProvider<ActorAnimationCollection> _appearanceLoader;
+        private readonly ScenePlayerController _scenePlayerController;
+        private readonly DialoguesProvider _dialoguesProvider;
+        private readonly ActorsEffectFactory _effectFactory;
+        private readonly ActorDataFactory _actorDataFactory;
+        private readonly FixedTickHandler _fixedTickHandler;
+        private readonly ICameraFollower _cameraFollower;
+        private readonly PauseNotifier _pauseNotifier;
+        private readonly TickHandler _tickHandler;
+        private readonly ItemFactory _itemFactory;
         
-        [Inject]
-        private void InjectDependencies(ActorsEffectFactory effectFactory, ScenePlayerController scenePlayerController, TickHandler tickHandler,
-            FixedTickHandler fixedTickHandler, PauseNotifier pauseNotifier, DialoguesProvider dialoguesProvider, ActorDataFactory actorDataFactory,
-            ItemFactory itemFactory, AssetProvider<ActorAnimationCollection> appearanceLoader)
+        private ISubBuilder[] _subBuilders;
+        private Actor _actorTemplate;
+
+        public ActorBuilder(ActorsEffectFactory effectFactory,
+                            ScenePlayerController scenePlayerController,
+                            TickHandler tickHandler,
+                            FixedTickHandler fixedTickHandler,
+                            PauseNotifier pauseNotifier,
+                            DialoguesProvider dialoguesProvider,
+                            ActorDataFactory actorDataFactory,
+                            ItemFactory itemFactory,
+                            AssetProvider<ActorAnimationCollection> appearanceLoader,
+                            ICameraFollower cameraFollower)
         {
+            _cameraFollower = cameraFollower;
             _appearanceLoader = appearanceLoader;
             _itemFactory = itemFactory;
             _actorDataFactory = actorDataFactory;
@@ -49,17 +47,30 @@ namespace Sheldier.Actors.Builder
             _effectFactory = effectFactory;
             _tickHandler = tickHandler;
         }
-
-        public Actor Build(string typeID)
+        
+        public void Initialize()
         {
+            _actorTemplate = Resources.Load<Actor>(ResourcePaths.ACTOR_TEMPLATE);
+            _subBuilders = new ISubBuilder[]
+            {
+                new ActorStatesBuilder(_actorDataFactory, _itemFactory),
+                new ActorInteractBuilder(_scenePlayerController, _dialoguesProvider, _cameraFollower)
+            };
+        }
+
+        public Actor Build(string typeID, string guid)
+        {
+            bool isNewActor = _actorDataFactory.IsDynamicConfigExists(guid);
+            var staticConfig = _actorDataFactory.GetStaticConfigData(typeID);
             ActorStaticBuildData buildData = _actorDataFactory.GetBuildData(typeID);
-            ActorDynamicConfigData dynamicConfigData = _actorDataFactory.CreateDynamicActorConfig(typeID);
-            ActorAnimationCollection actorAppearance = _appearanceLoader.Get(dynamicConfigData.ActorAppearance);
-            _actorDataFactory.CreateDynamicDialogueData(dynamicConfigData.Guid);
-            
-            
+            ActorDynamicConfigData dynamicConfigData = _actorDataFactory.GetDynamicActorConfig(typeID, guid);
+            ActorAnimationCollection actorAppearance = _appearanceLoader.Get(staticConfig.ActorAppearance);
+
+
             Actor actor = GameObject.Instantiate(_actorTemplate);
-            actor.SetDependencies(dynamicConfigData, _tickHandler, _fixedTickHandler, _pauseNotifier);
+            if (!isNewActor)
+                actor.transform.position = dynamicConfigData.Position;
+            actor.SetDependencies(dynamicConfigData.Guid, _tickHandler, _fixedTickHandler, _pauseNotifier);
             actor.ActorsView.SetActorAppearance(actorAppearance);
             actor.Initialize();
 
@@ -68,13 +79,15 @@ namespace Sheldier.Actors.Builder
                 var effectData = _actorDataFactory.CreateDynamicEffectData(dynamicConfigData.Guid);
                 actor.AddExtraModule(new ActorEffectModule(effectData, _effectFactory));
             }
-            if(buildData.CanAttack)
+
+            if (buildData.CanAttack)
                 actor.AddExtraModule(new ActorAttackModule());
-            
+
             foreach (var subBuilder in _subBuilders)
             {
                 subBuilder.Build(actor, buildData);
             }
+
             return actor;
         }
     }

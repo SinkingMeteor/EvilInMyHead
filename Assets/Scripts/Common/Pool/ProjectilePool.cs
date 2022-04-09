@@ -11,7 +11,8 @@ namespace Sheldier.Common.Pool
         private TickHandler _tickHandler;
         private AssetProvider<Sprite> _spriteLoader;
         
-        public void SetDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileDatabase, AssetProvider<Sprite> spriteLoader)
+        [Inject]
+        private void InjectDependencies(TickHandler tickHandler, Database<ItemStaticProjectileData> staticProjectileDatabase, AssetProvider<Sprite> spriteLoader)
         {
             _staticProjectileDatabase = staticProjectileDatabase;
             _spriteLoader = spriteLoader;

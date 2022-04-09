@@ -27,8 +27,8 @@ namespace Sheldier.Actors.Builder
             
             if (buildData.CanMove)
             {
-                movementDynamicData = _actorDataFactory.CreateDynamicMovementData(actor.DynamicConfig.Guid);
-                actor.StateModuleController.AddState(new ActorDefaultControlledMovementState(movementDynamicData));
+                movementDynamicData = _actorDataFactory.GetDynamicMovementData(actor.Guid);
+                actor.StateModuleController.AddState(new ActorDefaultControlledMovementState(movementDynamicData, _actorDataFactory.GetDynamicConfigData(actor.Guid)));
                 actor.StateModuleController.AddState(new ActorFallState());
             }
             if (canEquip)
@@ -37,7 +37,7 @@ namespace Sheldier.Actors.Builder
                 actor.StateModuleController.AddState(new ActorEquippedIdleState());
             }
             if(canEquip && buildData.CanMove)
-                actor.StateModuleController.AddState(new ActorEquippedControlledMovementState(movementDynamicData));
+                actor.StateModuleController.AddState(new ActorEquippedControlledMovementState(movementDynamicData, _actorDataFactory.GetDynamicConfigData(actor.Guid)));
                 
             if(buildData.CanJump)
                 actor.StateModuleController.AddState(new ActorJumpState());

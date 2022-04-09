@@ -28,10 +28,10 @@ namespace Sheldier.Setup
         
         public void LoadStaticData()
         {
-            _actorStaticBuildDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_BUILD_DATA));
-            _actorStaticConfigDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_CONFIG));
-            _actorStaticDialogueDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_DIALOGUE_DATA));
-            _actorStaticMovementDatabase.FillDatabase(_dataLoader.Get(AssetPathProvidersPaths.ACTOR_MOVEMENT_DATA));
+            _actorStaticBuildDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ACTOR_BUILD_DATA));
+            _actorStaticConfigDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ACTOR_CONFIG));
+            _actorStaticDialogueDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ACTOR_DIALOGUE_DATA));
+            _actorStaticMovementDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ACTOR_MOVEMENT_DATA));
         }
     }
 }

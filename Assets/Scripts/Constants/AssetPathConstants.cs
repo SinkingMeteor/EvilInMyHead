@@ -1,7 +1,7 @@
 ﻿
 namespace Sheldier.Constants
 {
-    public static class AssetPathProvidersPaths
+    public static class AssetPathConstants
     {
         public const string ANIMATION_COLLECTION_PROVIDER = "AnimationCollections/AnimationCollectionPathProvider";
         public const string ANIMATION_PROVIDER = "Animations/AnimationPathProvider";
@@ -22,7 +22,6 @@ namespace Sheldier.Constants
 
         public const string UI_PERFORM_CONFIG = "UIPerformData";
         
-        public const string CURRENT_PLAYER = "CurrentPlayer";
 
     }
 }

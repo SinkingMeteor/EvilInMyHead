@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
+using Sheldier.Common.SaveSystem;
 
 namespace Sheldier.Data
 {
-    public abstract class Database<T> where T : IDatabaseItem
+    public abstract class Database<T> : ISavable where T : IDatabaseItem
     {
         private Dictionary<string, T> _storageDictionary;
 
@@ -29,6 +31,8 @@ namespace Sheldier.Data
         public void Clear() => _storageDictionary.Clear();
 
         public string Save() => JsonConvert.SerializeObject(_storageDictionary);
+        
+        public virtual string GetSaveName() => String.Empty;
 
         public void Load(string JSONedText) => _storageDictionary = JsonConvert.DeserializeObject<Dictionary<string, T>>(JSONedText);
     }

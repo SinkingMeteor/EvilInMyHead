@@ -17,7 +17,7 @@ namespace Sheldier.Actors
         
         private ActorsInventoryModule _inventoryModule;
         
-        public ActorEquippedControlledMovementState(ActorDynamicMovementData movementData) : base(movementData)
+        public ActorEquippedControlledMovementState(ActorDynamicMovementData movementData, ActorDynamicConfigData dynamicConfigData) : base(movementData, dynamicConfigData)
         {
         }
         public override void SetDependencies(ActorInternalData data)
