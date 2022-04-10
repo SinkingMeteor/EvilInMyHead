@@ -16,6 +16,8 @@ namespace Sheldier.Actors
         public event Action OnReloadButtonReleased;
         public event Action OnJumpButtonPressed;
         public event Action OnJumpButtonReleased;
+        public event Action OnDropButtonPressed;
+        public event Action OnDropButtonReleased;
         public IGameplayInputProvider CurrentInputProvider => _currentInputProvider;
 
         private IGameplayInputProvider _currentInputProvider;
@@ -47,6 +49,8 @@ namespace Sheldier.Actors
             _currentInputProvider.ReloadButton.OnReleased += ReloadButtonReleased;
             _currentInputProvider.JumpButton.OnPressed += JumpButtonPressed;
             _currentInputProvider.JumpButton.OnReleased += JumpButtonReleased;
+            _currentInputProvider.DropButton.OnPressed += DropButtonPressed;
+            _currentInputProvider.DropButton.OnReleased += DropButtonReleased;
         }
 
         public void RemoveInputProvider()
@@ -59,6 +63,8 @@ namespace Sheldier.Actors
             _currentInputProvider.ReloadButton.OnReleased -= ReloadButtonReleased;
             _currentInputProvider.JumpButton.OnPressed -= JumpButtonPressed;
             _currentInputProvider.JumpButton.OnReleased -= JumpButtonReleased;
+            _currentInputProvider.DropButton.OnPressed -= DropButtonPressed;
+            _currentInputProvider.DropButton.OnReleased -= DropButtonReleased;
             
             _currentInputProvider = _nullProvider;
             _realInputProvider = _nullProvider;
@@ -84,7 +90,7 @@ namespace Sheldier.Actors
         private void AttackButtonPressed() => OnAttackButtonPressed?.Invoke();
         private void ReloadButtonReleased() => OnReloadButtonReleased?.Invoke();
         private void ReloadButtonPressed() => OnReloadButtonPressed?.Invoke();
-
-
+        private void DropButtonPressed() => OnDropButtonPressed?.Invoke();
+        private void DropButtonReleased() => OnDropButtonReleased?.Invoke();
     }
 }

@@ -6,6 +6,7 @@ using Sheldier.Actors.Data;
 using Sheldier.Common.Audio;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
+using Sheldier.Constants;
 using Sheldier.Data;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -26,8 +27,8 @@ namespace Sheldier.UI
         [OdinSerialize] private IUIStateAnimationAppearing appearingAnimation;
         [OdinSerialize] private IUIStateAnimationDisappearing disappearingAnimation;
 
-        private Database<ActorStaticDialogueData> _staticDialogueDatabase;
-        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private Database<DynamicNumericalEntityStatsCollection> _dynamicNumericStatsDatabase;
+        private Database<DynamicStringEntityStatsCollection> _dynamicStringStatsDatabase;
         private StringBuilder _stringBuilder;
         private IPool<SpeechCloud> _pool;
         private ISoundPlayer _soundPlayer;
@@ -45,11 +46,11 @@ namespace Sheldier.UI
             _fontProvider.AddListener(this);
 
         }
-        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorStaticDialogueData> dialogueDatabase, 
-            Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        public void SetDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<DynamicStringEntityStatsCollection> dynamicStringStatsDatabase,
+            Database<DynamicNumericalEntityStatsCollection> dynamicNumericStatsDatabase)
         {
-            _dynamicConfigDatabase = dynamicConfigDatabase;
-            _staticDialogueDatabase = dialogueDatabase;
+            _dynamicNumericStatsDatabase = dynamicNumericStatsDatabase;
+            _dynamicStringStatsDatabase = dynamicStringStatsDatabase;
             _soundPlayer = soundPlayer;
             _fontProvider = fontProvider;
         }
@@ -68,10 +69,10 @@ namespace Sheldier.UI
             pointerRect.position = new Vector3(actor.transform.position.x, pointerRect.position.y, pointerRect.position.z);
             cloudTMP.text = text;
 
-            var typeName = _dynamicConfigDatabase.Get(actor.Guid).TypeName;
-            ActorStaticDialogueData dynamicDialogueData = _staticDialogueDatabase.Get(typeName);
-            cloudTMP.color = new Color(dynamicDialogueData.TextColorR, dynamicDialogueData.TextColorG, dynamicDialogueData.TextColorB);
-            _typingCoroutine = StartCoroutine(TypeCoroutine(text, dynamicDialogueData.TypeSpeed));
+            var colorKey = _dynamicStringStatsDatabase.Get(actor.Guid).Get(StatsConstants.ACTOR_SPEECH_COLOR_STAT).Value;
+            var typeSpeed = _dynamicNumericStatsDatabase.Get(actor.Guid).Get(StatsConstants.ACTOR_TYPE_SPEED_STAT).BaseValue;
+            cloudTMP.color = ColorConstants.COLORS[colorKey];
+            _typingCoroutine = StartCoroutine(TypeCoroutine(text, typeSpeed));
         }
         public async void CloseCloud()
         {

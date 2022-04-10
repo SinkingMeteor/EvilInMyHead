@@ -8,7 +8,6 @@ namespace Sheldier.Actors.Hand
 {
     public class ActorsHand : MonoBehaviour, IExtraActorModule, ITickListener
     {
-        
         [SerializeField] private HandView actorHandObject;
         
         private ActorTransformHandler _transformHandler;
@@ -28,7 +27,8 @@ namespace Sheldier.Actors.Hand
             actorHandObject.SetDependencies(_tickHandler, _actor.DataModule.StateDataModule);
             actorHandObject.Initialize();
             _tickHandler.AddListener(this);
-            _actor.InventoryModule.OnUseItem += Equip;
+            _actor.InventoryModule.OnEquipItem += Equip;
+            _actor.InputController.OnDropButtonPressed += UnEquip;
             _actor.OnWillRemoveControl += UnEquip;
         }
 
@@ -78,7 +78,8 @@ namespace Sheldier.Actors.Hand
         public void Dispose()
         {
             _actor.OnWillRemoveControl -= UnEquip;
-            _actor.InventoryModule.OnUseItem -= Equip;
+            _actor.InputController.OnDropButtonPressed -= UnEquip;
+            _actor.InventoryModule.OnEquipItem -= Equip;
             _tickHandler.RemoveListener(this);
             actorHandObject.Dispose();
         }

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Sheldier.Item;
+using UnityEngine;
 
 namespace Sheldier.Actors.Inventory
 {
     public class Inventory : IActorsInventory, IItemStorage
     {
-        public event Action<ItemDynamicConfigData> OnItemUse;
+        public event Action<ItemDynamicConfigData> OnEquipItem;
         public IReadOnlyDictionary<string, InventoryGroup> ItemsCollection => _itemsCollection;
         private Dictionary<string, InventoryGroup> _itemsCollection;
         private int _capacity = 12;
@@ -23,12 +24,16 @@ namespace Sheldier.Actors.Inventory
             return _capacity - slotsCount;
         }
 
-        public void UseItem(string guid)
+        public void EquipItem(string guid)
         {
             if(TryGetItem(guid, out ItemDynamicConfigData dynamicConfigData))
-                OnItemUse?.Invoke(dynamicConfigData);
+                OnEquipItem?.Invoke(dynamicConfigData);
         }
 
+        public void UseItem(string guid)
+        {
+            Debug.Log("Item used");
+        }
         public bool IsItemTypeExists(string typeName) => _itemsCollection.ContainsKey(typeName);
 
         public bool IsItemExists(string guid)

@@ -320,6 +320,14 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 900251764696600820, guid: 785e7bfa3e66efb4db4fec1e31d63aa2, type: 3}
+    - target: {fileID: 1790065946722945001, guid: 785e7bfa3e66efb4db4fec1e31d63aa2, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 1790065946722945001, guid: 785e7bfa3e66efb4db4fec1e31d63aa2, type: 3}
+    - target: {fileID: 1990354907665697059, guid: 785e7bfa3e66efb4db4fec1e31d63aa2, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 1990354907665697059, guid: 785e7bfa3e66efb4db4fec1e31d63aa2, type: 3}
     - target: {fileID: 4328654965134550681, guid: 785e7bfa3e66efb4db4fec1e31d63aa2, type: 3}
       propertyPath: m_Name
       value: MainColonyLocation
@@ -381,6 +389,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5309230728850001324, guid: c642df762ffc11b49878bfa67588745c, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5309230728850001324, guid: c642df762ffc11b49878bfa67588745c, type: 3}
     - target: {fileID: 5985473700246864413, guid: c642df762ffc11b49878bfa67588745c, type: 3}
       propertyPath: m_Name
       value: ColonyBedroomLocation

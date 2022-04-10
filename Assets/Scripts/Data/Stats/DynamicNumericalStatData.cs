@@ -6,22 +6,19 @@ namespace Sheldier.Data
     [Serializable]
     public class DynamicNumericalStatData : IDatabaseItem
     {
-        public string ID => _guid;
+        public string ID => StatName;
         public float BaseValue => _value;
         public string StatName => _statName;
         public string TypeName => _typeName;
         public IReadOnlyList<StatModifierData> Modifiers => _modifierDatas;
 
-        private readonly string _guid;
         private string _typeName;
         private string _statName;
         private float _value;
         private List<StatModifierData> _modifierDatas;
 
-
-        public DynamicNumericalStatData(string guid, StaticNumericalStatData staticData)
+        public DynamicNumericalStatData(StaticNumericalStatData staticData)
         {
-            _guid = guid;
             _typeName = staticData.TypeName;
             _statName = staticData.StatName;
             _value = staticData.BaseValue;

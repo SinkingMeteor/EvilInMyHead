@@ -1,5 +1,5 @@
 ﻿namespace Sheldier.Data
 {
-    public class StaticStringStatDatabase : Database<StaticStringStatData>
+    public class StaticStringStatDatabase : Database<StaticStringStatCollection>
     { }
 }

@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Linq;
 using System.Threading.Tasks;
-using Sheldier.Actors;
-using Sheldier.Actors.Data;
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
 using Sheldier.Common.Cutscene;
@@ -21,10 +18,8 @@ namespace Sheldier.Setup
         [SerializeField] private SceneData sceneData;
 
         private SceneLoadingOperation _sceneLoadingOperation;
-        private ScenePlayerController _scenePlayerController;
         private SceneLocationController _locationController;
         private SceneSetupOperation _sceneSetupOperation;
-        private SceneActorsDatabase _sceneActorsDatabase;
         private UILoadingOperation _uiLoadingOperation;
         private UIStatesController _uiStatesController;
         private CutsceneController _cutsceneController;
@@ -33,14 +28,11 @@ namespace Sheldier.Setup
         private PauseNotifier _pauseNotifier;
 
         [Inject]
-        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation,
-             ScenePlayerController scenePlayerController, Pathfinder pathfinder,
+        public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation, Pathfinder pathfinder,
             UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler, PauseNotifier pauseNotifier, UIStatesController uiStatesController,
              CutsceneController cutsceneController, SceneLocationController locationController,
-            SceneSetupOperation sceneSetupOperation, SceneActorsDatabase sceneActorsDatabase)
+            SceneSetupOperation sceneSetupOperation)
         {
-            _sceneActorsDatabase = sceneActorsDatabase;
-            _scenePlayerController = scenePlayerController;
             _sceneLoadingOperation = sceneLoadingOperation;
             _sceneSetupOperation = sceneSetupOperation;
             _locationController = locationController;
@@ -61,12 +53,6 @@ namespace Sheldier.Setup
             if (_locationController.IsLocationExists)
                 await _locationController.DisposeLocation();
             await _locationController.LoadNewLocation(sceneData.SceneStartLocation);
-            
-            //Test
-            Actor firstActor = _sceneActorsDatabase.GetFirst();
-            _scenePlayerController.SetControl(firstActor.Guid);
-            _cameraHandler.SetFollowTarget(firstActor.transform);
-            //  StartCoroutine(DialogueTestCoroutine());
         }
 
         private void Start()

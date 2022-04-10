@@ -5,6 +5,7 @@ using Sheldier.Actors.Data;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
+using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
@@ -23,8 +24,7 @@ namespace Sheldier.UI
         private UIStatesController _statesController;
         private IDialoguesInputProvider _dialoguesInputProvider;
 
-        private Database<ActorStaticDialogueData> _actorsStaticDialogueDatabase;
-        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private Database<DynamicNumericalEntityStatsCollection> _dynamicNumericalStatsDatabase;
         private ILocalizationProvider _localizationProvider;
         private IDialogueReplica _currentReplica;
         private Actor[] _actorsInDialogue;
@@ -42,11 +42,9 @@ namespace Sheldier.UI
         [Inject]
         private void InjectDependencies(DialoguesProvider dialoguesProvider, UIStatesController statesController, IDialoguesInputProvider dialoguesInputProvider,
             SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider,
-            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler, Database<ActorStaticDialogueData> actorsStaticDialogueDatabase, 
-            Database<ActorDynamicConfigData> dynamicConfigDatabase)
+            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler, Database<DynamicNumericalEntityStatsCollection> dynamicNumericalStatsDatabase)
         {
-            _dynamicConfigDatabase = dynamicConfigDatabase;
-            _actorsStaticDialogueDatabase = actorsStaticDialogueDatabase;
+            _dynamicNumericalStatsDatabase = dynamicNumericalStatsDatabase;
             _cameraHandler = cameraHandler;
             _dialoguesInputProvider = dialoguesInputProvider;
             _statesController = statesController;
@@ -84,8 +82,7 @@ namespace Sheldier.UI
                 return;
             }
             Actor actor = _actorsInDialogue[(int) _currentReplica.Person];
-            var typeName = _dynamicConfigDatabase.Get(actor.Guid).TypeName;
-            var cloudLifetime = _actorsStaticDialogueDatabase.Get(typeName).TypeSpeed
+            var cloudLifetime = _dynamicNumericalStatsDatabase.Get(actor.Guid).Get(StatsConstants.ACTOR_TYPE_SPEED_STAT).BaseValue
                 * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + _currentReplica.Delay;
 
             if (_currentReplica.Choices.Count > 1)

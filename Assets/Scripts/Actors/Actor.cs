@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Sheldier.Actors.Data;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Common.Pause;
@@ -150,6 +149,7 @@ namespace Sheldier.Actors
             _pauseNotifier.Remove(this);
             _tickHandler.RemoveListener(this);
             _fixedTickHandler.RemoveListener(this);
+            _stateModuleController.Dispose();
             actorsView.Dispose();
             foreach (var module in _extraModules)
             {

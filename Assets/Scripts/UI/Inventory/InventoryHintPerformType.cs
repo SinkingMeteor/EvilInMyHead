@@ -3,6 +3,7 @@
     public enum InventoryHintPerformType
     {
         Use,
-        Remove
+        Remove,
+        Equip
     }
 }

@@ -3,7 +3,7 @@
 namespace Sheldier.Data
 {
     [Serializable]
-    public struct StaticStringStatData : IDatabaseItem
+    public struct StaticStringStatData
     {
         public string ID => TypeName + StatName;
 

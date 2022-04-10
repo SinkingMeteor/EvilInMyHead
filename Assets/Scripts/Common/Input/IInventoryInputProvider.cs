@@ -5,6 +5,7 @@ namespace Sheldier.Common
     {
         InputButton UIUseItemButton { get; }
         InputButton UIRemoveItemButton { get; }
+        InputButton UIEquipItemButton { get; }
         InputButton UIOpenInventoryButton { get; }
         InputButton UICloseInventoryButton { get; }
         

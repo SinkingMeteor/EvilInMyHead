@@ -11,22 +11,22 @@ namespace Sheldier.Common.Pool
     {
         private ISoundPlayer _soundPlayer;
         private IFontProvider _fontProvider;
-        private Database<ActorStaticDialogueData> _staticDialogueDatabase;
-        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private Database<DynamicStringEntityStatsCollection> _dynamicStringStatsDatabase;
+        private Database<DynamicNumericalEntityStatsCollection> _dynamicNumericStatsDatabase;
 
         [Inject]
-        private void InjectDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<ActorStaticDialogueData> staticDialogueDatabase,
-            Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        private void InjectDependencies(ISoundPlayer soundPlayer, IFontProvider fontProvider, Database<DynamicStringEntityStatsCollection> dynamicStringStatsDatabase,
+            Database<DynamicNumericalEntityStatsCollection> dynamicNumericStatsDatabase)
         {
-            _dynamicConfigDatabase = dynamicConfigDatabase;
-            _staticDialogueDatabase = staticDialogueDatabase;
+            _dynamicNumericStatsDatabase = dynamicNumericStatsDatabase;
+            _dynamicStringStatsDatabase = dynamicStringStatsDatabase;
             _soundPlayer = soundPlayer;
             _fontProvider = fontProvider;
         }
         
         protected override void SetDependenciesToEntity(SpeechCloud entity)
         {
-            entity.SetDependencies(_soundPlayer, _fontProvider, _staticDialogueDatabase, _dynamicConfigDatabase);
+            entity.SetDependencies(_soundPlayer, _fontProvider, _dynamicStringStatsDatabase, _dynamicNumericStatsDatabase);
         }
 
 

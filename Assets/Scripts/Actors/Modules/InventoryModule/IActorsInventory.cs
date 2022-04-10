@@ -5,7 +5,7 @@ namespace Sheldier.Actors.Inventory
 {
     public interface IActorsInventory
     {
-        public event Action<ItemDynamicConfigData> OnItemUse;
+        public event Action<ItemDynamicConfigData> OnEquipItem;
         bool IsItemTypeExists(string typeName);
         bool IsItemExists(string guid);
         InventoryOperationReport AddItem(ItemDynamicConfigData item);

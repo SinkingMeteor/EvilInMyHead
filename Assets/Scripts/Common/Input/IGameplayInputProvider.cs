@@ -9,6 +9,7 @@ namespace Sheldier.Common
          InputButton AttackButton { get; }
          InputButton ReloadButton { get; }
          InputButton JumpButton { get; }
+         InputButton DropButton { get; }
          Vector2 GetNonNormalizedDirectionToCursorFromPosition(Vector3 position);
          void SwitchActionMap(ActionMapType actionMapType);
          void SetMovementDirection(Vector2 movementDirection);

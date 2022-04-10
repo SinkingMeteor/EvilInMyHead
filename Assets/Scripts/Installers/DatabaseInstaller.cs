@@ -32,11 +32,8 @@ namespace Sheldier.Installers
             
             Container.Bind<Database<ActorStaticConfigData>>().To<ActorStaticConfigDatabase>().AsSingle();
             Container.Bind<Database<ActorStaticBuildData>>().To<ActorStaticBuildDatabase>().AsSingle();
-            Container.Bind<Database<ActorStaticMovementData>>().To<ActorStaticMovementDatabase>().AsSingle();
-            Container.Bind<Database<ActorStaticDialogueData>>().To<ActorStaticDialogueDatabase>().AsSingle();
             
             Container.Bind<Database<ActorDynamicConfigData>>().To<ActorDynamicConfigDatabase>().AsSingle();
-            Container.Bind<Database<ActorDynamicMovementData>>().To<ActorDynamicMovementDatabase>().AsSingle();
             Container.Bind<Database<ActorDynamicEffectData>>().To<ActorDynamicEffectDatabase>().AsSingle();
             
             Container.Bind<Database<ItemStaticConfigData>>().To<ItemStaticConfigDatabase>().AsSingle();
@@ -49,12 +46,10 @@ namespace Sheldier.Installers
 
             Container.Bind<Database<UIPerformStaticData>>().To<UIPerformStaticDatabase>().AsSingle();
 
-            Container.Bind<Database<StaticNumericalStatData>>().To<StaticNumericalStatDatabase>().AsSingle();
-            Container.Bind<Database<StaticStringStatData>>().To<StaticStringStatDatabase>().AsSingle();
-            Container.Bind<Database<DynamicNumericalEntityStatsCollection>>().To<DynamicNumericalStatsDatabase>().AsSingle();
-            Container.Bind<Database<DynamicNumericalStatData>>().To<DynamicNumericalEntityStatsCollection>().AsSingle();
-            Container.Bind<Database<DynamicStringEntityStatsCollection>>().To<DynamicStringStatsDatabase>().AsSingle();
-            Container.Bind<Database<DynamicStringStatData>>().To<DynamicStringEntityStatsCollection>().AsSingle();
+            Container.Bind<Database<StaticNumericalStatCollection>>().To<StaticNumericalStatDatabase>().AsSingle();
+            Container.Bind<Database<StaticStringStatCollection>>().To<StaticStringStatDatabase>().AsSingle();
+            Container.Bind<Database<DynamicNumericalEntityStatsCollection>>().To<DynamicGeneralNumericalStatsDatabase>().AsSingle();
+            Container.Bind<Database<DynamicStringEntityStatsCollection>>().To<DynamicGeneralStringStatsDatabase>().AsSingle();
             
             Container.Bind<SceneActorsDatabase>().AsSingle();
             Container.Bind<Database<SimpleItem>>().To<SimpleItemDatabase>().AsSingle();

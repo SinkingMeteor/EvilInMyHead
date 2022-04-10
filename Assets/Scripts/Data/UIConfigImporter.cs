@@ -12,7 +12,7 @@ namespace Sheldier.Data
         [SerializeField] private bool _prettyPrint = false;
 
         [Button]
-        private void ActorStaticConfigToJson()
+        private void UIPerformDataToJson()
         {
             Load("UIPerformData", data =>
             {

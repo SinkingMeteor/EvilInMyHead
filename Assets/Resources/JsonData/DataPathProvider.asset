@@ -64,30 +64,6 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ActorDialogueData
-    - Name: $v
-      Entry: 1
-      Data: JsonData/Data/
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ActorMovementData
-    - Name: $v
-      Entry: 1
-      Data: JsonData/Data/
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: InventorySlot
     - Name: $v
       Entry: 1
@@ -112,7 +88,31 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
+      Data: NumericalStatsData
+    - Name: $v
+      Entry: 1
+      Data: JsonData/Data/
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
       Data: ProjectileConfig
+    - Name: $v
+      Entry: 1
+      Data: JsonData/Data/
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: StringStatsData
     - Name: $v
       Entry: 1
       Data: JsonData/Data/

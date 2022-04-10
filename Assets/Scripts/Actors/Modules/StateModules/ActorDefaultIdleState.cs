@@ -1,6 +1,5 @@
-﻿using Sheldier.Common.Animation;
-using Sheldier.Constants;
-using UnityEngine;
+﻿using Sheldier.Actors.Data;
+using Sheldier.Common.Animation;
 
 namespace Sheldier.Actors
 {
@@ -11,11 +10,20 @@ namespace Sheldier.Actors
         public virtual int Priority => 0;
 
         protected AnimationType[] _animationHashes;
+
+        private readonly ActorDynamicConfigData _dynamicConfigData;
         
         private bool _isLocked = false;
         private ActorTransformHandler _actorTransformHandler;
         private ActorsView _actorsView;
+        private Actor _actor;
 
+        public ActorDefaultIdleState(ActorDynamicConfigData dynamicConfigData)
+        {
+            _dynamicConfigData = dynamicConfigData;
+        }
+        
+        
         public void Initialize()
         {
             InitializeHashes();
@@ -25,6 +33,7 @@ namespace Sheldier.Actors
         {
             _actorTransformHandler = data.ActorTransformHandler;
             _actorsView = data.Actor.ActorsView;
+            _actor = data.Actor;
         }
 
         protected virtual void InitializeHashes()
@@ -59,7 +68,7 @@ namespace Sheldier.Actors
 
         public void Dispose()
         {
-            
+            _dynamicConfigData.Position = _actor.gameObject.transform.position;
         }
 
         private void SetNewAnimation(AnimationType animationID) => _actorsView.PlayAnimation(animationID);

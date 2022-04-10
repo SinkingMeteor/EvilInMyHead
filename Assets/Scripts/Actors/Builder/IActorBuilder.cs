@@ -2,6 +2,6 @@
 {
     public interface IActorBuilder
     {
-        public Actor Build(string typeID, string guid);
+        public Actor Build(string typeID, string guid, ActorPlaceholder actorPlaceholder);
     }
 }

@@ -1,6 +1,8 @@
 using Sheldier.Actors.Pathfinding;
 using Sheldier.Item;
+using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.GameLocation
 {

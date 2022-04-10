@@ -4,9 +4,9 @@ namespace Sheldier.Data
 {
 
     [Serializable]
-    public struct StaticNumericalStatData : IDatabaseItem
+    public struct StaticNumericalStatData
     {
-        public string ID => TypeName + StatName;
+        public string ID => StatName;
         
         public string TypeName;
         public string StatName;

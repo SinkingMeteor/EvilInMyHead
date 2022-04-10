@@ -84,6 +84,7 @@ MonoBehaviour:
     - {fileID: 971708731, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
     - {fileID: -1829875704, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
     - {fileID: 910756255, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
+    - {fileID: 1297432167, guid: 490b73e1c0a00804880eb20b602aae58, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -102,7 +103,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 69
+      Data: 70
     - Name: 
       Entry: 7
       Data: 
@@ -1339,6 +1340,24 @@ MonoBehaviour:
     - Name: KeyIcon
       Entry: 10
       Data: 67
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: F
+    - Name: $v
+      Entry: 7
+      Data: Sheldier.Common.DeviceKeyIconConfig+KeyIconData, Sheldier
+    - Name: KeyIcon
+      Entry: 10
+      Data: 68
     - Name: 
       Entry: 8
       Data: 

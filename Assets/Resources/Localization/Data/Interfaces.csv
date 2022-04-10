@@ -1,0 +1,10 @@
+Key,Ru
+ui.inventory.hint.use,Использовать
+ui.inventory.hint.equip,Экипировать
+ui.inventory.hint.remove,Выбросить
+ui.items.item_slot.pistol.title,Пистолет
+ui.items.item_slot.pistol.description,Lorem Ipsum
+ui.items.item_slot.pistol_ammo.title,Патроны 9мм
+ui.items.item_slot.pistol_ammo.description,Lorem Ipsum
+ui.items.item_slot.cancel.title,Закрыть...
+ui.items.item_slot.cancel.description,...и продолжить.

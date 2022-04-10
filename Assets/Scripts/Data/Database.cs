@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Sheldier.Common.SaveSystem;
 
@@ -22,6 +23,8 @@ namespace Sheldier.Data
 
         public T Get(string ID) => _storageDictionary[ID];
 
+        public void Set(IEnumerable<T> enumerable) => _storageDictionary = enumerable.ToDictionary(x => x.ID);
+        
         public bool TryGet(string ID, out T item) => _storageDictionary.TryGetValue(ID, out item);
         
         public void Add(T item) => _storageDictionary.Add(item.ID, item);

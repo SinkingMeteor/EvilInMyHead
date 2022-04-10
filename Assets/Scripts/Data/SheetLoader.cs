@@ -115,7 +115,7 @@ namespace Sheldier.Data
             }
             
             var path = Application.dataPath + _pathConfigs + name + _extension;
-            var jsonData = JsonHelper.ToJson(data, prettyPrint);
+            var jsonData = JsonHelper.ToJson(data);
             File.WriteAllText(path, jsonData);
         }
     }

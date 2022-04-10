@@ -24,6 +24,8 @@ namespace Sheldier.Common
         public InputButton AttackButton => _attackButton;
         public InputButton ReloadButton => _reloadButton;
         public InputButton JumpButton => _jumpButton;
+        public InputButton DropButton => _dropButton;
+        public InputButton UIEquipItemButton => _uiEquipItemButton;
         public InputButton UIOpenInventoryButton => _uiOpenInventoryButton;
         public InputButton UICloseInventoryButton => _uiCloseInventoryButton;
         public InputButton UIUseItemButton => _uiUseItemButton;
@@ -46,11 +48,14 @@ namespace Sheldier.Common
         private InputButton _attackButton;
         private InputButton _reloadButton;
         private InputButton _jumpButton;
+        private InputButton _dropButton;
 
         private InputButton _uiOpenInventoryButton;
         private InputButton _uiCloseInventoryButton;
         private InputButton _uiRemoveItemButton;
+        private InputButton _uiEquipItemButton;
         private InputButton _uiUseItemButton;
+
         private InputButton _dialoguesLowerChoice;
         private InputButton _dialoguesLeftChoice;
         private InputButton _dialoguesUpperChoice;
@@ -65,9 +70,11 @@ namespace Sheldier.Common
             _attackButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Attack]);
             _reloadButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Reload]);
             _jumpButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.Jump]);
+            _dropButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DropItem]);
             
             _uiOpenInventoryButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.OpenInventory]);
             _uiUseItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.UseItem]);
+            _uiEquipItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.EquipItem]);
             _uiRemoveItemButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.RemoveItem]);
             _uiCloseInventoryButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.CloseInventory]);
 

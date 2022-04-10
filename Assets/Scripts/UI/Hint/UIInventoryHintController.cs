@@ -25,16 +25,17 @@ namespace Sheldier.UI
         {
             base.Initialize();
             
-            
             _conditionDictionary = new Dictionary<InventoryHintPerformType, Func<string, bool>>()
             {
-                {InventoryHintPerformType.Use, id => !_dynamicConfigDatabase.Get(id).IsStackable},
-                {InventoryHintPerformType.Remove, id => !_dynamicConfigDatabase.Get(id).IsQuest}
+                {InventoryHintPerformType.Use, id => _dynamicConfigDatabase.Get(id).IsUsable},
+                {InventoryHintPerformType.Remove, id => !_dynamicConfigDatabase.Get(id).IsQuest},
+                {InventoryHintPerformType.Equip, id => _dynamicConfigDatabase.Get(id).IsEquippable},
             };
             _performDictionary = new Dictionary<InventoryHintPerformType, Action>()
             {
                 {InventoryHintPerformType.Use, () => {_inventory.UseItem(_currentItemId); itemSwitcher.Refresh();}},
-                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItemId); itemSwitcher.Refresh();}}
+                {InventoryHintPerformType.Remove, () => {_inventory.RemoveItem(_currentItemId); itemSwitcher.Refresh();}},
+                {InventoryHintPerformType.Equip, () => {_inventory.EquipItem(_currentItemId); itemSwitcher.Refresh();}},
             };
             _hintsCollection = new Dictionary<InventoryHintPerformType, UIHint>();
         }
@@ -53,6 +54,8 @@ namespace Sheldier.UI
             _inventoryInputProvider.UIUseItemButton.OnReleased += OnUseButtonReleased;
             _inventoryInputProvider.UIRemoveItemButton.OnPressed += OnRemoveButtonPressed;
             _inventoryInputProvider.UIRemoveItemButton.OnReleased += OnRemoveButtonReleased;
+            _inventoryInputProvider.UIEquipItemButton.OnPressed += OnEquipButtonPressed;
+            _inventoryInputProvider.UIEquipItemButton.OnReleased += OnEquipButtonReleased;
             base.OnActivated();
         }
 
@@ -80,6 +83,8 @@ namespace Sheldier.UI
             _inventoryInputProvider.UIUseItemButton.OnReleased -= OnUseButtonReleased;
             _inventoryInputProvider.UIRemoveItemButton.OnPressed -= OnRemoveButtonPressed;
             _inventoryInputProvider.UIRemoveItemButton.OnReleased -= OnRemoveButtonReleased;
+            _inventoryInputProvider.UIEquipItemButton.OnPressed -= OnEquipButtonPressed;
+            _inventoryInputProvider.UIEquipItemButton.OnReleased -= OnEquipButtonReleased;
             base.OnDeactivated();
         }
 
@@ -108,6 +113,19 @@ namespace Sheldier.UI
             _hintsCollection[InventoryHintPerformType.Use].StopWaiting();
         }
 
+        private void OnEquipButtonPressed()
+        {
+            if (!_hintsCollection.ContainsKey(InventoryHintPerformType.Equip))
+                return;
+            _hintsCollection[InventoryHintPerformType.Equip].WaitAndPerform(_performDictionary[InventoryHintPerformType.Equip]);
+        }
+        private void OnEquipButtonReleased()
+        {
+            if (!_hintsCollection.ContainsKey(InventoryHintPerformType.Equip))
+                return;
+            _hintsCollection[InventoryHintPerformType.Equip].StopWaiting();
+        }  
+        
         protected override void CreateHint(InventoryHintPerformType conditionKey)
         {
             UIHint hint = _uiHintPool.GetFromPool();
@@ -125,6 +143,7 @@ namespace Sheldier.UI
             {
                 InventoryHintPerformType.Use => InputActionType.UseItem,
                 InventoryHintPerformType.Remove => InputActionType.RemoveItem,
+                InventoryHintPerformType.Equip => InputActionType.EquipItem,
                 _ => throw new ArgumentOutOfRangeException(nameof(performType), performType, null)
             };
         }

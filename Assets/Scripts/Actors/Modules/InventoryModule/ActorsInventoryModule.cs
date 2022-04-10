@@ -5,7 +5,7 @@ namespace Sheldier.Actors.Inventory
 {
     public class ActorsInventoryModule
     {
-        public event Action<ItemDynamicConfigData> OnUseItem;
+        public event Action<ItemDynamicConfigData> OnEquipItem;
         public bool IsEquipped => _isEquipped;
         
         private IActorsInventory _currentInventory;
@@ -16,9 +16,9 @@ namespace Sheldier.Actors.Inventory
             _currentInventory = new NullActorsInventory();
         }
 
-        private void UseItem(ItemDynamicConfigData dynamicConfigData)
+        private void EquipItem(ItemDynamicConfigData dynamicConfigData)
         {
-            OnUseItem?.Invoke(dynamicConfigData);
+            OnEquipItem?.Invoke(dynamicConfigData);
         }
 
         public bool IsItemExists(string guid)
@@ -48,12 +48,12 @@ namespace Sheldier.Actors.Inventory
         public void SetInventory(IActorsInventory actorsInventory)
         {
             _currentInventory = actorsInventory;
-            _currentInventory.OnItemUse += UseItem;
+            _currentInventory.OnEquipItem += EquipItem;
         }
 
         public void RemoveInventory()
         {
-            _currentInventory.OnItemUse -= UseItem;
+            _currentInventory.OnEquipItem -= EquipItem;
             _currentInventory = new NullActorsInventory();
         }
 

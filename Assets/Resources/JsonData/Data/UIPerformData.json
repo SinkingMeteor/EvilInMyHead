@@ -1,1 +1,1 @@
-{"Items":[{"PerformType":"Use","Localization":"ui.inventory.hint.use"},{"PerformType":"Remove","Localization":"ui.inventory.hint.remove"}]}
+{"Items":[{"PerformType":"Use","Localization":"ui.inventory.hint.use","ID":"Use"},{"PerformType":"Remove","Localization":"ui.inventory.hint.remove","ID":"Remove"},{"PerformType":"Equip","Localization":"ui.inventory.hint.equip","ID":"Equip"}]}

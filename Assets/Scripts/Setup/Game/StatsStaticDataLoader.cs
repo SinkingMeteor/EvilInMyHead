@@ -8,12 +8,12 @@ namespace Sheldier.Setup
 {
     public class StatsStaticDataLoader
     {
-        private Database<StaticNumericalStatData> _staticNumericalStatDatabase;
-        private Database<StaticStringStatData> _staticStringStatDatabase;
+        private Database<StaticNumericalStatCollection> _staticNumericalStatDatabase;
+        private Database<StaticStringStatCollection> _staticStringStatDatabase;
         private AssetProvider<TextAsset> _dataLoader;
 
         [Inject]
-        private void InjectDependencies(Database<StaticNumericalStatData> staticNumericalStatDatabase, Database<StaticStringStatData> staticStringStatDatabase,
+        private void InjectDependencies(Database<StaticNumericalStatCollection> staticNumericalStatDatabase, Database<StaticStringStatCollection> staticStringStatDatabase,
             AssetProvider<TextAsset> dataLoader)
         {
             _dataLoader = dataLoader;

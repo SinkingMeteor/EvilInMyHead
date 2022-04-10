@@ -18,10 +18,9 @@ namespace Sheldier.Actors
         protected ActorTransformHandler _actorTransformHandler;
         protected AnimationType[] _animationHashes;
 
-        private readonly Database<ActorDynamicMovementData> _dynamicMovementDatabase;
-        private readonly ActorDynamicMovementData _movementData;
-        private ActorDynamicMovementData _dynamicMovementData;
-        private readonly ActorDynamicConfigData _configData;
+        private readonly DynamicNumericalEntityStatsCollection _numericalStats;
+        private readonly DynamicStringEntityStatsCollection _stringStats;
+        private readonly ActorDynamicConfigData _dynamicConfigData;
         private ActorSoundController _soundController;
         private ActorNotifyModule _notifyModule;
         private Actor _actor;
@@ -39,10 +38,13 @@ namespace Sheldier.Actors
             InitializeHashes();
         }
 
-        public ActorDefaultControlledMovementState(ActorDynamicMovementData movementData, ActorDynamicConfigData configData)
+        public ActorDefaultControlledMovementState(DynamicNumericalEntityStatsCollection numericalStats, 
+                                                   DynamicStringEntityStatsCollection stringStats,
+                                                   ActorDynamicConfigData dynamicConfigData)
         {
-            _configData = configData;
-            _movementData = movementData;
+            _dynamicConfigData = dynamicConfigData;
+            _numericalStats = numericalStats;
+            _stringStats = stringStats;
         }
         public virtual void SetDependencies(ActorInternalData data)
         {
@@ -81,7 +83,6 @@ namespace Sheldier.Actors
         {
             ActorDirectionView directionView = GetDirectionView();
             SetNewAnimation(_animationHashes[(int)directionView]);
-            _configData.Position = _actor.gameObject.transform.position;
             if(Physics2D.OverlapCircle(_actor.transform.position.DiscardZ(), 0.1f, EnvironmentConstants.PIT_LAYER_MASK))
                 _notifyModule.NotifyFalling(directionView);
         }
@@ -89,7 +90,7 @@ namespace Sheldier.Actors
         public void FixedTick()
         {
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
-            var movementDistance = movementDirection * _movementData.Speed;
+            var movementDistance = movementDirection * _numericalStats.Get(StatsConstants.ACTOR_MOVEMENT_SPEED_STAT).BaseValue;
             _rigidbody2D.velocity = movementDistance;
         }
 

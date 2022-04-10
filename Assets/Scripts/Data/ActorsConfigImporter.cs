@@ -61,51 +61,5 @@ namespace Sheldier.Data
                 Save(config.ToArray(), "ActorBuildData",_prettyPrint);
             });
         }
-        [Button]
-        public void ActorStaticMovementDataToJson()
-        {
-            Load("ActorMovementData", data =>
-            {
-                var config = new List<ActorStaticMovementData>();
-                var lines = data.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).ToList();
-                lines.RemoveAt(0); // headers
-                foreach (var line in lines)
-                {
-                    var items = line.Split(new[] {","}, StringSplitOptions.None).ToList();
-                    var model = new ActorStaticMovementData()
-                    {
-                        TypeName = items[0],
-                        Speed = float.Parse(items[1]),
-                        StepSound = items[2]
-                    };
-                    config.Add(model);
-                }
-                Save(config.ToArray(), "ActorMovementData",_prettyPrint);
-            });
-        }
-        [Button]
-        public void ActorStaticDialogueDataToJson()
-        {
-            Load("ActorDialogueData", data =>
-            {
-                var config = new List<ActorStaticDialogueData>();
-                var lines = data.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).ToList();
-                lines.RemoveAt(0);
-                foreach (var line in lines)
-                {
-                    var items = line.Split(new[] {","}, StringSplitOptions.None).ToList();
-                    var model = new ActorStaticDialogueData()
-                    {
-                        TypeName = items[0],
-                        TypeSpeed = float.Parse(items[1], CultureInfo.InvariantCulture),
-                        TextColorR = float.Parse(items[2],CultureInfo.InvariantCulture),
-                        TextColorG = float.Parse(items[3],CultureInfo.InvariantCulture),
-                        TextColorB = float.Parse(items[4],CultureInfo.InvariantCulture),
-                    };
-                    config.Add(model);
-                }
-                Save(config.ToArray(), "ActorDialogueData",_prettyPrint);
-            });
-        }
     }
 }

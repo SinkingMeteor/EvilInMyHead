@@ -9,6 +9,7 @@ using Sheldier.Common.Pause;
 using Sheldier.Common.Pool;
 using Sheldier.Data;
 using Sheldier.Factories;
+using Sheldier.GameLocation;
 using Sheldier.Graphs.DialogueSystem;
 using UnityEngine;
 
@@ -16,31 +17,31 @@ namespace Sheldier.Setup
 {
     public class GameSystemsInitializer
     {
-        private InputProvider _inputProvider;
-        private LocalizationProvider _localizationProvider;
-        private AudioMixerController _audioMixerController;
-        private ActorsEffectFactory _effectFactory;
-        private ItemFactory _itemFactory;
-        private ProjectilePool _projectilePool;
-        private WeaponBlowPool _weaponBlowPool;
-        private Inventory _inventory;
-        private PathProvider _pathProvider;
-        private CameraHandler _cameraHandler;
-        private PauseNotifier _pauseNotifier;
-        private InventorySlotPool _inventorySlotPool;
-        private ActorBuilder _actorBuilder;
-        private UIHintPool _uiHintPool;
-        private InputBindHandler _inputBindHandler;
-        private DialoguesProvider _dialoguesProvider;
-        private SpeechCloudPool _speechCloudPool;
-        private FontProvider _fontProvider;
-        private ChoiceSlotPool _choiceSlotPool;
-        private AssetProvider<Sprite> _spriteLoader;
-        private AssetProvider<AnimationData> _animationLoader;
-        private AssetProvider<ActorAnimationCollection> _animationCollectionLoader;
-        private AssetProvider<AudioUnit> _audioLoader;
-        private AssetProvider<TextAsset> _dataLoader;
-        private AssetProvider<DialogueSystemGraph> _dialoguesLoader;
+        private readonly InputProvider _inputProvider;
+        private readonly LocalizationProvider _localizationProvider;
+        private readonly AudioMixerController _audioMixerController;
+        private readonly ActorsEffectFactory _effectFactory;
+        private readonly ItemFactory _itemFactory;
+        private readonly ProjectilePool _projectilePool;
+        private readonly WeaponBlowPool _weaponBlowPool;
+        private readonly Inventory _inventory;
+        private readonly PathProvider _pathProvider;
+        private readonly CameraHandler _cameraHandler;
+        private readonly PauseNotifier _pauseNotifier;
+        private readonly InventorySlotPool _inventorySlotPool;
+        private readonly ActorBuilder _actorBuilder;
+        private readonly UIHintPool _uiHintPool;
+        private readonly InputBindHandler _inputBindHandler;
+        private readonly DialoguesProvider _dialoguesProvider;
+        private readonly SpeechCloudPool _speechCloudPool;
+        private readonly FontProvider _fontProvider;
+        private readonly ChoiceSlotPool _choiceSlotPool;
+        private readonly AssetProvider<Sprite> _spriteLoader;
+        private readonly AssetProvider<AnimationData> _animationLoader;
+        private readonly AssetProvider<ActorAnimationCollection> _animationCollectionLoader;
+        private readonly AssetProvider<AudioUnit> _audioLoader;
+        private readonly AssetProvider<TextAsset> _dataLoader;
+        private readonly AssetProvider<DialogueSystemGraph> _dialoguesLoader;
 
         public GameSystemsInitializer(InputProvider inputProvider,
             LocalizationProvider localizationProvider,
@@ -103,7 +104,6 @@ namespace Sheldier.Setup
             _animationLoader.Initialize();
             _animationCollectionLoader.Initialize();
             _spriteLoader.Initialize();
-            
             _localizationProvider.Initialize();
             _fontProvider.Initialize();
             _projectilePool.Initialize();

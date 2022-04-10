@@ -2,14 +2,13 @@
 using Sheldier.Actors.Inventory;
 using Sheldier.Common.Animation;
 using Sheldier.Constants;
+using Sheldier.Data;
 using UnityEngine;
 
 namespace Sheldier.Actors
 {
     public class ActorEquippedControlledMovementState : ActorDefaultControlledMovementState
     {
-
-
         public override bool TransitionConditionIsDone =>
             _inputController.CurrentInputProvider.MovementDirection.sqrMagnitude > Mathf.Epsilon &&
             _inventoryModule.IsEquipped;
@@ -17,7 +16,9 @@ namespace Sheldier.Actors
         
         private ActorsInventoryModule _inventoryModule;
         
-        public ActorEquippedControlledMovementState(ActorDynamicMovementData movementData, ActorDynamicConfigData dynamicConfigData) : base(movementData, dynamicConfigData)
+        public ActorEquippedControlledMovementState(DynamicNumericalEntityStatsCollection numericalStats, 
+                                                    DynamicStringEntityStatsCollection stringStats,
+                                                    ActorDynamicConfigData dynamicConfigData) : base(numericalStats, stringStats, dynamicConfigData)
         {
         }
         public override void SetDependencies(ActorInternalData data)

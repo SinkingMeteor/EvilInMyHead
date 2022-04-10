@@ -58,9 +58,9 @@ namespace Sheldier.Actors.Builder
             };
         }
 
-        public Actor Build(string typeID, string guid)
+        public Actor Build(string typeID, string guid, ActorPlaceholder actorPlaceholder)
         {
-            bool isNewActor = _actorDataFactory.IsDynamicConfigExists(guid);
+            bool isNewActor = !_actorDataFactory.IsDynamicConfigExists(guid);
             var staticConfig = _actorDataFactory.GetStaticConfigData(typeID);
             ActorStaticBuildData buildData = _actorDataFactory.GetBuildData(typeID);
             ActorDynamicConfigData dynamicConfigData = _actorDataFactory.GetDynamicActorConfig(typeID, guid);
@@ -68,8 +68,6 @@ namespace Sheldier.Actors.Builder
 
 
             Actor actor = GameObject.Instantiate(_actorTemplate);
-            if (!isNewActor)
-                actor.transform.position = dynamicConfigData.Position;
             actor.SetDependencies(dynamicConfigData.Guid, _tickHandler, _fixedTickHandler, _pauseNotifier);
             actor.ActorsView.SetActorAppearance(actorAppearance);
             actor.Initialize();
@@ -87,7 +85,7 @@ namespace Sheldier.Actors.Builder
             {
                 subBuilder.Build(actor, buildData);
             }
-
+            actor.transform.position = isNewActor ? actorPlaceholder.transform.position : dynamicConfigData.Position;
             return actor;
         }
     }

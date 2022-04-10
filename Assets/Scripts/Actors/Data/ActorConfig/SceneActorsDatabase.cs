@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Sheldier.Actors.Data
 {
@@ -47,6 +48,7 @@ namespace Sheldier.Actors.Data
                 foreach (var actor in actorList.Value)
                 {
                     actor.Dispose();
+                    GameObject.Destroy(actor.gameObject);
                 }
             }
             _sceneActors.Clear();
