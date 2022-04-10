@@ -9,6 +9,7 @@ using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -16,55 +17,72 @@ namespace Sheldier.UI
 {
     public class DialogueController : SerializedMonoBehaviour, IUIInitializable
     {
-        
         [SerializeField] private DialogueChoiceViewer choiceViewer;
         [SerializeField] private SpeechCloudController speechCloudController;
-        
-        private DialoguesProvider _dialoguesProvider;
-        private UIStatesController _statesController;
-        private IDialoguesInputProvider _dialoguesInputProvider;
 
         private Database<DynamicNumericalEntityStatsCollection> _dynamicNumericalStatsDatabase;
-        private ILocalizationProvider _localizationProvider;
-        private IDialogueReplica _currentReplica;
-        private Actor[] _actorsInDialogue;
-        private Coroutine _waitCoroutine;
-        private Action _onCompleteCallback;
-        private CameraHandler _cameraHandler;
+        private Database<DynamicStringEntityStatsCollection> _dynamicStringStatsDatabase;
+        private Database<DialogueStaticData> _dialogueStaticDatabase;
+        private AssetProvider<DialogueSystemGraph> _dialogueLoader;
 
+        private IDialoguesInputProvider _dialoguesInputProvider;
+        private ILocalizationProvider _localizationProvider;
+        private SceneActorsDatabase _sceneActorsDatabase;
+        private UIStatesController _statesController;
+        private IDialogueReplica _currentReplica;
+        private ICameraFollower _cameraHandler;
+
+        private string[] _actorsGuidsInDialogue;
+        private string _currentDialogueType;
+        private Action _onCompleteCallback;
+        
+        private IDisposable _playDialogueEvent;
+        private Coroutine _waitCoroutine;
         public void Initialize()
         {
-            _dialoguesProvider.OnDialogueLoaded += StartDialogue;
+            _playDialogueEvent = MessageBroker.Default.Receive<DialoguePlayRequest>().Subscribe(StartDialogue);
+            choiceViewer.OnNextReplica += SetNext;
             speechCloudController.Initialize();
             choiceViewer.Initialize();
         }
 
         [Inject]
-        private void InjectDependencies(DialoguesProvider dialoguesProvider, UIStatesController statesController, IDialoguesInputProvider dialoguesInputProvider,
-            SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider, IFontProvider fontProvider,
-            ChoiceSlotPool choiceSlotPool, CameraHandler cameraHandler, Database<DynamicNumericalEntityStatsCollection> dynamicNumericalStatsDatabase)
+        private void InjectDependencies(UIStatesController statesController,
+                                        ILocalizationProvider localizationProvider, 
+                                        ICameraFollower cameraHandler,
+                                        Database<DynamicNumericalEntityStatsCollection> dynamicNumericalStatsDatabase,
+                                        Database<DialogueStaticData> dialogueStaticDatabase,
+                                        AssetProvider<DialogueSystemGraph> dialogueLoader,
+                                        Database<DynamicStringEntityStatsCollection> dynamicStringStatsDatabase,
+                                        SceneActorsDatabase sceneActorsDatabase,
+                                        IDialoguesInputProvider dialoguesInputProvider)
         {
             _dynamicNumericalStatsDatabase = dynamicNumericalStatsDatabase;
-            _cameraHandler = cameraHandler;
+            _dynamicStringStatsDatabase = dynamicStringStatsDatabase;
             _dialoguesInputProvider = dialoguesInputProvider;
-            _statesController = statesController;
-            _dialoguesProvider = dialoguesProvider;
+            _dialogueStaticDatabase = dialogueStaticDatabase;
             _localizationProvider = localizationProvider;
-            speechCloudController.SetDependencies(speechCloudPool, localizationProvider);
-            choiceViewer.SetDependencies(_dialoguesInputProvider, localizationProvider, bindIconProvider, this, choiceSlotPool);
+            _sceneActorsDatabase = sceneActorsDatabase;
+            _statesController = statesController;
+            _dialogueLoader = dialogueLoader;
+            _cameraHandler = cameraHandler;
         }
 
-        public void SetNext(IDialogueReplica dialogueReplica)
+        private void SetNext(IDialogueReplica dialogueReplica)
         {
             _currentReplica = dialogueReplica;
+            UnlockPassButton();
             ProcessReplica();
         }
-        public void StartDialogue(DialogueSystemGraph dialogue, Actor[] actors, Action callback)
+
+        private void StartDialogue(DialoguePlayRequest request)
         {
-            _onCompleteCallback = callback;
+            _onCompleteCallback = request.OnDialogueCompleted;
             EnableState();
-            _currentReplica = dialogue.StartReplica;
-            _actorsInDialogue = actors;
+            _currentDialogueType = request.DialogueId;
+            _currentReplica = _dialogueLoader.Get(request.DialogueId).StartReplica;
+            _actorsGuidsInDialogue = request.ActorsGuidsInDialogue;
+            UnlockPassButton();
             ProcessReplica();
         }
 
@@ -76,17 +94,18 @@ namespace Sheldier.UI
             
             if (_currentReplica == null)
             {
-                DisableState();
-                _cameraHandler.SetFollowTarget(_actorsInDialogue[0].transform);
-                _onCompleteCallback?.Invoke();
+                CompleteDialogue();
                 return;
             }
-            Actor actor = _actorsInDialogue[(int) _currentReplica.Person];
+            Actor actor = _sceneActorsDatabase.Get(_actorsGuidsInDialogue[(int) _currentReplica.Person]);
             var cloudLifetime = _dynamicNumericalStatsDatabase.Get(actor.Guid).Get(StatsConstants.ACTOR_TYPE_SPEED_STAT).BaseValue
                 * _localizationProvider.LocalizedText[_currentReplica.Replica].Length + _currentReplica.Delay;
 
             if (_currentReplica.Choices.Count > 1)
+            {
+                LockPassButton();
                 choiceViewer.Activate(_currentReplica.Choices, cloudLifetime);
+            }
             else
                 _waitCoroutine = StartCoroutine(WaitCloudCoroutine(cloudLifetime));
 
@@ -94,8 +113,27 @@ namespace Sheldier.UI
             speechCloudController.RevealCloud(_currentReplica, actor);
 
             _currentReplica = _currentReplica.Choices.Count == 0 ? null : _currentReplica.Choices[^1].Next;
+        }
 
+        private void LockPassButton() => _dialoguesInputProvider.PassReplicaButton.OnPressed -= ProcessReplica;
+        private void UnlockPassButton() => _dialoguesInputProvider.PassReplicaButton.OnPressed += ProcessReplica;
+        
+        private void CompleteDialogue()
+        {
+            ChangeNextDialogue();
+            LockPassButton();
+            DisableState();
+            _cameraHandler.SetFollowTarget(_sceneActorsDatabase.Get(_actorsGuidsInDialogue[0]).transform);
+            _onCompleteCallback?.Invoke();
+        }
 
+        private void ChangeNextDialogue()
+        {
+            var dialogueData = _dialogueStaticDatabase.Get(_currentDialogueType);
+            if (dialogueData.NextDialogueName == "None")
+                return;
+            
+            _dynamicStringStatsDatabase.Get(_actorsGuidsInDialogue[1]).Get(StatsConstants.ACTOR_CURRENT_DIALOGUE_STAT).Value = dialogueData.NextDialogueName;
         }
 
         private void EnableState()
@@ -110,7 +148,8 @@ namespace Sheldier.UI
         }
         public void Dispose()
         {
-            _dialoguesProvider.OnDialogueLoaded -= StartDialogue;
+            choiceViewer.OnNextReplica -= SetNext;
+            _playDialogueEvent.Dispose();
         }
         
         private IEnumerator WaitCloudCoroutine(float timeLeft)

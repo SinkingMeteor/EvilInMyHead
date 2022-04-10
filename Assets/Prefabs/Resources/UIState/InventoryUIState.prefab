@@ -626,7 +626,7 @@ MonoBehaviour:
     - {fileID: 3665230419125430624}
     - {fileID: 1985209259849459894}
     - {fileID: 5068598925404183195}
-    - {fileID: 5605089556466353989}
+    - {fileID: 2651084376514878145}
     - {fileID: 1174495038832356583}
     - {fileID: 5892222848040475454}
     - {fileID: 10075449080999992}
@@ -1155,8 +1155,8 @@ GameObject:
   - component: {fileID: 10075449182062823}
   - component: {fileID: 5524035650388403472}
   - component: {fileID: 5856734560275400828}
-  - component: {fileID: 5605089556466353989}
-  - component: {fileID: 3008067884413139674}
+  - component: {fileID: 9013240724026236401}
+  - component: {fileID: 2651084376514878145}
   m_Layer: 5
   m_Name: InventoryBody
   m_TagString: Untagged
@@ -1243,7 +1243,25 @@ MonoBehaviour:
   rectTransform: {fileID: 10075449182062823}
   initialScale: {x: 0, y: 0, z: 0}
   targetScale: {x: 0.8, y: 0.8, z: 1}
---- !u!114 &5605089556466353989
+--- !u!114 &9013240724026236401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10075449182062816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c757d397e30d432187fdddaa1a475513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedItemImage: {fileID: 5922037642015495393}
+  titleTMP: {fileID: 4076541096284527000}
+  descriptionTMP: {fileID: 5148918006267797442}
+  radialPointer: {fileID: 8661809774064285816}
+  slotsParent: {fileID: 3673565810148513963}
+  slotsSpawnDistance: 116.16
+--- !u!114 &2651084376514878145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1284,25 +1302,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  view: {fileID: 3008067884413139674}
---- !u!114 &3008067884413139674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 10075449182062816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c757d397e30d432187fdddaa1a475513, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedItemImage: {fileID: 5922037642015495393}
-  titleTMP: {fileID: 4076541096284527000}
-  descriptionTMP: {fileID: 5148918006267797442}
-  radialPointer: {fileID: 8661809774064285816}
-  slotsParent: {fileID: 3673565810148513963}
-  slotsSpawnDistance: 116.16
+  view: {fileID: 9013240724026236401}
 --- !u!1 &10075449299567218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,7 +1947,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 4646854908365205282}
     - {fileID: 631239665208668957}
-    - {fileID: 3008067884413139674}
+    - {fileID: 9013240724026236401}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Sheldier.Data;
 using UnityEngine;
 
 namespace Sheldier.Actors.Data
@@ -7,9 +8,11 @@ namespace Sheldier.Actors.Data
     public class SceneActorsDatabase
     {
         private Dictionary<string, List<Actor>> _sceneActors;
+        private readonly Database<ActorDynamicConfigData> _dynamicActorConfigDatabase;
 
-        public SceneActorsDatabase()
+        public SceneActorsDatabase(Database<ActorDynamicConfigData> dynamicActorConfigDatabase)
         {
+            _dynamicActorConfigDatabase = dynamicActorConfigDatabase;
             _sceneActors = new Dictionary<string, List<Actor>>();
         }
 
@@ -24,8 +27,9 @@ namespace Sheldier.Actors.Data
         {
             return _sceneActors.First().Value[0];
         }
-        public Actor Get(string typeName, string guid)
+        public Actor Get(string guid)
         {
+            var typeName = _dynamicActorConfigDatabase.Get(guid).TypeName;
             return _sceneActors[typeName].Find(x => x.Guid == guid);
         }
         public void Add(string typeName, Actor actor)

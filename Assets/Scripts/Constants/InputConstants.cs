@@ -26,7 +26,8 @@ namespace Sheldier.Constants
                 {InputActionType.DialoguesLowerChoice, "LowerChoice"},
                 {InputActionType.Jump, "Jump"},
                 {InputActionType.DropItem, "DropItem"},
-                {InputActionType.EquipItem, "EquipItem"}
+                {InputActionType.EquipItem, "EquipItem"},
+                {InputActionType.PassReplica, "PassReplica"},
 
             };
 

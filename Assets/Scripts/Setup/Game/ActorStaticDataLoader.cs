@@ -11,13 +11,16 @@ namespace Sheldier.Setup
     {
         private Database<ActorStaticBuildData> _actorStaticBuildDatabase;
         private Database<ActorStaticConfigData> _actorStaticConfigDatabase;
+        private Database<DialogueStaticData> _dialogueStaticDatabase;
         private AssetProvider<TextAsset> _dataLoader;
 
         [Inject]
         private void InjectDependencies(Database<ActorStaticBuildData> actorStaticBuildDatabase, Database<ActorStaticConfigData> actorStaticConfigDatabase,
-            AssetProvider<TextAsset> dataLoader)
+            AssetProvider<TextAsset> dataLoader, Database<DialogueStaticData> dialogueStaticDatabase)
         {
+            
             _dataLoader = dataLoader;
+            _dialogueStaticDatabase = dialogueStaticDatabase;
             _actorStaticBuildDatabase = actorStaticBuildDatabase;
             _actorStaticConfigDatabase = actorStaticConfigDatabase;
         }
@@ -26,6 +29,7 @@ namespace Sheldier.Setup
         {
             _actorStaticBuildDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ACTOR_BUILD_DATA));
             _actorStaticConfigDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.ACTOR_CONFIG));
+            _dialogueStaticDatabase.FillDatabase(_dataLoader.Get(AssetPathConstants.DIALOGUES_DATA));
         }
     }
 }

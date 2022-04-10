@@ -4,6 +4,7 @@ using Sheldier.Common.Localization;
 using Sheldier.Common.Pool;
 using Sheldier.Graphs.DialogueSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Sheldier.UI
 {
@@ -11,17 +12,18 @@ namespace Sheldier.UI
     {
         [SerializeField] private RectTransform canvasRectTransform;
         
-        private SpeechCloudPool _speechCloudPool;
+        private IPool<SpeechCloud> _speechCloudPool;
         private ILocalizationProvider _localizationProvider;
-        private SpeechCloud _currentSpeechCloud;
         private IDialogueReplica _currentReplica;
         private Queue<SpeechCloud> _speechClouds;
+        private SpeechCloud _currentSpeechCloud;
 
         public void Initialize()
         {
             _speechClouds = new Queue<SpeechCloud>();
         }
-        public void SetDependencies(SpeechCloudPool speechCloudPool, ILocalizationProvider localizationProvider)
+        [Inject]
+        private void InjectDependencies(IPool<SpeechCloud> speechCloudPool, ILocalizationProvider localizationProvider)
         {
             _speechCloudPool = speechCloudPool;
             _localizationProvider = localizationProvider;

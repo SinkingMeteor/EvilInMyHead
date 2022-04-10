@@ -12,8 +12,7 @@ namespace Sheldier.Constants
         
         public const string ACTOR_BUILD_DATA = "ActorBuildData";
         public const string ACTOR_CONFIG = "ActorConfig";
-        public const string ACTOR_DIALOGUE_DATA = "ActorDialogueData";
-        public const string ACTOR_MOVEMENT_DATA = "ActorMovementData";
+        public const string DIALOGUES_DATA = "DialoguesData";
         
         public const string INVENTORY_SLOT = "InventorySlot";
         public const string ITEM_CONFIG = "ItemConfig";

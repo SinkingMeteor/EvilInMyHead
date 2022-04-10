@@ -1,9 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Sheldier.Actors;
+using Sheldier.Actors.Data;
 using Sheldier.Common.Asyncs;
 using Sheldier.Constants;
+using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 
 namespace Sheldier.Common.Cutscene
@@ -14,32 +17,41 @@ namespace Sheldier.Common.Cutscene
         
         [SerializeField] private bool waitElement;
         [SerializeField] private DataReference[] actorsInDialogue;
-        [SerializeField] private DialogueSystemGraph dialogue;
-        
+        [SerializeField] private DataReference dialogue;
+
+        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
         private CutsceneInternalData _data;
         private bool _isFinished;
 
         public void SetDependencies(CutsceneInternalData data)
         {
             _data = data;
+            _dynamicConfigDatabase = data.DynamicConfigDatabase;
         }
 
         public async Task PlayCutScene()
         {
-            Actor[] actors = new Actor[actorsInDialogue.Length];
+            string[] actors = new string[actorsInDialogue.Length];
             for (int i = 0; i < actorsInDialogue.Length; i++)
             {
                 if (actorsInDialogue[i].Reference == GameplayConstants.CURRENT_PLAYER)
                 {
-                    actors[i] = _data.CurrentPlayer;
+                    actors[i] = _data.CurrentPlayer.Guid;
                     continue;
                 }
 
                 if (!_data.SceneActorsDatabase.ContainsKey(actorsInDialogue[i].Reference))
                     return;
                 _isFinished = false;
-                actors[i] = _data.SceneActorsDatabase.GetFirst(actorsInDialogue[i].Reference);
-                _data.DialoguesProvider.StartDialogue(dialogue, actors, OnFinished);
+                actors[i] = _dynamicConfigDatabase.Get(actorsInDialogue[i].Reference).Guid;
+
+                var playRequest = new DialoguePlayRequest()
+                {
+                    DialogueId = dialogue.Reference,
+                    ActorsGuidsInDialogue = actors,
+                    OnDialogueCompleted = OnFinished
+                };
+                MessageBroker.Default.Publish(playRequest);
                 await AsyncWaitersFactory.WaitUntil(() => _isFinished);
             }
         }

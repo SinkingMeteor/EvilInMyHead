@@ -1,81 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using Sheldier.Actors;
+﻿using Sheldier.Actors;
 using Sheldier.Actors.Data;
+using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
+using UniRx;
 using UnityEngine;
 
 namespace Sheldier.Common
 {
     public class DialoguesProvider
     {
-        public event Action<DialogueSystemGraph, Actor[], Action> OnDialogueLoaded;
-        
-        private Dictionary<string, DialoguePointer> _pointers;
         private ActorSpawner _spawner;
-        private readonly Database<ActorDynamicConfigData> _dynamicConfigDatabase;
         private readonly SceneActorsDatabase _sceneActorsDatabase;
+        
+        private readonly Database<DynamicStringEntityStatsCollection> _dynamicStatDatabase;
+        private readonly AssetProvider<DialogueSystemGraph> _dialoguesLoader;
 
-        public DialoguesProvider(SceneActorsDatabase sceneActorsDatabase, Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        public DialoguesProvider(SceneActorsDatabase sceneActorsDatabase,
+                                 AssetProvider<DialogueSystemGraph> dialoguesLoader,
+                                 Database<DynamicStringEntityStatsCollection> dynamicStatDatabase)
         {
-            _dynamicConfigDatabase = dynamicConfigDatabase;
+            _dynamicStatDatabase = dynamicStatDatabase;
+            _dialoguesLoader = dialoguesLoader;
             _sceneActorsDatabase = sceneActorsDatabase;
         }
-        
-        public void Initialize()
-        {
-            _pointers = new Dictionary<string, DialoguePointer>()
-            {
-                {"Fred", new DialoguePointer("Dialogues/Fred/TestDialogue")}
-            };
-        }
-
         public void FindDialogue(Actor dialogueInitiator, Actor dialogueTarget)
         {
-            var typeName = _dynamicConfigDatabase.Get(dialogueTarget.Guid).TypeName;
-            DialogueSystemGraph graph = _pointers[typeName].GetDialogue();
-            Actor[] actorsInDialogues = new Actor[2 + (graph.AdditionalPersons?.Length ?? 0)];
-            actorsInDialogues[0] = dialogueInitiator;
-            actorsInDialogues[1] = dialogueTarget;
+            var dialogueID = _dynamicStatDatabase.Get(dialogueTarget.Guid).Get(StatsConstants.ACTOR_CURRENT_DIALOGUE_STAT).Value;
+            var graph = _dialoguesLoader.Get(dialogueID);
+            string[] actorsInDialogues = new string[2 + (graph.AdditionalPersons?.Length ?? 0)];
+            actorsInDialogues[0] = dialogueInitiator.Guid;
+            actorsInDialogues[1] = dialogueTarget.Guid;
+            
             if (graph.AdditionalPersons != null)
                 for (int i = 0; i < graph.AdditionalPersons.Length; i++)
                 {
                     string typeID = graph.AdditionalPersons[i].Reference;
                     if (!_sceneActorsDatabase.ContainsKey(typeID))
                         return;
-                    actorsInDialogues[i + 2] = _sceneActorsDatabase.GetFirst(typeID);
+                    actorsInDialogues[i + 2] = _sceneActorsDatabase.GetFirst(typeID).Guid;
                 }
 
-            actorsInDialogues[0].LockInput();
-            OnDialogueLoaded?.Invoke(graph, actorsInDialogues, () => actorsInDialogues[0].UnlockInput());
-        }
+            dialogueInitiator.LockInput();
 
-        public void StartDialogue(DialogueSystemGraph graph, Actor[] actors, Action onCompleted)
-        {
-            OnDialogueLoaded?.Invoke(graph, actors, onCompleted);
-        }
-    }
-
-    public class DialoguePointer
-    {
-        private readonly string _path;
-        private int _currentIndex;
-
-        public DialoguePointer(string path)
-        {
-            _path = path;
-            _currentIndex = 0;
-        }
-
-        public void SetIndex(int index)
-        {
-            _currentIndex = index;
-        }
-
-        public DialogueSystemGraph GetDialogue()
-        {
-            return Resources.Load<DialogueSystemGraph>(_path + _currentIndex);
+            var playRequest = new DialoguePlayRequest()
+            {
+                ActorsGuidsInDialogue = actorsInDialogues,
+                DialogueId = dialogueID,
+                OnDialogueCompleted = dialogueInitiator.UnlockInput
+            };
+            
+            MessageBroker.Default.Publish(playRequest);
         }
     }
 }

@@ -10,11 +10,14 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Sheldier.UI
 {
     public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener
     {
+        public event Action<IDialogueReplica> OnNextReplica;
+        
         [OdinSerialize] private IUIStateAnimationAppearing[] appearingAnimations;
         [OdinSerialize] private IUIStateAnimationDisappearing[] disappearingAnimations;
         [SerializeField] private Image timerImage;
@@ -25,11 +28,9 @@ namespace Sheldier.UI
         private IInputBindIconProvider _bindIconProvider;
         private ILocalizationProvider _localizationProvider;
         private IReadOnlyList<ReplicaChoice> _currentChoices;
-        private DialogueController _dialogueController;
         private Coroutine _waitingCoroutine;
         private IFontProvider _fontProvider;
-        private ChoiceSlotPool _choiceSlotPool;
-
+        private IPool<ChoiceSlot> _choiceSlotPool;
 
         public void Initialize()
         {
@@ -40,11 +41,13 @@ namespace Sheldier.UI
                 disappearingAnimations[i].Initialize();
         }
         
-        public void SetDependencies(IDialoguesInputProvider inputProvider, ILocalizationProvider localizationProvider, IInputBindIconProvider bindIconProvider,
-            DialogueController dialogueController, ChoiceSlotPool choiceSlotPool)
+        [Inject]
+        public void InjectDependencies(IDialoguesInputProvider inputProvider, 
+                                       ILocalizationProvider localizationProvider,
+                                       IInputBindIconProvider bindIconProvider,
+                                       IPool<ChoiceSlot> choiceSlotPool)
         {
             _choiceSlotPool = choiceSlotPool;
-            _dialogueController = dialogueController;
             _localizationProvider = localizationProvider;
             _bindIconProvider = bindIconProvider;
             _inputProvider = inputProvider;
@@ -85,7 +88,6 @@ namespace Sheldier.UI
         {
             for (int i = 0; i < choiceSlots.Count; i++)
                 choiceSlots[i].SetBindIcon(_bindIconProvider.GetActionInputSprite(GetAction(i)));
-
         }
 
         private void InstantiateChoices(IReadOnlyList<ReplicaChoice> currentReplicaChoices)
@@ -140,7 +142,7 @@ namespace Sheldier.UI
             _inputProvider.LowerChoice.OnPressed -= OnLowerChoicePressed;
             
             IDialogueReplica nextReplica = choiceSlots[index].Next;
-            _dialogueController.SetNext(nextReplica);                        
+            OnNextReplica?.Invoke(nextReplica);
             await choiceSlots[index].Select();
             Deactivate();
         }

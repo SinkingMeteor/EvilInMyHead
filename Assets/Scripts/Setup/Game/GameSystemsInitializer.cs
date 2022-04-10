@@ -32,7 +32,6 @@ namespace Sheldier.Setup
         private readonly ActorBuilder _actorBuilder;
         private readonly UIHintPool _uiHintPool;
         private readonly InputBindHandler _inputBindHandler;
-        private readonly DialoguesProvider _dialoguesProvider;
         private readonly SpeechCloudPool _speechCloudPool;
         private readonly FontProvider _fontProvider;
         private readonly ChoiceSlotPool _choiceSlotPool;
@@ -58,7 +57,6 @@ namespace Sheldier.Setup
             ActorBuilder actorBuilder,
             UIHintPool uiHintPool,
             InputBindHandler inputBindHandler,
-            DialoguesProvider dialoguesProvider,
             SpeechCloudPool speechCloudPool,
             FontProvider fontProvider,
             ChoiceSlotPool choiceSlotPool,
@@ -90,7 +88,6 @@ namespace Sheldier.Setup
             _animationLoader = animationLoader;
             _speechCloudPool = speechCloudPool;
             _inputBindHandler = inputBindHandler;
-            _dialoguesProvider = dialoguesProvider;
             _inventorySlotPool = inventorySlotPool;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
@@ -112,7 +109,6 @@ namespace Sheldier.Setup
             _choiceSlotPool.Initialize();
             _inventorySlotPool.Initialize();
             _uiHintPool.Initialize();
-            _dialoguesProvider.Initialize();
             _actorBuilder.Initialize();
             _pauseNotifier.Initialize();
             _inventory.Initialize();

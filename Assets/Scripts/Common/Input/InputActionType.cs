@@ -17,6 +17,7 @@ namespace Sheldier.Common
         DialoguesRightChoice,
         Jump,
         DropItem,
-        EquipItem
+        EquipItem,
+        PassReplica
     }
 }

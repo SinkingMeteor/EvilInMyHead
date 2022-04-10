@@ -18,8 +18,12 @@ namespace Sheldier.Common.Cutscene
         private Cutscene _currentCutscene;
         private DialoguesProvider _dialoguesProvider;
 
-        public CutsceneController(SceneActorsDatabase sceneActorsDatabase, PauseNotifier pauseNotifier, PathProvider pathProvider, ScenePlayerController scenePlayerController,
-            DialoguesProvider dialoguesProvider, Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        public CutsceneController(SceneActorsDatabase sceneActorsDatabase,
+                                  PauseNotifier pauseNotifier,
+                                  PathProvider pathProvider,
+                                  ScenePlayerController scenePlayerController,
+                                  DialoguesProvider dialoguesProvider,
+                                  Database<ActorDynamicConfigData> dynamicConfigDatabase)
         {
             _dynamicConfigDatabase = dynamicConfigDatabase;
             _dialoguesProvider = dialoguesProvider;
@@ -50,8 +54,7 @@ namespace Sheldier.Common.Cutscene
         private Actor GetCurrentPlayer()
         {
             var guid = _scenePlayerController.ControlledActorGuid;
-            var dynamicData = _dynamicConfigDatabase.Get(guid);
-            return _sceneActorsDatabase.Get(dynamicData.TypeName, guid);
+            return _sceneActorsDatabase.Get(guid);
         } 
     }
 }

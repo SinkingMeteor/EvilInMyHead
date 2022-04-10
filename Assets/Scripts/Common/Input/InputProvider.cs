@@ -35,7 +35,8 @@ namespace Sheldier.Common
         public InputButton LeftChoice => _dialoguesLeftChoice;
         public InputButton UpperChoice => _dialoguesUpperChoice;
         public InputButton RightChoice => _dialoguesRightChoice;
-        
+        public InputButton PassReplicaButton => _passReplicaButton;
+
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private InputBindHandler bindHandler;
         
@@ -60,6 +61,7 @@ namespace Sheldier.Common
         private InputButton _dialoguesLeftChoice;
         private InputButton _dialoguesUpperChoice;
         private InputButton _dialoguesRightChoice;
+        private InputButton _passReplicaButton;
 
 
         public void Initialize()
@@ -82,6 +84,7 @@ namespace Sheldier.Common
             _dialoguesUpperChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesUpperChoice]);
             _dialoguesRightChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesRightChoice]);
             _dialoguesLowerChoice = new InputButton(playerInput, InputConstants.InputActions[InputActionType.DialoguesLowerChoice]);
+            _passReplicaButton = new InputButton(playerInput, InputConstants.InputActions[InputActionType.PassReplica]);
             
             _cursorDirectionConverter = new CursorDirectionConverter();
             _mouseHandlers = new Dictionary<string, IInputMouseHandler>

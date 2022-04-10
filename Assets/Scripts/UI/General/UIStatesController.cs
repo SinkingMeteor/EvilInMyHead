@@ -56,6 +56,16 @@ namespace Sheldier.UI
             _loadedStates = loadedStates;
         }
 
+        public bool TryGet<T>(UIType uiType, out T window) where T : MonoBehaviour
+        {
+            window = null;
+            if (!_states.ContainsKey(uiType))
+                return false;
+            if (_states[uiType].TryGetComponent<T>(out window))
+                return true;
+            return false;
+        }
+        
         public void Add(UIType uiType)
         {
             if (!_states.ContainsKey(uiType))

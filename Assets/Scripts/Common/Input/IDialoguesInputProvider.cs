@@ -6,5 +6,6 @@
         InputButton LeftChoice { get; }
         InputButton UpperChoice { get; }
         InputButton RightChoice { get; }
+        InputButton PassReplicaButton { get; }
     }
 }

@@ -752,6 +752,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PassReplica",
+                    "type": "Button",
+                    "id": "3601c576-b6a1-4919-bc75-fdd9e0f4a40c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -840,6 +849,17 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "LowerChoice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f6f8a29-7ed5-4794-b3ed-eac536c470e3",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "PassReplica",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

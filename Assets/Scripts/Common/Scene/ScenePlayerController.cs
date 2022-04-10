@@ -12,16 +12,13 @@ namespace Sheldier.Common
 
         private string _controlledActorsGuid;
 
-        private Database<ActorDynamicConfigData> _dynamicConfigDatabase;
         private SceneActorsDatabase _sceneActorsDatabase;
         private IGameplayInputProvider _inputProvider;
         private Inventory _inventory;
 
         [Inject]
-        private void InjectDependencies(IGameplayInputProvider inputProvider, Inventory inventory, SceneActorsDatabase sceneActorsDatabase,
-            Database<ActorDynamicConfigData> dynamicConfigDatabase)
+        private void InjectDependencies(IGameplayInputProvider inputProvider, Inventory inventory, SceneActorsDatabase sceneActorsDatabase)
         {
-            _dynamicConfigDatabase = dynamicConfigDatabase;
             _sceneActorsDatabase = sceneActorsDatabase;
             _inventory = inventory;
             _inputProvider = inputProvider;
@@ -29,9 +26,7 @@ namespace Sheldier.Common
         
         public void SetControl(string guid)
         {
-            var controlledActorData = _dynamicConfigDatabase.Get(guid);
-            var controlledActor = _sceneActorsDatabase.Get(controlledActorData.TypeName, guid);
-            
+            var controlledActor = _sceneActorsDatabase.Get(guid);
             SetControl(controlledActor);
         }
 

@@ -1,5 +1,6 @@
 ﻿using Sheldier.Actors.Builder;
 using Sheldier.Actors.Data;
+using Sheldier.Common;
 using Sheldier.Common.Animation;
 using Sheldier.Common.Audio;
 using Sheldier.Data;
@@ -32,6 +33,7 @@ namespace Sheldier.Installers
             
             Container.Bind<Database<ActorStaticConfigData>>().To<ActorStaticConfigDatabase>().AsSingle();
             Container.Bind<Database<ActorStaticBuildData>>().To<ActorStaticBuildDatabase>().AsSingle();
+            Container.Bind<Database<DialogueStaticData>>().To<DialogueStaticDatabase>().AsSingle();
             
             Container.Bind<Database<ActorDynamicConfigData>>().To<ActorDynamicConfigDatabase>().AsSingle();
             Container.Bind<Database<ActorDynamicEffectData>>().To<ActorDynamicEffectDatabase>().AsSingle();
