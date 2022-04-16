@@ -35,8 +35,7 @@ namespace Sheldier.Actors
         }
         private void LoadActors()
         {
-            int counter = 0;    
-            string typeName = null;
+            string typeName;
             bool isPlayer;
             foreach (var placeholder in _placeholdersKeeper.ActorPlaceholders)
             {

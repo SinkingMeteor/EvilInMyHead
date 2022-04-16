@@ -47,7 +47,9 @@ namespace Sheldier.Data
 
 				if (!request.isDone)
 				{
+#pragma warning disable CS0618
 					yield return request.Send();
+#pragma warning restore CS0618
 				}
 
 				if (request.error == null)

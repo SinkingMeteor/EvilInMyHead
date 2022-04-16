@@ -52,10 +52,12 @@ namespace Sheldier.Factories
             _projectilePool = projectilePool;
         }
 
-        public ItemDynamicConfigData CreateItem(string typeName)
+        public ItemDynamicConfigData CreateItem(string typeName, string guid)
         {
+            if (_dynamicConfigDatabase.IsItemExists(guid))
+                return _dynamicConfigDatabase.Get(guid);
+            
             ItemStaticConfigData staticConfigData = _staticConfigDatabase.Get(typeName);
-            string guid = Guid.NewGuid().ToString();
             ItemDynamicConfigData dynamicConfigData = new ItemDynamicConfigData(guid, staticConfigData);
             _dynamicConfigDatabase.Add(dynamicConfigData);
             

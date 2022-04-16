@@ -54,7 +54,8 @@ namespace Sheldier.Data
                         CanInteract = Convert.ToBoolean(items[4]),
                         CanAttack = Convert.ToBoolean(items[5]),
                         CanJump = Convert.ToBoolean(items[6]),
-                        InteractType = items[7]
+                        InteractType = items[7],
+                        CanMoveObjects = Convert.ToBoolean(items[8])
                     };
                     config.Add(model);
                 }

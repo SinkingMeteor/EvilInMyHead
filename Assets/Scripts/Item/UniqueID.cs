@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Sheldier.Item
 {
-    public class UniqueID : SerializedMonoBehaviour
+    public class UniqueID : SerializedMonoBehaviour, IUniqueID
     {
         public string ID => _id;
         [SerializeField] private string _id;

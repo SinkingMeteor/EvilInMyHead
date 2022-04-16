@@ -26,12 +26,12 @@ namespace Sheldier.Actors.Builder
             
             if (buildData.CanMove)
             {
-                
                 actor.StateModuleController.AddState(new ActorDefaultControlledMovementState(
                     _actorDataFactory.GetEntityNumericalStatCollection(actor.Guid),
                     _actorDataFactory.GetEntityStringStatCollection(actor.Guid),
                     _actorDataFactory.GetDynamicConfigData(actor.Guid)));
                 actor.StateModuleController.AddState(new ActorFallState());
+                actor.StateDataModule.Add(new StateData(GameplayConstants.FALL_STATE_DATA));                
             }
             if (canEquip)
             {
@@ -43,9 +43,18 @@ namespace Sheldier.Actors.Builder
                     _actorDataFactory.GetEntityNumericalStatCollection(actor.Guid),
                     _actorDataFactory.GetEntityStringStatCollection(actor.Guid),
                     _actorDataFactory.GetDynamicConfigData(actor.Guid)));
-                
-            if(buildData.CanJump)
+
+            if (buildData.CanJump)
+            {
                 actor.StateModuleController.AddState(new ActorJumpState());
+                actor.StateDataModule.Add(new StateData(GameplayConstants.JUMP_STATE_DATA));                
+            }
+
+            if (buildData.CanMoveObjects)
+            {
+                actor.StateModuleController.AddState(new ActorMovesObjectsState());
+                actor.StateDataModule.Add(new StateData(GameplayConstants.MOVES_OBJECTS_STATE_DATA));
+            }
         }
 
         private void AddHand(Actor actor)

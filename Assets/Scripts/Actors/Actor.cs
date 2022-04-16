@@ -19,7 +19,7 @@ namespace Sheldier.Actors
         public ActorsInventoryModule InventoryModule => _inventoryModule;
         public ActorsView ActorsView => actorsView;
         public ActorStateModuleController StateModuleController => _stateModuleController;
-        public ActorDataModule DataModule => _dataModule;
+        public ActorStateDataModule StateDataModule => _dataModule;
         public ActorSoundController SoundController => soundController;
 
         [SerializeField] private Rigidbody2D actorsRigidbody;
@@ -36,7 +36,7 @@ namespace Sheldier.Actors
         private TickHandler _tickHandler;
         private FixedTickHandler _fixedTickHandler;
         private PauseNotifier _pauseNotifier;
-        private ActorDataModule _dataModule;
+        private ActorStateDataModule _dataModule;
         private RigidbodyType2D _previousBodyType;
         private ActorTraceProvider _traceProvider;
         private string _guid;
@@ -47,7 +47,7 @@ namespace Sheldier.Actors
             
             _notifier = new ActorNotifyModule();
 
-            _dataModule = new ActorDataModule();
+            _dataModule = new ActorStateDataModule();
             
             _actorInputController = new ActorInputController();
             _actorInputController.Initialize();

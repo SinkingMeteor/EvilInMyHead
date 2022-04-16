@@ -1,5 +1,6 @@
 ﻿using Sheldier.Common;
 using Sheldier.Common.Animation;
+using Sheldier.Constants;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -15,7 +16,7 @@ namespace Sheldier.Actors
         [SerializeField] private ActorAnimationCollection animationCollection;
         [SerializeField] private SpriteRenderer body;
         [SerializeField] private SpriteRenderer shadow;
-        private ActorDataModule _stateDataModule;
+        private ActorStateDataModule _stateDataModule;
 
         private int _currentSortingOrder;
         private AnimationType _currentPlayingType = AnimationType.None;
@@ -24,7 +25,7 @@ namespace Sheldier.Actors
         {
             animator.Initialize();
         }
-        public void SetDependencies(TickHandler tickHandler, ActorDataModule stateDataModule)
+        public void SetDependencies(TickHandler tickHandler, ActorStateDataModule stateDataModule)
         {
             _stateDataModule = stateDataModule;
             animator.SetDependencies(tickHandler);
@@ -36,7 +37,8 @@ namespace Sheldier.Actors
 
         public void Tick()
         {
-            shadow.enabled = !_stateDataModule.StateDataModule.IsFalling;
+            if(_stateDataModule.IsItemExists(GameplayConstants.FALL_STATE_DATA))
+                shadow.enabled = !_stateDataModule.Get(GameplayConstants.FALL_STATE_DATA).StateValue;
         }
         public void SetSortingOrder(int order)
         {

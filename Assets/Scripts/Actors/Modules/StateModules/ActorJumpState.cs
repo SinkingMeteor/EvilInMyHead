@@ -10,7 +10,7 @@ namespace Sheldier.Actors
     public class ActorJumpState : IStateComponent
     {
         public bool IsLocked => _isLocked;
-        public bool TransitionConditionIsDone => _data.IsJumping;
+        public bool TransitionConditionIsDone => _data.Get(GameplayConstants.JUMP_STATE_DATA).StateValue;
         public int Priority => 4;
 
         private bool _isLocked;
@@ -34,7 +34,7 @@ namespace Sheldier.Actors
         private void JumpButtonPressed()
         {
             if(_inputController.MovementDirection != Vector2.zero)
-                _data.SetJump(true);
+                _data.Get(GameplayConstants.JUMP_STATE_DATA).SetState(true);
         }
 
         private void InitializeHashes()
@@ -51,7 +51,7 @@ namespace Sheldier.Actors
         public void SetDependencies(ActorInternalData data)
         {
             _actor = data.Actor;
-            _data = _actor.DataModule.StateDataModule;
+            _data = _actor.StateDataModule;
             _inputController = data.Actor.InputController;
             _actorsRigidbody = data.Rigidbody2D;
             _actorsView = data.Actor.ActorsView;
@@ -67,6 +67,7 @@ namespace Sheldier.Actors
             SetNewAnimation(_animationHashes[(int)_directionView]);
             _actorsView.Animator.OnAnimationTriggered += OnLanded;
             _actorsView.Animator.OnAnimationEnd += OnJumpingEnd;
+            _data.Get(GameplayConstants.DOES_ANY_STATE_DATA).SetState(true);
         }
 
         private void OnLanded()
@@ -84,7 +85,7 @@ namespace Sheldier.Actors
 
         private void OnJumpingEnd()
         {
-            _data.SetJump(false);
+            _data.Get(GameplayConstants.JUMP_STATE_DATA).SetState(false);
             _isLanded = false;
         }
 
@@ -93,17 +94,18 @@ namespace Sheldier.Actors
             _actorsRigidbody.velocity = Vector2.zero;
             _actorsView.Animator.OnAnimationTriggered -= OnLanded;
             _actorsView.Animator.OnAnimationEnd -= OnJumpingEnd;
+            _data.Get(GameplayConstants.DOES_ANY_STATE_DATA).SetState(false);
         }
 
         public void Tick()
         {
-            if (_isLanded)
-                _actorsRigidbody.velocity = Vector2.Lerp(_actorsRigidbody.velocity, Vector2.zero, _tickHandler.TickDelta * 10.0f);
+
         }
 
         public void FixedTick()
         {
-            
+            if (_isLanded)
+                _actorsRigidbody.velocity = Vector2.Lerp(_actorsRigidbody.velocity, Vector2.zero, _tickHandler.TickDelta * 10.0f);
         }
 
         public void Dispose()

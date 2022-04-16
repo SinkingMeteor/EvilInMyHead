@@ -24,7 +24,7 @@ namespace Sheldier.Actors.Hand
             _tickHandler = data.TickHandler;
             _nullItem = new NullItem();
             _currentItem = _nullItem;
-            actorHandObject.SetDependencies(_tickHandler, _actor.DataModule.StateDataModule);
+            actorHandObject.SetDependencies(_tickHandler, _actor.StateDataModule);
             actorHandObject.Initialize();
             _tickHandler.AddListener(this);
             _actor.InventoryModule.OnEquipItem += Equip;

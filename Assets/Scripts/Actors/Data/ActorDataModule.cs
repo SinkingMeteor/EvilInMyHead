@@ -1,4 +1,6 @@
 ﻿
+using Sheldier.Data;
+
 namespace Sheldier.Actors
 {
     public class ActorDataModule
@@ -13,15 +15,28 @@ namespace Sheldier.Actors
         }
     }
 
-    public class ActorStateDataModule
+    public class ActorStateDataModule : Database<StateData>
     {
-        public bool IsFalling => _isFalling;
-        public bool IsJumping => _isJumping;
-        
-        private bool _isJumping;
-        private bool _isFalling;
 
-        public bool SetJump(bool isJump) => _isJumping = isJump;
-        public bool SetFall(bool isFall) => _isFalling = isFall;
+    }
+    
+    public class StateData : IDatabaseItem
+    {
+        public string ID => _stateTypeName;
+
+        private string _stateTypeName;
+
+        public bool StateValue => _stateValue;
+
+        private bool _stateValue;
+
+        public StateData(string stateTypeName)
+        {
+            _stateTypeName = stateTypeName;
+        }
+        public void SetState(bool isActive)
+        {
+            _stateValue = isActive;
+        }
     }
 }

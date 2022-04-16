@@ -17,5 +17,4 @@ namespace Sheldier.Common
             reference = newReference;
         }
     }
-
 }

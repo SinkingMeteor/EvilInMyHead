@@ -4,7 +4,6 @@ using Sheldier.Actors;
 using Sheldier.Actors.Data;
 using Sheldier.Common;
 using Sheldier.Common.Localization;
-using Sheldier.Common.Pool;
 using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;

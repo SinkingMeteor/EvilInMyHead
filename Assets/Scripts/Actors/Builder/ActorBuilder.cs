@@ -65,13 +65,15 @@ namespace Sheldier.Actors.Builder
             ActorStaticBuildData buildData = _actorDataFactory.GetBuildData(typeID);
             ActorDynamicConfigData dynamicConfigData = _actorDataFactory.GetDynamicActorConfig(typeID, guid);
             ActorAnimationCollection actorAppearance = _appearanceLoader.Get(staticConfig.ActorAppearance);
-
+            
 
             Actor actor = GameObject.Instantiate(_actorTemplate);
             actor.SetDependencies(dynamicConfigData.Guid, _tickHandler, _fixedTickHandler, _pauseNotifier);
             actor.ActorsView.SetActorAppearance(actorAppearance);
             actor.Initialize();
 
+            actor.StateDataModule.Add(new StateData(GameplayConstants.DOES_ANY_STATE_DATA));
+            
             if (buildData.IsEffectPerceptive)
             {
                 var effectData = _actorDataFactory.CreateDynamicEffectData(dynamicConfigData.Guid);

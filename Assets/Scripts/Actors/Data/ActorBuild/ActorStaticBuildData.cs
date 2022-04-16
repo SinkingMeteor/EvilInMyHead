@@ -16,5 +16,6 @@ namespace Sheldier.Actors.Data
         public bool CanAttack;
         public bool CanJump;
         public string InteractType;
+        public bool CanMoveObjects;
     }
 }

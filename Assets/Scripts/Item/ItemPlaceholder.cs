@@ -5,19 +5,20 @@ using Sheldier.Actors.Inventory;
 using Sheldier.Common;
 using Sheldier.Factories;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Sheldier.Item
 {
     [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public class ItemPlaceholder : MonoBehaviour, IUniqueID, IInteractReceiver
+    public class ItemPlaceholder : SerializedMonoBehaviour, IInteractReceiver
     {
         public Transform Transform => transform;
         public string ID => uniqueID.ID;
         public DataReference Reference => itemReference;
 
-        [SerializeField] private UniqueID uniqueID;
+        [OdinSerialize] private IUniqueID uniqueID;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private DataReference itemReference;
         [SerializeField] private Material onInteractMaterial;

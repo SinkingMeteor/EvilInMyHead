@@ -1,15 +1,17 @@
 ﻿using Sheldier.Common;
 using Sheldier.Item;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Sheldier.Actors
 {
-    public class ActorPlaceholder : MonoBehaviour
+    public class ActorPlaceholder : SerializedMonoBehaviour
     {
         public string Guid => guid.ID;
         public DataReference Reference => reference;
 
-        [SerializeField] private UniqueID guid;
+        [OdinSerialize] private IUniqueID guid;
         [SerializeField] private DataReference reference;
         public void Deactivate() => gameObject.SetActive(false);
         private void OnDrawGizmos()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Sheldier.Common.Animation;
+using Sheldier.Constants;
 using UnityEngine;
 
 namespace Sheldier.Actors
@@ -8,8 +9,8 @@ namespace Sheldier.Actors
     public class ActorFallState : IStateComponent
     {
         public bool IsLocked => _isLocked;
-        public bool TransitionConditionIsDone => _data.IsFalling;
-        public int Priority => 5;
+        public bool TransitionConditionIsDone => _data.Get(GameplayConstants.FALL_STATE_DATA).StateValue;
+        public int Priority => 6;
         
         private bool _isLocked;
         private Actor _actor;
@@ -26,7 +27,7 @@ namespace Sheldier.Actors
         public void SetDependencies(ActorInternalData data)
         {
             _actor = data.Actor;
-            _data = _actor.DataModule.StateDataModule;
+            _data = _actor.StateDataModule;
             _traceProvider = data.ActorTraceProvider;
         }
         
@@ -44,7 +45,7 @@ namespace Sheldier.Actors
         private void OnFallSignalReceived(ActorDirectionView view)
         {
             _directionView = view;
-            _data.SetFall(true);
+            _data.Get(GameplayConstants.FALL_STATE_DATA).SetState(true);
         }
 
         public void Enter()
@@ -52,12 +53,14 @@ namespace Sheldier.Actors
             _actor.LockInput();
             SetNewAnimation(_animationHashes[(int)_directionView]);
             _actor.ActorsView.Animator.OnAnimationEnd += OnFallingEnd;
+            _data.Get(GameplayConstants.DOES_ANY_STATE_DATA).SetState(true);
 
         }
 
         public void Exit()
         {
             _actor.ActorsView.Animator.OnAnimationEnd -= OnFallingEnd;
+            _data.Get(GameplayConstants.DOES_ANY_STATE_DATA).SetState(true);
             _actor.UnlockInput();
         }
 
@@ -82,7 +85,47 @@ namespace Sheldier.Actors
         {
             yield return new WaitForSeconds(1.0f);
             _actor.transform.position = _traceProvider.LastSafePoint;
-            _data.SetFall(false);
+            _data.Get(GameplayConstants.FALL_STATE_DATA).SetState(false);
+
+        }
+    }
+    public class ActorMovesObjectsState : IStateComponent
+    {
+        public bool IsLocked => _isLocked;
+        public bool TransitionConditionIsDone => _stateData.Get(GameplayConstants.MOVES_OBJECTS_STATE_DATA).StateValue;
+        public int Priority => 5;
+
+        private bool _isLocked;
+        private ActorStateDataModule _stateData;
+
+        public void Initialize()
+        {
+        }
+
+        public void SetDependencies(ActorInternalData data)
+        {
+            _stateData = data.Actor.StateDataModule;
+        }
+
+        public void Enter()
+        {
+        }
+
+        public void Exit()
+        {
+            _stateData.Get(GameplayConstants.MOVES_OBJECTS_STATE_DATA).SetState(false);
+        }
+
+        public void Tick()
+        {
+        }
+
+        public void FixedTick()
+        {
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
