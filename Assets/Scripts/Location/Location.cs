@@ -1,4 +1,5 @@
 using Sheldier.Actors.Pathfinding;
+using Sheldier.Common;
 using Sheldier.Item;
 using UniRx;
 using UnityEngine;
@@ -10,7 +11,9 @@ namespace Sheldier.GameLocation
     {
         public LocationPlaceholdersKeeper Placeholders => placeholdersKeeper;
         public PathGrid PathGrid => pathGrid;
-        
+        public DataReference LocationReference => locationReference;
+
+        [SerializeField] private DataReference locationReference;
         [SerializeField] private LocationPlaceholdersKeeper placeholdersKeeper;
         [SerializeField] private PathGrid pathGrid;
 

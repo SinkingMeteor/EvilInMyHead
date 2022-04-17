@@ -32,6 +32,14 @@
         Jump_Fall_Front,
         Jump_Fall_Front_Side,
         Jump_Fall_Back_Side,
-        Jump_Fall_Back
+        Jump_Fall_Back,
+        
+        Move_Object_Idle_Front,
+        Move_Object_Idle_Right,
+        Move_Object_Idle_Left,
+        
+        Move_Object_Move_Front,
+        Move_Object_Move_Right,
+        Move_Object_Move_Left,
     }
 }

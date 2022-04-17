@@ -7923,6 +7923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9ba87a6f6285246891fc5ecc31addb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locationReference: {fileID: 11400000, guid: 0c63b303fdba3d744a99696d2eb50342, type: 2}
   placeholdersKeeper: {fileID: 5530891056617806347}
   pathGrid: {fileID: 8073123327105349764}
 --- !u!1 &5985473700258531380

@@ -1,4 +1,5 @@
-﻿using Sheldier.Setup;
+﻿using Sheldier.Common;
+using Sheldier.Setup;
 using Zenject;
 
 namespace Sheldier.Installers
@@ -11,6 +12,7 @@ namespace Sheldier.Installers
             Container.Bind<UILoadingOperation>().AsSingle();
             Container.Bind<SceneSetupOperation>().AsSingle();
             Container.Bind<GameSystemsInitializer>().AsSingle();
+            Container.Bind<PostProcessingController>().AsSingle();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Sheldier.Common;
+using Sheldier.Constants;
 using UnityEngine;
 
 namespace Sheldier.Actors.Interact
@@ -6,6 +7,7 @@ namespace Sheldier.Actors.Interact
     public class ReplaceInteractReceiver : MonoBehaviour, IInteractReceiver, IExtraActorModule
     {
         public Transform Transform => _currentActor.transform;
+        public string ReceiverType => GameplayConstants.INTERACT_RECEIVER_ACTOR;
 
         private Material _material;
         private Actor _currentActor;

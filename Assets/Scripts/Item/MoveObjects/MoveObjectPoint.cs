@@ -5,13 +5,11 @@ using UnityEngine;
 
 namespace Sheldier.Item
 {
-    public class MoveObjectPoint : MonoBehaviour, IInteractReceiver, IMoveObjectPoint
+    public class MoveObjectPoint : MonoBehaviour, IInteractReceiver
     {
-        public GameObject GameObject => gameObject;
         public Transform Transform => transform;
+        public string ReceiverType => GameplayConstants.INTERACT_RECEIVER_MOVING_OBJECT;
 
-        [SerializeField] private MoveObject moveObject;
-        
         private bool _isMoving;
 
         public void OnEntered()
@@ -24,16 +22,6 @@ namespace Sheldier.Item
                 return false;
             _isMoving = !_isMoving; 
             actor.StateDataModule.Get(GameplayConstants.MOVES_OBJECTS_STATE_DATA).SetState(_isMoving);
-            if (_isMoving)
-            {
-                actor.transform.position = transform.position;
-                moveObject.DisableAllExcept(this);
-            }
-            else
-            {
-                moveObject.EnableAllExcept(this);
-            }
-            transform.parent.SetParent(_isMoving ? actor.transform : null);
             return false;
         }
 

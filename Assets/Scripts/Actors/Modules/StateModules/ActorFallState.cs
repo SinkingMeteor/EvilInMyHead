@@ -89,43 +89,4 @@ namespace Sheldier.Actors
 
         }
     }
-    public class ActorMovesObjectsState : IStateComponent
-    {
-        public bool IsLocked => _isLocked;
-        public bool TransitionConditionIsDone => _stateData.Get(GameplayConstants.MOVES_OBJECTS_STATE_DATA).StateValue;
-        public int Priority => 5;
-
-        private bool _isLocked;
-        private ActorStateDataModule _stateData;
-
-        public void Initialize()
-        {
-        }
-
-        public void SetDependencies(ActorInternalData data)
-        {
-            _stateData = data.Actor.StateDataModule;
-        }
-
-        public void Enter()
-        {
-        }
-
-        public void Exit()
-        {
-            _stateData.Get(GameplayConstants.MOVES_OBJECTS_STATE_DATA).SetState(false);
-        }
-
-        public void Tick()
-        {
-        }
-
-        public void FixedTick()
-        {
-        }
-
-        public void Dispose()
-        {
-        }
-    }
 }

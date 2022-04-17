@@ -4,11 +4,13 @@ using Sheldier.Common;
 using Sheldier.Common.Animation;
 using Sheldier.Common.Audio;
 using Sheldier.Data;
+using Sheldier.GameLocation;
 using Sheldier.Graphs.DialogueSystem;
 using Sheldier.Item;
 using Sheldier.Setup;
 using Sheldier.UI;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Zenject;
 
 namespace Sheldier.Installers
@@ -21,6 +23,7 @@ namespace Sheldier.Installers
             Container.Bind<ItemStaticDataLoader>().AsSingle();
             Container.Bind<UIStaticDataLoader>().AsSingle();
             Container.Bind<StatsStaticDataLoader>().AsSingle();
+            Container.Bind<LocationStaticDataLoader>().AsSingle();
             
             Container.Bind<ActorDataFactory>().AsSingle();
 
@@ -30,6 +33,7 @@ namespace Sheldier.Installers
             Container.Bind<AssetProvider<ActorAnimationCollection>>().To<AnimationCollectionLoader>().AsSingle();
             Container.Bind<AssetProvider<TextAsset>>().To<DataLoader>().AsSingle();
             Container.Bind<AssetProvider<DialogueSystemGraph>>().To<DialoguesLoader>().AsSingle();
+            Container.Bind<AssetProvider<VolumeProfile>>().To<PostProcessingLoader>().AsSingle();
             
             Container.Bind<Database<ActorStaticConfigData>>().To<ActorStaticConfigDatabase>().AsSingle();
             Container.Bind<Database<ActorStaticBuildData>>().To<ActorStaticBuildDatabase>().AsSingle();
@@ -52,6 +56,9 @@ namespace Sheldier.Installers
             Container.Bind<Database<StaticStringStatCollection>>().To<StaticStringStatDatabase>().AsSingle();
             Container.Bind<Database<DynamicNumericalEntityStatsCollection>>().To<DynamicGeneralNumericalStatsDatabase>().AsSingle();
             Container.Bind<Database<DynamicStringEntityStatsCollection>>().To<DynamicGeneralStringStatsDatabase>().AsSingle();
+            
+            Container.Bind<Database<LocationStaticConfig>>().To<LocationStaticConfigDatabase>().AsSingle();
+            Container.Bind<Database<LocationDynamicConfig>>().To<LocationDynamicConfigDatabase>().AsSingle();
             
             Container.Bind<SceneActorsDatabase>().AsSingle();
             Container.Bind<Database<SimpleItem>>().To<SimpleItemDatabase>().AsSingle();

@@ -11,5 +11,10 @@
         public const string FALL_STATE_DATA = "Fall";
         public const string MOVES_OBJECTS_STATE_DATA = "MovesObjects";
         public const string DOES_ANY_STATE_DATA = "DoesAny";
+
+        public const string INTERACT_RECEIVER_ACTOR = "Actor";
+        public const string INTERACT_RECEIVER_ITEM = "Item";
+        public const string INTERACT_RECEIVER_MOVING_OBJECT = "MovingObject";
+        public const string INTERACT_RECEIVER_LOCATION_CHANGER = "ChangeLocation";
     }
 }

@@ -11,7 +11,9 @@ using Sheldier.Data;
 using Sheldier.Factories;
 using Sheldier.GameLocation;
 using Sheldier.Graphs.DialogueSystem;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Sheldier.Setup
 {
@@ -41,6 +43,7 @@ namespace Sheldier.Setup
         private readonly AssetProvider<AudioUnit> _audioLoader;
         private readonly AssetProvider<TextAsset> _dataLoader;
         private readonly AssetProvider<DialogueSystemGraph> _dialoguesLoader;
+        private readonly AssetProvider<VolumeProfile> _postProcessingLoader;
 
         public GameSystemsInitializer(InputProvider inputProvider,
             LocalizationProvider localizationProvider,
@@ -65,7 +68,8 @@ namespace Sheldier.Setup
             AssetProvider<ActorAnimationCollection> animationCollectionLoader,
             AssetProvider<AudioUnit> audioLoader,
             AssetProvider<TextAsset> dataLoader,
-            AssetProvider<DialogueSystemGraph> dialoguesLoader)
+            AssetProvider<DialogueSystemGraph> dialoguesLoader,
+            AssetProvider<VolumeProfile> postProcessingLoader)
         {
             _animationCollectionLoader = animationCollectionLoader;
             _dialoguesLoader = dialoguesLoader;
@@ -91,6 +95,7 @@ namespace Sheldier.Setup
             _inventorySlotPool = inventorySlotPool;
             _audioMixerController = audioMixerController;
             _localizationProvider = localizationProvider;
+            _postProcessingLoader = postProcessingLoader;
         }
 
         public void InitializeSystems()
@@ -101,6 +106,7 @@ namespace Sheldier.Setup
             _animationLoader.Initialize();
             _animationCollectionLoader.Initialize();
             _spriteLoader.Initialize();
+            _postProcessingLoader.Initialize();
             _localizationProvider.Initialize();
             _fontProvider.Initialize();
             _projectilePool.Initialize();

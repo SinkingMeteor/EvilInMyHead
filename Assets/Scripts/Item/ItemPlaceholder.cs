@@ -3,6 +3,7 @@ using Sheldier.Actors;
 using Sheldier.Actors.Interact;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
+using Sheldier.Constants;
 using Sheldier.Factories;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -15,6 +16,7 @@ namespace Sheldier.Item
     public class ItemPlaceholder : SerializedMonoBehaviour, IInteractReceiver
     {
         public Transform Transform => transform;
+        public string ReceiverType => GameplayConstants.INTERACT_RECEIVER_ITEM;
         public string ID => uniqueID.ID;
         public DataReference Reference => itemReference;
 

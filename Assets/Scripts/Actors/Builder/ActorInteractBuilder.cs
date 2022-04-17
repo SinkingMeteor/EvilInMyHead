@@ -31,7 +31,7 @@ namespace Sheldier.Actors.Builder
 
             if (buildData.CanInteract)
             {
-                var interactNotifier = body.AddComponent<ActorsInteractNotifier>();
+                var interactNotifier = body.AddComponent<ActorsUpdatableInteractNotifier>();
                 actor.AddExtraModule(interactNotifier);
             }
 

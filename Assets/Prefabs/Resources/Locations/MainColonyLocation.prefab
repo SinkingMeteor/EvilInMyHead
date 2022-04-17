@@ -18907,7 +18907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveObject: {fileID: 8156999283873747061}
 --- !u!58 &4246734426850089780
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18950,7 +18949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3223189839144604280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.284, y: 0.078, z: 0}
+  m_LocalPosition: {x: -0.24, y: 0.078, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18969,7 +18968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveObject: {fileID: 8156999283873747061}
 --- !u!58 &2009427840813012708
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19012,7 +19010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3795362401934343003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.013, y: 0.243, z: 0}
+  m_LocalPosition: {x: 0.013, y: 0.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19031,7 +19029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveObject: {fileID: 8156999283873747061}
 --- !u!58 &4914952928144130766
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19130,6 +19127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9ba87a6f6285246891fc5ecc31addb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locationReference: {fileID: 11400000, guid: 1ef8f2891e789d641b68407996b96d44, type: 2}
   placeholdersKeeper: {fileID: 900251764314670137}
   pathGrid: {fileID: 1170739601962116410}
 --- !u!1 &4350258919141107598
@@ -19158,7 +19156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4350258919141107598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.264, y: 0.085, z: 0}
+  m_LocalPosition: {x: 0.24, y: 0.085, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19177,7 +19175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveObject: {fileID: 8156999283873747061}
 --- !u!58 &193903400482502631
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19456,7 +19453,7 @@ MonoBehaviour:
   gridWorldPosition: {x: -18.48, y: -11.23}
   gridWorldSize: {x: 31.78, y: 27.92}
   nodeRadius: 0.15
-  _showNodes: 1
+  _showNodes: 0
 --- !u!1 &5541150217554965833
 GameObject:
   m_ObjectHideFlags: 0
@@ -19468,7 +19465,6 @@ GameObject:
   - component: {fileID: 8587728145185040021}
   - component: {fileID: 7893933270560295417}
   - component: {fileID: 2365989680595725429}
-  - component: {fileID: 8156999283873747061}
   m_Layer: 0
   m_Name: MoveObject
   m_TagString: Untagged
@@ -19573,55 +19569,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37722695, y: 0.11338514}
   m_EdgeRadius: 0
---- !u!114 &8156999283873747061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5541150217554965833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b816ed52dfa347f68459cbd5b72b00f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 5980085712587685857}
-    - {fileID: 2343277581456267382}
-    - {fileID: 5224613849698913556}
-    - {fileID: 4122480688164158342}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: movePoints
-      Entry: 7
-      Data: 0|Sheldier.Item.IMoveObjectPoint[], Sheldier
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!1 &6135962535692094074
 GameObject:
   m_ObjectHideFlags: 0

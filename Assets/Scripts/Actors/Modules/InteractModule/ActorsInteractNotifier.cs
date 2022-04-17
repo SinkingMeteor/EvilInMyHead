@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sheldier.Constants;
 using Sheldier.Setup;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Sheldier.Actors.Interact
 {
@@ -18,11 +21,13 @@ namespace Sheldier.Actors.Interact
         private Coroutine _inInteractField;
 
         private IInteractReceiver _currentReceiver;
+        private ActorStateDataModule _stateData;
         private Actor _actor;
 
         public void Initialize(ActorInternalData data)
         {
             _actor = data.Actor;
+            _stateData = data.Actor.StateDataModule;
             _circleCollider2D = GetComponent<CircleCollider2D>();
             _inputController = data.Actor.InputController;
             _receivers = new Stack<IInteractReceiver>();
@@ -45,6 +50,8 @@ namespace Sheldier.Actors.Interact
         private void Interact()
         {
             if(_currentReceiver == null)
+                return;
+            if (_stateData.Get(GameplayConstants.DOES_ANY_STATE_DATA).StateValue)
                 return;
             bool interactResult = _currentReceiver.OnInteracted(_actor);
             if (_inInteractField != null || interactResult)

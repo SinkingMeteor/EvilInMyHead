@@ -53,7 +53,7 @@ namespace Sheldier.Actors.Builder
             _actorTemplate = Resources.Load<Actor>(ResourcePaths.ACTOR_TEMPLATE);
             _subBuilders = new ISubBuilder[]
             {
-                new ActorStatesBuilder(_actorDataFactory, _itemFactory),
+                new ActorStatesBuilder(_actorDataFactory, _itemFactory, _cameraFollower),
                 new ActorInteractBuilder(_scenePlayerController, _dialoguesProvider, _cameraFollower)
             };
         }

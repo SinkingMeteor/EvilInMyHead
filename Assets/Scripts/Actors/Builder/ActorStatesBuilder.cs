@@ -1,5 +1,6 @@
 ﻿using Sheldier.Actors.Data;
 using Sheldier.Actors.Hand;
+using Sheldier.Common;
 using Sheldier.Constants;
 using Sheldier.Factories;
 using UnityEngine;
@@ -9,11 +10,13 @@ namespace Sheldier.Actors.Builder
     public class ActorStatesBuilder : ISubBuilder
     {
         private readonly ActorDataFactory _actorDataFactory;
+        private readonly ICameraFollower _cameraFollower;
         private readonly ItemFactory _itemFactory;
         private ActorsHand _handTemplate;
 
-        public ActorStatesBuilder(ActorDataFactory actorDataFactory, ItemFactory itemFactory)
+        public ActorStatesBuilder(ActorDataFactory actorDataFactory, ItemFactory itemFactory, ICameraFollower cameraFollower)
         {
+            _cameraFollower = cameraFollower;
             _itemFactory = itemFactory;
             _actorDataFactory = actorDataFactory;
             _handTemplate = Resources.Load<ActorsHand>(ResourcePaths.ACTOR_HAND);
@@ -52,7 +55,7 @@ namespace Sheldier.Actors.Builder
 
             if (buildData.CanMoveObjects)
             {
-                actor.StateModuleController.AddState(new ActorMovesObjectsState());
+                actor.StateModuleController.AddState(new ActorMovesObjectsState(_actorDataFactory.GetEntityNumericalStatCollection(actor.Guid)));
                 actor.StateDataModule.Add(new StateData(GameplayConstants.MOVES_OBJECTS_STATE_DATA));
             }
         }

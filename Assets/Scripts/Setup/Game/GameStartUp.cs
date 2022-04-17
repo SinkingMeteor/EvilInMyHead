@@ -7,11 +7,12 @@ namespace Sheldier.Setup
     {
         private GameSystemsInitializer _gameSystemsInitializer;
         private LoadingScreenProvider _loadingScreenProvider;
-        
+
         private SceneLoadingOperation _sceneLoadingOperation;
         private SceneSetupOperation _sceneSetupOperation;
         private UILoadingOperation _uiLoadingOperation;
-        
+
+        private LocationStaticDataLoader _locationStaticDataLoader;
         private ActorStaticDataLoader _actorStaticDataLoader;
         private StatsStaticDataLoader _statsStaticDataLoader;
         private ItemStaticDataLoader _itemStaticDataLoader;
@@ -26,11 +27,13 @@ namespace Sheldier.Setup
                                         ItemStaticDataLoader itemStaticDataLoader,
                                         UIStaticDataLoader uiStaticDataLoader,
                                         StatsStaticDataLoader statsStaticDataLoader,
+                                        LocationStaticDataLoader locationStaticDataLoader,
                                         GameSystemsInitializer gameSystemsInitializer)
         {
             _gameSystemsInitializer = gameSystemsInitializer;
             _uiStaticDataLoader = uiStaticDataLoader;
-          
+
+            _locationStaticDataLoader = locationStaticDataLoader;
             _uiLoadingOperation = uiLoadingOperation;
             _sceneSetupOperation = sceneSetupOperation;
             _itemStaticDataLoader = itemStaticDataLoader;
@@ -53,6 +56,7 @@ namespace Sheldier.Setup
             _itemStaticDataLoader.LoadStaticData();
             _statsStaticDataLoader.LoadStaticData();
             _uiStaticDataLoader.LoadStaticData();
+            _locationStaticDataLoader.LoadStaticData();
         }
         private void InitializeSystems()
         {

@@ -17,6 +17,7 @@ namespace Sheldier.Setup
     {
         [SerializeField] private SceneData sceneData;
 
+        private PostProcessingController _postProcessingController;
         private SceneLoadingOperation _sceneLoadingOperation;
         private SceneLocationController _locationController;
         private SceneSetupOperation _sceneSetupOperation;
@@ -31,8 +32,9 @@ namespace Sheldier.Setup
         public void InjectDependencies(InputProvider inputProvider, SceneLoadingOperation sceneLoadingOperation, Pathfinder pathfinder,
             UILoadingOperation uiLoadingOperation, CameraHandler cameraHandler, PauseNotifier pauseNotifier, UIStatesController uiStatesController,
              CutsceneController cutsceneController, SceneLocationController locationController,
-            SceneSetupOperation sceneSetupOperation)
+            SceneSetupOperation sceneSetupOperation, PostProcessingController postProcessingController)
         {
+            _postProcessingController = postProcessingController;
             _sceneLoadingOperation = sceneLoadingOperation;
             _sceneSetupOperation = sceneSetupOperation;
             _locationController = locationController;
@@ -49,6 +51,7 @@ namespace Sheldier.Setup
             _cameraHandler.InitializeOnScene();
             _inputProvider.SetSceneCamera(_cameraHandler.CurrentSceneCamera);
             _uiStatesController.InitializeOnScene();
+            _postProcessingController.InitializeOnScene();
 
             if (_locationController.IsLocationExists)
                 await _locationController.DisposeLocation();
