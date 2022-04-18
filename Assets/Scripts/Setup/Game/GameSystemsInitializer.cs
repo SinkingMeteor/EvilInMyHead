@@ -44,6 +44,7 @@ namespace Sheldier.Setup
         private readonly AssetProvider<TextAsset> _dataLoader;
         private readonly AssetProvider<DialogueSystemGraph> _dialoguesLoader;
         private readonly AssetProvider<VolumeProfile> _postProcessingLoader;
+        private readonly ScenePlayerController _scenePlayerController;
 
         public GameSystemsInitializer(InputProvider inputProvider,
             LocalizationProvider localizationProvider,
@@ -69,8 +70,10 @@ namespace Sheldier.Setup
             AssetProvider<AudioUnit> audioLoader,
             AssetProvider<TextAsset> dataLoader,
             AssetProvider<DialogueSystemGraph> dialoguesLoader,
-            AssetProvider<VolumeProfile> postProcessingLoader)
+            AssetProvider<VolumeProfile> postProcessingLoader,
+            ScenePlayerController scenePlayerController)
         {
+            _scenePlayerController = scenePlayerController;
             _animationCollectionLoader = animationCollectionLoader;
             _dialoguesLoader = dialoguesLoader;
             _dataLoader = dataLoader;
@@ -123,6 +126,7 @@ namespace Sheldier.Setup
             _inputBindHandler.Initialize();
             _inputProvider.Initialize();
             _effectFactory.Initialize();
+            _scenePlayerController.Initialize();
             _pathProvider.Initialize();
             _cameraHandler.Initialize();
         }

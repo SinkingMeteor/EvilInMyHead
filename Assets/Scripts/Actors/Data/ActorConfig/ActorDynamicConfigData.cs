@@ -11,7 +11,6 @@ namespace Sheldier.Actors.Data
 
         public string Guid;
         public string TypeName;
-        public Vector2 Position;
 
         public ActorDynamicConfigData(string guid, ActorStaticConfigData staticConfigData)
         {

@@ -23,5 +23,11 @@ namespace Sheldier.UI
         {
             canvas.sortingOrder = order;
         }
+
+        public void TurnOff()
+        {
+            canvasGroup.alpha = 0.0f;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 }

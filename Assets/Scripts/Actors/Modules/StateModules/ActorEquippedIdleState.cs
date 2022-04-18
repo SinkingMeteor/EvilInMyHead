@@ -2,6 +2,7 @@
 using Sheldier.Actors.Inventory;
 using Sheldier.Common.Animation;
 using Sheldier.Constants;
+using Sheldier.GameLocation;
 
 namespace Sheldier.Actors
 {
@@ -12,7 +13,7 @@ namespace Sheldier.Actors
 
         private ActorsInventoryModule _inventoryModule;
 
-        public ActorEquippedIdleState(ActorDynamicConfigData dynamicConfigData) : base(dynamicConfigData)
+        public ActorEquippedIdleState(EntityPositionDynamicData positionDynamicData) : base(positionDynamicData)
         {
         }
         

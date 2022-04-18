@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sheldier.Actors;
 using Sheldier.Actors.Pathfinding;
@@ -7,9 +8,9 @@ using Sheldier.Common.Asyncs;
 using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Item;
+using Sheldier.UI;
 using UniRx;
 using UnityEngine;
-using Zenject;
 
 namespace Sheldier.GameLocation
 {
@@ -20,6 +21,8 @@ namespace Sheldier.GameLocation
         private readonly Database<LocationDynamicConfig> _locationDynamicConfigDatabase;
         private readonly Database<LocationStaticConfig> _locationStaticConfigDatabase;
         private readonly PostProcessingController _postProcessingController;
+        private readonly CurrentSceneDynamicData _currentSceneDynamicData;
+        private readonly PersistUI _persistUI;
 
         private Location _currentLocation;
         private ItemSpawner _itemSpawner;
@@ -33,8 +36,12 @@ namespace Sheldier.GameLocation
                                        Pathfinder pathfinder,
                                        PostProcessingController postProcessingController,
                                        Database<LocationStaticConfig> locationStaticConfigDatabase,
-                                       Database<LocationDynamicConfig> locationDynamicConfigDatabase)
+                                       Database<LocationDynamicConfig> locationDynamicConfigDatabase,
+                                       CurrentSceneDynamicData currentSceneDynamicData,
+                                       PersistUI persistUI)
         {
+            _persistUI = persistUI;
+            _currentSceneDynamicData = currentSceneDynamicData;
             _locationStaticConfigDatabase = locationStaticConfigDatabase;
             _locationDynamicConfigDatabase = locationDynamicConfigDatabase;
             _postProcessingController = postProcessingController;
@@ -44,7 +51,9 @@ namespace Sheldier.GameLocation
         }
         private async void OnReceivedLocationChangeRequest(ChangeLocationRequest request)
         {
+            await _persistUI.Fader.FadeIn();
             await LoadNewLocation(request.LocationReference);
+            await _persistUI.Fader.FadeOut();
         }
         
         public async Task LoadNewLocation(string locationName)
@@ -56,11 +65,14 @@ namespace Sheldier.GameLocation
             _currentLocation = GameObject.Instantiate(location);
 
             string locationReference = _currentLocation.LocationReference.Reference;
+            _currentSceneDynamicData.SetCurrentScene(locationReference);
             
             if (!_locationDynamicConfigDatabase.IsItemExists(locationReference))
                 CreateNewLocationDynamicData(locationReference);
-            
-            _postProcessingController.ApplyPostProcessingProfile(_locationDynamicConfigDatabase.Get(locationReference).VolumeProfile);
+
+            string volumeProfile = _locationDynamicConfigDatabase.Get(locationReference).VolumeProfile;
+            if(volumeProfile != "None")
+                _postProcessingController.ApplyPostProcessingProfile(volumeProfile);
             
             _locationChangeEvent = MessageBroker.Default.Receive<ChangeLocationRequest>().Subscribe(OnReceivedLocationChangeRequest);
             

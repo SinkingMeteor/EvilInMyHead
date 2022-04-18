@@ -2,21 +2,26 @@
 using Sheldier.Actors.Hand;
 using Sheldier.Common;
 using Sheldier.Constants;
+using Sheldier.Data;
 using Sheldier.Factories;
+using Sheldier.GameLocation;
 using UnityEngine;
 
 namespace Sheldier.Actors.Builder
 {
     public class ActorStatesBuilder : ISubBuilder
     {
+        private readonly Database<LocationDynamicConfig> _locationDynamicConfigDatabase;
+        private readonly CurrentSceneDynamicData _currentSceneDynamicData;
         private readonly ActorDataFactory _actorDataFactory;
-        private readonly ICameraFollower _cameraFollower;
         private readonly ItemFactory _itemFactory;
         private ActorsHand _handTemplate;
 
-        public ActorStatesBuilder(ActorDataFactory actorDataFactory, ItemFactory itemFactory, ICameraFollower cameraFollower)
+        public ActorStatesBuilder(ActorDataFactory actorDataFactory, ItemFactory itemFactory,
+            CurrentSceneDynamicData currentSceneDynamicData, Database<LocationDynamicConfig> locationDynamicConfigDatabase)
         {
-            _cameraFollower = cameraFollower;
+            _currentSceneDynamicData = currentSceneDynamicData;
+            _locationDynamicConfigDatabase = locationDynamicConfigDatabase;
             _itemFactory = itemFactory;
             _actorDataFactory = actorDataFactory;
             _handTemplate = Resources.Load<ActorsHand>(ResourcePaths.ACTOR_HAND);
@@ -25,7 +30,8 @@ namespace Sheldier.Actors.Builder
         public void Build(Actor actor, ActorStaticBuildData buildData)
         {
             bool canEquip = buildData.CanEquip;
-            actor.StateModuleController.AddState(new ActorDefaultIdleState(_actorDataFactory.GetDynamicConfigData(actor.Guid)));
+            var locationData = _locationDynamicConfigDatabase.Get(_currentSceneDynamicData.CurrentLocationID);
+            actor.StateModuleController.AddState(new ActorDefaultIdleState(locationData.Get(actor.Guid)));
             
             if (buildData.CanMove)
             {
@@ -39,7 +45,7 @@ namespace Sheldier.Actors.Builder
             if (canEquip)
             {
                 AddHand(actor);
-                actor.StateModuleController.AddState(new ActorEquippedIdleState(_actorDataFactory.GetDynamicConfigData(actor.Guid)));
+                actor.StateModuleController.AddState(new ActorEquippedIdleState(locationData.Get(actor.Guid)));
             }
             if(canEquip && buildData.CanMove)
                 actor.StateModuleController.AddState(new ActorEquippedControlledMovementState(

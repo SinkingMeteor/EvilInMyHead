@@ -59,6 +59,7 @@ namespace Sheldier.Installers
             
             Container.Bind<Database<LocationStaticConfig>>().To<LocationStaticConfigDatabase>().AsSingle();
             Container.Bind<Database<LocationDynamicConfig>>().To<LocationDynamicConfigDatabase>().AsSingle();
+            Container.Bind<CurrentSceneDynamicData>().AsSingle();
             
             Container.Bind<SceneActorsDatabase>().AsSingle();
             Container.Bind<Database<SimpleItem>>().To<SimpleItemDatabase>().AsSingle();

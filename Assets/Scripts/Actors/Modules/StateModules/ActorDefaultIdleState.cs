@@ -1,5 +1,6 @@
 ﻿using Sheldier.Actors.Data;
 using Sheldier.Common.Animation;
+using Sheldier.GameLocation;
 
 namespace Sheldier.Actors
 {
@@ -11,16 +12,16 @@ namespace Sheldier.Actors
 
         protected AnimationType[] _animationHashes;
 
-        private readonly ActorDynamicConfigData _dynamicConfigData;
-        
+        private readonly EntityPositionDynamicData _entityPositionDynamicData;
+
         private bool _isLocked = false;
         private ActorTransformHandler _actorTransformHandler;
         private ActorsView _actorsView;
         private Actor _actor;
 
-        public ActorDefaultIdleState(ActorDynamicConfigData dynamicConfigData)
+        public ActorDefaultIdleState(EntityPositionDynamicData entityPositionDynamicData)
         {
-            _dynamicConfigData = dynamicConfigData;
+            _entityPositionDynamicData = entityPositionDynamicData;
         }
         
         
@@ -68,7 +69,7 @@ namespace Sheldier.Actors
 
         public void Dispose()
         {
-            _dynamicConfigData.Position = _actor.gameObject.transform.position;
+            _entityPositionDynamicData.Position = _actor.gameObject.transform.position;
         }
 
         private void SetNewAnimation(AnimationType animationID) => _actorsView.PlayAnimation(animationID);

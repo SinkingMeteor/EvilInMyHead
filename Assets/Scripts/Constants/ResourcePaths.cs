@@ -9,8 +9,6 @@ namespace Sheldier.Constants
         public const string ACTOR_TEMPLATE = "Actors/Actor_Humanoid";
         public const string ACTOR_HAND = "Actors/Hand";
         public const string ACTOR_INTERACT_MODULE = "Actors/InteractModule";
-        public const string ACTOR_MAP = "Actors/ActorsMap";
-        public const string ACTOR_APPEARANCE_DIRECTORY = "Appearance/";
         
         //camera
         public const string PIXEL_PERFECT_CAMERA = "Scene/MainCamera";
@@ -22,6 +20,10 @@ namespace Sheldier.Constants
             {UIType.Dialogue, "UIState/DialoguesUIState"}
         };
 
+        public const string FADER = "UIState/Fader";
+        public const string WORLD_CANVAS = "UIState/WorldCanvas";
+
+        
         //sceneData
         public const string COLONY_SCENE_DATA_PATH = "SceneData/ColonyOutside";
 

@@ -67,8 +67,8 @@ namespace Sheldier.Setup
         {
             ILoadOperation[] loadOperations =
             {
-                _uiLoadingOperation,
                 _sceneLoadingOperation,
+                _uiLoadingOperation,
                 _sceneSetupOperation
             };
             

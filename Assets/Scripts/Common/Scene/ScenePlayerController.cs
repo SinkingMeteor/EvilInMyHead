@@ -1,7 +1,10 @@
+using System;
 using Sheldier.Actors;
 using Sheldier.Actors.Data;
 using Sheldier.Actors.Inventory;
 using Sheldier.Data;
+using Sheldier.GameLocation;
+using UniRx;
 using Zenject;
 
 namespace Sheldier.Common
@@ -14,7 +17,13 @@ namespace Sheldier.Common
 
         private SceneActorsDatabase _sceneActorsDatabase;
         private IGameplayInputProvider _inputProvider;
+        private IDisposable _locationChangeEvent;
         private Inventory _inventory;
+
+        public void Initialize()
+        {
+            _locationChangeEvent = MessageBroker.Default.Receive<ChangeLocationRequest>().Subscribe(OnReceivedLocationChangeRequest);
+        }
 
         [Inject]
         private void InjectDependencies(IGameplayInputProvider inputProvider, Inventory inventory, SceneActorsDatabase sceneActorsDatabase)
@@ -45,6 +54,15 @@ namespace Sheldier.Common
         }
         
         public bool IsCurrentActor(string guid) => _controlledActorsGuid == guid;
+
+        private void OnReceivedLocationChangeRequest(ChangeLocationRequest request)
+        {
+            _sceneActorsDatabase.Get(_controlledActorsGuid).LockInput();
+        }
+        public void Dispose()
+        {
+            _locationChangeEvent.Dispose();
+        }
     }
 
 }

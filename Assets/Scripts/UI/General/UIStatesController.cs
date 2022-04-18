@@ -1,48 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Sheldier.Common;
 using Sheldier.Common.Pause;
 using Sheldier.Installers;
 using UnityEngine;
-using Zenject;
 
 
 namespace Sheldier.UI
 {
     public class UIStatesController : IUIStatesController
     {
-        public IReadOnlyDictionary<UIType, UIState> States => _states;
         private Stack<UIState> _shownStates;
         private Dictionary<UIType, UIState> _states;
-        private Dictionary<UIType, UIState> _loadedStates;
 
-        private UIInstaller _uiInstaller;
         private int _topSortingOrder;
+        
+        private UIInstaller _uiInstaller;
         private PauseNotifier _pauseNotifier;
         private IGameplayInputProvider _inputProvider;
-
-        public void InitializeOnScene()
-        {
-            _shownStates = new Stack<UIState>();
-            _states = new Dictionary<UIType, UIState>();
-            GameObject uiMain = new GameObject("[UI]");
-            uiMain.transform.position = Vector3.zero;
-            foreach (var uiState in _loadedStates)
-            {
-                var state = GameObject.Instantiate(uiState.Value, uiMain.transform, true);
-                _uiInstaller.InjectUIState(state.gameObject);
-                _states.Add(uiState.Key, state);
-            }
-            
-            _topSortingOrder = 0;
-            foreach (var state in _states)
-            {
-                state.Value.Initialize();
-            }
-
-            _loadedStates = null;
-        }
 
         public UIStatesController(UIInstaller uiInstaller, PauseNotifier pauseNotifier, IGameplayInputProvider inputProvider)
         {
@@ -51,9 +26,27 @@ namespace Sheldier.UI
             _uiInstaller = uiInstaller;
         } 
         
+        public void InitializeOnScene()
+        {
+            _shownStates = new Stack<UIState>();
+            GameObject uiMain = new GameObject("[UI]");
+            uiMain.transform.position = Vector3.zero;
+            foreach (var uiState in _states)
+            {
+                uiState.Value.transform.SetParent(uiMain.transform);
+                _uiInstaller.InjectUIState(uiState.Value.gameObject);
+            }
+            
+            _topSortingOrder = 0;
+            foreach (var state in _states)
+            {
+                state.Value.Initialize();
+            }
+        }
+        
         public void SetStates(Dictionary<UIType, UIState> loadedStates)
         {
-            _loadedStates = loadedStates;
+            _states = loadedStates;
         }
 
         public bool TryGet<T>(UIType uiType, out T window) where T : MonoBehaviour

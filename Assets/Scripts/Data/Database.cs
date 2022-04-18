@@ -33,9 +33,8 @@ namespace Sheldier.Data
         
         public void Clear() => _storageDictionary.Clear();
 
+        public virtual string GetSaveName() => GetType().ToString();
         public string Save() => JsonConvert.SerializeObject(_storageDictionary);
-        
-        public virtual string GetSaveName() => String.Empty;
 
         public void Load(string JSONedText) => _storageDictionary = JsonConvert.DeserializeObject<Dictionary<string, T>>(JSONedText);
     }

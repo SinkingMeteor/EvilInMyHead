@@ -37,6 +37,15 @@ namespace Sheldier.Common
             for (int i = 0; i < itemArrays.Length; i++)
                 database.Add(itemArrays[i]);
         }
+
+        public static float Max(this Vector2 vector2)
+        {
+            return Mathf.Max(vector2.x, vector2.y);
+        }
+        public static float Min(this Vector2 vector2)
+        {
+            return Mathf.Min(vector2.x, vector2.y);
+        }
     }
 
 }

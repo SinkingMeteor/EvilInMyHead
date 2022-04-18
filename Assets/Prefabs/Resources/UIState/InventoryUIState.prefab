@@ -572,7 +572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 10075448713908996}
-  - component: {fileID: 10075448713908997}
+  - component: {fileID: 5005573525770800204}
   m_Layer: 0
   m_Name: InventoryUIState
   m_TagString: Untagged
@@ -596,7 +596,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &10075448713908997
+--- !u!114 &5005573525770800204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -605,7 +605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 10075448713908998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94f0b23c97874bfd85225e5a40816413, type: 3}
+  m_Script: {fileID: 11500000, guid: 731177894c1b95a459346096df42b725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -626,8 +626,8 @@ MonoBehaviour:
     - {fileID: 3665230419125430624}
     - {fileID: 1985209259849459894}
     - {fileID: 5068598925404183195}
-    - {fileID: 2651084376514878145}
     - {fileID: 1174495038832356583}
+    - {fileID: 5859206116214232055}
     - {fileID: 5892222848040475454}
     - {fileID: 10075449080999992}
     - {fileID: 10075447839071162}
@@ -710,13 +710,10 @@ MonoBehaviour:
       Data: 2|Sheldier.UI.IUIInitializable[], Sheldier
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 10
       Data: 14
-    - Name: 
-      Entry: 10
-      Data: 15
     - Name: 
       Entry: 13
       Data: 
@@ -731,7 +728,7 @@ MonoBehaviour:
       Data: 6
     - Name: 
       Entry: 10
-      Data: 14
+      Data: 15
     - Name: 
       Entry: 10
       Data: 16
@@ -761,7 +758,7 @@ MonoBehaviour:
       Data: 5
     - Name: 
       Entry: 10
-      Data: 14
+      Data: 15
     - Name: 
       Entry: 10
       Data: 17
@@ -773,7 +770,7 @@ MonoBehaviour:
       Data: 19
     - Name: 
       Entry: 10
-      Data: 15
+      Data: 14
     - Name: 
       Entry: 13
       Data: 
@@ -783,8 +780,27 @@ MonoBehaviour:
     - Name: canvas
       Entry: 10
       Data: 21
+    - Name: cursorRequirers
+      Entry: 7
+      Data: 5|Sheldier.UI.ICursorRequirer[], Sheldier
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 10
+      Data: 20
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   isRequirePause: 1
   actionMapType: 2
+  view: {fileID: 5859206116214232055}
 --- !u!1 &10075448730968194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,8 +1171,7 @@ GameObject:
   - component: {fileID: 10075449182062823}
   - component: {fileID: 5524035650388403472}
   - component: {fileID: 5856734560275400828}
-  - component: {fileID: 9013240724026236401}
-  - component: {fileID: 2651084376514878145}
+  - component: {fileID: 5859206116214232055}
   m_Layer: 5
   m_Name: InventoryBody
   m_TagString: Untagged
@@ -1243,7 +1258,7 @@ MonoBehaviour:
   rectTransform: {fileID: 10075449182062823}
   initialScale: {x: 0, y: 0, z: 0}
   targetScale: {x: 0.8, y: 0.8, z: 1}
---- !u!114 &9013240724026236401
+--- !u!114 &5859206116214232055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1261,48 +1276,6 @@ MonoBehaviour:
   radialPointer: {fileID: 8661809774064285816}
   slotsParent: {fileID: 3673565810148513963}
   slotsSpawnDistance: 116.16
---- !u!114 &2651084376514878145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 10075449182062816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 731177894c1b95a459346096df42b725, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 5892222848040475454}
-    - {fileID: 8661809774064285816}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: cursorRequirers
-      Entry: 7
-      Data: 0|Sheldier.UI.ICursorRequirer[], Sheldier
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-  view: {fileID: 9013240724026236401}
 --- !u!1 &10075449299567218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,7 +1920,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 4646854908365205282}
     - {fileID: 631239665208668957}
-    - {fileID: 9013240724026236401}
+    - {fileID: 5859206116214232055}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []

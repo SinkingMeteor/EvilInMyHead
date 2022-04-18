@@ -5,13 +5,17 @@ using Sheldier.Common.Pause;
 using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Factories;
+using Sheldier.GameLocation;
 using UnityEngine;
 
 namespace Sheldier.Actors.Builder
 {
     public class ActorBuilder : IActorBuilder
     {
+        private readonly Database<LocationDynamicConfig> _locationDynamicConfigDatabase;
         private readonly AssetProvider<ActorAnimationCollection> _appearanceLoader;
+        private readonly CurrentSceneDynamicData _currentSceneDynamicData;
+        private readonly SceneLocationController _sceneLocationController;
         private readonly ScenePlayerController _scenePlayerController;
         private readonly DialoguesProvider _dialoguesProvider;
         private readonly ActorsEffectFactory _effectFactory;
@@ -21,7 +25,7 @@ namespace Sheldier.Actors.Builder
         private readonly PauseNotifier _pauseNotifier;
         private readonly TickHandler _tickHandler;
         private readonly ItemFactory _itemFactory;
-        
+
         private ISubBuilder[] _subBuilders;
         private Actor _actorTemplate;
 
@@ -34,8 +38,12 @@ namespace Sheldier.Actors.Builder
                             ActorDataFactory actorDataFactory,
                             ItemFactory itemFactory,
                             AssetProvider<ActorAnimationCollection> appearanceLoader,
-                            ICameraFollower cameraFollower)
+                            ICameraFollower cameraFollower,
+                            CurrentSceneDynamicData currentSceneDynamicData,
+                            Database<LocationDynamicConfig> locationDynamicConfigDatabase)
         {
+            _locationDynamicConfigDatabase = locationDynamicConfigDatabase;
+            _currentSceneDynamicData = currentSceneDynamicData;
             _cameraFollower = cameraFollower;
             _appearanceLoader = appearanceLoader;
             _itemFactory = itemFactory;
@@ -53,7 +61,7 @@ namespace Sheldier.Actors.Builder
             _actorTemplate = Resources.Load<Actor>(ResourcePaths.ACTOR_TEMPLATE);
             _subBuilders = new ISubBuilder[]
             {
-                new ActorStatesBuilder(_actorDataFactory, _itemFactory, _cameraFollower),
+                new ActorStatesBuilder(_actorDataFactory, _itemFactory, _currentSceneDynamicData, _locationDynamicConfigDatabase),
                 new ActorInteractBuilder(_scenePlayerController, _dialoguesProvider, _cameraFollower)
             };
         }
@@ -65,8 +73,11 @@ namespace Sheldier.Actors.Builder
             ActorStaticBuildData buildData = _actorDataFactory.GetBuildData(typeID);
             ActorDynamicConfigData dynamicConfigData = _actorDataFactory.GetDynamicActorConfig(typeID, guid);
             ActorAnimationCollection actorAppearance = _appearanceLoader.Get(staticConfig.ActorAppearance);
-            
+            var locationData = _locationDynamicConfigDatabase.Get(_currentSceneDynamicData.CurrentLocationID);
 
+            if(!locationData.IsItemExists(dynamicConfigData.Guid))
+                locationData.Add(new EntityPositionDynamicData(dynamicConfigData.Guid));
+            
             Actor actor = GameObject.Instantiate(_actorTemplate);
             actor.SetDependencies(dynamicConfigData.Guid, _tickHandler, _fixedTickHandler, _pauseNotifier);
             actor.ActorsView.SetActorAppearance(actorAppearance);
@@ -87,7 +98,7 @@ namespace Sheldier.Actors.Builder
             {
                 subBuilder.Build(actor, buildData);
             }
-            actor.transform.position = isNewActor ? actorPlaceholder.transform.position : dynamicConfigData.Position;
+            actor.transform.position = isNewActor ? actorPlaceholder.transform.position : locationData.Get(dynamicConfigData.Guid).Position;
             return actor;
         }
     }

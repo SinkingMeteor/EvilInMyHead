@@ -14,7 +14,7 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener
+    public class DialogueChoiceViewer : SerializedMonoBehaviour, ILocalizationListener, IDeviceListener, IUIInitializable
     {
         public event Action<IDialogueReplica> OnNextReplica;
         
@@ -40,7 +40,8 @@ namespace Sheldier.UI
             for (int i = 0; i < disappearingAnimations.Length; i++)
                 disappearingAnimations[i].Initialize();
         }
-        
+
+     
         [Inject]
         public void InjectDependencies(IDialoguesInputProvider inputProvider, 
                                        ILocalizationProvider localizationProvider,
@@ -168,6 +169,10 @@ namespace Sheldier.UI
                 yield return null;
             }
             ApplyChoice(UnityEngine.Random.Range(0, _currentChoices.Count));
+        }
+        public void Dispose()
+        {
+            
         }
 
     }

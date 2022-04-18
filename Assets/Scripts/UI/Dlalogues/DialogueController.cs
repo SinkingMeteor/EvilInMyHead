@@ -7,14 +7,13 @@ using Sheldier.Common.Localization;
 using Sheldier.Constants;
 using Sheldier.Data;
 using Sheldier.Graphs.DialogueSystem;
-using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 namespace Sheldier.UI
 {
-    public class DialogueController : SerializedMonoBehaviour, IUIInitializable
+    public class DialogueController : UIState
     {
         [SerializeField] private DialogueChoiceViewer choiceViewer;
         [SerializeField] private SpeechCloudController speechCloudController;
@@ -37,12 +36,11 @@ namespace Sheldier.UI
         
         private IDisposable _playDialogueEvent;
         private Coroutine _waitCoroutine;
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
             _playDialogueEvent = MessageBroker.Default.Receive<DialoguePlayRequest>().Subscribe(StartDialogue);
             choiceViewer.OnNextReplica += SetNext;
-            speechCloudController.Initialize();
-            choiceViewer.Initialize();
         }
 
         [Inject]
@@ -145,8 +143,9 @@ namespace Sheldier.UI
             _currentReplica = null;
             _statesController.Remove(UIType.Dialogue);
         }
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
             choiceViewer.OnNextReplica -= SetNext;
             _playDialogueEvent.Dispose();
         }

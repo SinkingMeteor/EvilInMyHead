@@ -1,5 +1,6 @@
 using Sheldier.Actors;
 using Sheldier.Actors.Interact;
+using Sheldier.Common.Utilities;
 using Sheldier.Constants;
 using UnityEngine;
 
@@ -8,6 +9,11 @@ namespace Sheldier.Item
     public class MoveObjectPoint : MonoBehaviour, IInteractReceiver
     {
         public Transform Transform => transform;
+        public Vector2 ColliderPosition => transform.position.DiscardZ() + circleCollider.offset;
+        public float ColliderSize => circleCollider.radius;
+
+        [SerializeField] private CircleCollider2D circleCollider;
+        
         public string ReceiverType => GameplayConstants.INTERACT_RECEIVER_MOVING_OBJECT;
 
         private bool _isMoving;

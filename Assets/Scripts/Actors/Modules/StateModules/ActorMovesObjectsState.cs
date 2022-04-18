@@ -1,4 +1,5 @@
-﻿using Sheldier.Actors.Interact;
+﻿using DG.Tweening;
+using Sheldier.Actors.Interact;
 using Sheldier.Common.Animation;
 using Sheldier.Constants;
 using Sheldier.Data;
@@ -15,6 +16,7 @@ namespace Sheldier.Actors
         private readonly DynamicNumericalEntityStatsCollection _numericalStats;
         
         private bool _isLocked;
+        private bool _isEntered;
         private ActorStateDataModule _stateData;
         private ActorInputController _inputController;
         private IInteractReceiver _interactReceiver;
@@ -46,15 +48,16 @@ namespace Sheldier.Actors
             _actorsView = data.Actor.ActorsView;
         }
 
-        public void Enter()
+        public async void Enter()
         {
             _stateData.Get(GameplayConstants.DOES_ANY_STATE_DATA).SetState(true);
             var transform = _actor.transform;
             transform.localScale = Vector3.one;
-            transform.position = _interactReceiver.Transform.position;
+            await transform.DOMove(_interactReceiver.Transform.position, 0.3f).AsyncWaitForCompletion();
             _interactReceiver.Transform.parent.SetParent(transform);
             var direction = (_interactReceiver.Transform.parent.transform.position - transform.position).normalized;
             SetViewDirection(direction);
+            _isEntered = true;
         }
 
         private void OnInteractedWithMoveObject(IInteractReceiver interactReceiver)
@@ -88,16 +91,21 @@ namespace Sheldier.Actors
         {
             _stateData.Get(GameplayConstants.DOES_ANY_STATE_DATA).SetState(false);
             _interactReceiver.Transform.parent.SetParent(null);
+            _isEntered = false;
         }
 
         public void Tick()
         {
+            if (!_isEntered)
+                return;
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
             SetNewAnimation(movementDirection.sqrMagnitude < 0.2f ? _idleAnimation : _moveAnimation);
         }
 
         public void FixedTick()
         {
+            if (!_isEntered)
+                return;
             var movementDirection = _inputController.CurrentInputProvider.MovementDirection;
             if (movementDirection.sqrMagnitude < 0.2f || Vector2.Dot(movementDirection.normalized, _viewDirection) < 0.5f)
             {

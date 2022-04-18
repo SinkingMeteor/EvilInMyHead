@@ -9,6 +9,7 @@ namespace Sheldier.Installers
         public override void InstallBindings()
         {
             Container.Bind<UIStatesController>().AsSingle();
+            Container.Bind<PersistUI>().AsSingle();
             Container.Bind<UIInstaller>().FromInstance(this).AsSingle();
         }
 

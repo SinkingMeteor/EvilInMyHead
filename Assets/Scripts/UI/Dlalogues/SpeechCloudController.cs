@@ -8,13 +8,12 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class SpeechCloudController : MonoBehaviour
+    public class SpeechCloudController : MonoBehaviour, IUIInitializable
     {
         [SerializeField] private RectTransform canvasRectTransform;
         
         private IPool<SpeechCloud> _speechCloudPool;
         private ILocalizationProvider _localizationProvider;
-        private IDialogueReplica _currentReplica;
         private Queue<SpeechCloud> _speechClouds;
         private SpeechCloud _currentSpeechCloud;
 
@@ -22,6 +21,7 @@ namespace Sheldier.UI
         {
             _speechClouds = new Queue<SpeechCloud>();
         }
+
         [Inject]
         private void InjectDependencies(IPool<SpeechCloud> speechCloudPool, ILocalizationProvider localizationProvider)
         {
@@ -32,7 +32,6 @@ namespace Sheldier.UI
         public void RevealCloud(IDialogueReplica currentReplica, Actor actor)
         {
             Transform speechPoint = actor.ActorsView.SpeechPoint;
-            _currentReplica = currentReplica;
             SpeechCloud currentSpeechCloud = InstantiateCloud(speechPoint);
             currentSpeechCloud.SetText(_localizationProvider.LocalizedText[currentReplica.Replica], actor);
             _speechClouds.Enqueue(currentSpeechCloud);
@@ -53,6 +52,9 @@ namespace Sheldier.UI
             return cloud;
         }
 
-
+        public void Dispose()
+        {
+            
+        }
     }
 }

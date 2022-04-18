@@ -25,9 +25,8 @@ namespace Sheldier.UI
         
         private bool _isActivated;
         private TickHandler _tickHandler;
-        private IInventoryInputProvider _inputProvider;
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             for (int i = 0; i < appearingAnimations.Length; i++)
                 appearingAnimations[i].Initialize();
@@ -48,6 +47,11 @@ namespace Sheldier.UI
                 tickListeners[i].Tick();    
         }
 
+        public void TurnOff()
+        {
+            canvas.TurnOff();
+        }
+        
         public async void Show()
         {
             Activate();
@@ -115,7 +119,7 @@ namespace Sheldier.UI
         {
             canvas.SetSortingOrder(order);
         }
-        public void Dispose()
+        public virtual void Dispose()
         {
             for (int i = 0; i < initializableUIElements.Length; i++)
                 initializableUIElements[i].Dispose();          

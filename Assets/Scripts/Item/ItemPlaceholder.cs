@@ -3,6 +3,7 @@ using Sheldier.Actors;
 using Sheldier.Actors.Interact;
 using Sheldier.Actors.Inventory;
 using Sheldier.Common;
+using Sheldier.Common.Utilities;
 using Sheldier.Constants;
 using Sheldier.Factories;
 using Sirenix.OdinInspector;
@@ -11,15 +12,19 @@ using UnityEngine;
 
 namespace Sheldier.Item
 {
-    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(CircleCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     public class ItemPlaceholder : SerializedMonoBehaviour, IInteractReceiver
     {
         public Transform Transform => transform;
+        public Vector2 ColliderPosition => transform.position.DiscardZ() + circleCollider.offset;
+        public float ColliderSize => circleCollider.radius;
+
         public string ReceiverType => GameplayConstants.INTERACT_RECEIVER_ITEM;
         public string ID => uniqueID.ID;
         public DataReference Reference => itemReference;
 
+        [SerializeField] private CircleCollider2D circleCollider;
         [OdinSerialize] private IUniqueID uniqueID;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private DataReference itemReference;

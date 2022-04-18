@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sheldier.Common;
+using Sheldier.Common.Utilities;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace Sheldier.Actors.Interact
             IInteractReceiver nextReceiver = default;
             for (int i = 0; i < _receivers.Count; i++)
             {
-                LengthCheckResult checkResult = IsInsideField(_receivers[i].Transform);
+                LengthCheckResult checkResult = IsInsideField(_receivers[i]);
                 
                 if (!checkResult.IsInside)
                 {
@@ -74,13 +75,13 @@ namespace Sheldier.Actors.Interact
             _currentReceiver.OnInteracted(_actor);
             _actor.Notifier.NotifyInteracting(_currentReceiver);
         }
-        private LengthCheckResult IsInsideField(Transform receiver)
+        private LengthCheckResult IsInsideField(IInteractReceiver interactReceiver)
         {
-            var length = (receiver.position - _actor.transform.position).magnitude;
+            var length = (interactReceiver.ColliderPosition - _actor.transform.position.DiscardZ()).magnitude;
             return new LengthCheckResult()
             {
                 Distance = length,
-                IsInside = length - 0.35f < _circleCollider2D.radius
+                IsInside = length < _circleCollider2D.radius + interactReceiver.ColliderSize
             };
         }
 
@@ -102,8 +103,8 @@ namespace Sheldier.Actors.Interact
         {
             if (!ReferenceEquals(_currentReceiver, null))
             {
-                LengthCheckResult currentResult = IsInsideField(_currentReceiver.Transform);
-                LengthCheckResult newResult = IsInsideField(interactReceiver.Transform);
+                LengthCheckResult currentResult = IsInsideField(_currentReceiver);
+                LengthCheckResult newResult = IsInsideField(interactReceiver);
                 if (currentResult.Distance > newResult.Distance)
                 {
                     _currentReceiver.OnExit();

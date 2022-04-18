@@ -13,7 +13,7 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener, IFontRequier
+    public class InventoryView : MonoBehaviour, IUISimpleItemSwitcher, ILocalizationListener, IFontRequier, IUIActivatable, ITickListener
     {
         public FontType FontTypeRequirer => FontType.DefaultPixelFont7;
         public event Action<string> OnCurrentItemChanged;
@@ -57,7 +57,7 @@ namespace Sheldier.UI
             descriptionTMP.font = font;
             _fontProvider.AddListener(this);
         }
-        public void Activate()
+        public void OnActivated()
         {
             var inventoryItems = GetItemsList();
             _localizationProvider.AddListener(this);
@@ -120,7 +120,7 @@ namespace Sheldier.UI
 
             Tick();
         }
-        public void Deactivate()
+        public void OnDeactivated()
         {
             _localizationProvider.RemoveListener(this);
             for (int i = 0; i < _slotsCollection.Count; i++)

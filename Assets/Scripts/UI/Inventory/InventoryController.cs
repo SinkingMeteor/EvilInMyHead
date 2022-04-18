@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Sheldier.UI
 {
-    public class InventoryController : SerializedMonoBehaviour, IUIActivatable, ITickListener, IUIInitializable
+    public class InventoryController : UIState
     {
         [SerializeField] private InventoryView view;
         [OdinSerialize] [ReadOnly] private ICursorRequirer[] cursorRequirers;
@@ -14,8 +14,10 @@ namespace Sheldier.UI
         private IInventoryInputProvider _inputProvider;
         private UIStatesController _statesController;
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+            
             view.Initialize();
             
             _inputProvider.UIOpenInventoryButton.OnPressed += OpenInventoryWindow;
@@ -32,22 +34,7 @@ namespace Sheldier.UI
             _statesController = statesController;
         }
 
-        public void OnActivated()
-        {
-            view.Activate();
-        }
-
-        public void OnDeactivated()
-        {
-            view.Deactivate();
-        }
-
-        public void Tick()
-        {
-            view.Tick();
-        }
-
-        public void Dispose()
+        public override void Dispose()
         {
             view.Dispose();
             

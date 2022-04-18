@@ -27,7 +27,7 @@ namespace Sheldier.Data
                     {
                         TypeName = items[0],
                         ActorAppearance = items[1],
-                        ActorAvatar = items[2]
+                        ActorAvatar = items[2],
                     };
                     config.Add(model);
                 }

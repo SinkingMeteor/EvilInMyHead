@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9017657195461037734}
   - component: {fileID: 8712000665347240788}
-  - component: {fileID: 9004266171535507068}
+  - component: {fileID: 5588240778654055342}
   m_Layer: 0
   m_Name: CurrentPlayer_PH
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 9004266171535507068}
+    - {fileID: 5588240778654055342}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -59,7 +59,7 @@ MonoBehaviour:
       Entry: 10
       Data: 0
   reference: {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
---- !u!114 &9004266171535507068
+--- !u!114 &5588240778654055342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21599,3 +21599,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locationReference: {fileID: 11400000, guid: 1ef8f2891e789d641b68407996b96d44, type: 2}
+  boxCollider: {fileID: 6063860821163747072}

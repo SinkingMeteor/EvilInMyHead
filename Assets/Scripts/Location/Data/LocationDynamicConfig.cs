@@ -4,7 +4,7 @@ using Sheldier.Data;
 namespace Sheldier.GameLocation
 {
     [Serializable]
-    public class LocationDynamicConfig : IDatabaseItem
+    public class LocationDynamicConfig : Database<EntityPositionDynamicData>, IDatabaseItem 
     {
         public string ID => TypeName;
         public string TypeName;

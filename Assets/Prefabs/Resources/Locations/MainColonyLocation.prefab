@@ -904,7 +904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 900251763378160683}
   - component: {fileID: 900251763378160681}
-  - component: {fileID: 641192629382633567}
+  - component: {fileID: 347284925148277420}
   m_Layer: 0
   m_Name: CurrentActor_PH
   m_TagString: Untagged
@@ -943,7 +943,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 641192629382633567}
+    - {fileID: 347284925148277420}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -953,7 +953,7 @@ MonoBehaviour:
       Entry: 10
       Data: 0
   reference: {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
---- !u!114 &641192629382633567
+--- !u!114 &347284925148277420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1715,9 +1715,9 @@ GameObject:
   m_Component:
   - component: {fileID: 900251763515350164}
   - component: {fileID: 900251763515350163}
-  - component: {fileID: 900251763515350162}
   - component: {fileID: 900251763515350165}
   - component: {fileID: 900251763515350160}
+  - component: {fileID: 6959133941618342286}
   m_Layer: 0
   m_Name: Ammo_PH (1)
   m_TagString: Untagged
@@ -1792,32 +1792,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &900251763515350162
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900251763515350167}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.359375, y: 0.28125}
-    newSize: {x: 0.359375, y: 0.28125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.23778528, y: 0.15088797}
-  m_EdgeRadius: 0
 --- !u!114 &900251763515350165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1865,10 +1839,27 @@ MonoBehaviour:
     - Name: uniqueID
       Entry: 10
       Data: 0
+  circleCollider: {fileID: 6959133941618342286}
   spriteRenderer: {fileID: 900251763515350163}
   itemReference: {fileID: 11400000, guid: dcc6695bdf9e0bc40ac32970470a8dde, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
   amount: 4
+--- !u!58 &6959133941618342286
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900251763515350167}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1796875
 --- !u!1 &900251763528667252
 GameObject:
   m_ObjectHideFlags: 0
@@ -9541,9 +9532,9 @@ GameObject:
   m_Component:
   - component: {fileID: 900251764473314536}
   - component: {fileID: 900251764473314532}
-  - component: {fileID: 900251764473314535}
   - component: {fileID: 900251764473314534}
   - component: {fileID: 900251764473314533}
+  - component: {fileID: 1248690762748365744}
   m_Layer: 0
   m_Name: Gun_PH (1)
   m_TagString: Untagged
@@ -9618,32 +9609,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &900251764473314535
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900251764473314539}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.29, y: 0.36}
-    oldSize: {x: 0.421875, y: 0.34375}
-    newSize: {x: 0.421875, y: 0.34375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.23778528, y: 0.15088797}
-  m_EdgeRadius: 0
 --- !u!114 &900251764473314534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9691,10 +9656,27 @@ MonoBehaviour:
     - Name: uniqueID
       Entry: 10
       Data: 0
+  circleCollider: {fileID: 1248690762748365744}
   spriteRenderer: {fileID: 900251764473314532}
   itemReference: {fileID: 11400000, guid: b8f87892dbcd86b41a13b6e85dd9b3f4, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
   amount: 0
+--- !u!58 &1248690762748365744
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900251764473314539}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.08859375, y: 0.048125}
+  serializedVersion: 2
+  m_Radius: 0.2109375
 --- !u!1 &900251764475957548
 GameObject:
   m_ObjectHideFlags: 0
@@ -11078,9 +11060,9 @@ GameObject:
   m_Component:
   - component: {fileID: 900251764672193045}
   - component: {fileID: 900251764672193041}
-  - component: {fileID: 900251764672193040}
   - component: {fileID: 900251764672193043}
   - component: {fileID: 900251764672193042}
+  - component: {fileID: 3107347959352002960}
   m_Layer: 0
   m_Name: Ammo_PH
   m_TagString: Untagged
@@ -11155,32 +11137,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &900251764672193040
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900251764672193044}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.359375, y: 0.28125}
-    newSize: {x: 0.359375, y: 0.28125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.23778528, y: 0.15088797}
-  m_EdgeRadius: 0
 --- !u!114 &900251764672193043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11228,10 +11184,27 @@ MonoBehaviour:
     - Name: uniqueID
       Entry: 10
       Data: 0
+  circleCollider: {fileID: 3107347959352002960}
   spriteRenderer: {fileID: 900251764672193041}
   itemReference: {fileID: 11400000, guid: dcc6695bdf9e0bc40ac32970470a8dde, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
   amount: 10
+--- !u!58 &3107347959352002960
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900251764672193044}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1796875
 --- !u!1 &900251764673273184
 GameObject:
   m_ObjectHideFlags: 0
@@ -11491,9 +11464,9 @@ GameObject:
   m_Component:
   - component: {fileID: 900251764696600822}
   - component: {fileID: 900251764696600818}
-  - component: {fileID: 900251764696600825}
   - component: {fileID: 900251764696600820}
   - component: {fileID: 900251764696600821}
+  - component: {fileID: 4228610441364928516}
   m_Layer: 0
   m_Name: Gun_PH
   m_TagString: Untagged
@@ -11568,32 +11541,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &900251764696600825
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900251764696600827}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.29, y: 0.36}
-    oldSize: {x: 0.421875, y: 0.34375}
-    newSize: {x: 0.421875, y: 0.34375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.23778528, y: 0.15088797}
-  m_EdgeRadius: 0
 --- !u!114 &900251764696600820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11641,10 +11588,27 @@ MonoBehaviour:
     - Name: uniqueID
       Entry: 10
       Data: 0
+  circleCollider: {fileID: 4228610441364928516}
   spriteRenderer: {fileID: 900251764696600818}
   itemReference: {fileID: 11400000, guid: b8f87892dbcd86b41a13b6e85dd9b3f4, type: 2}
   onInteractMaterial: {fileID: 2100000, guid: 5ee655077cb9af344ae70d86bfee3230, type: 2}
   amount: 1
+--- !u!58 &4228610441364928516
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900251764696600827}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.08859375, y: 0.048125}
+  serializedVersion: 2
+  m_Radius: 0.2109375
 --- !u!1 &900251764701053067
 GameObject:
   m_ObjectHideFlags: 0
@@ -18907,6 +18871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleCollider: {fileID: 4246734426850089780}
 --- !u!58 &4246734426850089780
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18968,6 +18933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleCollider: {fileID: 4246734426850089780}
 --- !u!58 &2009427840813012708
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19029,6 +18995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleCollider: {fileID: 4246734426850089780}
 --- !u!58 &4914952928144130766
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19175,6 +19142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0004e3a43040c4f849a2d6992cd286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleCollider: {fileID: 4246734426850089780}
 --- !u!58 &193903400482502631
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19406,6 +19374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locationReference: {fileID: 11400000, guid: 0c63b303fdba3d744a99696d2eb50342, type: 2}
+  boxCollider: {fileID: 7384856609440773043}
 --- !u!1 &5224684683615838579
 GameObject:
   m_ObjectHideFlags: 0
