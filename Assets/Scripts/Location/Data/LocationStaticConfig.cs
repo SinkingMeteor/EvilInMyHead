@@ -9,5 +9,6 @@ namespace Sheldier.GameLocation
         public string ID => TypeName;
         public string TypeName;
         public string VolumeProfile;
+        public string OnLoadCutscene;
     }
 }

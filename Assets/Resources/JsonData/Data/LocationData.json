@@ -1,1 +1,1 @@
-{"Items":[{"TypeName":"MainColonyLocation","VolumeProfile":"DefaultNightPostProcessing","ID":"MainColonyLocation"},{"TypeName":"ColonyBedroomLocation","VolumeProfile":"BlueGammaPostProcessing","ID":"ColonyBedroomLocation"}]}
+{"Items":[{"TypeName":"MainColonyLocation","VolumeProfile":"DefaultNightPostProcessing","OnLoadCutscene":"TestCutScene","ID":"MainColonyLocation"},{"TypeName":"ColonyBedroomLocation","VolumeProfile":"BlueGammaPostProcessing","OnLoadCutscene":null,"ID":"ColonyBedroomLocation"}]}

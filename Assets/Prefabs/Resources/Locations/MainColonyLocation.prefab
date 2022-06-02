@@ -974,7 +974,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  persistantUniqueID: {fileID: 11400000, guid: 2181550e64038f54f825e6c82fa80fb1, type: 2}
+  persistantUniqueID: {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
 --- !u!1 &900251763423948662
 GameObject:
   m_ObjectHideFlags: 0
@@ -11453,7 +11453,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  persistantUniqueID: {fileID: 11400000, guid: c2c18636419f9ef48bd3b869759dc51f, type: 2}
+  persistantUniqueID: {fileID: 11400000, guid: 5b987489c2a535a4d85b2e26453b75ea, type: 2}
 --- !u!1 &900251764696600827
 GameObject:
   m_ObjectHideFlags: 0
@@ -19331,7 +19331,8 @@ Transform:
   m_LocalPosition: {x: -0.09, y: -1.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1888513651602302799}
   m_Father: {fileID: 900251765129004645}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19375,6 +19376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationReference: {fileID: 11400000, guid: 0c63b303fdba3d744a99696d2eb50342, type: 2}
   boxCollider: {fileID: 7384856609440773043}
+  interactHintTransform: {fileID: 1888513651602302799}
 --- !u!1 &5224684683615838579
 GameObject:
   m_ObjectHideFlags: 0
@@ -19569,6 +19571,37 @@ Transform:
   - {fileID: 8587728145185040021}
   m_Father: {fileID: 9073815041872246128}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8350851251800207475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1888513651602302799}
+  m_Layer: 7
+  m_Name: HInt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1888513651602302799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8350851251800207475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.384, y: 0.356, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2129211658501405736}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8504542026232595445
 GameObject:

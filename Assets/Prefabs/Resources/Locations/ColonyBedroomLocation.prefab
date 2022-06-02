@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3513743512503885860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5790812948937714541}
+  m_Layer: 0
+  m_Name: Hint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5790812948937714541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513743512503885860}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.43, y: 0.22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8198215849888300193}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4146428697753767421
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +111,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  persistantUniqueID: {fileID: 11400000, guid: 2181550e64038f54f825e6c82fa80fb1, type: 2}
+  persistantUniqueID: {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
 --- !u!1 &4522233654658952139
 GameObject:
   m_ObjectHideFlags: 0
@@ -21556,7 +21587,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -3.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5790812948937714541}
   m_Father: {fileID: 5985473700466228049}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21600,3 +21632,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationReference: {fileID: 11400000, guid: 1ef8f2891e789d641b68407996b96d44, type: 2}
   boxCollider: {fileID: 6063860821163747072}
+  interactHintTransform: {fileID: 5790812948937714541}

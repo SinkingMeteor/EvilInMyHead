@@ -14,26 +14,12 @@ namespace Sheldier.Common.Cutscene
     {
         [OdinSerialize] private ICutsceneElement[] cutsceneElements;
         
-        private CutsceneInternalData _internalData;
-        
-        public void SetDependencies(SceneActorsDatabase sceneActorsDatabase, PauseNotifier pauseNotifier, PathProvider pathProvider,
-            DialoguesProvider dialoguesProvider, Database<ActorDynamicConfigData> dynamicConfigDatabase, Actor controlledActor)
+        public void Play(Action<Cutscene> onCutsceneComplete)
         {
-            ActorsAIMoveModule moveModule = new ActorsAIMoveModule();
-            moveModule.SetDependencies(pathProvider, pauseNotifier);
-            _internalData = new CutsceneInternalData(sceneActorsDatabase, moveModule, controlledActor, dialoguesProvider, dynamicConfigDatabase);
-        }
-
-        public void Play(Action onCutsceneComplete)
-        {
-
-            foreach (var cutsceneElement in cutsceneElements)
-                cutsceneElement.SetDependencies(_internalData);
-            
             CutsceneCoroutine(onCutsceneComplete);
         }
 
-        private async void CutsceneCoroutine(Action onCutSceneComplete)
+        private async void CutsceneCoroutine(Action<Cutscene> onCutSceneComplete)
         {
             foreach (var element in cutsceneElements)
             {
@@ -45,7 +31,7 @@ namespace Sheldier.Common.Cutscene
 #pragma warning restore CS4014
             }
 
-            onCutSceneComplete?.Invoke();
+            onCutSceneComplete?.Invoke(this);
         }
 
 #if UNITY_EDITOR

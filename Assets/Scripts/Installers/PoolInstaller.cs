@@ -13,17 +13,17 @@ namespace Sheldier.Installers
         [SerializeField] private SpeechCloudPool speechCloudPool;
         [SerializeField] private ChoiceSlotPool choiceSlotPool;
         [SerializeField] private UIHintPool uiHintPool;
+        [SerializeField] private InteractHintPool interactHintPool;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<ProjectilePool>().FromInstance(projectilePool).AsSingle();
             Container.BindInterfacesAndSelfTo<WeaponBlowPool>().FromInstance(weaponBlowPool).AsSingle();
             Container.BindInterfacesAndSelfTo<SpeechCloudPool>().FromInstance(speechCloudPool).AsSingle();
-            Container.Bind<InventorySlotPool>().FromInstance(inventorySlotPool).AsSingle();
-            Container.Bind<IPool<InventorySlot>>().FromInstance(inventorySlotPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<InventorySlotPool>().FromInstance(inventorySlotPool).AsSingle();
             Container.BindInterfacesAndSelfTo<ChoiceSlotPool>().FromInstance(choiceSlotPool).AsSingle();
-            Container.Bind<UIHintPool>().FromInstance(uiHintPool).AsSingle();
-            Container.Bind<IPool<UIHint>>().FromInstance(uiHintPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIHintPool>().FromInstance(uiHintPool).AsSingle();
+            Container.BindInterfacesAndSelfTo<InteractHintPool>().FromInstance(interactHintPool).AsSingle();
         }
     }
 }

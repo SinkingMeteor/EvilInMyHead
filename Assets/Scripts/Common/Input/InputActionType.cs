@@ -18,6 +18,6 @@ namespace Sheldier.Common
         Jump,
         DropItem,
         EquipItem,
-        PassReplica
+        PassReplica,
     }
 }

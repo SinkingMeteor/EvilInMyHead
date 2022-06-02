@@ -16,6 +16,8 @@ namespace Sheldier.GameLocation
 {
     public class SceneLocationController
     {
+        public event Action<string> OnNewLocationLoaded;
+        
         public bool IsLocationExists => _currentLocation != null;
 
         private readonly Database<LocationDynamicConfig> _locationDynamicConfigDatabase;
@@ -80,6 +82,8 @@ namespace Sheldier.GameLocation
             _actorSpawner.Initialize(_currentLocation.Placeholders);
             _currentLocation.Initialize();
             _pathfinder.InitializeOnNewLocation(_currentLocation.PathGrid);
+            
+            OnNewLocationLoaded?.Invoke(locationReference);
         }
 
         private void CreateNewLocationDynamicData(string locationReference)
@@ -98,4 +102,5 @@ namespace Sheldier.GameLocation
             await AsyncWaitersFactory.WaitUntil(() => asyncHandle.isDone);
         }
     }
+    
 }

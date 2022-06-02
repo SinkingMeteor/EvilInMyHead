@@ -10,6 +10,7 @@ namespace Sheldier.Constants
         public const string DATA_PROVIDER = "JsonData/DataPathProvider";
         public const string SPRITES_PROVIDER = "Sprites/SpritesPathProvider";
         public const string POST_PROCESSING_PROVIDER = "PostProcessing/PostProcessingPathProvider";
+        public const string CUTSCENE_PROVIDER = "Cutscenes/CutscenePathProvider";
         
         public const string ACTOR_BUILD_DATA = "ActorBuildData";
         public const string ACTOR_CONFIG = "ActorConfig";

@@ -3,6 +3,7 @@ using Sheldier.Actors.Data;
 using Sheldier.Common;
 using Sheldier.Common.Animation;
 using Sheldier.Common.Audio;
+using Sheldier.Common.Cutscene;
 using Sheldier.Data;
 using Sheldier.GameLocation;
 using Sheldier.Graphs.DialogueSystem;
@@ -34,6 +35,7 @@ namespace Sheldier.Installers
             Container.Bind<AssetProvider<TextAsset>>().To<DataLoader>().AsSingle();
             Container.Bind<AssetProvider<DialogueSystemGraph>>().To<DialoguesLoader>().AsSingle();
             Container.Bind<AssetProvider<VolumeProfile>>().To<PostProcessingLoader>().AsSingle();
+            Container.Bind<AssetProvider<Cutscene>>().To<CutsceneLoader>().AsSingle();
             
             Container.Bind<Database<ActorStaticConfigData>>().To<ActorStaticConfigDatabase>().AsSingle();
             Container.Bind<Database<ActorStaticBuildData>>().To<ActorStaticBuildDatabase>().AsSingle();

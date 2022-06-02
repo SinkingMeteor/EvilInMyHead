@@ -26,6 +26,7 @@ namespace Sheldier.Data
                     {
                         TypeName = items[0],
                         VolumeProfile = items[1],
+                        OnLoadCutscene = items[2] == "None" ? null : items[2]
                     };
                     config.Add(model);
                 }

@@ -349,7 +349,7 @@ MonoBehaviour:
   actorsInDialogue:
   - {fileID: 11400000, guid: 0898e09eb6212b44083bf20cb51a2219, type: 2}
   - {fileID: 11400000, guid: 5b987489c2a535a4d85b2e26453b75ea, type: 2}
-  dialogue: {fileID: 11400000, guid: b3ef6ea87bc20eb428c4ca14d0dcf9e4, type: 2}
+  dialogue: {fileID: 11400000, guid: 1aad36aa5b421804f8c30b1ad2e62b9d, type: 2}
 --- !u!1 &7853075101337971551
 GameObject:
   m_ObjectHideFlags: 0

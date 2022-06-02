@@ -11,6 +11,7 @@ namespace Sheldier.Installers
             Container.Bind<UIStatesController>().AsSingle();
             Container.Bind<PersistUI>().AsSingle();
             Container.Bind<UIInstaller>().FromInstance(this).AsSingle();
+            Container.Bind<InteractHintController>().AsSingle();
         }
 
         public void InjectUIState(GameObject obj)

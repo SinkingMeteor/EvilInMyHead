@@ -401,6 +401,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1293854348372480656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3007462322887615534}
+  - component: {fileID: 5998795133756958679}
+  m_Layer: 0
+  m_Name: InteractHintPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3007462322887615534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293854348372480656}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1394628898399293891}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5998795133756958679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293854348372480656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1752cebcb543415bb3424eb6819b07a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolTransform: {fileID: 3007462322887615534}
+  startEntitiesAmount: 2
+  _entity: {fileID: 1110824424253850383, guid: c854d086af623d54f93b294d6cc4d2bf, type: 3}
 --- !u!1 &1356011144046736996
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +634,7 @@ Transform:
   - {fileID: 7965448270670163983}
   - {fileID: 4327083215870991154}
   - {fileID: 2274240205054566278}
+  - {fileID: 3007462322887615534}
   m_Father: {fileID: 2407684473881099581}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -608,6 +656,7 @@ MonoBehaviour:
   speechCloudPool: {fileID: 8112014841091630080}
   choiceSlotPool: {fileID: 3107942800174105065}
   uiHintPool: {fileID: 758959613565578788}
+  interactHintPool: {fileID: 5998795133756958679}
 --- !u!1 &2959590074228738114
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,10 +806,6 @@ MonoBehaviour:
     m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 79838ade-6848-4ea8-87c1-eb3cee8d4382
-    m_ActionName: Gameplay/Cursor[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 3ba954a3-a685-4f5a-bdec-14fef34d5d7d
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
@@ -805,12 +850,52 @@ MonoBehaviour:
     m_ActionName: Gameplay/OpenInventory[/Mouse/middleButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 50283c97-51ed-44e3-8508-931e12cea048
-    m_ActionName: Gameplay/UseItem[/Keyboard/e]
+    m_ActionId: b92ccb59-e084-445e-bd26-4fdfeb8a9879
+    m_ActionName: Gameplay/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: d599ca6c-e7f6-4d37-96c2-47bddf2c5442
-    m_ActionName: Gameplay/RemoveItem[/Keyboard/q]
+    m_ActionId: 65d643f0-5f64-488c-ae19-ba533de1668a
+    m_ActionName: Gameplay/DropItem[/Keyboard/g]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7e63f7b3-47b0-4180-a51e-03c3162d7c6d
+    m_ActionName: Inventory/CloseInventory[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2492b4eb-efba-449a-9341-9a34b85d9da8
+    m_ActionName: Inventory/UseItem[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6631f6a7-804a-42dd-8e7c-9cbfcfc38544
+    m_ActionName: Inventory/RemoveItem[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 69a451cc-8283-4c78-9e26-205d2e22e460
+    m_ActionName: Inventory/EquipItem[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5ff0546a-4957-43ae-bf2e-6448df6a92be
+    m_ActionName: Dialogues/LeftChoice[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8080f4a0-ddf0-43a5-b75a-e1ce43bb4f9e
+    m_ActionName: Dialogues/UpperChoice[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb8b43e5-3ae6-45c4-8e68-57364ffd3291
+    m_ActionName: Dialogues/RightChoice[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c5d3c2e-b034-46e4-82bf-87ed4d04c338
+    m_ActionName: Dialogues/LowerChoice[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3601c576-b6a1-4919-bc75-fdd9e0f4a40c
+    m_ActionName: Dialogues/PassReplica[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9c5094d-47eb-4bbb-b4f4-5e28ffe70df0
+    m_ActionName: Cursor/Cursor[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: GamePad
   m_DefaultActionMap: Gameplay

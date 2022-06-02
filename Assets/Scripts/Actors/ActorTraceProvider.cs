@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Sheldier.Common;
-using Sheldier.Common.Utilities;
+﻿using Sheldier.Common.Utilities;
 using Sheldier.Constants;
 using UnityEngine;
 
@@ -12,7 +10,6 @@ namespace Sheldier.Actors
         
         private Vector3 _lastSafePoint;
         private Transform _actorTransform;
-        private Coroutine _traceCoroutine;
         private float _accumulatedTime;
 
         private const float DELAY = 1.0f;

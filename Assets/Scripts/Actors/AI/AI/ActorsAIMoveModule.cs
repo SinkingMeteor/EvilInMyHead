@@ -27,7 +27,7 @@ namespace Sheldier.Actors.AI
             _actorTransform = data.Actor.transform;
             _pauseNotifier.Add(this);
         }
-        public void SetDependencies(PathProvider provider, PauseNotifier pauseNotifier)
+        public ActorsAIMoveModule(PathProvider provider, PauseNotifier pauseNotifier)
         {
             _pauseNotifier = pauseNotifier;
             _pathProvider = provider;

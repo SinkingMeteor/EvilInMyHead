@@ -1,54 +1,75 @@
 ﻿using Sheldier.Actors;
 using Sheldier.Actors.Data;
-using Sheldier.Actors.Pathfinding;
-using Sheldier.Common.Pause;
 using Sheldier.Data;
+using Sheldier.GameLocation;
+using Sheldier.Installers;
 using UnityEngine;
 
 namespace Sheldier.Common.Cutscene
 {
     public class CutsceneController
     {
-        private readonly Database<ActorDynamicConfigData> _dynamicConfigDatabase;
+        private readonly Database<LocationDynamicConfig> _dynamicLocationDataDatabase;
+        private readonly SceneLocationController _sceneLocationController;
         private readonly SceneActorsDatabase _sceneActorsDatabase;
+        private readonly AssetProvider<Cutscene> _cutsceneLoader;
+        private readonly GameplayInstaller _gameplayInstaller;
 
-        private PauseNotifier _pauseNotifier;
-        private PathProvider _pathProvider;
         private ScenePlayerController _scenePlayerController;
-        private Cutscene _currentCutscene;
-        private DialoguesProvider _dialoguesProvider;
 
         public CutsceneController(SceneActorsDatabase sceneActorsDatabase,
-                                  PauseNotifier pauseNotifier,
-                                  PathProvider pathProvider,
                                   ScenePlayerController scenePlayerController,
-                                  DialoguesProvider dialoguesProvider,
-                                  Database<ActorDynamicConfigData> dynamicConfigDatabase)
+                                  SceneLocationController sceneLocationController,
+                                  Database<LocationDynamicConfig> dynamicLocationDataDatabase,
+                                  AssetProvider<Cutscene> cutsceneLoader,
+                                  GameplayInstaller gameplayInstaller)
         {
-            _dynamicConfigDatabase = dynamicConfigDatabase;
-            _dialoguesProvider = dialoguesProvider;
+            _gameplayInstaller = gameplayInstaller;
+            _cutsceneLoader = cutsceneLoader;
+            _dynamicLocationDataDatabase = dynamicLocationDataDatabase;
+            _sceneLocationController = sceneLocationController;
             _sceneActorsDatabase = sceneActorsDatabase;
-            _pauseNotifier = pauseNotifier;
-            _pathProvider = pathProvider;
             _scenePlayerController = scenePlayerController;
         }
-        
-        public void StartCutscene(string cutScenePath)
+
+        public void Initialize()
         {
-            Cutscene cutscene = Resources.Load<Cutscene>(cutScenePath);
-            if (ReferenceEquals(cutscene, null))
+            _sceneLocationController.OnNewLocationLoaded += OnLocationLoaded;
+        }
+
+        private void StartCutscene(string cutsceneName)
+        {
+            Cutscene cutscene = _cutsceneLoader.Get(cutsceneName);
+            Cutscene cutsceneInstance = Object.Instantiate(cutscene); 
+            if (ReferenceEquals(cutsceneInstance, null))
                 return;
             Actor controlledActor = GetCurrentPlayer();
             controlledActor.LockInput();
-            _currentCutscene = GameObject.Instantiate(cutscene);
-            _currentCutscene.SetDependencies(_sceneActorsDatabase, _pauseNotifier, _pathProvider, _dialoguesProvider, _dynamicConfigDatabase, controlledActor);
-            _currentCutscene.Play(OnCutsceneComplete);
+            _gameplayInstaller.InjectGameObject(cutsceneInstance.gameObject);
+            cutsceneInstance.Play(OnCutsceneComplete);
         }
 
-        private void OnCutsceneComplete()
+        public void Dispose()
+        {
+            _sceneLocationController.OnNewLocationLoaded -= OnLocationLoaded;
+        }
+
+        private void OnLocationLoaded(string locationName)
+        {
+            return;
+            if (!_dynamicLocationDataDatabase.IsItemExists(locationName))
+                return;
+            var locationData = _dynamicLocationDataDatabase.Get(locationName);
+            if(locationData.OnLoadCutscene == null)
+                return;
+            var startCutsceneName = locationData.OnLoadCutscene;
+            locationData.OnLoadCutscene = null;
+            StartCutscene(startCutsceneName);
+        }
+        private void OnCutsceneComplete(Cutscene cutscene)
         {
             GetCurrentPlayer().UnlockInput();
-            GameObject.Destroy(_currentCutscene);
+            Object.Destroy(cutscene.gameObject);
         }
 
         private Actor GetCurrentPlayer()
@@ -57,4 +78,5 @@ namespace Sheldier.Common.Cutscene
             return _sceneActorsDatabase.Get(guid);
         } 
     }
+    
 }

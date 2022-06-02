@@ -7,6 +7,6 @@ namespace Sheldier.Item
     public class ReferenceUniqueID : SerializedMonoBehaviour, IUniqueID
     {
         public string ID => persistantUniqueID.Reference;
-        [SerializeField] private PersistantUniqueID persistantUniqueID;
+        [SerializeField] private DataReference persistantUniqueID;
     }
 }

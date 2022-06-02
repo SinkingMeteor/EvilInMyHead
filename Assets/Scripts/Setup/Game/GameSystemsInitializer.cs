@@ -4,6 +4,7 @@ using Sheldier.Actors.Pathfinding;
 using Sheldier.Common;
 using Sheldier.Common.Animation;
 using Sheldier.Common.Audio;
+using Sheldier.Common.Cutscene;
 using Sheldier.Common.Localization;
 using Sheldier.Common.Pause;
 using Sheldier.Common.Pool;
@@ -11,6 +12,7 @@ using Sheldier.Data;
 using Sheldier.Factories;
 using Sheldier.GameLocation;
 using Sheldier.Graphs.DialogueSystem;
+using Sheldier.UI;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -37,6 +39,7 @@ namespace Sheldier.Setup
         private readonly SpeechCloudPool _speechCloudPool;
         private readonly FontProvider _fontProvider;
         private readonly ChoiceSlotPool _choiceSlotPool;
+        private readonly InteractHintPool _interactHintPool;
         private readonly AssetProvider<Sprite> _spriteLoader;
         private readonly AssetProvider<AnimationData> _animationLoader;
         private readonly AssetProvider<ActorAnimationCollection> _animationCollectionLoader;
@@ -45,6 +48,9 @@ namespace Sheldier.Setup
         private readonly AssetProvider<DialogueSystemGraph> _dialoguesLoader;
         private readonly AssetProvider<VolumeProfile> _postProcessingLoader;
         private readonly ScenePlayerController _scenePlayerController;
+        private readonly InteractHintController _interactHintController;
+        private readonly CutsceneController _cutsceneController;
+        private readonly AssetProvider<Cutscene> _cutsceneLoader;
 
         public GameSystemsInitializer(InputProvider inputProvider,
             LocalizationProvider localizationProvider,
@@ -62,8 +68,10 @@ namespace Sheldier.Setup
             UIHintPool uiHintPool,
             InputBindHandler inputBindHandler,
             SpeechCloudPool speechCloudPool,
+            InteractHintPool interactHintPool,
             FontProvider fontProvider,
             ChoiceSlotPool choiceSlotPool,
+            InteractHintController interactHintController,
             AssetProvider<Sprite> spriteLoader, 
             AssetProvider<AnimationData> animationLoader,
             AssetProvider<ActorAnimationCollection> animationCollectionLoader,
@@ -71,8 +79,12 @@ namespace Sheldier.Setup
             AssetProvider<TextAsset> dataLoader,
             AssetProvider<DialogueSystemGraph> dialoguesLoader,
             AssetProvider<VolumeProfile> postProcessingLoader,
-            ScenePlayerController scenePlayerController)
+            AssetProvider<Cutscene> cutsceneLoader,
+            ScenePlayerController scenePlayerController,
+            CutsceneController cutsceneController)
         {
+            _cutsceneController = cutsceneController;
+            _interactHintController = interactHintController;
             _scenePlayerController = scenePlayerController;
             _animationCollectionLoader = animationCollectionLoader;
             _dialoguesLoader = dialoguesLoader;
@@ -81,6 +93,7 @@ namespace Sheldier.Setup
             _inventory = inventory;
             _uiHintPool = uiHintPool;
             _itemFactory = itemFactory;
+            _interactHintPool = interactHintPool;
             _fontProvider = fontProvider;
             _pathProvider = pathProvider;
             _actorBuilder = actorBuilder;
@@ -91,6 +104,7 @@ namespace Sheldier.Setup
             _inputProvider = inputProvider;
             _weaponBlowPool = weaponBlowPool;
             _choiceSlotPool = choiceSlotPool;
+            _cutsceneLoader = cutsceneLoader;
             _projectilePool = projectilePool;
             _animationLoader = animationLoader;
             _speechCloudPool = speechCloudPool;
@@ -116,12 +130,16 @@ namespace Sheldier.Setup
             _weaponBlowPool.Initialize();
             _speechCloudPool.Initialize();
             _choiceSlotPool.Initialize();
+            _interactHintPool.Initialize();
             _inventorySlotPool.Initialize();
+            _interactHintController.Initialize();
             _uiHintPool.Initialize();
             _actorBuilder.Initialize();
             _pauseNotifier.Initialize();
             _inventory.Initialize();
+            _cutsceneLoader.Initialize();
             _itemFactory.Initialize();
+            _cutsceneController.Initialize();
             _audioMixerController.Initialize();
             _inputBindHandler.Initialize();
             _inputProvider.Initialize();
@@ -129,6 +147,13 @@ namespace Sheldier.Setup
             _scenePlayerController.Initialize();
             _pathProvider.Initialize();
             _cameraHandler.Initialize();
+        }
+
+        public void DisposeSystems()
+        {
+            _cutsceneController.Dispose();
+            _scenePlayerController.Dispose();
+            _interactHintController.Dispose();
         }
     }
 }

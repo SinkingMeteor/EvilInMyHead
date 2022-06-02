@@ -62,13 +62,7 @@ namespace Sheldier.Setup
         {
             GameIsInitialized();
         }
-
-        private IEnumerator DialogueTestCoroutine()
-        {
-            yield return new WaitForSeconds(7.0f);
-            _cutsceneController.StartCutscene(ResourcePaths.TEST_CUTSCENE);
-
-        }
+        
         private void GameIsInitialized()
         {
             if (GameGlobalSettings.IsStarted)
