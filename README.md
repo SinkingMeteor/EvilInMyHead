@@ -12,7 +12,7 @@ A small techno-demo of the game with some implemented mechanics. The technology 
 8) No Unity Animator at all
 9) Location changes are done within a single scene
 
-All scripts except third party plugins, sprites and animations were made by me, so are free to use for any purpose.
+All scripts (except third party plugins), sprites and animations were made by me, so are free to use for any purpose.
 
 Screenshots:
 
