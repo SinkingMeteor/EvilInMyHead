@@ -16,6 +16,7 @@ All scripts except third party plugins, sprites and animations were made by me, 
 
 Screenshots:
 
+![image](https://user-images.githubusercontent.com/83251600/189062057-5ab347fe-dfb0-4afc-bc19-d2212b57f18f.png)
 ![Screenshot_51](https://user-images.githubusercontent.com/83251600/189058213-6e90340c-827e-4f5e-9202-f7f67cd795e9.png)
 ![Screenshot_49](https://user-images.githubusercontent.com/83251600/189061171-d30e8e59-b724-427a-98fd-7ebf8b17df7e.png)
 ![Screenshot_48](https://user-images.githubusercontent.com/83251600/189061181-b2f2c2e8-ab9a-4ec6-9521-676ccf973786.png)
